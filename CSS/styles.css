@@ -1,0 +1,72 @@
+<style>
+
+        body{
+            font-family: 'Poppins', sans-serif;
+            background-color:#f8fff9;
+        }
+
+        .historia{
+
+            background: white;
+            padding:70px 0;
+
+        }
+
+        .titulo{
+
+            color:#198754;
+            font-weight:bold;
+            margin-bottom:25px;
+
+        }
+
+        .historia p{
+
+            text-align:justify;
+            color:#444;
+            line-height:30px;
+            font-size:17px;
+
+        }
+
+        .imagen-historia{
+
+            width:100%;
+            max-width:450px;
+            border-radius:20px;
+            border:5px solid #198754;
+
+        }
+
+        hr{
+
+            margin:60px 0;
+
+            border:2px solid #198754;
+
+        }
+
+        .frase{
+
+            font-size:25px;
+            color:#198754;
+            font-style:italic;
+            font-weight:500;
+
+        }
+
+        .autor{
+
+            margin-top:30px;
+            font-weight:bold;
+            color:#198754;
+            font-size:20px;
+
+        }
+
+        .cargo{
+
+            color:#777;
+        }
+
+    </style>

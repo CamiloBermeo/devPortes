@@ -1,4 +1,29 @@
 @import '../global.css';
+.about-santiago {
+    min-height: 100vh;
+}
+.about-santiago .container-fluid {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.about-santiago .row {
+    flex: 1;
+}
+.icono-grande{
+    font-size: 50px;
+}
+.linea-about{
+    width: 50%;      /* o 40%, 50%, etc. */
+    margin: 0 auto;
+}
+.imgEquipo{
+    max-width: 25%;
+    height: auto;
+    border-radius: 10px;
+}
+
+
 /* ----------------- Seccion Equipo de Desarrollo ------------------ */
 .cont-info-comple {
     padding-bottom: 2rem;

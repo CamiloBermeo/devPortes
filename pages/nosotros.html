@@ -1,21 +1,260 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <title>Nosotros</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="../CSS/nosotros.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/views/nosotros.css">
 </head>
 
-<body>
-    <section class="historia">
+<body class="bg-light d-flex flex-column min-height-vh-100">
+  
+  <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 border-top border-4" style="border-color: #40b622 !important;">
+    <div class="container-fluid px-lg-5">
+
+        <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+            <div class="text-white d-flex align-items-center justify-content-center rounded-3 fw-bold" style="width: 38px; height: 38px; font-size: 1.2rem; background-color: #224330;">
+                D
+            </div>
+            <span class="fs-4 fw-black tracking-tight m-0 p-0" style="font-weight: 900; letter-spacing: -0.5px; color: #1c1c1c;">
+                    DEV<span class="fw-bold" style="color: #216e2a;">PORTES</span>
+                </span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto gap-3 text-center my-3 my-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link fw-medium px-2" href="#" style="color: #1c1c1c; transition: color 0.2s;" onmouseover="this.style.color='#40b622'" onmouseout="this.style.color='#1c1c1c'">
+                        Nuestras Canchas
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-bold px-2" href="#" style="color: #216e2a;">
+                        Nosotros
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-medium px-2" href="#" style="color: #1c1c1c; transition: color 0.2s;" onmouseover="this.style.color='#40b622'" onmouseout="this.style.color='#1c1c1c'">
+                        ¿Cómo funciona?
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-medium px-2" href="#" style="color: #1c1c1c; transition: color 0.2s;" onmouseover="this.style.color='#40b622'" onmouseout="this.style.color='#1c1c1c'">
+                        Galería
+                    </a>
+                </li>
+            </ul>
+            <div class="d-flex flex-column flex-lg-row align-items-center gap-3">
+                <a href="#" class="btn px-4 py-2 rounded-3 fw-medium w-100 w-lg-auto text-nowrap text-center"
+                   style="color: #1c1c1c; border: 1px solid #1c1c1c; background-color: transparent; transition: all 0.2s ease;"
+                   onmouseover="this.style.color='#ffffff'; this.style.backgroundColor='#224330'; this.style.borderColor='#224330';"
+                   onmouseout="this.style.color='#1c1c1c'; this.style.backgroundColor='transparent'; this.style.borderColor='#1c1c1c';">
+                    Iniciar Sesión
+                </a>
+                <a href="#" class="btn px-4 py-2 rounded-pill fw-bold d-flex align-items-center justify-content-center gap-2 w-100 w-lg-auto text-nowrap"
+                   style="color: #ffffff; background-color: #40b622; transition: all 0.2s ease;"
+                   onmouseover="this.style.backgroundColor='#216e2a';"
+                   onmouseout="this.style.backgroundColor='#40b622';">
+                    Reservar Ahora <span>&rarr;</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+    <section class="about-santiago">
+        <div class="container-fluid">                
+            <div class="row text-center mb-5">
+                <!-- Primera fila -->
+                <div class="col-12 d-flex justify-content-center align-items-center">
+                    <h3 class="mt-5">
+                        ¿Cómo funciona Golaya.com?
+                    </h3>
+                </div>
+                <div>
+                    <hr class="linea-about">
+                </div>                
+                <div class="col">
+                    <div><i class="bi bi-1-square-fill icono-grande"></i></div>
+                    <h5>Registrate/Inicia Sesión</h5>
+                    <p>Pegueloooo Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet quaerat, odit minus nobis id neque, minima quisquam saepe, a aspernatur vitae culpa molestias quae. Quam illo impedit debitis doloremque modi?</p>
+                </div>
+                <div class="col">
+                    <div><i class="bi bi-2-square-fill icono-grande"></i></div>
+                    <h5>¡Reserva!</h5>
+                    <p>Sobeloooo Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam molestias, atque odio reprehenderit unde iusto voluptas! Tempore, quia a natus hic, tenetur nostrum, soluta quam dolorum in voluptas sint facilis.</p>
+                </div>
+                <div class="col">
+                    <div><i class="bi bi-3-square-fill icono-grande"></i></i></div>
+                    <h5>Ven y disfruta de TUS espacios</h5>
+                    <p>Añañaaai Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam molestias, atque odio reprehenderit unde iusto voluptas! Tempore, quia a natus hic, tenetur nostrum, soluta quam dolorum in voluptas sint facilis.</p>
+                </div>
+            </div>
+            <hr class="linea-about">
+            <div class="row text-center">
+                <!-- Segunda fila -->
+                 <div class="col d-flex justify-content-center align-items-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt ad non error est quaerat fugiat modi ut exercitationem earum deleniti, recusandae labore! Ipsum odio autem voluptatibus saepe quibusdam in harum?</div>
+                 <div class="col d-flex justify-content-center align-items-center">
+                    <img class="img-fluid imgEquipo" src="../assets/img/equipoCasaRoca.jpeg" alt="Equipo Casa Roca">
+                 </div>                 
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ----------Seccion Equipo de Desarrollo ----------------- -->
+    <section class="desarrollado-por">
+        <div class="container-fluid cont-info-comple">
+            <div class=" div-titulo p-3">
+                <h2>Desarrollado Por </h2>
+                <p> Una hermandad enfocada a entregar calidad antes que cantidad</p>
+            </div>
+
+            <div class="container-fluid cont-tarjetas">
+                <div class="row g-4 justify-content-center">
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2 d-flex justify-content-center div-card">
+                        <div class="card-inner w-100">
+                            <div class="card w-100">
+                                <img src="../assets/img/camilo.png" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <H3>Camilo Bermeo</H3>
+                                    <p>Backend Developer</p>
+
+                                </div>
+                            </div>
+                            <div class="card card-reves w-100">
+                                <div class="card-body">
+                                    <h3>Camilo Bermeo</h3>
+                                    <p>Diseña soluciones de backend con enfoque en seguridad, escalabilidad y mantenimiento.</p>
+                                    <div class="badge-group">
+                                        <span>Backend</span>
+                                        <span>APIs</span>
+                                        <span>Calidad</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2 d-flex justify-content-center div-card">
+                        <div class="card-inner w-100">
+                            <div class="card w-100">
+                                <img src="https://avatars.githubusercontent.com/u/297007275?v=4" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <H3>Miguel Alvarez</H3>
+                                    <p>Full-Stack Developer</p>
+
+                                </div>
+                            </div>
+                            <div class="card card-reves w-100">
+                                <div class="card-body">
+                                    <h3>Miguel Alvarez</h3>
+                                    <p>Apasionado por construir experiencias claras, intuitivas y con enfoque en el usuario.</p>
+                                    <div class="badge-group">
+                                        <span>Frontend</span>
+                                        <span>UX</span>
+                                        <span>Diseño</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2 d-flex justify-content-center div-card">
+                        <div class="card-inner w-100">
+                            <div class="card w-100">
+                                <img src="../assets/img/persona1.jpg" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <H3>Felipe Bejarano</H3>
+                                    <p>Full-Stack Developer</p>
+
+                                </div>
+                            </div>
+                            <div class="card card-reves w-100">
+                                <div class="card-body">
+                                    <h3>Felipe Bejarano</h3>
+                                    <p>Especialista en integrar sistemas con enfoque en calidad, orden y mantenibilidad.</p>
+                                    <div class="badge-group">
+                                        <span>Integración</span>
+                                        <span>QA</span>
+                                        <span>Optimización</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-2 d-flex justify-content-center div-card">
+                        <div class="card-inner w-100">
+                            <div class="card w-100">
+                                <img src="../assets/img/persona1.jpg" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <H3>Deiby Moreno</H3>
+                                    <p>Full-Stack Developer</p>
+
+                                </div>
+                            </div>
+                            <div class="card card-reves w-100">
+                                <div class="card-body">
+                                    <h3>Deiby Moreno</h3>
+                                    <p>Comprometido con entregar productos útiles, bien diseñados y listos para crecer.</p>
+                                    <div class="badge-group">
+                                        <span>Producto</span>
+                                        <span>Escalabilidad</span>
+                                        <span>Innovación</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+<div class="col-12 col-sm-6 col-lg-4 col-xl-2 d-flex justify-content-center div-card">
+                        <div class="card-inner w-100">
+                            <div class="card w-100">
+                                <img src="../assets/img/persona1.jpg" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <H3>Andres Guzman</H3>
+                                    <p>Full-Stack Developer</p>
+
+                                </div>
+                            </div>
+                            <div class="card card-reves w-100">
+                                <div class="card-body">
+                                    <h3>Andrés Guzmán</h3>
+                                    <p>Combina desarrollo y soporte para entregar productos modernos, estables y fáciles de mantener.</p>
+                                    <div class="badge-group">
+                                        <span>Full Stack</span>
+                                        <span>Soporte</span>
+                                        <span>Escalabilidad</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                </div>
+                <div class="container-fluid cont-contactenos">
+                    <div class="cont-info-contact">
+                        <h3>¿Quieres tu software de reservas?</h3>
+                        <p>Contactanos para obtener informacion sobre nuestros servicios y precios,
+                            la tecnologia avanza, el mundo avanza, tu que esperas para avanzar?
+                        </p>
+                        <button type="button" class="btn-vamos ">Vamos</button>
+                    </div>
+                </div>
+            </div>
+    </section>
+          
+    <!-- ----------Fin Seccion de Desarrollo -------------------- -->
+           <section class="historia">
 
         <div class="container">
 
@@ -83,10 +322,45 @@
         </div>
 
         </div>
+</section>
+   
+          <footer class="text-white py-4 border-top border-4 mt-auto" style="background-color: #1c1c1c !important; border-color: #224330 !important;">
+    <div class="container-fluid px-lg-5">
+        <div class="row align-items-center justify-content-between gy-3">
+            <div class="col-12 col-md-auto d-flex align-items-center justify-content-center justify-content-md-start gap-2">
+                <div class="text-white d-flex align-items-center justify-content-center rounded-3 fw-bold" style="width: 38px; height: 38px; font-size: 1.2rem; background-color: #224330;">
+                    D
+                </div>
+                <span class="fs-4 fw-black tracking-tight m-0 p-0" style="font-weight: 900; letter-spacing: -0.5px; color: #ffffff;">
+                        DEV<span class="fw-bold" style="color: #40b622;">PORTES</span>
+                    </span>
+            </div>
+            <div class="col-12 col-md-auto">
+                <ul class="list-unstyled d-flex flex-wrap justify-content-center justify-content-md-end gap-4 m-0 p-0 fw-medium" style="font-size: 0.9rem;">
+                    <li>
+                        <a href="#" class="text-decoration-none" style="color: #a3a3a3; transition: color 0.2s;" onmouseover="this.style.color='#40b622'" onmouseout="this.style.color='#a3a3a3'">Inicio</a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-decoration-none" style="color: #a3a3a3; transition: color 0.2s;" onmouseover="this.style.color='#40b622'" onmouseout="this.style.color='#a3a3a3'">Términos y Condiciones</a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-decoration-none" style="color: #a3a3a3; transition: color 0.2s;" onmouseover="this.style.color='#40b622'" onmouseout="this.style.color='#a3a3a3'">Política de Privacidad</a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-decoration-none" style="color: #a3a3a3; transition: color 0.2s;" onmouseover="this.style.color='#40b622'" onmouseout="this.style.color='#a3a3a3'">Soporte</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row mt-4 pt-3 border-top border-white border-opacity-10 text-center text-md-start">
+            <div class="col-12">
+                <p class="m-0 small text-white-50 opacity-50">&copy; 2026 DEVPORTES. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 
-    </section>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

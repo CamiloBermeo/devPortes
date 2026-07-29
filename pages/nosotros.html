@@ -3,63 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nav DEVPORTES - Paleta Corregida v2</title>
+    <title>DevPortes - Nosotros</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .nav-link-custom {
-            color: #1c1c1c !important;
-            transition: color 0.2s ease;
-        }
-        .nav-link-custom:hover {
-            color: #40b622 !important; 
-        }
-        .nav-link-custom.active-green {
-            color: #216e2a !important; 
-        }
-        
-        .btn-brand-outline {
-            color: #1c1c1c !important;
-            border: 1px solid #1c1c1c !important;
-            background-color: transparent !important;
-            transition: all 0.2s ease;
-        }
-        .btn-brand-outline:hover {
-            color: #ffffff !important;
-            background-color: #224330 !important;
-            border-color: #224330 !important;
-        }
-        
-        .btn-brand-solid {
-            color: #ffffff !important;
-            background-color: #40b622 !important;
-            transition: all 0.2s ease;
-        }
-        .btn-brand-solid:hover {
-            background-color: #216e2a !important; 
-        }
-        
-        .bg-brand-dark {
-            background-color: #1c1c1c !important;
-        }
-        
-        .footer-link {
-            color: #a3a3a3 !important; 
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        .footer-link:hover {
-            color: #40b622 !important;
-        }
-    </style>
 </head>
-<body>
-
+<body class="bg-light d-flex flex-column min-height-vh-100">
 <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 border-top border-4" style="border-color: #40b622 !important;">
     <div class="container-fluid px-lg-5">
-        
+
         <a class="navbar-brand d-flex align-items-center gap-2" href="#">
-           
             <div class="text-white d-flex align-items-center justify-content-center rounded-3 fw-bold" style="width: 38px; height: 38px; font-size: 1.2rem; background-color: #224330;">
                 D
             </div>
@@ -73,35 +24,52 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto gap-3 text-center my-3 my-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link fw-medium nav-link-custom" href="#">Nuestras Canchas</a>
+                    <a class="nav-link fw-medium px-2" href="#" style="color: #1c1c1c; transition: color 0.2s;" onmouseover="this.style.color='#40b622'" onmouseout="this.style.color='#1c1c1c'">
+                        Nuestras Canchas
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link fw-bold nav-link-custom active-green" href="#">Nosotros</a>
+                    <a class="nav-link fw-bold px-2" href="#" style="color: #216e2a;">
+                        Nosotros
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link fw-medium nav-link-custom" href="#">¿Cómo funciona?</a>
+                    <a class="nav-link fw-medium px-2" href="#" style="color: #1c1c1c; transition: color 0.2s;" onmouseover="this.style.color='#40b622'" onmouseout="this.style.color='#1c1c1c'">
+                        ¿Cómo funciona?
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link fw-medium nav-link-custom" href="#">Galería</a>
+                    <a class="nav-link fw-medium px-2" href="#" style="color: #1c1c1c; transition: color 0.2s;" onmouseover="this.style.color='#40b622'" onmouseout="this.style.color='#1c1c1c'">
+                        Galería
+                    </a>
                 </li>
             </ul>
             <div class="d-flex flex-column flex-lg-row align-items-center gap-3">
-                <a href="#" class="btn btn-brand-outline px-4 py-2 rounded-3 fw-medium w-100 w-lg-auto text-nowrap">
+                <a href="#" class="btn px-4 py-2 rounded-3 fw-medium w-100 w-lg-auto text-nowrap text-center"
+                   style="color: #1c1c1c; border: 1px solid #1c1c1c; background-color: transparent; transition: all 0.2s ease;"
+                   onmouseover="this.style.color='#ffffff'; this.style.backgroundColor='#224330'; this.style.borderColor='#224330';"
+                   onmouseout="this.style.color='#1c1c1c'; this.style.backgroundColor='transparent'; this.style.borderColor='#1c1c1c';">
                     Iniciar Sesión
                 </a>
-                <a href="#" class="btn btn-brand-solid px-4 py-2 rounded-pill fw-bold d-flex align-items-center justify-content-center gap-2 w-100 w-lg-auto text-nowrap">
+                <a href="#" class="btn px-4 py-2 rounded-pill fw-bold d-flex align-items-center justify-content-center gap-2 w-100 w-lg-auto text-nowrap"
+                   style="color: #ffffff; background-color: #40b622; transition: all 0.2s ease;"
+                   onmouseover="this.style.backgroundColor='#216e2a';"
+                   onmouseout="this.style.backgroundColor='#40b622';">
                     Reservar Ahora <span>&rarr;</span>
                 </a>
             </div>
+
         </div>
     </div>
 </nav>
 
+<div class="flex-grow-1 py-5 my-5 text-center text-muted">
+    <p>[ El contenido de tu página va en esta sección ]</p>
+</div>
 
-<footer class="bg-brand-dark text-white py-4 border-top border-4" style="border-color: #224330 !important;">
+<footer class="text-white py-4 border-top border-4 mt-auto" style="background-color: #1c1c1c !important; border-color: #224330 !important;">
     <div class="container-fluid px-lg-5">
         <div class="row align-items-center justify-content-between gy-3">
-            
             <div class="col-12 col-md-auto d-flex align-items-center justify-content-center justify-content-md-start gap-2">
                 <div class="text-white d-flex align-items-center justify-content-center rounded-3 fw-bold" style="width: 38px; height: 38px; font-size: 1.2rem; background-color: #224330;">
                     D
@@ -113,29 +81,27 @@
             <div class="col-12 col-md-auto">
                 <ul class="list-unstyled d-flex flex-wrap justify-content-center justify-content-md-end gap-4 m-0 p-0 fw-medium" style="font-size: 0.9rem;">
                     <li>
-                        <a href="#" class="footer-link">Inicio</a>
+                        <a href="#" class="text-decoration-none" style="color: #a3a3a3; transition: color 0.2s;" onmouseover="this.style.color='#40b622'" onmouseout="this.style.color='#a3a3a3'">Inicio</a>
                     </li>
                     <li>
-                        <a href="#" class="footer-link">Términos y Condiciones</a>
+                        <a href="#" class="text-decoration-none" style="color: #a3a3a3; transition: color 0.2s;" onmouseover="this.style.color='#40b622'" onmouseout="this.style.color='#a3a3a3'">Términos y Condiciones</a>
                     </li>
                     <li>
-                        <a href="#" class="footer-link">Política de Privacidad</a>
+                        <a href="#" class="text-decoration-none" style="color: #a3a3a3; transition: color 0.2s;" onmouseover="this.style.color='#40b622'" onmouseout="this.style.color='#a3a3a3'">Política de Privacidad</a>
                     </li>
                     <li>
-                        <a href="#" class="footer-link">Soporte</a>
+                        <a href="#" class="text-decoration-none" style="color: #a3a3a3; transition: color 0.2s;" onmouseover="this.style.color='#40b622'" onmouseout="this.style.color='#a3a3a3'">Soporte</a>
                     </li>
                 </ul>
             </div>
         </div>
-        <div class="row mt-4 pt-3 border-top border-secondary border-opacity-10 text-center text-md-start">
+        <div class="row mt-4 pt-3 border-top border-white border-opacity-10 text-center text-md-start">
             <div class="col-12">
-                <p class="m-0 small text-secondary opacity-50">&copy; 2026 DEVPORTES. Todos los derechos reservados.</p>
+                <p class="m-0 small text-white-50 opacity-50">&copy; 2026 DEVPORTES. Todos los derechos reservados.</p>
             </div>
         </div>
     </div>
 </footer>
-
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

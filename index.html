@@ -3,25 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nav DEVPORTES - Paleta Corregida v2</title>
-    <!-- Bootstrap 5 CSS CDN -->
+    <title>Nav DEVPORTES</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Estilos específicos con la paleta de verdes aplicada al 100% -->
-    <style>
-        /* Enlaces del menú */
+    <link rel="stylesheet" href="css/style.css">
+    <!-- <style>
         .nav-link-custom {
             color: #1c1c1c !important;
             transition: color 0.2s ease;
         }
         .nav-link-custom:hover {
-            color: #40b622 !important; /* Verde vibrante al pasar el mouse */
+            color: #40b622 !important;
         }
         .nav-link-custom.active-green {
-            color: #216e2a !important; /* Verde medio para la página activa (Nosotros) */
+            color: #216e2a !important;
         }
 
-        /* Botón Iniciar Sesión (Corregido con Verde Oscuro #224330 en Hover) */
         .btn-brand-outline {
             color: #1c1c1c !important;
             border: 1px solid #1c1c1c !important;
@@ -30,64 +26,52 @@
         }
         .btn-brand-outline:hover {
             color: #ffffff !important;
-            background-color: #224330 !important; /* Verde Oscuro Institucional */
+            background-color: #224330 !important;
             border-color: #224330 !important;
         }
 
-        /* Botón Reservar Ahora (Sólido Verde #40b622) */
         .btn-brand-solid {
             color: #ffffff !important;
             background-color: #40b622 !important;
             transition: all 0.2s ease;
         }
         .btn-brand-solid:hover {
-            background-color: #216e2a !important; /* Verde medio al pasar el mouse */
+            background-color: #216e2a !important;
         }
 
-        /* Fondo Negro Carbón de la paleta */
         .bg-brand-dark {
             background-color: #1c1c1c !important;
         }
 
-        /* Enlaces del Footer */
         .footer-link {
-            color: #a3a3a3 !important; /* Gris claro para lectura suave */
+            color: #a3a3a3 !important;
             text-decoration: none;
             transition: color 0.2s ease;
         }
 
         .footer-link:hover {
-            color: #40b622 !important; /* Cambia al verde vibrante en hover */
+            color: #40b622 !important;
         }
-    </style>
+    </style> -->
 </head>
 <body>
 
-<!-- Navbar con borde superior vibrante (#40b622) -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 border-top border-4" style="border-color: #40b622 !important;">
     <div class="container-fluid px-lg-5">
 
-        <!-- LOGO: D + DEVPORTES -->
         <a class="navbar-brand d-flex align-items-center gap-2" href="#">
-            <!-- Contenedor con el verde oscuro (#224330) -->
+
             <div class="text-white d-flex align-items-center justify-content-center rounded-3 fw-bold" style="width: 38px; height: 38px; font-size: 1.2rem; background-color: #224330;">
                 D
             </div>
-            <!-- Texto del logo -->
             <span class="fs-4 fw-black tracking-tight m-0 p-0" style="font-weight: 900; letter-spacing: -0.5px; color: #1c1c1c;">
                     DEV<span class="fw-bold" style="color: #216e2a;">PORTES</span>
                 </span>
         </a>
-
-        <!-- Botón Hamburguesa para Móviles -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
-        <!-- MENÚ CENTRAL Y BOTONES -->
         <div class="collapse navbar-collapse" id="navbarNav">
-
-            <!-- Links de navegación con hovers -->
             <ul class="navbar-nav mx-auto gap-3 text-center my-3 my-lg-0">
                 <li class="nav-item">
                     <a class="nav-link fw-medium nav-link-custom" href="#">Nuestras Canchas</a>
@@ -102,44 +86,103 @@
                     <a class="nav-link fw-medium nav-link-custom" href="#">Galería</a>
                 </li>
             </ul>
-
-            <!-- Botones del extremo derecho -->
             <div class="d-flex flex-column flex-lg-row align-items-center gap-3">
-                <!-- Botón Iniciar Sesión (Hover verde oscuro corregido) -->
                 <a href="#" class="btn btn-brand-outline px-4 py-2 rounded-3 fw-medium w-100 w-lg-auto text-nowrap">
                     Iniciar Sesión
                 </a>
-
-                <!-- Botón Reservar Ahora -->
                 <a href="#" class="btn btn-brand-solid px-4 py-2 rounded-pill fw-bold d-flex align-items-center justify-content-center gap-2 w-100 w-lg-auto text-nowrap">
                     Reservar Ahora <span>&rarr;</span>
                 </a>
             </div>
-
         </div>
     </div>
 </nav>
 
+<!-- SECCIÓN HERO PRINCIPAL -->
+<div class="position-relative text-white d-flex flex-column justify-content-between"
+     style="min-height: 90vh; background: linear-gradient(rgba(34, 67, 48, 0.65), rgba(28, 28, 28, 0.8)), url('TU_IMAGEN_DE_FUTBOL_AQUI.jpg') center/cover no-repeat;">
+
+    <!-- CONTENIDO CENTRALIZADO -->
+    <div class="container d-flex flex-column align-items-center justify-content-center flex-grow-1 text-center px-4 py-5">
+
+        <!-- Badge Superior (Píldora traslúcida con Verde Oscuro #224330) -->
+        <div class="badge rounded-pill px-3 py-2 mb-4 border border-white border-opacity-25 d-flex align-items-center gap-2"
+             style="background-color: rgba(34, 67, 48, 0.6); font-size: 0.75rem; letter-spacing: 1px;">
+            <span>⚡</span> 6 CANCHAS - RESERVA ONLINE 24/7
+        </div>
+
+        <!-- Título de Impacto (Mayúsculas y Extra Bold) -->
+        <h1 class="display-3 fw-black text-uppercase mb-3 tracking-tight"
+            style="font-weight: 900; max-width: 650px; line-height: 1.05; letter-spacing: -1px;">
+            Reserva tu<br>cancha en<br>segundos
+        </h1>
+
+        <!-- Subtítulo descriptivo -->
+        <p class="text-white-50 mb-4" style="max-width: 520px; font-size: 0.95rem; line-height: 1.5;">
+            Devportes pone a tu disposición 6 canchas de fútbol, pádel, tenis, básquet y vóley. Sin llamadas, sin esperas — reserva online y llega a jugar.
+        </p>
+
+        <!-- Botones de Acción Integrados -->
+        <div class="d-flex flex-column flex-sm-row gap-3 text-nowrap">
+            <!-- Botón Blanco Principal con Flecha -->
+            <a href="#" class="btn btn-light text-dark fw-bold px-4 py-2.5 rounded-pill d-flex align-items-center justify-content-center gap-2" style="font-size: 0.9rem;">
+                Ver nuestras canchas <span style="font-size: 1.1rem;">&rarr;</span>
+            </a>
+            <!-- Botón Transparente con Borde Suave -->
+            <a href="#" class="btn btn-outline-light fw-medium px-4 py-2.5 rounded-pill d-flex align-items-center justify-content-center"
+               style="font-size: 0.9rem; background-color: rgba(28, 28, 28, 0.3); border-color: rgba(255, 255, 255, 0.25);">
+                ¿Cómo funciona?
+            </a>
+        </div>
+    </div>
+
+    <!-- BARRA INFERIOR DE MÉTRICAS (Fondo Negro Carbón #1c1c1c) -->
+    <div class="w-100 py-3 border-top border-white border-opacity-10" style="background-color: #1c1c1c;">
+        <div class="container-fluid px-lg-5">
+            <div class="row text-center gy-3 my-1">
+
+                <!-- Métrica 1 -->
+                <div class="col-6 col-md-3 border-end border-white border-opacity-10">
+                    <div class="fw-bold fs-4 text-white">6</div>
+                    <div class="text-white-50 text-uppercase small" style="font-size: 0.65rem; letter-spacing: 1px;">Canchas Propias</div>
+                </div>
+
+                <!-- Métrica 2 -->
+                <div class="col-6 col-md-3 border-md-end border-white border-opacity-10">
+                    <div class="fw-bold fs-4 text-white">5 deportes</div>
+                    <div class="text-white-50 text-uppercase small" style="font-size: 0.65rem; letter-spacing: 1px;">Disciplinas Disponibles</div>
+                </div>
+
+                <!-- Métrica 3 -->
+                <div class="col-6 col-md-3 border-end border-white border-opacity-10">
+                    <div class="fw-bold fs-4 text-white">4.9★</div>
+                    <div class="text-white-50 text-uppercase small" style="font-size: 0.65rem; letter-spacing: 1px;">Calificación Promedio</div>
+                </div>
+
+                <!-- Métrica 4 -->
+                <div class="col-6 col-md-3">
+                    <div class="fw-bold fs-4 text-white">24/7</div>
+                    <div class="text-white-50 text-uppercase small" style="font-size: 0.65rem; letter-spacing: 1px;">Reserva Online</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 
-<!-- FOOTER: Con el fondo #1c1c1c y un sutil borde superior con el verde institucional #224330 -->
 <footer class="bg-brand-dark text-white py-4 border-top border-4" style="border-color: #224330 !important;">
     <div class="container-fluid px-lg-5">
         <div class="row align-items-center justify-content-between gy-3">
 
-            <!-- COLUMNA IZQUIERDA: LOGO ADAPTADO A FONDO OSCURO -->
             <div class="col-12 col-md-auto d-flex align-items-center justify-content-center justify-content-md-start gap-2">
-                <!-- Contenedor con el verde oscuro institucional (#224330) -->
                 <div class="text-white d-flex align-items-center justify-content-center rounded-3 fw-bold" style="width: 38px; height: 38px; font-size: 1.2rem; background-color: #224330;">
                     D
                 </div>
-                <!-- Texto del logo invertido para fondo oscuro -->
                 <span class="fs-4 fw-black tracking-tight m-0 p-0" style="font-weight: 900; letter-spacing: -0.5px; color: #ffffff;">
                         DEV<span class="fw-bold" style="color: #40b622;">PORTES</span>
                     </span>
             </div>
-
-            <!-- COLUMNA DERECHA: ENLACES SECUNDARIOS Y LEGALES -->
             <div class="col-12 col-md-auto">
                 <ul class="list-unstyled d-flex flex-wrap justify-content-center justify-content-md-end gap-4 m-0 p-0 fw-medium" style="font-size: 0.9rem;">
                     <li>
@@ -156,10 +199,7 @@
                     </li>
                 </ul>
             </div>
-
         </div>
-
-        <!-- LÍNEA DE COPYRIGHT INFERIOR -->
         <div class="row mt-4 pt-3 border-top border-secondary border-opacity-10 text-center text-md-start">
             <div class="col-12">
                 <p class="m-0 small text-secondary opacity-50">&copy; 2026 DEVPORTES. Todos los derechos reservados.</p>
@@ -168,7 +208,7 @@
     </div>
 </footer>
 
-<!-- Bootstrap 5 JS Bundle -->
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

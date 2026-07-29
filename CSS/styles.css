@@ -1,32 +1,51 @@
-.nav-link-custom {
-    color: #1c1c1c !important;
+.navbar .nav-link-custom {
+    color: #1c1c1c;
     transition: color 0.2s ease;
 }
-.nav-link-custom:hover {
-    color: #40b622 !important; /* Cambia al verde vibrante al pasar el mouse */
-}
-.nav-link-custom.active-green {
-    color: #216e2a !important; /* Verde medio para la página activa (Nosotros) */
+
+.navbar .nav-link-custom:hover {
+    color: #40b622;
 }
 
-/* Botón Iniciar Sesión (Outline) */
-.btn-brand-outline {
-    color: #1c1c1c !important;
-    border: 1px solid #1c1c1c !important;
-    background-color: transparent !important;
-    transition: all 0.2s ease;
-}
-.btn-brand-outline:hover {
-    color: #ffffff !important; /* Ahora el texto sí cambia a blanco */
-    background-color: #1c1c1c !important;
+.navbar .nav-link-custom.active-green {
+    color: #216e2a;
 }
 
-/* Botón Reservar Ahora (Sólido Verde) */
-.btn-brand-solid {
-    color: #ffffff !important;
-    background-color: #40b622 !important;
+.btn.btn-brand-outline {
+    --bs-btn-color: #1c1c1c;
+    --bs-btn-bg: transparent;
+    --bs-btn-border-color: #1c1c1c;
+    --bs-btn-hover-color: #ffffff;
+    --bs-btn-hover-bg: #224330;
+    --bs-btn-hover-border-color: #224330;
+
     transition: all 0.2s ease;
 }
-.btn-brand-solid:hover {
-    background-color: #216e2a !important; /* Oscurece un poco el verde al pasar el mouse */
+
+.btn.btn-brand-solid {
+    /* Estado Normal */
+    --bs-btn-color: #ffffff;
+    --bs-btn-bg: #40b622;
+    --bs-btn-border-color: #40b622;
+
+    /* Estado Hover */
+    --bs-btn-hover-color: #ffffff;
+    --bs-btn-hover-bg: #216e2a;
+    --bs-btn-hover-border-color: #216e2a;
+
+    transition: all 0.2s ease;
+}
+
+.bg-brand-dark {
+    background-color: #1c1c1c;
+}
+
+.footer-link {
+    color: #a3a3a3;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+    color: #40b622;
 }

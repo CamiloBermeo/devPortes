@@ -16,6 +16,9 @@
     width: 50%;      /* o 40%, 50%, etc. */
     margin: 0 auto;
 }
-
-
+.imgEquipo{
+    max-width: 25%;
+    height: auto;
+    border-radius: 10px;
+}
 

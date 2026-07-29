@@ -1,0 +1,32 @@
+.nav-link-custom {
+    color: #1c1c1c !important;
+    transition: color 0.2s ease;
+}
+.nav-link-custom:hover {
+    color: #40b622 !important; /* Cambia al verde vibrante al pasar el mouse */
+}
+.nav-link-custom.active-green {
+    color: #216e2a !important; /* Verde medio para la página activa (Nosotros) */
+}
+
+/* Botón Iniciar Sesión (Outline) */
+.btn-brand-outline {
+    color: #1c1c1c !important;
+    border: 1px solid #1c1c1c !important;
+    background-color: transparent !important;
+    transition: all 0.2s ease;
+}
+.btn-brand-outline:hover {
+    color: #ffffff !important; /* Ahora el texto sí cambia a blanco */
+    background-color: #1c1c1c !important;
+}
+
+/* Botón Reservar Ahora (Sólido Verde) */
+.btn-brand-solid {
+    color: #ffffff !important;
+    background-color: #40b622 !important;
+    transition: all 0.2s ease;
+}
+.btn-brand-solid:hover {
+    background-color: #216e2a !important; /* Oscurece un poco el verde al pasar el mouse */
+}

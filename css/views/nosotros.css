@@ -1,0 +1,158 @@
+@import '../global.css';
+/* ----------------- Seccion Equipo de Desarrollo ------------------ */
+.cont-info-comple {
+    padding-bottom: 2rem;
+}
+
+.div-titulo {
+    align-items: center;
+    text-align: center;
+}
+
+.div-titulo h2 {
+    color: var(--color-texto);
+    font-family: var(--font-principal);
+}
+
+.cont-tarjetas {
+    padding: 2em 1rem;
+}
+
+.div-card {
+    position: relative;
+    width: 100%;
+    max-width: 15rem;
+    min-height: 20rem;
+    margin: 0 auto;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s ease;
+    transform-style: preserve-3d;
+}
+
+.div-card:hover .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card, .card-reves {
+    position: absolute;
+    inset: 0;
+    width: 100% !important;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 1em;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+.card {
+    background-color: var(--color-terceario);
+    color: var(--color-texto);
+}
+
+.card-reves {
+    background: linear-gradient(135deg, var(--color-primario), var(--color-secundario));
+    color: var(--color-fondo);
+    transform: rotateY(180deg);
+    align-items: center;
+    text-align: center;
+    padding: 1.25rem;
+}
+
+.card img {
+    border-radius: 1em;
+    height: 12rem;
+    object-fit: cover;
+}
+
+.card-body {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 0.8rem;
+}
+
+.card-body h3 {
+    color: var(--color-fondo);
+    font-size: 1.2em;
+    margin-bottom: 0.2rem;
+}
+
+.card-body p {
+    color: var(--color-cuaternario);
+    margin: 0;
+}
+
+.card-reves .card-body {
+    gap: 0.75rem;
+}
+
+.card-reves .card-body h3 {
+    color: var(--color-fondo);
+    font-size: 1.1rem;
+}
+
+.card-reves .card-body p {
+    color: var(--color-fondo);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.card-reves .badge-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-top: 0.25rem;
+}
+
+.card-reves .badge-group span {
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 999px;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.72rem;
+    background: rgba(255,255,255,0.12);
+}
+
+.card:hover {
+    cursor: pointer;
+    box-shadow: 0 10px 20px var(--color-primario);
+}
+
+.cont-contactenos {
+    padding: 2em 15em;
+}
+
+.cont-info-contact {
+    background-color: var(--color-terceario);
+    text-align: center;
+    padding: 1em;
+    gap: 1em;
+    border-radius: 1em;
+    color: var(--color-fondo);
+}
+
+.btn-vamos {
+    background-color: var(--color-primario);
+    color: var(--color-fondo);
+    border-color: var(--color-primario);
+    border-radius: 10px;
+    height: 2.5em;
+    width: 10em;
+}
+
+.btn-vamos:hover {
+    background-color: var(--color-exito);
+}
+/* ----------------- Fin Seccion de Desarrollo ---------------------*/

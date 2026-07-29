@@ -3,64 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nav DEVPORTES</title>
+    <title>DevPortes - Complejo Deportivo y Reserva de Canchas</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <!-- <style>
-        .nav-link-custom {
-            color: #1c1c1c !important;
-            transition: color 0.2s ease;
-        }
-        .nav-link-custom:hover {
-            color: #40b622 !important;
-        }
-        .nav-link-custom.active-green {
-            color: #216e2a !important;
-        }
-
-        .btn-brand-outline {
-            color: #1c1c1c !important;
-            border: 1px solid #1c1c1c !important;
-            background-color: transparent !important;
-            transition: all 0.2s ease;
-        }
-        .btn-brand-outline:hover {
-            color: #ffffff !important;
-            background-color: #224330 !important;
-            border-color: #224330 !important;
-        }
-
-        .btn-brand-solid {
-            color: #ffffff !important;
-            background-color: #40b622 !important;
-            transition: all 0.2s ease;
-        }
-        .btn-brand-solid:hover {
-            background-color: #216e2a !important;
-        }
-
-        .bg-brand-dark {
-            background-color: #1c1c1c !important;
-        }
-
-        .footer-link {
-            color: #a3a3a3 !important;
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        .footer-link:hover {
-            color: #40b622 !important;
-        }
-    </style> -->
 </head>
-<body>
+<body class="bg-light d-flex flex-column min-vh-100" style="font-family: system-ui, -apple-system, sans-serif;">
 
-<nav class="navbar navbar-expand-lg navbar-light bg-white py-3 border-top border-4" style="border-color: #40b622 !important;">
+<nav class="navbar navbar-expand-lg navbar-light bg-white py-3 border-top border-4 sticky-top shadow-sm" style="border-color: #40b622 !important; z-index: 1030;">
     <div class="container-fluid px-lg-5">
 
         <a class="navbar-brand d-flex align-items-center gap-2" href="#">
-
             <div class="text-white d-flex align-items-center justify-content-center rounded-3 fw-bold" style="width: 38px; height: 38px; font-size: 1.2rem; background-color: #224330;">
                 D
             </div>
@@ -68,29 +20,49 @@
                     DEV<span class="fw-bold" style="color: #216e2a;">PORTES</span>
                 </span>
         </a>
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto gap-3 text-center my-3 my-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link fw-medium nav-link-custom" href="#">Nuestras Canchas</a>
+                    <a class="nav-link active fw-bold px-2" href="#canchas" style="color: #216e2a;" aria-current="page">
+                        Nuestras Canchas
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link fw-bold nav-link-custom active-green" href="#">Nosotros</a>
+                    <a class="nav-link fw-medium px-2" href="./pages/nosotros.html" style="color: #1c1c1c; transition: color 0.2s;"
+                       onmouseover="this.style.color='#40b622'" onmouseout="this.style.color='#1c1c1c'">
+                        Nosotros
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link fw-medium nav-link-custom" href="#">¿Cómo funciona?</a>
+                    <a class="nav-link fw-medium px-2" href="#proceso" style="color: #1c1c1c; transition: color 0.2s;" onmouseover="this.style.color='#40b622'" onmouseout="this.style.color='#1c1c1c'">
+                        ¿Cómo funciona?
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link fw-medium nav-link-custom" href="#">Galería</a>
+                    <a class="nav-link fw-medium px-2" href="#" style="color: #1c1c1c; transition: color 0.2s;" onmouseover="this.style.color='#40b622'" onmouseout="this.style.color='#1c1c1c'">
+                        Galería
+                    </a>
                 </li>
             </ul>
+
+
             <div class="d-flex flex-column flex-lg-row align-items-center gap-3">
-                <a href="#" class="btn btn-brand-outline px-4 py-2 rounded-3 fw-medium w-100 w-lg-auto text-nowrap">
+                <a href="#" class="btn px-4 py-2 rounded-3 fw-medium w-100 w-lg-auto text-nowrap text-center"
+                   style="color: #1c1c1c; border: 1px solid #1c1c1c; background-color: transparent; transition: all 0.2s ease;"
+                   onmouseover="this.style.color='#ffffff'; this.style.backgroundColor='#224330'; this.style.borderColor='#224330';"
+                   onmouseout="this.style.color='#1c1c1c'; this.style.backgroundColor='transparent'; this.style.borderColor='#1c1c1c';">
                     Iniciar Sesión
                 </a>
-                <a href="#" class="btn btn-brand-solid px-4 py-2 rounded-pill fw-bold d-flex align-items-center justify-content-center gap-2 w-100 w-lg-auto text-nowrap">
+
+                <a href="#" class="btn px-4 py-2 rounded-pill fw-bold d-flex align-items-center justify-content-center gap-2 w-100 w-lg-auto text-nowrap"
+                   style="color: #ffffff; background-color: #40b622; transition: all 0.2s ease;"
+                   onmouseover="this.style.backgroundColor='#216e2a';"
+                   onmouseout="this.style.backgroundColor='#40b622';">
                     Reservar Ahora <span>&rarr;</span>
                 </a>
             </div>
@@ -98,80 +70,533 @@
     </div>
 </nav>
 
-<!-- SECCIÓN HERO PRINCIPAL -->
-<div class="position-relative text-white d-flex flex-column justify-content-between"
-     style="min-height: 90vh; background: linear-gradient(rgba(34, 67, 48, 0.65), rgba(28, 28, 28, 0.8)), url('TU_IMAGEN_DE_FUTBOL_AQUI.jpg') center/cover no-repeat;">
+<main>
+    
+    <section class="position-relative text-white d-flex flex-column justify-content-between"
+             style="min-height: 90vh; background: linear-gradient(rgba(34, 67, 48, 0.65), rgba(28, 28, 28, 0.8)), url('./img/fondo.jpg') center/cover no-repeat;">
+        
+        <div class="container d-flex flex-column align-items-center justify-content-center flex-grow-1 text-center px-4 py-5">
+            <div class="badge rounded-pill px-3 py-2 mb-4 border border-white border-opacity-25 d-flex align-items-center gap-2"
+                 style="background-color: rgba(34, 67, 48, 0.6); font-size: 0.75rem; letter-spacing: 1px;">
+                <span>⚡</span> 6 CANCHAS - RESERVA ONLINE 24/7
+            </div>
 
-    <!-- CONTENIDO CENTRALIZADO -->
-    <div class="container d-flex flex-column align-items-center justify-content-center flex-grow-1 text-center px-4 py-5">
+            <h1 class="display-3 text-uppercase mb-3" style="font-weight: 900; max-width: 650px; line-height: 1.05; letter-spacing: -1px;">
+                Reserva tu<br>cancha en<br>segundos
+            </h1>
 
-        <!-- Badge Superior (Píldora traslúcida con Verde Oscuro #224330) -->
-        <div class="badge rounded-pill px-3 py-2 mb-4 border border-white border-opacity-25 d-flex align-items-center gap-2"
-             style="background-color: rgba(34, 67, 48, 0.6); font-size: 0.75rem; letter-spacing: 1px;">
-            <span>⚡</span> 6 CANCHAS - RESERVA ONLINE 24/7
+            <p class="text-white-50 mb-4" style="max-width: 520px; font-size: 0.95rem; line-height: 1.5;">
+                Devportes pone a tu disposición 6 canchas de fútbol, pádel, tenis, básquet y vóley. Sin llamadas, sin esperas — reserva online y llega a jugar.
+            </p>
+
+            <div class="d-flex flex-column flex-sm-row gap-3 text-nowrap">
+                <a href="#canchas" class="btn btn-light text-dark fw-bold px-4 py-2.5 rounded-pill d-flex align-items-center justify-content-center gap-2"
+                   style="font-size: 0.9rem; transition: all 0.2s;"
+                   onmouseover="this.style.backgroundColor='#40b622'; this.style.color='#ffffff'; this.style.borderColor='#40b622';"
+                   onmouseout="this.style.backgroundColor='#ffffff'; this.style.color='#1c1c1c'; this.style.borderColor='#ffffff';">
+                    Ver nuestras canchas <span style="font-size: 1.1rem;">&rarr;</span>
+                </a>
+
+                <a href="#proceso" class="btn btn-outline-light fw-medium px-4 py-2.5 rounded-pill d-flex align-items-center justify-content-center"
+                   style="font-size: 0.9rem; background-color: rgba(28, 28, 28, 0.3); border-color: rgba(255, 255, 255, 0.25); transition: all 0.2s;"
+                   onmouseover="this.style.backgroundColor='rgba(255,255,255,0.15)';"
+                   onmouseout="this.style.backgroundColor='rgba(28, 28, 28, 0.3)';">
+                    ¿Cómo funciona?
+                </a>
+            </div>
         </div>
 
-        <!-- Título de Impacto (Mayúsculas y Extra Bold) -->
-        <h1 class="display-3 fw-black text-uppercase mb-3 tracking-tight"
-            style="font-weight: 900; max-width: 650px; line-height: 1.05; letter-spacing: -1px;">
-            Reserva tu<br>cancha en<br>segundos
-        </h1>
-
-        <!-- Subtítulo descriptivo -->
-        <p class="text-white-50 mb-4" style="max-width: 520px; font-size: 0.95rem; line-height: 1.5;">
-            Devportes pone a tu disposición 6 canchas de fútbol, pádel, tenis, básquet y vóley. Sin llamadas, sin esperas — reserva online y llega a jugar.
-        </p>
-
-        <!-- Botones de Acción Integrados -->
-        <div class="d-flex flex-column flex-sm-row gap-3 text-nowrap">
-            <!-- Botón Blanco Principal con Flecha -->
-            <a href="#" class="btn btn-light text-dark fw-bold px-4 py-2.5 rounded-pill d-flex align-items-center justify-content-center gap-2" style="font-size: 0.9rem;">
-                Ver nuestras canchas <span style="font-size: 1.1rem;">&rarr;</span>
-            </a>
-            <!-- Botón Transparente con Borde Suave -->
-            <a href="#" class="btn btn-outline-light fw-medium px-4 py-2.5 rounded-pill d-flex align-items-center justify-content-center"
-               style="font-size: 0.9rem; background-color: rgba(28, 28, 28, 0.3); border-color: rgba(255, 255, 255, 0.25);">
-                ¿Cómo funciona?
-            </a>
+        <div class="w-100 py-3 border-top border-white border-opacity-10" style="background-color: #1c1c1c;">
+            <div class="container-fluid px-lg-5">
+                <div class="row text-center gy-3 my-1">
+                    <div class="col-6 col-md-3 border-end border-white border-opacity-10">
+                        <div class="fw-bold fs-4 text-white">6</div>
+                        <div class="text-white-50 text-uppercase small" style="font-size: 0.65rem; letter-spacing: 1px;">Canchas Propias</div>
+                    </div>
+                    <div class="col-6 col-md-3 border-md-end border-white border-opacity-10">
+                        <div class="fw-bold fs-4 text-white">5 deportes</div>
+                        <div class="text-white-50 text-uppercase small" style="font-size: 0.65rem; letter-spacing: 1px;">Disciplinas Disponibles</div>
+                    </div>
+                    <div class="col-6 col-md-3 border-end border-white border-opacity-10">
+                        <div class="fw-bold fs-4 text-white">4.9★</div>
+                        <div class="text-white-50 text-uppercase small" style="font-size: 0.65rem; letter-spacing: 1px;">Calificación Promedio</div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="fw-bold fs-4 text-white">24/7</div>
+                        <div class="text-white-50 text-uppercase small" style="font-size: 0.65rem; letter-spacing: 1px;">Reserva Online</div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
+    
+    <section id="nosotros" class="py-5 text-white" style="background-color: #000000;">
+        <div class="container py-5">
+            <div class="row align-items-center gy-5">
 
-    <!-- BARRA INFERIOR DE MÉTRICAS (Fondo Negro Carbón #1c1c1c) -->
-    <div class="w-100 py-3 border-top border-white border-opacity-10" style="background-color: #1c1c1c;">
-        <div class="container-fluid px-lg-5">
-            <div class="row text-center gy-3 my-1">
+                <header class="col-12 col-lg-6 blockquote mb-0">
+                    <h2 class="display-5 fw-bold mb-4" style="letter-spacing: -1px; line-height: 1.15; color: #ffffff;">
+                        El complejo deportivo que estabas buscando
+                    </h2>
+                    <p class="text-white-50 mb-3" style="font-size: 0.95rem; line-height: 1.6; max-width: 500px;">
+                        Devportes es un complejo deportivo con 5 canchas propias, diseñado para que jugadores de todos los niveles tengan un espacio de calidad donde practicar su deporte favorito.
+                    </p>
+                    <p class="text-white-50 mb-4" style="font-size: 0.95rem; line-height: 1.6; max-width: 500px;">
+                        Contamos con instalaciones modernas, bien mantenidas y con todo lo que necesitas para un partido perfecto: vestuarios, parqueadero, iluminación nocturna y atención personalizada.
+                    </p>
 
-                <!-- Métrica 1 -->
-                <div class="col-6 col-md-3 border-end border-white border-opacity-10">
-                    <div class="fw-bold fs-4 text-white">6</div>
-                    <div class="text-white-50 text-uppercase small" style="font-size: 0.65rem; letter-spacing: 1px;">Canchas Propias</div>
+                    <div class="d-flex align-items-center gap-2 text-white-50 pt-2" style="font-size: 0.85rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt text-secondary" viewBox="0 0 16 16">
+                            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.304 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"/>
+                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                        </svg>
+                        <span>Calle 45 #23-10, Bogotá</span>
+                    </div>
+                </header>
+
+                <div class="col-12 col-lg-6">
+                    <div class="row row-cols-1 row-cols-sm-2 g-3">
+
+                        <article class="col">
+                            <div class="p-4 rounded-4 border border-secondary border-opacity-10 h-100"
+                                 style="background-color: #141414; transition: all 0.2s;"
+                                 onmouseover="this.style.backgroundColor='#1c1c1c'; this.style.borderColor='rgba(64,182,34,0.3)';"
+                                 onmouseout="this.style.backgroundColor='#141414'; this.style.borderColor='rgba(255,255,255,0.1)';">
+                                <span class="d-block display-6 fw-bold mb-1" style="color: #ffffff;">6</span>
+                                <h3 class="h6 fw-bold mb-1" style="color: #ffffff;">Canchas propias</h3>
+                                <p class="text-white-50 m-0 small" style="font-size: 0.75rem;">Fútbol, pádel, tenis, básquet y vóley</p>
+                            </div>
+                        </article>
+
+                        <article class="col">
+                            <div class="p-4 rounded-4 border border-secondary border-opacity-10 h-100"
+                                 style="background-color: #141414; transition: all 0.2s;"
+                                 onmouseover="this.style.backgroundColor='#1c1c1c'; this.style.borderColor='rgba(64,182,34,0.3)';"
+                                 onmouseout="this.style.backgroundColor='#141414'; this.style.borderColor='rgba(255,255,255,0.1)';">
+                                <span class="d-block display-6 fw-bold mb-1" style="color: #ffffff;">+500</span>
+                                <h3 class="h6 fw-bold mb-1" style="color: #ffffff;">Partidos al mes</h3>
+                                <p class="text-white-50 m-0 small" style="font-size: 0.75rem;">Reservas confirmadas mensualmente</p>
+                            </div>
+                        </article>
+
+                        <article class="col">
+                            <div class="p-4 rounded-4 border border-secondary border-opacity-10 h-100"
+                                 style="background-color: #141414; transition: all 0.2s;"
+                                 onmouseover="this.style.backgroundColor='#1c1c1c'; this.style.borderColor='rgba(64,182,34,0.3)';"
+                                 onmouseout="this.style.backgroundColor='#141414'; this.style.borderColor='rgba(255,255,255,0.1)';">
+                                <span class="d-block display-6 fw-bold mb-1" style="color: #ffffff;">4.9★</span>
+                                <h3 class="h6 fw-bold mb-1" style="color: #ffffff;">Calificación</h3>
+                                <p class="text-white-50 m-0 small" style="font-size: 0.75rem;">Promedio de todos nuestros usuarios</p>
+                            </div>
+                        </article>
+
+                        <article class="col">
+                            <div class="p-4 rounded-4 border border-secondary border-opacity-10 h-100"
+                                 style="background-color: #141414; transition: all 0.2s;"
+                                 onmouseover="this.style.backgroundColor='#1c1c1c'; this.style.borderColor='rgba(64,182,34,0.3)';"
+                                 onmouseout="this.style.backgroundColor='#141414'; this.style.borderColor='rgba(255,255,255,0.1)';">
+                                <span class="d-block display-6 fw-bold mb-1" style="color: #ffffff;">2019</span>
+                                <h3 class="h6 fw-bold mb-1" style="color: #ffffff;">Fundados en</h3>
+                                <p class="text-white-50 m-0 small" style="font-size: 0.75rem;">Más de 5 años en el deporte local</p>
+                            </div>
+                        </article>
+
+                    </div>
                 </div>
 
-                <!-- Métrica 2 -->
-                <div class="col-6 col-md-3 border-md-end border-white border-opacity-10">
-                    <div class="fw-bold fs-4 text-white">5 deportes</div>
-                    <div class="text-white-50 text-uppercase small" style="font-size: 0.65rem; letter-spacing: 1px;">Disciplinas Disponibles</div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="proceso" class="py-5" style="background-color: #f8f9fa;">
+        <div class="container py-5">
+
+            <header class="text-center mb-5">
+                    <span class="d-block text-uppercase fw-bold text-secondary mb-1" style="font-size: 0.75rem; letter-spacing: 2px;">
+                        Proceso
+                    </span>
+                <h2 class="display-6 fw-bold text-dark" style="font-weight: 800; letter-spacing: -0.5px;">
+                    Reserva en 3 pasos
+                </h2>
+            </header>
+
+            <div class="row row-cols-1 row-cols-md-3 g-4 mb-4">
+
+                <article class="col">
+                    <div class="card h-100 bg-white border-0 shadow-sm p-4 rounded-4" style="transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <div class="d-flex align-items-center gap-2 mb-4">
+                            <span class="badge text-white px-2.5 py-1.5 rounded-3 fw-bold fs-6" style="background-color: #000000;">01</span>
+                            <span class="fs-4">📅</span>
+                        </div>
+                        <h3 class="h5 fw-bold mb-2 text-dark">Elige tu cancha</h3>
+                        <p class="text-secondary small mb-0" style="line-height: 1.5; font-size: 0.85rem;">
+                            Revisa nuestras 5 canchas, sus precios, horarios disponibles y servicios incluidos.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="col">
+                    <div class="card h-100 bg-white border-0 shadow-sm p-4 rounded-4" style="transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <div class="d-flex align-items-center gap-2 mb-4">
+                            <span class="badge text-white px-2.5 py-1.5 rounded-3 fw-bold fs-6" style="background-color: #000000;">02</span>
+                            <span class="fs-4">🕒</span>
+                        </div>
+                        <h3 class="h5 fw-bold mb-2 text-dark">Selecciona el horario</h3>
+                        <p class="text-secondary small mb-0" style="line-height: 1.5; font-size: 0.85rem;">
+                            Escoge la fecha y la hora que mejor te quede. Disponibilidad en tiempo real.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="col">
+                    <div class="card h-100 bg-white border-0 shadow-sm p-4 rounded-4" style="transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <div class="d-flex align-items-center gap-2 mb-4">
+                            <span class="badge text-white px-2.5 py-1.5 rounded-3 fw-bold fs-6" style="background-color: #000000;">03</span>
+                            <span class="fs-4">😊</span>
+                        </div>
+                        <h3 class="h5 fw-bold mb-2 text-dark">¡Llega y juega!</h3>
+                        <p class="text-secondary small mb-0" style="line-height: 1.5; font-size: 0.85rem;">
+                            Recibe tu código de confirmación y preséntate en el complejo. Nosotros nos encargamos del resto.
+                        </p>
+                    </div>
+                </article>
+
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-3 g-3">
+
+                <div class="col">
+                    <div class="bg-white border-0 shadow-sm rounded-4 p-3 d-flex align-items-center gap-3">
+                        <div class="d-flex align-items-center justify-content-center text-secondary opacity-75 fs-4" style="width: 40px; height: 40px;">
+                            🛡️
+                        </div>
+                        <div>
+                            <h4 class="m-0 fw-bold text-dark" style="font-size: 0.85rem;">Reserva 100% segura</h4>
+                            <p class="m-0 text-secondary small" style="font-size: 0.75rem;">Tu reserva queda registrada al instante</p>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Métrica 3 -->
-                <div class="col-6 col-md-3 border-end border-white border-opacity-10">
-                    <div class="fw-bold fs-4 text-white">4.9★</div>
-                    <div class="text-white-50 text-uppercase small" style="font-size: 0.65rem; letter-spacing: 1px;">Calificación Promedio</div>
+                <div class="col">
+                    <div class="bg-white border-0 shadow-sm rounded-4 p-3 d-flex align-items-center gap-3">
+                        <div class="d-flex align-items-center justify-content-center text-secondary opacity-75 fs-4" style="width: 40px; height: 40px;">
+                            ⏱️
+                        </div>
+                        <div>
+                            <h4 class="m-0 fw-bold text-dark" style="font-size: 0.85rem;">Sin tiempos de espera</h4>
+                            <p class="m-0 text-secondary small" style="font-size: 0.75rem;">Sin llamadas, sin filas, sin complicaciones</p>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Métrica 4 -->
-                <div class="col-6 col-md-3">
-                    <div class="fw-bold fs-4 text-white">24/7</div>
-                    <div class="text-white-50 text-uppercase small" style="font-size: 0.65rem; letter-spacing: 1px;">Reserva Online</div>
+                <div class="col">
+                    <div class="bg-white border-0 shadow-sm rounded-4 p-3 d-flex align-items-center gap-3">
+                        <div class="d-flex align-items-center justify-content-center text-secondary opacity-75 fs-4" style="width: 40px; height: 40px;">
+                            📍
+                        </div>
+                        <div>
+                            <h4 class="m-0 fw-bold text-dark" style="font-size: 0.85rem;">Fácil de llegar</h4>
+                            <p class="m-0 text-secondary small" style="font-size: 0.75rem;">Ubicados en zona céntrica con parqueadero</p>
+                        </div>
+                    </div>
                 </div>
 
+            </div>
+
+        </div>
+    </section>
+    
+    <section class="py-5 bg-white" id="instalaciones">
+        <div class="container py-4">
+
+            <!-- Encabezado de la Sección -->
+            <header class="text-center mb-5">
+            <span class="d-block text-uppercase fw-bold text-secondary mb-1" style="font-size: 0.75rem; letter-spacing: 2px;">
+                Instalaciones
+            </span>
+                <h2 class="display-6 fw-bold text-dark" style="font-weight: 800; letter-spacing: -0.5px;">
+                    Conoce nuestras canchas
+                </h2>
+                <p class="text-secondary mx-auto mt-2 mb-0" style="max-width: 600px; font-size: 0.95rem;">
+                    Espacios modernos, bien mantenidos y listos para que disfrutes tu deporte favorito.
+                </p>
+            </header>
+            
+            <div class="row g-3 align-items-stretch">
+                
+                <article class="col-12 col-md-5 d-flex">
+                    <div class="w-100 position-relative overflow-hidden rounded-4 shadow-sm"
+                         style="cursor: pointer; min-height: 400px;"
+                         data-bs-toggle="modal"
+                         data-bs-target="#modalCancha1">
+                        <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80"
+                             alt="Cancha de Fútbol Principal" class="w-100 h-100 position-absolute"
+                             style="object-fit: cover; transition: all 0.3s ease;"
+                             onmouseover="this.style.transform='scale(1.04)'; this.style.filter='brightness(0.85)';"
+                             onmouseout="this.style.transform='scale(1)'; this.style.filter='brightness(1)';" />
+                    </div>
+                </article>
+                
+                <div class="col-12 col-md-7">
+                    <div class="row g-3">
+
+                        <article class="col-6">
+                            <div class="position-relative overflow-hidden rounded-4 shadow-sm"
+                                 style="cursor: pointer; height: 195px;"
+                                 data-bs-toggle="modal"
+                                 data-bs-target="#modalCancha2">
+                                <img src="https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format&fit=crop&w=600&q=80"
+                                     alt="Coliseo Cubierto" class="w-100 h-100"
+                                     style="object-fit: cover; transition: all 0.3s ease;"
+                                     onmouseover="this.style.transform='scale(1.04)'; this.style.filter='brightness(0.85)';"
+                                     onmouseout="this.style.transform='scale(1)'; this.style.filter='brightness(1)';" />
+                            </div>
+                        </article>
+                        <article class="col-6">
+                            <div class="position-relative overflow-hidden rounded-4 shadow-sm"
+                                 style="cursor: pointer; height: 195px;"
+                                 data-bs-toggle="modal"
+                                 data-bs-target="#modalCancha3">
+                                <img src="https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?auto=format&fit=crop&w=600&q=80"
+                                     alt="Cancha de Tenis" class="w-100 h-100"
+                                     style="object-fit: cover; transition: all 0.3s ease;"
+                                     onmouseover="this.style.transform='scale(1.04)'; this.style.filter='brightness(0.85)';"
+                                     onmouseout="this.style.transform='scale(1)'; this.style.filter='brightness(1)';" />
+                            </div>
+                        </article>
+                        <article class="col-6">
+                            <div class="position-relative overflow-hidden rounded-4 shadow-sm"
+                                 style="cursor: pointer; height: 195px;"
+                                 data-bs-toggle="modal"
+                                 data-bs-target="#modalCancha4">
+                                <img src="https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format&fit=crop&w=600&q=80"
+                                     alt="Cancha de Pádel" class="w-100 h-100"
+                                     style="object-fit: cover; transition: all 0.3s ease;"
+                                     onmouseover="this.style.transform='scale(1.04)'; this.style.filter='brightness(0.85)';"
+                                     onmouseout="this.style.transform='scale(1)'; this.style.filter='brightness(1)';" />
+                            </div>
+                        </article>
+                        <article class="col-6">
+                            <div class="position-relative overflow-hidden rounded-4 shadow-sm"
+                                 style="cursor: pointer; height: 195px;"
+                                 data-bs-toggle="modal"
+                                 data-bs-target="#modalCancha5">
+                                <img src="https://images.unsplash.com/photo-1781786501670-82355e5b12c4?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                     alt="Cancha de Básquet de Entrenamiento" class="w-100 h-100"
+                                     style="object-fit: cover; filter: grayscale(100%); transition: all 0.3s ease;"
+                                     onmouseover="this.style.transform='scale(1.04)'; this.style.filter='grayscale(100%) brightness(0.85)';"
+                                     onmouseout="this.style.transform='scale(1)'; this.style.filter='grayscale(100%) brightness(1)';" />
+                            </div>
+                        </article>
+
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5">
+                <a href="#proceso" class="btn px-4 py-2.5 rounded-pill fw-bold text-white d-inline-flex align-items-center gap-2"
+                   style="background-color: #1c1c1c; font-size: 0.9rem; transition: all 0.2s;"
+                   onmouseover="this.style.backgroundColor='#40b622';"
+                   onmouseout="this.style.backgroundColor='#1c1c1c';">
+                    Reservar una cancha <span>&rarr;</span>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<div class="modal fade" id="modalCancha1" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 rounded-4 overflow-hidden">
+            <div class="modal-body p-0">
+                <div class="row g-0">
+                    <div class="col-12 col-md-5 bg-dark">
+                        <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80" class="w-100 h-100" style="object-fit: cover; min-height: 250px;" alt="Cancha 1">
+                    </div>
+                    <div class="col-12 col-md-7 p-4 bg-white d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h3 class="h4 fw-bold text-dark m-0">Estadio Principal - Fútbol 11</h3>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <span class="badge mb-3 text-white px-2.5 py-1" style="background-color: #216e2a;">Grama Natural Pro</span>
+                            <p class="text-secondary small mb-4" style="line-height: 1.6;">
+                                Nuestra joya del complejo. Una cancha con medidas oficiales óptima para partidos grandes de 11 contra 11. Cuenta con drenaje profesional de alta velocidad e iluminación LED de nivel de torneo para partidos nocturnos impecables.
+                            </p>
+                            <ul class="list-unstyled small text-dark mb-4">
+                                <li class="mb-2">✔️ Capacidad ideal: 22 jugadores</li>
+                                <li class="mb-2">✔️ Graderías laterales para acompañantes</li>
+                                <li class="mb-2">✔️ Incluye petos de entrenamiento y balones oficiales</li>
+                            </ul>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                            <div>
+                                <span class="text-secondary d-block small">Precio por Hora</span>
+                                <span class="fw-bold fs-4 text-dark">$60.000</span>
+                            </div>
+                            <button class="btn text-white fw-bold px-4 py-2 rounded-pill" style="background-color: #40b622;" data-bs-dismiss="modal">Reservar este espacio</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
+<div class="modal fade" id="modalCancha2" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 rounded-4 overflow-hidden">
+            <div class="modal-body p-0">
+                <div class="row g-0">
+                    <div class="col-12 col-md-5 bg-dark">
+                        <img src="https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format&fit=crop&w=600&q=80" class="w-100 h-100" style="object-fit: cover; min-height: 250px;" alt="Cancha 2">
+                    </div>
+                    <div class="col-12 col-md-7 p-4 bg-white d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h3 class="h4 fw-bold text-dark m-0">Coliseo Multi-deporte Cubierto</h3>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <span class="badge mb-3 text-white px-2.5 py-1" style="background-color: #224330;">Madera Pulida / PVC</span>
+                            <p class="text-secondary small mb-4" style="line-height: 1.6;">
+                                Espacio totalmente techado y protegido del clima. Su suelo amortiguado reduce el impacto en las articulaciones. Ideal tanto para fútbol de salón (fútsal) como para intensos partidos de baloncesto o vóley.
+                            </p>
+                            <ul class="list-unstyled small text-dark mb-4">
+                                <li class="mb-2">✔️ Tableros de baloncesto hidráulicos ajustables</li>
+                                <li class="mb-2">✔️ Excelente ventilación e iluminación cenital</li>
+                                <li class="mb-2">✔️ Arcos de fútsal con mallas reforzadas</li>
+                            </ul>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                            <div>
+                                <span class="text-secondary d-block small">Precio por Hora</span>
+                                <span class="fw-bold fs-4 text-dark">$45.000</span>
+                            </div>
+                            <button class="btn text-white fw-bold px-4 py-2 rounded-pill" style="background-color: #40b622;" data-bs-dismiss="modal">Reservar este espacio</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<footer class="bg-brand-dark text-white py-4 border-top border-4" style="border-color: #224330 !important;">
+<div class="modal fade" id="modalCancha3" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 rounded-4 overflow-hidden">
+            <div class="modal-body p-0">
+                <div class="row g-0">
+                    <div class="col-12 col-md-5 bg-dark">
+                        <img src="https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?auto=format&fit=crop&w=600&q=80" class="w-100 h-100" style="object-fit: cover; min-height: 250px;" alt="Cancha 3">
+                    </div>
+                    <div class="col-12 col-md-7 p-4 bg-white d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h3 class="h4 fw-bold text-dark m-0">Cancha de Tenis - Pista Rápida</h3>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <span class="badge mb-3 text-white px-2.5 py-1" style="background-color: #216e2a;">Superficie Sintética Rápida</span>
+                            <p class="text-secondary small mb-4" style="line-height: 1.6;">
+                                Diseñada para amantes de la velocidad y precisión. Malla tensada reglamentaria con líneas nítidas. Perfecta para singles competitivos o partidos dinámicos de dobles.
+                            </p>
+                            <ul class="list-unstyled small text-dark mb-4">
+                                <li class="mb-2">✔️ Excelente rebote controlado de bola</li>
+                                <li class="mb-2">✔️ Entorno libre de ruidos disruptivos</li>
+                                <li class="mb-2">✔️ Alquiler disponible de raquetas y tubos de bolas</li>
+                            </ul>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                            <div>
+                                <span class="text-secondary d-block small">Precio por Hora</span>
+                                <span class="fw-bold fs-4 text-dark">$35.000</span>
+                            </div>
+                            <button class="btn text-white fw-bold px-4 py-2 rounded-pill" style="background-color: #40b622;" data-bs-dismiss="modal">Reservar este espacio</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalCancha4" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 rounded-4 overflow-hidden">
+            <div class="modal-body p-0">
+                <div class="row g-0">
+                    <div class="col-12 col-md-5 bg-dark">
+                        <img src="https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format&fit=crop&w=600&q=80" class="w-100 h-100" style="object-fit: cover; min-height: 250px;" alt="Cancha 4">
+                    </div>
+                    <div class="col-12 col-md-7 p-4 bg-white d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h3 class="h4 fw-bold text-dark m-0">Cancha de Pádel Azul Celeste</h3>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <span class="badge mb-3 text-white px-2.5 py-1" style="background-color: #1c1c1c;">Vidrio Templado Panorámico</span>
+                            <p class="text-secondary small mb-4" style="line-height: 1.6;">
+                                Disfruta del deporte con mayor crecimiento mundial en una cancha de especificaciones profesionales. Alfombra azul texturizada de última generación que evita resbalones indeseados y paredes de cristal templado perfectas para rebotes limpios.
+                            </p>
+                            <ul class="list-unstyled small text-dark mb-4">
+                                <li class="mb-2">✔️ Estructura panorámica de alta visibilidad</li>
+                                <li class="mb-2">✔️ Iluminación LED antideslumbrante orientada al cielo</li>
+                                <li class="mb-2">✔️ Zona de descanso integrada para hidratación</li>
+                            </ul>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                            <div>
+                                <span class="text-secondary d-block small">Precio por Hora</span>
+                                <span class="fw-bold fs-4 text-dark">$40.000</span>
+                            </div>
+                            <button class="btn text-white fw-bold px-4 py-2 rounded-pill" style="background-color: #40b622;" data-bs-dismiss="modal">Reservar este espacio</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalCancha5" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 rounded-4 overflow-hidden">
+            <div class="modal-body p-0">
+                <div class="row g-0">
+                    <div class="col-12 col-md-5 bg-dark">
+                        <img src="https://images.unsplash.com/photo-1781786501670-82355e5b12c4?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="w-100 h-100" style="object-fit: cover; min-height: 250px;" alt="Cancha 5">
+                    </div>
+                    <div class="col-12 col-md-7 p-4 bg-white d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h3 class="h4 fw-bold text-dark m-0">Espacio de Entrenamiento Indoor</h3>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <span class="badge mb-3 text-white px-2.5 py-1" style="background-color: #224330;">Piso de Concreto Pulido Técnico</span>
+                            <p class="text-secondary small mb-4" style="line-height: 1.6;">
+                                Diseñada especialmente para sesiones enfocadas en la técnica, lanzamientos individuales, entrenamientos personalizados o partidos informales de formato 3x3. Un entorno minimalista y tranquilo para pulir tus habilidades.
+                            </p>
+                            <ul class="list-unstyled small text-dark mb-4">
+                                <li class="mb-2">✔️ Excelente acústica y concentración</li>
+                                <li class="mb-2">✔️ Redes de aro en nylon de alta densidad</li>
+                                <li class="mb-2">✔️ Ideal para prácticas libres o rutinas físicas</li>
+                            </ul>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                            <div>
+                                <span class="text-secondary d-block small">Precio por Hora</span>
+                                <span class="fw-bold fs-4 text-dark">$25.000</span>
+                            </div>
+                            <button class="btn text-white fw-bold px-4 py-2 rounded-pill" style="background-color: #40b622;" data-bs-dismiss="modal">Reservar este espacio</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="text-white py-4 border-top border-4 mt-auto" style="background-color: #1c1c1c !important; border-color: #224330 !important;">
     <div class="container-fluid px-lg-5">
         <div class="row align-items-center justify-content-between gy-3">
 
@@ -183,31 +608,33 @@
                         DEV<span class="fw-bold" style="color: #40b622;">PORTES</span>
                     </span>
             </div>
+
             <div class="col-12 col-md-auto">
                 <ul class="list-unstyled d-flex flex-wrap justify-content-center justify-content-md-end gap-4 m-0 p-0 fw-medium" style="font-size: 0.9rem;">
                     <li>
-                        <a href="#" class="footer-link">Inicio</a>
+                        <a href="#" class="text-decoration-none" style="color: #a3a3a3; transition: color 0.2s;" onmouseover="this.style.color='#40b622'" onmouseout="this.style.color='#a3a3a3'">Inicio</a>
                     </li>
                     <li>
-                        <a href="#" class="footer-link">Términos y Condiciones</a>
+                        <a href="#" class="text-decoration-none" style="color: #a3a3a3; transition: color 0.2s;" onmouseover="this.style.color='#40b622'" onmouseout="this.style.color='#a3a3a3'">Términos y Condiciones</a>
                     </li>
                     <li>
-                        <a href="#" class="footer-link">Política de Privacidad</a>
+                        <a href="#" class="text-decoration-none" style="color: #a3a3a3; transition: color 0.2s;" onmouseover="this.style.color='#40b622'" onmouseout="this.style.color='#a3a3a3'">Política de Privacidad</a>
                     </li>
                     <li>
-                        <a href="#" class="footer-link">Soporte</a>
+                        <a href="#" class="text-decoration-none" style="color: #a3a3a3; transition: color 0.2s;" onmouseover="this.style.color='#40b622'" onmouseout="this.style.color='#a3a3a3'">Soporte</a>
                     </li>
                 </ul>
             </div>
+
         </div>
-        <div class="row mt-4 pt-3 border-top border-secondary border-opacity-10 text-center text-md-start">
+
+        <div class="row mt-4 pt-3 border-top border-white border-opacity-10 text-center text-md-start">
             <div class="col-12">
-                <p class="m-0 small text-secondary opacity-50">&copy; 2026 DEVPORTES. Todos los derechos reservados.</p>
+                <p class="m-0 small text-white-50 opacity-50">&copy; 2026 DEVPORTES. Todos los derechos reservados.</p>
             </div>
         </div>
     </div>
 </footer>
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

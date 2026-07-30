@@ -1,141 +1,101 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevPortes - Nosotros</title>
-
-    <!-- 1. CDN de Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- 2. Configuración de tu paleta de colores corporativa -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brandGreen: '#40b622',
-                        brandDarkGreen: '#224330',
-                        brandMidGreen: '#216e2a',
-                        brandDark: '#1c1c1c',
-                    }
-                }
-            }
-        }
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/views/index.css">
 </head>
-<body class="bg-gray-50 flex flex-col min-h-screen font-sans">
-
-<!-- BARRA DE NAVEGACIÓN -->
-<nav class="bg-white py-3 border-t-4 border-brandGreen shadow-sm relative z-50">
-    <div class="w-full px-4 lg:px-12 flex flex-wrap items-center justify-between">
-
-        <!-- Logo Principal -->
-        <a class="flex items-center gap-2" href="#">
-            <div class="text-white flex items-center justify-center rounded-lg font-bold w-[38px] h-[38px] text-lg bg-brandDarkGreen">
+<body>
+<!-- Menú de navgación stilizado para pantallas de PC y Celular -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top py-3 border-top border-4 border-brand-green shadow-sm">
+    <div class="container-fluid px-3 px-lg-5">
+        <a class="navbar-brand d-flex align-items-center gap-2 m-0" href="../index.html">
+            <div class="text-white d-flex align-items-center justify-content-center rounded-3 fw-bold logo-box">
                 D
             </div>
-            <span class="text-xl font-black tracking-tight text-brandDark">
-                    DEV<span class="font-bold text-brandMidGreen">PORTES</span>
-                </span>
-        </a>
+            <span class="fs-5 fw-black text-brand-dark tracking-tight">
+                DEV<span class="fw-bold text-brand-mid-green">PORTES</span>
+            </span> </a>
 
-        <!-- Botón Hamburguesa Móvil (Vinculado a tu script.js) -->
-        <button id="menuToggle" type="button" class="lg:hidden inline-flex items-center justify-center p-2 rounded-md text-brandDark hover:text-brandGreen focus:outline-none" aria-label="Abrir menú">
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        <button
+                class="navbar-toggler p-2 text-secondary border-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <svg class="bi bi-list" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                <path
+                        fill-rule="evenodd"
+                        d="M2.5 12.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1zm0-4a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1zm0-4a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1z"/>
             </svg>
         </button>
 
-        <!-- Contenedor de Enlaces y Acciones -->
-        <div id="navbarMenu" class="hidden w-full lg:flex lg:flex-1 lg:items-center lg:justify-between lg:ml-8 mt-4 lg:mt-0 transition-all duration-300">
-
-            <!-- Menú de Enlaces -->
-            <ul class="flex flex-col lg:flex-row lg:mx-auto gap-4 items-center text-center my-4 lg:my-0">
-                <li>
-                    <a class="text-brandDark font-medium px-2 py-1 hover:text-brandGreen transition-colors duration-200" href="#">
-                        Nuestras Canchas
-                    </a>
+        <div class="collapse navbar-collapse mt-4 mt-lg-0 justify-content-lg-between" id="navbarMenu">
+            <ul class="navbar-nav mx-auto gap-lg-2 text-center my-3 my-lg-0 px-lg-4 text-nowrap">
+                <li class="nav-item">
+                    <a class="nav-link fw-bold text-brand-mid-green px-2" href="#canchas">Nuestras Canchas</a>
                 </li>
-                <li>
-                    <!-- Link Activo (Nosotros) -->
-                    <a class="text-brandMidGreen font-bold px-2 py-1" href="#">
-                        Nosotros
-                    </a>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-custom transition-base px-2" href="./pages/nosotros.html">Nosotros</a>
                 </li>
-                <li>
-                    <a class="text-brandDark font-medium px-2 py-1 hover:text-brandGreen transition-colors duration-200" href="#">
-                        ¿Cómo funciona?
-                    </a>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-custom transition-base px-2" href="#proceso">¿Cómo funciona?</a>
                 </li>
-                <li>
-                    <a class="text-brandDark font-medium px-2 py-1 hover:text-brandGreen transition-colors duration-200" href="#">
-                        Galería
-                    </a>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-custom transition-base px-2" href="#">Galería</a>
                 </li>
             </ul>
 
-            <!-- Botones de Acción -->
-            <div class="flex flex-col lg:flex-row items-center gap-3 w-full lg:w-auto">
-                <a href="#" class="px-4 py-2 rounded-xl font-medium w-full lg:w-auto text-center border border-brandDark text-brandDark bg-transparent hover:text-white hover:bg-brandDarkGreen hover:border-brandDarkGreen transition-all duration-200 whitespace-nowrap">
-                    Iniciar Sesión
-                </a>
-                <a href="#" class="px-4 py-2 rounded-full font-bold flex items-center justify-center gap-2 w-full lg:w-auto text-center bg-brandGreen text-white hover:bg-brandMidGreen transition-all duration-200 whitespace-nowrap">
-                    Reservar Ahora <span>&rarr;</span>
-                </a>
+            <div class="d-grid d-lg-flex align-items-center gap-3">
+                <a href="#" class="btn btn-outline-custom rounded-3 px-4 py-2 text-nowrap transition-base"> Iniciar
+                    Sesión </a> <a
+                    href="#"
+                    class="btn btn-brand rounded-pill px-4 py-2 d-flex align-items-center justify-content-center gap-2 text-nowrap transition-base">
+                Reservar Ahora <span>&rarr;</span> </a>
             </div>
-
         </div>
     </div>
 </nav>
-
-<!-- CONTENIDO PRINCIPAL DE LA PÁGINA -->
-<main class="flex-grow py-12 my-12 text-center text-gray-500">
-    <p class="text-lg">[ El contenido de tu página va en esta sección ]</p>
-</main>
-
-<!-- PIE DE PÁGINA (FOOTER) -->
-<footer class="bg-brandDark text-white py-6 border-t-4 border-brandDarkGreen mt-auto">
-    <div class="w-full px-4 lg:px-12">
-        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-            <!-- Logo Footer -->
-            <div class="flex items-center justify-center md:justify-start gap-2">
-                <div class="text-white flex items-center justify-center rounded-lg font-bold w-[38px] h-[38px] text-lg bg-brandDarkGreen">
+<footer class="py-3 border-top border-4 border-brand-green mt-auto bg-brand-dark">
+    <div class="container-fluid px-3 px-lg-5">
+        <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3">
+            <div class="d-flex align-items-center gap-2">
+                <div class="d-flex align-items-center justify-content-center rounded-3 fw-bold footer-logo-box">
                     D
                 </div>
-                <span class="text-xl font-black tracking-tight text-white">
-                        DEV<span class="font-bold text-brandGreen">PORTES</span>
-                    </span>
+                <span class="fs-6 text-white m-0 tracking-tight" style="font-weight: 900;">
+                    DEVPORTES
+                </span>
             </div>
-
-            <!-- Enlaces Footer -->
-            <div>
-                <ul class="flex flex-wrap justify-center md:justify-end gap-6 font-medium text-sm">
-                    <li>
-                        <a href="#" class="text-gray-400 hover:text-brandGreen transition-colors duration-200">Inicio</a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-gray-400 hover:text-brandGreen transition-colors duration-200">Términos y Condiciones</a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-gray-400 hover:text-brandGreen transition-colors duration-200">Política de Privacidad</a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-gray-400 hover:text-brandGreen transition-colors duration-200">Soporte</a>
-                    </li>
-                </ul>
+            <ul class="nav justify-content-center gap-3 gap-md-4 font-medium small">
+                <li class="nav-item">
+                    <a href="#canchas" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base">Nuestras Canchas</a>
+                </li>
+                <li class="nav-item">
+                    <a href="./pages/nosotros.html" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base">Nosotros</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#proceso" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base">¿Cómo funciona?</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base">Galería</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base">Política de Privacidad</a>
+                </li>
+            </ul>
+            <div class="text-center text-lg-end">
+                <p class="m-0 text-white-50 text-tiny">&copy; 2026 Devportes.</p>
             </div>
         </div>
-
-        <!-- Derechos Reservados -->
-        <div class="mt-6 pt-4 border-t border-white/10 text-center md:text-left">
-            <p class="text-xs text-white/40">&copy; 2026 DEVPORTES. Todos los derechos reservados.</p>
-        </div>
-
     </div>
 </footer>
-
-<!-- 3. Vinculación de tu lógica JS externa al final para controlar la interactividad -->
-<script src="../JS/app.js" defer></script>
+<button id="btnScrollTop" class="btn btn-brand" aria-label="Subir al inicio">
+    <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
+    </svg>
+</button>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../JS/api/views/index.js"></script>
 </body>
 </html>

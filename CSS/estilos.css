@@ -1,0 +1,287 @@
+
+.custom-body {
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+.custom-navbar {
+    border-color: #40b622 !important;
+    z-index: 1030;
+}
+
+.custom-navbar .brand-logo {
+    width: 38px;
+    height: 38px;
+    font-size: 1.2rem;
+    background-color: #224330;
+}
+
+.custom-navbar .brand-text {
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    color: #1c1c1c;
+}
+
+.custom-navbar .brand-text-highlight {
+    color: #216e2a;
+}
+
+.custom-navbar .nav-link-active {
+    color: #216e2a !important;
+}
+
+.custom-navbar .custom-nav-link {
+    color: #1c1c1c !important;
+    transition: color 0.2s;
+}
+
+.custom-navbar .custom-nav-link:hover {
+    color: #40b622 !important;
+}
+
+.custom-navbar .btn-login {
+    color: #1c1c1c;
+    border: 1px solid #1c1c1c;
+    background-color: transparent;
+    transition: all 0.2s ease;
+}
+
+.custom-navbar .btn-login:hover {
+    color: #ffffff;
+    background-color: #224330;
+    border-color: #224330;
+}
+
+.custom-navbar .btn-reserve-now {
+    color: #ffffff;
+    background-color: #40b622;
+    transition: all 0.2s ease;
+}
+
+.custom-navbar .btn-reserve-now:hover {
+    background-color: #216e2a;
+}
+
+.hero-section {
+    min-height: 90vh;
+    background: linear-gradient(rgba(34, 67, 48, 0.65), rgba(28, 28, 28, 0.8)), url('../img/fondo.jpg') center/cover no-repeat;
+}
+
+.hero-section .hero-badge {
+    background-color: rgba(34, 67, 48, 0.6);
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+}
+
+.hero-section .hero-title {
+    font-weight: 900;
+    max-width: 650px;
+    line-height: 1.05;
+    letter-spacing: -1px;
+}
+
+.hero-section .hero-description {
+    max-width: 520px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.hero-section .btn-hero-primary {
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.hero-section .btn-hero-primary:hover {
+    background-color: #40b622;
+    color: #ffffff;
+    border-color: #40b622;
+}
+
+.hero-section .hero-btn-arrow {
+    font-size: 1.1rem;
+}
+
+.hero-section .btn-hero-secondary {
+    font-size: 0.9rem;
+    background-color: rgba(28, 28, 28, 0.3);
+    border-color: rgba(255, 255, 255, 0.25);
+    transition: all 0.2s;
+}
+
+.hero-section .btn-hero-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.hero-section .stats-strip {
+    background-color: #1c1c1c;
+}
+
+.hero-section .stat-label {
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+}
+
+.nosotros-section {
+    background-color: #000000;
+}
+
+.nosotros-section .nosotros-title {
+    letter-spacing: -1px;
+    line-height: 1.15;
+    color: #ffffff;
+}
+
+.nosotros-section .nosotros-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 500px;
+}
+
+.nosotros-section .location-text {
+    font-size: 0.85rem;
+}
+
+/* Tarjetas de Datos Nosotros */
+.nosotros-section .stat-card {
+    background-color: #141414;
+    transition: all 0.2s;
+}
+
+.nosotros-section .stat-card:hover {
+    background-color: #1c1c1c;
+    border-color: rgba(64, 182, 34, 0.3) !important;
+}
+
+.nosotros-section .card-stat-value {
+    color: #ffffff;
+}
+
+.nosotros-section .card-stat-title {
+    color: #ffffff;
+}
+
+.nosotros-section .card-stat-desc {
+    font-size: 0.75rem;
+}
+
+.proceso-section {
+    background-color: #f8f9fa;
+}
+
+.proceso-section .proceso-subtitle {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+}
+
+.proceso-section .proceso-title {
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.proceso-section .step-card {
+    transition: transform 0.2s;
+}
+
+.proceso-section .step-card:hover {
+    transform: translateY(-4px);
+}
+
+.proceso-section .step-badge {
+    background-color: #000000;
+}
+
+.proceso-section .step-text {
+    line-height: 1.5;
+    font-size: 0.85rem;
+}
+
+.proceso-section .info-mini-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.proceso-section .info-mini-title {
+    font-size: 0.85rem;
+}
+
+.proceso-section .info-mini-desc {
+    font-size: 0.75rem;
+}
+
+.instalaciones-subtitle {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+}
+
+.instalaciones-title {
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.instalaciones-desc {
+    max-width: 600px;
+    font-size: 0.95rem;
+}
+
+.gallery-container-large {
+    cursor: pointer;
+    min-height: 400px;
+}
+
+.gallery-container-thumb {
+    cursor: pointer;
+    height: 195px;
+}
+
+.gallery-img-zoom {
+    object-fit: cover;
+    transition: all 0.3s ease;
+}
+
+.gallery-container-large:hover .gallery-img-zoom,
+.gallery-container-thumb:hover .gallery-img-zoom {
+    transform: scale(1.04);
+}
+
+.gallery-container-large:hover .gallery-img-zoom:not(.gallery-img-grayscale),
+.gallery-container-thumb:hover .gallery-img-zoom:not(.gallery-img-grayscale) {
+    filter: brightness(0.85);
+}
+
+.gallery-img-grayscale {
+    filter: grayscale(100%);
+}
+
+.gallery-container-thumb:hover .gallery-img-grayscale {
+    filter: grayscale(100%) brightness(0.85);
+}
+
+.btn-gallery-cta {
+    background-color: #1c1c1c;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-gallery-cta:hover {
+    background-color: #40b622;
+}
+
+.modal-featured-img {
+    object-fit: cover;
+    min-height: 250px;
+}
+
+.modal-desc-text {
+    line-height: 1.6;
+}
+
+.badge-natural-grass {
+    background-color: #216e2a;
+}
+
+.badge-pvc-wood {
+    background-color: #224330;
+}
+
+.btn-modal-reserve {
+    background-color: #40b622;
+}

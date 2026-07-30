@@ -1,4 +1,6 @@
 @import '../global.css';
+
+/* ----------------- Seccion Santiago------------------ */
 .about-santiago {
     min-height: 100vh;
 }
@@ -23,7 +25,7 @@
     border-radius: 10px;
 }
 
-
+/* ----------------- Fin Seccion Santiago ------------------ */
 /* ----------------- Seccion Equipo de Desarrollo ------------------ */
 .cont-info-comple {
     padding-bottom: 2rem;

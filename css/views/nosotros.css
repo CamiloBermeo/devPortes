@@ -229,14 +229,14 @@
     transform: scale(1.05);
 }
 
-.card {
+.card-andres {
     background: #fff;
     border-left: 8px solid #198754;
     box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.15);
     transition: 0.4s;
 }
 
-.card:hover {
+.card-andres:hover {
     transform: translateY(-8px);
     box-shadow: 0px 18px 40px rgba(0, 0, 0, 0.2);
 }

@@ -13,10 +13,6 @@
 .icono-grande {
     font-size: 50px;
 }
-.linea-about {
-    width: 50%; /* o 40%, 50%, etc. */
-    margin: 0 auto;
-}
 .imgEquipo {
     max-width: 25%;
     height: auto;
@@ -26,16 +22,15 @@
 /* ----------------- Seccion Equipo de Desarrollo ------------------ */
 .cont-info-comple {
     padding-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .div-titulo {
     align-items: center;
     text-align: center;
-}
-
-.div-titulo h2 {
-    color: var(--color-texto);
-    font-family: var(--font-principal);
 }
 
 .cont-tarjetas {
@@ -47,7 +42,7 @@
     width: 100%;
     max-width: 15rem;
     min-height: 20rem;
-    margin: 0 auto;
+    margin: 1rem auto;
     perspective: 1000px;
     perspective-origin: center;
 }
@@ -70,7 +65,7 @@
 .cont-tarjetas .card-reves {
     position: absolute;
     inset: 0;
-    width: 100% !important;
+    width: 100%;
     height: 100%;
     backface-visibility: hidden;
     border-radius: 1em;
@@ -148,10 +143,11 @@
 
 .cont-tarjetas .card-reves .badge-group span {
     border: 1px solid rgba(255, 255, 255, 0.35);
-    border-radius: 999px;
     padding: 0.3rem 0.6rem;
     font-size: 0.72rem;
+    border-radius: 999px;
     background: rgba(255, 255, 255, 0.12);
+    justify-content: center;
 }
 
 .cont-tarjetas .card:hover {
@@ -160,7 +156,9 @@
 }
 
 .cont-contactenos {
-    padding: 2em 15em;
+    display: flex;
+    width: 100%;
+    margin-top: 2rem;
 }
 
 .cont-info-contact {
@@ -170,6 +168,7 @@
     gap: 1em;
     border-radius: 1em;
     color: var(--color-fondo);
+    width: 100%;
 }
 
 .btn-vamos {
@@ -188,12 +187,6 @@
 
 /* -------------- seccion vision -------------- */
 
-body {
-    font-family: "Poppins", sans-serif;
-    background: linear-gradient(to bottom, var(--color-fondo), #ffffff);
-    color: #333;
-}
-
 .historia {
     padding: 80px 0;
 }
@@ -204,16 +197,6 @@ body {
     margin-bottom: 35px;
     position: relative;
     text-align: center;
-}
-
-.titulo::after {
-    content: "";
-    width: 120px;
-    height: 5px;
-    background: #198754;
-    display: block;
-    margin: 15px auto 0;
-    border-radius: 50px;
 }
 
 .historia p {
@@ -235,23 +218,16 @@ body {
     transform: scale(1.05);
 }
 
-hr {
-    border: none;
-    height: 2px;
-    background: #d9d9d9;
-    margin: 60px 0;
-}
-
-.card {
+.card-andres {
     background: #fff;
-    border-left: 8px solid #198754 !important;
-    box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.15) !important;
+    border-left: 8px solid #198754;
+    box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.15);
     transition: 0.4s;
 }
 
-.card:hover {
+.card-andres:hover {
     transform: translateY(-8px);
-    box-shadow: 0px 18px 40px rgba(0, 0, 0, 0.2) !important;
+    box-shadow: 0px 18px 40px rgba(0, 0, 0, 0.2);
 }
 
 .frase {
@@ -262,76 +238,12 @@ hr {
     margin: 0;
 }
 
-@media (max-width: 992px) {
-    .titulo {
-        font-size: 3rem !important;
-    }
-
-    .imagen-historia {
-        margin-top: 30px;
-    }
-
-    .frase {
-        font-size: 1.5rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .historia {
-        padding: 50px 15px;
-    }
-
-    .titulo {
-        font-size: 2.3rem !important;
-    }
-
-    .historia p {
-        font-size: 1rem;
-    }
-
-    .frase {
-        font-size: 1.2rem;
-    }
-
-    .card {
-        padding: 20px !important;
-    }
-}
-
 /* ------------ cierre seccion vison ---------- */
 
 /* INICIO: MAURICIO */
 
-:root {
-    /* Brand Kit Colors */
-    --color-dark: #1c1c1c;
-    --color-forest-dark: #224330;
-    --color-forest: #216e2a;
-    --color-accent: #40b622;
-    --color-light-green: #5bbe49;
-    --color-soft-blue: #a1c9f5;
-    --bg-hero: #f9f6f0;
-    --bg-white: #ffffff;
-}
-
-body {
-    font-family: "Inter", sans-serif; /* Parrafos y cuerpo */
-    color: #333333;
-}
-
-h1,
-h2,
-h3,
-.brand-heading {
-    font-family:
-        "Bebas Neue", sans-serif; /* Puedes
-alternar a 'Bebas Neue' si requieres títulos en mayúsculas */
-    font-weight: 800;
-    color: var(--color-dark);
-}
-
 .bg-hero {
-    background-color: var(--bg-hero);
+    background-color: var(--color-fondo);
 }
 
 .btn-brand-dark {
@@ -343,7 +255,7 @@ alternar a 'Bebas Neue' si requieres títulos en mayúsculas */
     transition: all 0.2s ease-in-out;
 }
 .btn-brand-dark:hover {
-    background-color: var(--color-forest-dark);
+    background-color: var(--color-terceario);
     color: #ffffff;
 }
 .rounded-custom {
@@ -369,14 +281,13 @@ alternar a 'Bebas Neue' si requieres títulos en mayúsculas */
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.25);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .btn-reserve {
-    background-color: var(--color-forest);
+    background-color: var(--color-dark);
     color: #ffffff;
     font-weight: 700;
     padding: 0.75rem 1.75rem;
@@ -387,9 +298,322 @@ alternar a 'Bebas Neue' si requieres títulos en mayúsculas */
 }
 
 .btn-reserve:hover {
-    background-color: var(--color-forest);
+    background-color: var(--color-secundario);
     color: #ffffff;
     transform: scale(1.05);
 }
 
 /* FINAL MAURICIO */
+
+/* Integrated felipe CSS | by Mauricio */
+
+/* Se inyecta las variables a las clases que usa Bootstrap */
+.bg-brand-green {
+    background-color: var(--color-primario);
+}
+.bg-brand-dark-green {
+    background-color: var(--color-terceario);
+}
+.bg-brand-mid-green {
+    background-color: var(--color-secundario);
+}
+.bg-brand-dark {
+    background-color: var(--color-dark);
+}
+.text-brand-green {
+    color: var(--color-primario);
+}
+.text-brand-dark-green {
+    color: var(--color-terceario);
+}
+.text-brand-mid-green {
+    color: var(--color-secundario);
+}
+.text-brand-dark {
+    color: var(--color-dark);
+}
+.border-brand-green {
+    border-color: var(--color-primario);
+}
+.border-brand-dark-green {
+    border-color: var(--color-terceario);
+}
+.logo-box {
+    width: 38px;
+    height: 38px;
+    font-size: 1.125rem;
+    background-color: var(--color-terceario);
+}
+.icon-box-40 {
+    width: 40px;
+    height: 40px;
+}
+.cursor-pointer {
+    cursor: pointer;
+}
+.max-w-650 {
+    max-width: 650px;
+}
+.max-w-600 {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.max-w-520 {
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.max-w-500 {
+    max-width: 500px;
+}
+.text-md-custom {
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+.text-sm-custom {
+    font-size: 0.875rem;
+}
+.text-xs-custom {
+    font-size: 11px;
+}
+.text-xxs-custom {
+    font-size: 10px;
+}
+.text-tiny {
+    font-size: 0.75rem;
+}
+
+/* Estilos Sección Principal */
+.hero-section {
+    min-height: 90vh;
+    background:
+        linear-gradient(rgba(34, 67, 48, 0.65), rgba(28, 28, 28, 0.8)),
+        url("../../../assets/img/fondo.jpg") center/cover no-repeat;
+}
+
+/* Estilos para botones y enlaces */
+.transition-base {
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-outline-custom {
+    color: var(--color-dark);
+    border: 1px solid var(--color-dark);
+    background: transparent;
+}
+
+.btn-outline-custom:hover {
+    color: #fff;
+    background-color: var(--color-terceario);
+    border-color: var(--color-terceario);
+}
+
+.btn-brand {
+    color: #fff;
+    background-color: var(--color-primario);
+    font-weight: 700;
+}
+
+.btn-brand:hover {
+    color: #fff;
+    background-color: var(--color-secundario);
+}
+
+/* Fondo de la sección similar al de la imagen */
+.bg-process-section {
+    background-color: #f7f7f8;
+}
+
+.step-card-custom {
+    border-radius: 1rem;
+    transition:
+        transform 0.2s ease-in-out,
+        box-shadow 0.2s ease;
+}
+.step-card-custom:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.08);
+}
+
+/* Cajas negras para los números (01, 02, 03) */
+.step-number-box {
+    width: 48px;
+    height: 48px;
+    background-color: #000000;
+    color: #ffffff;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.15rem;
+}
+
+/* Color específico para los iconos al lado de los números */
+.step-icon-color {
+    color: #a1a1aa;
+}
+
+/* Cajas grises claras para los iconos de las tarjetas inferiores */
+.feature-icon-box {
+    width: 42px;
+    height: 42px;
+    background-color: #f3f4f6;
+    border-radius: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4b5563;
+    flex-shrink: 0; /* Evita que el ícono se aplaste */
+}
+
+/* Colores de texto ajustados a la imagen */
+.text-custom-gray {
+    color: #6b7280;
+}
+.title-step-h3 {
+    font-size: 1.15rem;
+}
+.text-step-p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+.feature-title {
+    font-size: 0.9rem;
+}
+.feature-text {
+    font-size: 0.75rem;
+}
+
+/* Estos son los estilos para la galeria de imagenes */
+.gallery-img-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    display: block;
+    width: 100%;
+}
+
+.gallery-img-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition:
+        transform 0.3s ease-in-out,
+        filter 0.3s ease-in-out;
+}
+
+.gallery-img-container:hover img {
+    transform: scale(1.05);
+    filter: brightness(0.9);
+}
+
+/* Damos estilos para obtener las proporsiones exactas */
+.gallery-img-sub {
+    aspect-ratio: 4/3;
+}
+
+.gallery-img-main {
+    min-height: 350px;
+    height: 100%;
+}
+
+.img-grayscale img {
+    filter: grayscale(100%);
+}
+
+.img-grayscale:hover img {
+    filter: grayscale(0%);
+}
+
+/* Estilos para las tarjetas */
+.card-custom {
+    background-color: #141414;
+    border: 1px solid #2a2a2a;
+    border-radius: 1rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.card-custom:hover {
+    background-color: var(--color-dark);
+    border-color: rgba(64, 182, 34, 0.3);
+}
+
+.step-card {
+    background-color: #fff;
+    border-radius: 1rem;
+    transition: transform 0.2s ease-in-out;
+}
+
+.step-card:hover {
+    transform: translateY(-4px);
+}
+
+/* Estilos para el boton flotante que nos vuelv al inicio de la página */
+#btnScrollTop {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: none; /* Oculto hasta que se haga scroll */
+    z-index: 999;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
+}
+
+/* Esto estilos son para que los modales sean responsivos y se vean bien en cualquier dispositivo */
+.modal-img-wrapper {
+    height: 220px;
+}
+
+@media (max-width: 992px) {
+    .modal-img-wrapper {
+        height: auto;
+        min-height: 100%;
+    }
+    .titulo {
+        font-size: 3rem;
+    }
+
+    .imagen-historia {
+        margin-top: 30px;
+    }
+
+    .frase {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .historia {
+        padding: 50px 15px;
+    }
+
+    .gallery-img-main {
+        min-height: 100%;
+    }
+
+    .titulo {
+        font-size: 2.3rem;
+    }
+
+    .historia p {
+        font-size: 1rem;
+    }
+
+    .frase {
+        font-size: 1.2rem;
+    }
+
+    .card {
+        padding: 20px;
+    }
+}

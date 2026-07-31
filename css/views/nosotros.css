@@ -13,10 +13,6 @@
 .icono-grande {
     font-size: 50px;
 }
-.linea-about {
-    width: 50%; /* o 40%, 50%, etc. */
-    margin: 0 auto;
-}
 .imgEquipo {
     max-width: 25%;
     height: auto;
@@ -31,11 +27,6 @@
 .div-titulo {
     align-items: center;
     text-align: center;
-}
-
-.div-titulo h2 {
-    color: var(--color-texto);
-    font-family: var(--font-principal);
 }
 
 .cont-tarjetas {
@@ -198,16 +189,6 @@
     margin-bottom: 35px;
     position: relative;
     text-align: center;
-}
-
-.titulo::after {
-    content: "";
-    width: 120px;
-    height: 5px;
-    background: #198754;
-    display: block;
-    margin: 15px auto 0;
-    border-radius: 50px;
 }
 
 .historia p {

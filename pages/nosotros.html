@@ -17,91 +17,57 @@
     <link rel="stylesheet" href="../css/views/nosotros.css" />
     </head>
 
+  
 <body class="bg-light d-flex flex-column min-height-vh-100">
 
-    <body class="bg-light d-flex flex-column min-height-vh-100">
-        <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 border-top border-4"
-            style="border-color: #40b622 !important">
-            <div class="container-fluid px-lg-5">
-                <a class="navbar-brand d-flex align-items-center gap-2" href="#">
-                    <div class="text-white d-flex align-items-center justify-content-center rounded-3 fw-bold" style="
-                            width: 38px;
-                            height: 38px;
-                            font-size: 1.2rem;
-                            background-color: #224330;
-                        ">
-                        D
-                    </div>
-                    <span class="fs-4 fw-black tracking-tight m-0 p-0" style="
-                            font-weight: 900;
-                            letter-spacing: -0.5px;
-                            color: #1c1c1c;
-                        ">
-                        DEV<span class="fw-bold" style="color: #216e2a">PORTES</span>
-                    </span>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav mx-auto gap-3 text-center my-3 my-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link fw-medium px-2" href="#" style="color: #1c1c1c; transition: color 0.2s"
-                                onmouseover="this.style.color = '#40b622'" onmouseout="this.style.color = '#1c1c1c'">
-                                Nuestras Canchas
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link fw-bold px-2" href="#" style="color: #216e2a">
-                                Nosotros
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link fw-medium px-2" href="#" style="color: #1c1c1c; transition: color 0.2s"
-                                onmouseover="this.style.color = '#40b622'" onmouseout="this.style.color = '#1c1c1c'">
-                                ¿Cómo funciona?
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link fw-medium px-2" href="#" style="color: #1c1c1c; transition: color 0.2s"
-                                onmouseover="this.style.color = '#40b622'" onmouseout="this.style.color = '#1c1c1c'">
-                                Galería
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="d-flex flex-column flex-lg-row align-items-center gap-3">
-                        <a href="#" class="btn px-4 py-2 rounded-3 fw-medium w-100 w-lg-auto text-nowrap text-center"
-                            style="
-                                color: #1c1c1c;
-                                border: 1px solid #1c1c1c;
-                                background-color: transparent;
-                                transition: all 0.2s ease;
-                            " onmouseover="
-                                this.style.color = '#ffffff';
-                                this.style.backgroundColor = '#224330';
-                                this.style.borderColor = '#224330';
-                            " onmouseout="
-                                this.style.color = '#1c1c1c';
-                                this.style.backgroundColor = 'transparent';
-                                this.style.borderColor = '#1c1c1c';
-                            ">
-                            Iniciar Sesión
-                        </a>
-                        <a href="#"
-                            class="btn px-4 py-2 rounded-pill fw-bold d-flex align-items-center justify-content-center gap-2 w-100 w-lg-auto text-nowrap"
-                            style="
-                                color: #ffffff;
-                                background-color: #40b622;
-                                transition: all 0.2s ease;
-                            " onmouseover="this.style.backgroundColor = '#216e2a'"
-                            onmouseout="this.style.backgroundColor = '#40b622'">
-                            Reservar Ahora <span>&rarr;</span>
-                        </a>
-                    </div>
-                </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top py-3 border-top border-4 border-brand-green shadow-sm">
+    <div class="container-fluid px-3 px-lg-5">
+        <a class="navbar-brand d-flex align-items-center gap-2 m-0" href="../index.html">
+            <div class="text-white d-flex align-items-center justify-content-center rounded-3 fw-bold logo-box">
+                D
             </div>
-        </nav>
+            <span class="fs-5 fw-black text-brand-dark tracking-tight">
+                DEV<span class="fw-bold text-brand-mid-green">PORTES</span>
+            </span> </a>
+
+        <button
+                class="navbar-toggler p-2 text-secondary border-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <svg class="bi bi-list" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                <path
+                        fill-rule="evenodd"
+                        d="M2.5 12.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1zm0-4a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1zm0-4a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1z"/>
+            </svg>
+        </button>
+
+        <div class="collapse navbar-collapse mt-4 mt-lg-0 justify-content-lg-between" id="navbarMenu">
+            <ul class="navbar-nav mx-auto gap-lg-2 text-center my-3 my-lg-0 px-lg-4 text-nowrap">
+                <li class="nav-item">
+                    <a class="nav-link fw-bold text-brand-mid-green px-2" href="#canchas">Nuestras Canchas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-custom transition-base px-2" href="./pages/nosotros.html">Nosotros</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-custom transition-base px-2" href="#proceso">¿Cómo funciona?</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-custom transition-base px-2" href="#">Galería</a>
+                </li>
+            </ul>
+
+            <div class="d-grid d-lg-flex align-items-center gap-3">
+                <a href="#" class="btn btn-outline-custom rounded-3 px-4 py-2 text-nowrap transition-base"> Iniciar
+                    Sesión </a> <a
+                    href="#"
+                    class="btn btn-brand rounded-pill px-4 py-2 d-flex align-items-center justify-content-center gap-2 text-nowrap transition-base">
+                Reservar Ahora <span>&rarr;</span> </a>
+            </div>
+        </div>
+    </div>
+</nav>
+       
 
         <!-- INICIO: MAURICIO -->
 
@@ -457,83 +423,61 @@
             </div>
 
         </section>
-        <hr><!--estos son temporales como guia de hasta donde abarca mi seccion-->
-        <!-- ----------Fin Seccion de Equipo de Desarrollo -------------------- -->
-        <footer class="text-white py-4 border-top border-4 mt-auto" style="
-                background-color: #1c1c1c !important;
-                border-color: #224330 !important;
-            ">
-            <div class="container-fluid px-lg-5">
-                <div class="row align-items-center justify-content-between gy-3">
-                    <div
-                        class="col-12 col-md-auto d-flex align-items-center justify-content-center justify-content-md-start gap-2">
-                        <div class="text-white d-flex align-items-center justify-content-center rounded-3 fw-bold"
-                            style="
-                                width: 38px;
-                                height: 38px;
-                                font-size: 1.2rem;
-                                background-color: #224330;
-                            ">
-                            D
-                        </div>
-                        <span class="fs-4 fw-black tracking-tight m-0 p-0" style="
-                                font-weight: 900;
-                                letter-spacing: -0.5px;
-                                color: #ffffff;
-                            ">
-                            DEV<span class="fw-bold" style="color: #40b622">PORTES</span>
-                        </span>
-                    </div>
-                    <div class="col-12 col-md-auto">
-                        <ul class="list-unstyled d-flex flex-wrap justify-content-center justify-content-md-end gap-4 m-0 p-0 fw-medium"
-                            style="font-size: 0.9rem">
-                            <li>
-                                <a href="#" class="text-decoration-none" style="
-                                        color: #a3a3a3;
-                                        transition: color 0.2s;
-                                    " onmouseover="this.style.color = '#40b622'"
-                                    onmouseout="this.style.color = '#a3a3a3'">Inicio</a>
-                            </li>
-                            <li>
-                                <a href="#" class="text-decoration-none" style="
-                                        color: #a3a3a3;
-                                        transition: color 0.2s;
-                                    " onmouseover="this.style.color = '#40b622'"
-                                    onmouseout="this.style.color = '#a3a3a3'">Términos y Condiciones</a>
-                            </li>
-                            <li>
-                                <a href="#" class="text-decoration-none" style="
-                                        color: #a3a3a3;
-                                        transition: color 0.2s;
-                                    " onmouseover="this.style.color = '#40b622'"
-                                    onmouseout="this.style.color = '#a3a3a3'">Política de Privacidad</a>
-                            </li>
-                            <li>
-                                <a href="#" class="text-decoration-none" style="
-                                        color: #a3a3a3;
-                                        transition: color 0.2s;
-                                    " onmouseover="this.style.color = '#40b622'"
-                                    onmouseout="this.style.color = '#a3a3a3'">Soporte</a>
-                            </li>
-                        </ul>
-                    </div>
+        <hr>
+  
+  <!--estos son temporales como guia de hasta donde abarca mi seccion-->
+  
+  <footer class="py-3 border-top border-4 border-brand-green mt-auto bg-brand-dark">
+    <div class="container-fluid px-3 px-lg-5">
+        <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3">
+            <div class="d-flex align-items-center gap-2">
+                <div class="d-flex align-items-center justify-content-center rounded-3 fw-bold footer-logo-box">
+                    D
                 </div>
-                <div class="row mt-4 pt-3 border-top border-white border-opacity-10 text-center text-md-start">
-                    <div class="col-12">
-                        <p class="m-0 small text-white-50 opacity-50">
-                            &copy; 2026 DEVPORTES. Todos los derechos
-                            reservados.
-                        </p>
-                    </div>
-                </div>
+                <span class="fs-6 text-white m-0 tracking-tight" style="font-weight: 900;">
+                    DEVPORTES
+                </span>
             </div>
-        </footer>
+            <ul class="nav justify-content-center gap-3 gap-md-4 font-medium small">
+                <li class="nav-item">
+                    <a href="#canchas" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base">Nuestras Canchas</a>
+                </li>
+                <li class="nav-item">
+                    <a href="./pages/nosotros.html" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base">Nosotros</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#proceso" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base">¿Cómo funciona?</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base">Galería</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base">Política de Privacidad</a>
+                </li>
+            </ul>
+            <div class="text-center text-lg-end">
+                <p class="m-0 text-white-50 text-tiny">&copy; 2026 Devportes.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+  
+  <button id="btnScrollTop" class="btn btn-brand" aria-label="Subir al inicio">
+    <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
+    </svg>
+</button>
+ 
+      
+      
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
             crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"
             defer></script>
-    </body>
+  
+  <!--<script src="../JS/api/views/index.js"></script>-->
 
+    </body>
 </html>

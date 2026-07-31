@@ -70,7 +70,7 @@
 .cont-tarjetas .card-reves {
     position: absolute;
     inset: 0;
-    width: 100% !important;
+    width: 100%;
     height: 100%;
     backface-visibility: hidden;
     border-radius: 1em;
@@ -188,12 +188,6 @@
 
 /* -------------- seccion vision -------------- */
 
-body {
-    font-family: "Poppins", sans-serif;
-    background: linear-gradient(to bottom, #f8f9fa, #ffffff);
-    color: #333;
-}
-
 .historia {
     padding: 80px 0;
 }
@@ -235,23 +229,16 @@ body {
     transform: scale(1.05);
 }
 
-hr {
-    border: none;
-    height: 2px;
-    background: #d9d9d9;
-    margin: 60px 0;
-}
-
 .card {
     background: #fff;
-    border-left: 8px solid #198754 !important;
-    box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.15) !important;
+    border-left: 8px solid #198754;
+    box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.15);
     transition: 0.4s;
 }
 
 .card:hover {
     transform: translateY(-8px);
-    box-shadow: 0px 18px 40px rgba(0, 0, 0, 0.2) !important;
+    box-shadow: 0px 18px 40px rgba(0, 0, 0, 0.2);
 }
 
 .frase {
@@ -266,24 +253,8 @@ hr {
 
 /* INICIO: MAURICIO */
 
-body {
-    font-family: "Inter", sans-serif; /* Parrafos y cuerpo */
-    color: #333333;
-}
-
-h1,
-h2,
-h3,
-.brand-heading {
-    font-family:
-        "Bebas Neue", sans-serif; /* Puedes
-alternar a 'Bebas Neue' si requieres títulos en mayúsculas */
-    font-weight: 800;
-    color: var(--color-dark);
-}
-
 .bg-hero {
-    background-color: var(--bg-hero);
+    background-color: var(--color-fondo);
 }
 
 .btn-brand-dark {
@@ -295,7 +266,7 @@ alternar a 'Bebas Neue' si requieres títulos en mayúsculas */
     transition: all 0.2s ease-in-out;
 }
 .btn-brand-dark:hover {
-    background-color: var(--color-forest-dark);
+    background-color: var(--color-terceario);
     color: #ffffff;
 }
 .rounded-custom {
@@ -328,7 +299,7 @@ alternar a 'Bebas Neue' si requieres títulos en mayúsculas */
 }
 
 .btn-reserve {
-    background-color: var(--color-forest);
+    background-color: var(--color-secundario);
     color: #ffffff;
     font-weight: 700;
     padding: 0.75rem 1.75rem;
@@ -339,7 +310,7 @@ alternar a 'Bebas Neue' si requieres títulos en mayúsculas */
 }
 
 .btn-reserve:hover {
-    background-color: var(--color-forest);
+    background-color: var(--color-secundario);
     color: #ffffff;
     transform: scale(1.05);
 }
@@ -347,46 +318,43 @@ alternar a 'Bebas Neue' si requieres títulos en mayúsculas */
 /* FINAL MAURICIO */
 
 /* Integrated felipe CSS | by Mauricio */
-html {
-    scroll-behavior: smooth;
-}
 
 /* Se inyecta las variables a las clases que usa Bootstrap */
 .bg-brand-green {
-    background-color: var(--brand-green);
+    background-color: var(--color-primario);
 }
 .bg-brand-dark-green {
-    background-color: var(--brand-dark-green);
+    background-color: var(--color-terceario);
 }
 .bg-brand-mid-green {
-    background-color: var(--brand-mid-green);
+    background-color: var(--color-secundario);
 }
 .bg-brand-dark {
-    background-color: var(--brand-dark);
+    background-color: var(--color-dark);
 }
 .text-brand-green {
-    color: var(--brand-green);
+    color: var(--color-primario);
 }
 .text-brand-dark-green {
-    color: var(--brand-dark-green);
+    color: var(--color-terceario);
 }
 .text-brand-mid-green {
-    color: var(--brand-mid-green);
+    color: var(--color-secundario);
 }
 .text-brand-dark {
-    color: var(--brand-dark);
+    color: var(--color-dark);
 }
 .border-brand-green {
-    border-color: var(--brand-green);
+    border-color: var(--color-primario);
 }
 .border-brand-dark-green {
-    border-color: var(--brand-dark-green);
+    border-color: var(--color-terceario);
 }
 .logo-box {
     width: 38px;
     height: 38px;
     font-size: 1.125rem;
-    background-color: var(--brand-dark-green);
+    background-color: var(--color-terceario);
 }
 .icon-box-40 {
     width: 40px;
@@ -442,26 +410,26 @@ html {
 }
 
 .btn-outline-custom {
-    color: var(--brand-dark);
-    border: 1px solid var(--brand-dark);
+    color: var(--color-dark);
+    border: 1px solid var(--color-dark);
     background: transparent;
 }
 
 .btn-outline-custom:hover {
     color: #fff;
-    background-color: var(--brand-dark-green);
-    border-color: var(--brand-dark-green);
+    background-color: var(--color-terceario);
+    border-color: var(--color-terceario);
 }
 
 .btn-brand {
     color: #fff;
-    background-color: var(--brand-green);
+    background-color: var(--color-primario);
     font-weight: 700;
 }
 
 .btn-brand:hover {
     color: #fff;
-    background-color: var(--brand-mid-green);
+    background-color: var(--color-secundario);
 }
 
 /* Fondo de la sección similar al de la imagen */
@@ -477,7 +445,7 @@ html {
 }
 .step-card-custom:hover {
     transform: translateY(-5px);
-    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.08);
 }
 
 /* Cajas negras para los números (01, 02, 03) */
@@ -583,7 +551,7 @@ html {
 }
 
 .card-custom:hover {
-    background-color: var(--brand-dark);
+    background-color: var(--color-dark);
     border-color: rgba(64, 182, 34, 0.3);
 }
 
@@ -595,15 +563,6 @@ html {
 
 .step-card:hover {
     transform: translateY(-4px);
-}
-
-/* Estilos para el logo del Footer */
-.footer-logo-box {
-    width: 32px;
-    height: 32px;
-    font-size: 1rem;
-    background-color: #ffffff;
-    color: var(--brand-dark);
 }
 
 /* Estilos para el boton flotante que nos vuelv al inicio de la página */
@@ -633,7 +592,7 @@ html {
         min-height: 100%;
     }
     .titulo {
-        font-size: 3rem !important;
+        font-size: 3rem;
     }
 
     .imagen-historia {
@@ -655,7 +614,7 @@ html {
     }
 
     .titulo {
-        font-size: 2.3rem !important;
+        font-size: 2.3rem;
     }
 
     .historia p {
@@ -667,6 +626,6 @@ html {
     }
 
     .card {
-        padding: 20px !important;
+        padding: 20px;
     }
 }

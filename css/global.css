@@ -1,13 +1,13 @@
 /* Aca se colocan todo lo que sea global, por ejemplo los colores globales, la tipografia,
 ajostes globles de boostrap etc */
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@400;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@400;500&display=swap");
 
 :root {
     /* Fuentes */
-    --font-principal: 'inter bold', sans-serif;
-    --font-secundaria: 'Inter', sans-serif;
-    --font-secundaria: 'Bebas Neue', sans-serif;
+    --font-principal: "inter bold", sans-serif;
+    --font-secundaria: "Inter", sans-serif;
+    --font-secundaria: "Bebas Neue", sans-serif;
 
     /* 5 Colores del sistema */
     --color-primario: #40b622;
@@ -17,4 +17,21 @@ ajostes globles de boostrap etc */
     --color-cuaternario: #a1c9f5;
     --color-fondo: #f8f9fa;
     --color-texto: #1c1c1c;
+    --color-dark: #1c1c1c;
+
+    /* PRIMER ROOT ENCONTRADO */
+
+    --color-forest-dark: #224330;
+    --color-forest: #216e2a;
+    --color-accent: #40b622;
+    --color-light-green: #5bbe49;
+    --color-soft-blue: #a1c9f5;
+    --bg-hero: #f9f6f0;
+    --bg-white: #ffffff;
+
+    /* SEGUNDO ROOT ENCONTRADO */
+    --brand-green: #40b622;
+    --brand-dark-green: #224330;
+    --brand-mid-green: #216e2a;
+    --brand-dark: #1c1c1c;
 }

@@ -5,7 +5,7 @@ ajostes globles de boostrap etc */
     /* Fuentes */
     --font-principal: "inter bold", sans-serif;
     --font-secundaria: "Inter", sans-serif;
-    --font-secundaria: "Bebas Neue", sans-serif;
+    --font-tercearia: "Bebas Neue", sans-serif;
 
     /* 5 Colores del sistema */
     --color-primario: #40b622;
@@ -40,7 +40,7 @@ html {
 }
 
 body {
-    font-family: "Inter", sans-serif; /* Parrafos y cuerpo */
+    font-family: var(--font-secundaria); /* Parrafos y cuerpo */
     background: linear-gradient(to bottom, #f8f9fa, #ffffff);
     color: var(--color-dark);
 }
@@ -49,12 +49,14 @@ hr {
     border: none;
     height: 2px;
     background: #d9d9d9;
-    margin: 60px 0;
 }
 
-h1,
-h2,
-h3,
+.brand-heading-alt {
+    font-family: var(--font-principal);
+    font-weight: 800;
+    color: var(--color-dark);
+}
+
 .brand-heading {
     font-family: "Bebas Neue", sans-serif;
     font-weight: 800;

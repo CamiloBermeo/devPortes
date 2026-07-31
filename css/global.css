@@ -18,6 +18,11 @@ ajostes globles de boostrap etc */
     --color-dark: #1c1c1c;
 }
 
+* {
+    margin: 0;
+    padding: 0;
+}
+
 .nav-link-custom {
     color: var(--color-dark);
     font-weight: 500;

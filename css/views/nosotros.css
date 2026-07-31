@@ -441,15 +441,6 @@ html {
     transition: all 0.2s ease-in-out;
 }
 
-.nav-link-custom {
-    color: var(--brand-dark);
-    font-weight: 500;
-}
-
-.nav-link-custom:hover {
-    color: var(--brand-green);
-}
-
 .btn-outline-custom {
     color: var(--brand-dark);
     border: 1px solid var(--brand-dark);
@@ -478,12 +469,6 @@ html {
     background-color: #f7f7f8;
 }
 
-/* Espaciado de letras para el subtítulo (PROCESO) */
-.tracking-widest {
-    letter-spacing: 2px;
-}
-
-/* Efecto hover suave para las tarjetas */
 .step-card-custom {
     border-radius: 1rem;
     transition:

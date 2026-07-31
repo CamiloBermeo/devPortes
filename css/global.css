@@ -35,3 +35,20 @@ ajostes globles de boostrap etc */
     --brand-mid-green: #216e2a;
     --brand-dark: #1c1c1c;
 }
+
+.nav-link-custom {
+    color: var(--brand-dark);
+    font-weight: 500;
+}
+
+.nav-link-custom:hover {
+    color: var(--brand-green);
+}
+
+.footer-logo-box {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+    background-color: #ffffff;
+    color: var(--brand-dark);
+}

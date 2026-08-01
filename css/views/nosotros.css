@@ -344,52 +344,12 @@
   font-size: 1.125rem;
   background-color: var(--color-terceario);
 }
-.icon-box-40 {
-  width: 40px;
-  height: 40px;
-}
 .cursor-pointer {
   cursor: pointer;
 }
-.max-w-650 {
-  max-width: 650px;
-}
-.max-w-600 {
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.max-w-520 {
-  max-width: 520px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.max-w-500 {
-  max-width: 500px;
-}
-.text-md-custom {
-  font-size: 0.95rem;
-  line-height: 1.6;
-}
-.text-sm-custom {
-  font-size: 0.875rem;
-}
-.text-xs-custom {
-  font-size: 11px;
-}
-.text-xxs-custom {
-  font-size: 10px;
-}
+
 .text-tiny {
   font-size: 0.75rem;
-}
-
-/* Estilos Sección Principal */
-.hero-section {
-  min-height: 90vh;
-  background:
-    linear-gradient(rgba(34, 67, 48, 0.65), rgba(28, 28, 28, 0.8)),
-    url('../../../assets/img/fondo.jpg') center/cover no-repeat;
 }
 
 /* Estilos para botones y enlaces */
@@ -420,65 +380,6 @@
   background-color: var(--color-secundario);
 }
 
-/* Fondo de la sección similar al de la imagen */
-.bg-process-section {
-  background-color: #f7f7f8;
-}
-
-.step-card-custom {
-  border-radius: 1rem;
-  transition:
-    transform 0.2s ease-in-out,
-    box-shadow 0.2s ease;
-}
-.step-card-custom:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.08);
-}
-
-/* Cajas negras para los números (01, 02, 03) */
-.step-number-box {
-  width: 48px;
-  height: 48px;
-  background-color: #000000;
-  color: #ffffff;
-  border-radius: 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 1.15rem;
-}
-
-/* Color específico para los iconos al lado de los números */
-.step-icon-color {
-  color: #a1a1aa;
-}
-
-/* Cajas grises claras para los iconos de las tarjetas inferiores */
-.feature-icon-box {
-  width: 42px;
-  height: 42px;
-  background-color: #f3f4f6;
-  border-radius: 0.6rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #4b5563;
-  flex-shrink: 0; /* Evita que el ícono se aplaste */
-}
-
-/* Colores de texto ajustados a la imagen */
-.text-custom-gray {
-  color: #6b7280;
-}
-.title-step-h3 {
-  font-size: 1.15rem;
-}
-.text-step-p {
-  font-size: 0.9rem;
-  line-height: 1.6;
-}
 .feature-title {
   font-size: 0.9rem;
 }
@@ -541,16 +442,6 @@
 .card-custom:hover {
   background-color: var(--color-dark);
   border-color: rgba(64, 182, 34, 0.3);
-}
-
-.step-card {
-  background-color: #fff;
-  border-radius: 1rem;
-  transition: transform 0.2s ease-in-out;
-}
-
-.step-card:hover {
-  transform: translateY(-4px);
 }
 
 /* Estilos para el boton flotante que nos vuelv al inicio de la página */

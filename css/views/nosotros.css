@@ -1,241 +1,241 @@
-@import "../global.css";
+@import '../global.css';
 .about-santiago {
-    min-height: 100vh;
+  min-height: 100vh;
 }
 .about-santiago .container-fluid {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 .about-santiago .row {
-    flex: 1;
+  flex: 1;
 }
 .icono-grande {
-    font-size: 50px;
+  font-size: 50px;
 }
 .imgEquipo {
-    max-width: 25%;
-    height: auto;
-    border-radius: 10px;
+  max-width: 25%;
+  height: auto;
+  border-radius: 10px;
 }
 
 /* ----------------- Seccion Equipo de Desarrollo ------------------ */
 .cont-info-comple {
-    padding-bottom: 2rem;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    gap: 1rem;
+  padding-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .div-titulo {
-    align-items: center;
-    text-align: center;
+  align-items: center;
+  text-align: center;
 }
 
 .cont-tarjetas {
-    padding: 2em 1rem;
+  padding: 2em 1rem;
 }
 
 .cont-tarjetas .div-card {
-    position: relative;
-    width: 100%;
-    max-width: 15rem;
-    min-height: 20rem;
-    margin: 1rem auto;
-    perspective: 1000px;
-    perspective-origin: center;
+  position: relative;
+  width: 100%;
+  max-width: 15rem;
+  min-height: 20rem;
+  margin: 1rem auto;
+  perspective: 1000px;
+  perspective-origin: center;
 }
 
 .cont-tarjetas .card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    transform-style: preserve-3d;
-    pointer-events: auto;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transform-style: preserve-3d;
+  pointer-events: auto;
 }
 
 .cont-tarjetas .div-card:hover .card-inner {
-    transform: rotateY(180deg);
-    pointer-events: auto;
+  transform: rotateY(180deg);
+  pointer-events: auto;
 }
 
 .cont-tarjetas .card,
 .cont-tarjetas .card-reves {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    border-radius: 1em;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    overflow: hidden;
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 1em;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
 }
 
 .cont-tarjetas .card {
-    background-color: var(--color-terceario);
-    color: var(--color-fondo);
+  background-color: var(--color-terceario);
+  color: var(--color-fondo);
 }
 
 .cont-tarjetas .card-reves {
-    background-color: var(--color-primario);
-    color: var(--color-fondo);
-    transform: rotateY(180deg);
-    align-items: center;
-    text-align: center;
-    padding: 1.25rem;
+  background-color: var(--color-primario);
+  color: var(--color-fondo);
+  transform: rotateY(180deg);
+  align-items: center;
+  text-align: center;
+  padding: 1.25rem;
 }
 
 .cont-tarjetas .card img {
-    border-radius: 1em;
-    height: 12rem;
-    object-fit: cover;
+  border-radius: 1em;
+  height: 12rem;
+  object-fit: cover;
 }
 
 .cont-tarjetas .card-body {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 1rem 0.8rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 0.8rem;
 }
 
 .cont-tarjetas .card-body h3 {
-    color: var(--color-fondo);
-    font-size: 1.2em;
-    margin-bottom: 0.2rem;
+  color: var(--color-fondo);
+  font-size: 1.2em;
+  margin-bottom: 0.2rem;
 }
 
 .cont-tarjetas .card-body p {
-    color: var(--color-cuaternario);
-    margin: 0;
+  color: var(--color-cuaternario);
+  margin: 0;
 }
 
 .cont-tarjetas .card-reves .card-body {
-    gap: 0.75rem;
+  gap: 0.75rem;
 }
 
 .cont-tarjetas .card-reves .card-body h3 {
-    color: var(--color-fondo);
-    font-size: 1.1rem;
+  color: var(--color-fondo);
+  font-size: 1.1rem;
 }
 
 .cont-tarjetas .card-reves .card-body p {
-    color: var(--color-fondo);
-    font-size: 0.95rem;
-    line-height: 1.5;
+  color: var(--color-fondo);
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
 .cont-tarjetas .card-reves .badge-group {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.4rem;
-    margin-top: 0.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
 }
 
 .cont-tarjetas .card-reves .badge-group span {
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    padding: 0.3rem 0.6rem;
-    font-size: 0.72rem;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.12);
-    justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 0.3rem 0.6rem;
+  font-size: 0.72rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  justify-content: center;
 }
 
 .cont-tarjetas .card:hover {
-    cursor: pointer;
-    box-shadow: 0 10px 20px var(--color-primario);
+  cursor: pointer;
+  box-shadow: 0 10px 20px var(--color-primario);
 }
 
 .cont-contactenos {
-    display: flex;
-    width: 100%;
-    margin-top: 2rem;
+  display: flex;
+  width: 100%;
+  margin-top: 2rem;
 }
 
 .cont-info-contact {
-    background-color: var(--color-terceario);
-    text-align: center;
-    padding: 1em;
-    gap: 1em;
-    border-radius: 1em;
-    color: var(--color-fondo);
-    width: 100%;
+  background-color: var(--color-terceario);
+  text-align: center;
+  padding: 1em;
+  gap: 1em;
+  border-radius: 1em;
+  color: var(--color-fondo);
+  width: 100%;
 }
 
 .btn-vamos {
-    background-color: var(--color-primario);
-    color: var(--color-fondo);
-    border-color: var(--color-primario);
-    border-radius: 10px;
-    height: 2.5em;
-    width: 10em;
+  background-color: var(--color-primario);
+  color: var(--color-fondo);
+  border-color: var(--color-primario);
+  border-radius: 10px;
+  height: 2.5em;
+  width: 10em;
 }
 
 .btn-vamos:hover {
-    background-color: var(--color-exito);
+  background-color: var(--color-exito);
 }
 /* ----------------- Fin Seccion de Desarrollo ---------------------*/
 
 /* -------------- seccion vision -------------- */
 
 .historia {
-    padding: 80px 0;
+  padding: 80px 0;
 }
 
 .titulo {
-    color: #198754;
-    font-weight: 700;
-    margin-bottom: 35px;
-    position: relative;
-    text-align: center;
+  color: #198754;
+  font-weight: 700;
+  margin-bottom: 35px;
+  position: relative;
+  text-align: center;
 }
 
 .historia p {
-    font-size: 1.1rem;
-    line-height: 2;
-    text-align: justify;
-    color: #555;
+  font-size: 1.1rem;
+  line-height: 2;
+  text-align: justify;
+  color: #555;
 }
 
 .imagen-historia {
-    width: 100%;
-    max-width: 520px;
-    border-radius: 20px;
-    transition: 0.4s;
-    cursor: pointer;
+  width: 100%;
+  max-width: 520px;
+  border-radius: 20px;
+  transition: 0.4s;
+  cursor: pointer;
 }
 
 .imagen-historia:hover {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 .card-andres {
-    background: #fff;
-    border-left: 8px solid #198754;
-    box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.15);
-    transition: 0.4s;
+  background: #fff;
+  border-left: 8px solid #198754;
+  box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.15);
+  transition: 0.4s;
 }
 
 .card-andres:hover {
-    transform: translateY(-8px);
-    box-shadow: 0px 18px 40px rgba(0, 0, 0, 0.2);
+  transform: translateY(-8px);
+  box-shadow: 0px 18px 40px rgba(0, 0, 0, 0.2);
 }
 
 .frase {
-    font-size: 2rem;
-    font-weight: 700;
-    line-height: 1.5;
-    color: #222;
-    margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #222;
+  margin: 0;
 }
 
 /* ------------ cierre seccion vison ---------- */
@@ -243,64 +243,64 @@
 /* INICIO: MAURICIO */
 
 .bg-hero {
-    background-color: var(--color-fondo);
+  background-color: var(--color-fondo);
 }
 
 .btn-brand-dark {
-    background-color: var(--color-dark);
-    color: #ffffff;
-    border-radius: 50rem; /* rounded-pill */
-    padding: 0.75rem 2rem;
-    font-weight: 500;
-    transition: all 0.2s ease-in-out;
+  background-color: var(--color-dark);
+  color: #ffffff;
+  border-radius: 50rem; /* rounded-pill */
+  padding: 0.75rem 2rem;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
 }
 .btn-brand-dark:hover {
-    background-color: var(--color-terceario);
-    color: #ffffff;
+  background-color: var(--color-terceario);
+  color: #ffffff;
 }
 .rounded-custom {
-    border-radius: 1rem;
+  border-radius: 1rem;
 }
 
 .video-container {
-    position: relative;
-    border-radius: 1rem;
-    overflow: hidden;
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
 }
 
 .video-container img {
-    width: 100%;
-    height: 350px;
-    object-fit: cover;
-    transition: transform 0.3s ease;
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
 .reserve-btn-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-reserve {
-    background-color: var(--color-dark);
-    color: #ffffff;
-    font-weight: 700;
-    padding: 0.75rem 1.75rem;
-    border-radius: 50rem;
-    text-decoration: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-    transition: all 0.2s ease-in-out;
+  background-color: var(--color-dark);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 0.75rem 1.75rem;
+  border-radius: 50rem;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s ease-in-out;
 }
 
 .btn-reserve:hover {
-    background-color: var(--color-secundario);
-    color: #ffffff;
-    transform: scale(1.05);
+  background-color: var(--color-secundario);
+  color: #ffffff;
+  transform: scale(1.05);
 }
 
 /* FINAL MAURICIO */
@@ -309,311 +309,311 @@
 
 /* Se inyecta las variables a las clases que usa Bootstrap */
 .bg-brand-green {
-    background-color: var(--color-primario);
+  background-color: var(--color-primario);
 }
 .bg-brand-dark-green {
-    background-color: var(--color-terceario);
+  background-color: var(--color-terceario);
 }
 .bg-brand-mid-green {
-    background-color: var(--color-secundario);
+  background-color: var(--color-secundario);
 }
 .bg-brand-dark {
-    background-color: var(--color-dark);
+  background-color: var(--color-dark);
 }
 .text-brand-green {
-    color: var(--color-primario);
+  color: var(--color-primario);
 }
 .text-brand-dark-green {
-    color: var(--color-terceario);
+  color: var(--color-terceario);
 }
 .text-brand-mid-green {
-    color: var(--color-secundario);
+  color: var(--color-secundario);
 }
 .text-brand-dark {
-    color: var(--color-dark);
+  color: var(--color-dark);
 }
 .border-brand-green {
-    border-color: var(--color-primario);
+  border-color: var(--color-primario);
 }
 .border-brand-dark-green {
-    border-color: var(--color-terceario);
+  border-color: var(--color-terceario);
 }
 .logo-box {
-    width: 38px;
-    height: 38px;
-    font-size: 1.125rem;
-    background-color: var(--color-terceario);
+  width: 38px;
+  height: 38px;
+  font-size: 1.125rem;
+  background-color: var(--color-terceario);
 }
 .icon-box-40 {
-    width: 40px;
-    height: 40px;
+  width: 40px;
+  height: 40px;
 }
 .cursor-pointer {
-    cursor: pointer;
+  cursor: pointer;
 }
 .max-w-650 {
-    max-width: 650px;
+  max-width: 650px;
 }
 .max-w-600 {
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .max-w-520 {
-    max-width: 520px;
-    margin-left: auto;
-    margin-right: auto;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .max-w-500 {
-    max-width: 500px;
+  max-width: 500px;
 }
 .text-md-custom {
-    font-size: 0.95rem;
-    line-height: 1.6;
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
 .text-sm-custom {
-    font-size: 0.875rem;
+  font-size: 0.875rem;
 }
 .text-xs-custom {
-    font-size: 11px;
+  font-size: 11px;
 }
 .text-xxs-custom {
-    font-size: 10px;
+  font-size: 10px;
 }
 .text-tiny {
-    font-size: 0.75rem;
+  font-size: 0.75rem;
 }
 
 /* Estilos Sección Principal */
 .hero-section {
-    min-height: 90vh;
-    background:
-        linear-gradient(rgba(34, 67, 48, 0.65), rgba(28, 28, 28, 0.8)),
-        url("../../../assets/img/fondo.jpg") center/cover no-repeat;
+  min-height: 90vh;
+  background:
+    linear-gradient(rgba(34, 67, 48, 0.65), rgba(28, 28, 28, 0.8)),
+    url('../../../assets/img/fondo.jpg') center/cover no-repeat;
 }
 
 /* Estilos para botones y enlaces */
 .transition-base {
-    transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .btn-outline-custom {
-    color: var(--color-dark);
-    border: 1px solid var(--color-dark);
-    background: transparent;
+  color: var(--color-dark);
+  border: 1px solid var(--color-dark);
+  background: transparent;
 }
 
 .btn-outline-custom:hover {
-    color: #fff;
-    background-color: var(--color-terceario);
-    border-color: var(--color-terceario);
+  color: #fff;
+  background-color: var(--color-terceario);
+  border-color: var(--color-terceario);
 }
 
 .btn-brand {
-    color: #fff;
-    background-color: var(--color-primario);
-    font-weight: 700;
+  color: #fff;
+  background-color: var(--color-primario);
+  font-weight: 700;
 }
 
 .btn-brand:hover {
-    color: #fff;
-    background-color: var(--color-secundario);
+  color: #fff;
+  background-color: var(--color-secundario);
 }
 
 /* Fondo de la sección similar al de la imagen */
 .bg-process-section {
-    background-color: #f7f7f8;
+  background-color: #f7f7f8;
 }
 
 .step-card-custom {
-    border-radius: 1rem;
-    transition:
-        transform 0.2s ease-in-out,
-        box-shadow 0.2s ease;
+  border-radius: 1rem;
+  transition:
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease;
 }
 .step-card-custom:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.08);
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.08);
 }
 
 /* Cajas negras para los números (01, 02, 03) */
 .step-number-box {
-    width: 48px;
-    height: 48px;
-    background-color: #000000;
-    color: #ffffff;
-    border-radius: 0.75rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: 1.15rem;
+  width: 48px;
+  height: 48px;
+  background-color: #000000;
+  color: #ffffff;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.15rem;
 }
 
 /* Color específico para los iconos al lado de los números */
 .step-icon-color {
-    color: #a1a1aa;
+  color: #a1a1aa;
 }
 
 /* Cajas grises claras para los iconos de las tarjetas inferiores */
 .feature-icon-box {
-    width: 42px;
-    height: 42px;
-    background-color: #f3f4f6;
-    border-radius: 0.6rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #4b5563;
-    flex-shrink: 0; /* Evita que el ícono se aplaste */
+  width: 42px;
+  height: 42px;
+  background-color: #f3f4f6;
+  border-radius: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4b5563;
+  flex-shrink: 0; /* Evita que el ícono se aplaste */
 }
 
 /* Colores de texto ajustados a la imagen */
 .text-custom-gray {
-    color: #6b7280;
+  color: #6b7280;
 }
 .title-step-h3 {
-    font-size: 1.15rem;
+  font-size: 1.15rem;
 }
 .text-step-p {
-    font-size: 0.9rem;
-    line-height: 1.6;
+  font-size: 0.9rem;
+  line-height: 1.6;
 }
 .feature-title {
-    font-size: 0.9rem;
+  font-size: 0.9rem;
 }
 .feature-text {
-    font-size: 0.75rem;
+  font-size: 0.75rem;
 }
 
 /* Estos son los estilos para la galeria de imagenes */
 .gallery-img-container {
-    position: relative;
-    overflow: hidden;
-    border-radius: 1rem;
-    display: block;
-    width: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  display: block;
+  width: 100%;
 }
 
 .gallery-img-container img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition:
-        transform 0.3s ease-in-out,
-        filter 0.3s ease-in-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition:
+    transform 0.3s ease-in-out,
+    filter 0.3s ease-in-out;
 }
 
 .gallery-img-container:hover img {
-    transform: scale(1.05);
-    filter: brightness(0.9);
+  transform: scale(1.05);
+  filter: brightness(0.9);
 }
 
 /* Damos estilos para obtener las proporsiones exactas */
 .gallery-img-sub {
-    aspect-ratio: 4/3;
+  aspect-ratio: 4/3;
 }
 
 .gallery-img-main {
-    min-height: 350px;
-    height: 100%;
+  min-height: 350px;
+  height: 100%;
 }
 
 .img-grayscale img {
-    filter: grayscale(100%);
+  filter: grayscale(100%);
 }
 
 .img-grayscale:hover img {
-    filter: grayscale(0%);
+  filter: grayscale(0%);
 }
 
 /* Estilos para las tarjetas */
 .card-custom {
-    background-color: #141414;
-    border: 1px solid #2a2a2a;
-    border-radius: 1rem;
-    transition: all 0.2s ease-in-out;
+  background-color: #141414;
+  border: 1px solid #2a2a2a;
+  border-radius: 1rem;
+  transition: all 0.2s ease-in-out;
 }
 
 .card-custom:hover {
-    background-color: var(--color-dark);
-    border-color: rgba(64, 182, 34, 0.3);
+  background-color: var(--color-dark);
+  border-color: rgba(64, 182, 34, 0.3);
 }
 
 .step-card {
-    background-color: #fff;
-    border-radius: 1rem;
-    transition: transform 0.2s ease-in-out;
+  background-color: #fff;
+  border-radius: 1rem;
+  transition: transform 0.2s ease-in-out;
 }
 
 .step-card:hover {
-    transform: translateY(-4px);
+  transform: translateY(-4px);
 }
 
 /* Estilos para el boton flotante que nos vuelv al inicio de la página */
 #btnScrollTop {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    display: none; /* Oculto hasta que se haga scroll */
-    z-index: 999;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    transition: background-color 0.3s ease;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  display: none; /* Oculto hasta que se haga scroll */
+  z-index: 999;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
 }
 
 /* Esto estilos son para que los modales sean responsivos y se vean bien en cualquier dispositivo */
 .modal-img-wrapper {
-    height: 220px;
+  height: 220px;
 }
 
 @media (max-width: 992px) {
-    .modal-img-wrapper {
-        height: auto;
-        min-height: 100%;
-    }
-    .titulo {
-        font-size: 3rem;
-    }
+  .modal-img-wrapper {
+    height: auto;
+    min-height: 100%;
+  }
+  .titulo {
+    font-size: 3rem;
+  }
 
-    .imagen-historia {
-        margin-top: 30px;
-    }
+  .imagen-historia {
+    margin-top: 30px;
+  }
 
-    .frase {
-        font-size: 1.5rem;
-    }
+  .frase {
+    font-size: 1.5rem;
+  }
 }
 
 @media (max-width: 768px) {
-    .historia {
-        padding: 50px 15px;
-    }
+  .historia {
+    padding: 50px 15px;
+  }
 
-    .gallery-img-main {
-        min-height: 100%;
-    }
+  .gallery-img-main {
+    min-height: 100%;
+  }
 
-    .titulo {
-        font-size: 2.3rem;
-    }
+  .titulo {
+    font-size: 2.3rem;
+  }
 
-    .historia p {
-        font-size: 1rem;
-    }
+  .historia p {
+    font-size: 1rem;
+  }
 
-    .frase {
-        font-size: 1.2rem;
-    }
+  .frase {
+    font-size: 1.2rem;
+  }
 
-    .card {
-        padding: 20px;
-    }
+  .card {
+    padding: 20px;
+  }
 }

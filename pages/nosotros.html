@@ -1,679 +1,442 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Nosotros</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nosotros</title>
 
-        <!-- Google Fonts (Brand Kit: Inter & Bebas Neue) -->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Inter:wght@400;500;700;800&amp;display=swap"
-            rel="stylesheet"
-        />
-        <!-- BOOTSTRAP -->
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-        />
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
-        />
-        <link rel="stylesheet" href="../css/views/nosotros.css" />
-    </head>
+    <!-- Google Fonts (Brand Kit: Inter & Bebas Neue) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Inter:wght@400;500;700;800&amp;display=swap"
+      rel="stylesheet" />
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="../css/views/nosotros.css" />
+  </head>
 
-    <body class="bg-light d-flex flex-column min-height-vh-100">
-        <nav
-            class="navbar navbar-expand-lg navbar-light bg-white sticky-top py-3 border-top border-4 border-brand-green shadow-sm"
-        >
-            <div class="container-fluid px-3 px-lg-5">
-                <a
-                    class="navbar-brand d-flex align-items-center gap-2 m-0"
-                    href="../index.html"
-                >
-                    <div
-                        class="text-white d-flex align-items-center justify-content-center rounded-3 fw-bold logo-box"
-                    >
-                        D
-                    </div>
-                    <span class="fs-5 fw-black text-brand-dark tracking-tight">
-                        DEV<span class="fw-bold text-brand-mid-green"
-                            >PORTES</span
-                        >
-                    </span>
-                </a>
-
-                <button
-                    class="navbar-toggler p-2 text-secondary border-0"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarMenu"
-                    aria-controls="navbarMenu"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                >
-                    <svg
-                        class="bi bi-list"
-                        width="24"
-                        height="24"
-                        fill="currentColor"
-                        viewBox="0 0 16 16"
-                    >
-                        <path
-                            fill-rule="evenodd"
-                            d="M2.5 12.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1zm0-4a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1zm0-4a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1z"
-                        />
-                    </svg>
-                </button>
-
-                <div
-                    class="collapse navbar-collapse mt-4 mt-lg-0 justify-content-lg-between"
-                    id="navbarMenu"
-                >
-                    <ul
-                        class="navbar-nav mx-auto gap-lg-2 text-center my-3 my-lg-0 px-lg-4 text-nowrap"
-                    >
-                        <li class="nav-item">
-                            <a
-                                class="nav-link fw-bold text-brand-mid-green px-2"
-                                >Nuestras Canchas</a
-                            >
-                        </li>
-                        <li class="nav-item">
-                            <a
-                                class="nav-link nav-link-custom transition-base px-2"
-                                href="./nosotros.html"
-                                >Nosotros</a
-                            >
-                        </li>
-                        <li class="nav-item">
-                            <a
-                                class="nav-link nav-link-custom transition-base px-2"
-                                >¿Cómo funciona?</a
-                            >
-                        </li>
-                        <li class="nav-item">
-                            <a
-                                class="nav-link nav-link-custom transition-base px-2"
-                                href="#"
-                                >Galería</a
-                            >
-                        </li>
-                    </ul>
-
-                    <div class="d-grid d-lg-flex align-items-center gap-3">
-                        <a
-                            href="#"
-                            class="btn btn-outline-custom rounded-3 px-4 py-2 text-nowrap transition-base"
-                        >
-                            Iniciar Sesión
-                        </a>
-                        <a
-                            href="#"
-                            class="btn btn-brand rounded-pill px-4 py-2 d-flex align-items-center justify-content-center gap-2 text-nowrap transition-base"
-                        >
-                            Reservar Ahora <span>&rarr;</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </nav>
-
-        <!-- INICIO: MAURICIO -->
-
-        <section class="bg-hero py-5">
-            <div class="container py-lg-4 d-flex justify-content-center">
-                <div class="row align-items-center g-5">
-                    <!-- Columna Izquierda: Texto y Botón -->
-                    <div class="col-lg-5">
-                        <h1
-                            class="display-1 display-lg-2 fw-bold mb-3 brand-heading"
-                        >
-                            Equipo listo,
-                            <span class="d-block">Cancha lista</span>
-                        </h1>
-                        <p class="text-secondary fs-5 mb-4">
-                            Conectamos a apasionados del deporte con los mejores
-                            espacios de la ciudad. Reserva en segundos y sal a
-                            jugar.
-                        </p>
-                        <a
-                            href="#"
-                            class="btn btn-brand-dark text-decoration-none"
-                        >
-                            Nuestras canchas
-                        </a>
-                    </div>
-
-                    <!-- Der: Galería de Imágenes -->
-                    <div class="col-lg-7">
-                        <div class="row g-3">
-                            <!-- Columna Interna Izquierda (2 imágenes apiladas) -->
-                            <div class="col-6 d-flex flex-column gap-4">
-                                <img
-                                    src="https://images.unsplash.com/photo-1624280157150-4d1ed8632989"
-                                    alt="Futbol"
-                                    class="img-fluid rounded-custom object-fit-cover h-50"
-                                />
-                                <img
-                                    src="https://images.unsplash.com/photo-1624295059100-0ca889087b54?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNvY2NlciUyMHRlYW18ZW58MHx8MHx8fDA%3D"
-                                    alt="Estiramiento"
-                                    class="img-fluid rounded-custom object-fit-cover h-50"
-                                />
-                            </div>
-                            <!-- Columna Interna Derecha (1 imagen alta) -->
-                            <div class="col-6">
-                                <img
-                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO17zIdKvi71mxolW2Q_BwD65ReoBtoVlDucL5sJT-LWceXi4OrIGEF7E"
-                                    alt="Bienestar"
-                                    class="img-fluid rounded-custom object-fit-cover w-100"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <hr class="m-0 p-0" />
-
-        <!-- SECCIÓN INFERIOR -->
-        <section class="bg-white py-5 d-flex justify-content-center">
-            <div class="container py-lg-4">
-                <div class="row g-5">
-                    <!-- Columna Izquierda: Contenido de Texto -->
-                    <div class="col-lg-6">
-                        <h2 class="brand-heading fw-bold mb-3">
-                            Simplificamos la forma en que el deporte se vive y
-                            se comparte.
-                        </h2>
-                        <p class="text-secondary small fs-6 mb-3">
-                            Nacimos con la visión de eliminar las complicaciones
-                            al momento de organizar un partido. Unimos
-                            tecnología ágil y gestión en tiempo real para que
-                            encontrar una cancha disponible sea tan rápido como
-                            dar un pase.
-                        </p>
-                        <p class="text-secondary small fs-6 mb-0">
-                            Queremos activar a las ciudades impulsando la vida
-                            comunitaria, el rendimiento y el entretenimiento
-                            deportivo. Desde partidos casuales con amigos hasta
-                            torneos locales, construimos las herramientas para
-                            que solo te preocupes por el juego.
-                        </p>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="video-container shadow-lg">
-                            <img
-                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx-LfydjnpmTIVYLchDftbQhRLgCKgWv2m8ie0byY3yANaG7_LBdXnp60"
-                                alt="Imagen de Reserva"
-                                width="600"
-                                height="350"
-                            />
-                            <!-- Overlay con Botón "Reservar Ya" -->
-                            <div class="reserve-btn-overlay">
-                                <a href="#" class="btn-reserve">
-                                    Reservar ya <span class="ms-1">&gt;</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- FINAL: MAURICIO -->
-
-        <section class="about-santiago p-2">
-            <div class="container-fluid">
-                <div class="row text-center mb-5">
-                    <!-- Primera fila -->
-                    <div
-                        class="col-12 d-flex justify-content-center align-items-center"
-                    >
-                        <h3 class="display-1 mt-5 brand-heading">
-                            ¿Cómo funciona Golaya.com?
-                        </h3>
-                    </div>
-                    <div>
-                        <hr class="linea-about" />
-                    </div>
-                    <div class="col">
-                        <div>
-                            <i class="bi bi-1-square-fill icono-grande"></i>
-                        </div>
-                        <h3 class="h3 brand-heading">
-                            Registrate/Inicia Sesión
-                        </h3>
-                        <p>
-                            Pegueloooo Lorem, ipsum dolor sit amet consectetur
-                            adipisicing elit. Amet quaerat, odit minus nobis id
-                            neque, minima quisquam saepe, a aspernatur vitae
-                            culpa molestias quae. Quam illo impedit debitis
-                            doloremque modi?
-                        </p>
-                    </div>
-                    <div class="col">
-                        <div>
-                            <i class="bi bi-2-square-fill icono-grande"></i>
-                        </div>
-                        <h3 class="h3 brand-heading">¡Reserva!</h3>
-                        <p>
-                            Sobeloooo Lorem, ipsum dolor sit amet consectetur
-                            adipisicing elit. Ipsam molestias, atque odio
-                            reprehenderit unde iusto voluptas! Tempore, quia a
-                            natus hic, tenetur nostrum, soluta quam dolorum in
-                            voluptas sint facilis.
-                        </p>
-                    </div>
-                    <div class="col">
-                        <div>
-                            <i class="bi bi-3-square-fill icono-grande"></i>
-                        </div>
-                        <h3 class="h3 brand-heading">
-                            Ven y disfruta de TUS espacios
-                        </h3>
-                        <p>
-                            Añañaaai Lorem, ipsum dolor sit amet consectetur
-                            adipisicing elit. Ipsam molestias, atque odio
-                            reprehenderit unde iusto voluptas! Tempore, quia a
-                            natus hic, tenetur nostrum, soluta quam dolorum in
-                            voluptas sint facilis.
-                        </p>
-                    </div>
-                </div>
-                <hr class="linea-about" />
-                <div class="row text-center">
-                    <!-- Segunda fila -->
-                    <div
-                        class="col d-flex justify-content-center align-items-center"
-                    >
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Sunt ad non error est quaerat fugiat modi ut
-                        exercitationem earum deleniti, recusandae labore! Ipsum
-                        odio autem voluptatibus saepe quibusdam in harum?
-                    </div>
-                    <div
-                        class="col d-flex justify-content-center align-items-center"
-                    >
-                        <img
-                            class="img-fluid imgEquipo"
-                            src="../assets/img/equipoCasaRoca.jpeg"
-                            alt="Equipo Casa Roca"
-                        />
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="historia">
-            <div class="container">
-                <div class="row align-items-center gy-5 mt-4">
-                    <div class="col-lg-7 container">
-                        <h2
-                            class="titulo brand-heading display-1 row justify-content-center"
-                        >
-                            Nuestra Mision
-                        </h2>
-
-                        <p>
-                            Nuestra plataforma nació con el propósito de
-                            facilitar la reserva de canchas deportivas de una
-                            manera rápida, segura y completamente en línea.
-                            Queremos que cada jugador pueda organizar sus
-                            partidos sin perder tiempo realizando llamadas o
-                            visitando diferentes escenarios deportivos.
-                        </p>
-
-                        <p>
-                            Con el paso del tiempo hemos trabajado para mejorar
-                            la experiencia de nuestros usuarios, ofreciendo una
-                            interfaz sencilla, información actualizada sobre
-                            disponibilidad de horarios y un sistema que permite
-                            realizar reservas desde cualquier dispositivo y de
-                            manera muy automatizada.
-                        </p>
-
-                        <p>
-                            Nuestro compromiso es brindar un servicio confiable,
-                            moderno y accesible para fomentar el deporte, la
-                            integración entre amigos, familias y equipos
-                            deportivos.
-                        </p>
-                    </div>
-
-                    <div class="col-lg-5 text-center">
-                        <img
-                            src="../assets/img/canchafutbol.jpg"
-                            class="imagen-historia shadow-lg"
-                            alt="Equipo"
-                        />
-                    </div>
-                </div>
-
-                <hr />
-
-                <div
-                    class="row justify-content-center card-andres shadow border-2 rounded-5 container mt-3 p-5"
-                >
-                    <div class="col-lg-12 text-center justify-content-center">
-                        <h3 class="frase brand-heading">
-                            Creemos que el deporte une a las personas. Nuestro
-                            objetivo es ofrecer una plataforma rápida, sencilla
-                            y confiable para que reservar una cancha sea tan
-                            fácil como disfrutar del partido.
-                        </h3>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ----------Seccion Equipo de Desarrollo ----------------- -->
-        <hr />
-        <section class="desarrollado-por">
-            <div class="container-fluid cont-info-comple">
-                <div class="div-titulo p-3">
-                    <h2 class="brand-heading display-1">Desarrollado Por</h2>
-                    <p>
-                        Una hermandad enfocada a entregar calidad antes que
-                        cantidad
-                    </p>
-                </div>
-
-                <div class="container-fluid cont-tarjetas">
-                    <div class="row g-4 justify-content-center">
-                        <div class="d-flex justify-content-center div-card">
-                            <div class="card-inner w-100">
-                                <div class="card w-100">
-                                    <img
-                                        src="../assets/img/camilo.png"
-                                        class="card-img-top"
-                                        alt="..."
-                                    />
-                                    <div class="card-body">
-                                        <h3 class="brand-heading">
-                                            Camilo Bermeo
-                                        </h3>
-                                        <p>Backend Developer</p>
-                                    </div>
-                                </div>
-                                <div class="card card-reves w-100">
-                                    <div class="card-body">
-                                        <h3 class="brand-heading">
-                                            Camilo Bermeo
-                                        </h3>
-                                        <p>
-                                            Diseña soluciones de backend con
-                                            enfoque en seguridad, escalabilidad
-                                            y mantenimiento.
-                                        </p>
-                                        <div class="badge-group">
-                                            <span>Backend</span>
-                                            <span>APIs</span>
-                                            <span>Calidad</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div
-                            class="col-12 col-sm-6 col-lg-4 col-xl-2 d-flex justify-content-center div-card"
-                        >
-                            <div class="card-inner w-100">
-                                <div class="card w-100">
-                                    <img
-                                        src="https://avatars.githubusercontent.com/u/297007275?v=4"
-                                        class="card-img-top"
-                                        alt="..."
-                                    />
-                                    <div class="card-body">
-                                        <h3 class="brand-heading">
-                                            Mauricio Alvarez
-                                        </h3>
-                                        <p>Full-Stack Developer</p>
-                                    </div>
-                                </div>
-                                <div class="card card-reves w-100">
-                                    <div class="card-body">
-                                        <h3 class="brand-heading">
-                                            Mauricio Alvarez
-                                        </h3>
-                                        <p>
-                                            Apasionado por construir
-                                            experiencias claras, intuitivas y
-                                            con enfoque en el usuario.
-                                        </p>
-                                        <div class="badge-group">
-                                            <span>Frontend</span>
-                                            <span>UX</span>
-                                            <span>Diseño</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            class="col-12 col-sm-6 col-lg-4 col-xl-2 d-flex justify-content-center div-card"
-                        >
-                            <div class="card-inner w-100">
-                                <div class="card w-100">
-                                    <img
-                                        src="../assets/img/persona1.jpg"
-                                        class="card-img-top"
-                                        alt="..."
-                                    />
-                                    <div class="card-body">
-                                        <h3 class="brand-heading">
-                                            Felipe Bejarano
-                                        </h3>
-                                        <p>Full-Stack Developer</p>
-                                    </div>
-                                </div>
-                                <div class="card card-reves w-100">
-                                    <div class="card-body">
-                                        <h3 class="brand-heading">
-                                            Felipe Bejarano
-                                        </h3>
-                                        <p>
-                                            Especialista en integrar sistemas
-                                            con enfoque en calidad, orden y
-                                            mantenibilidad.
-                                        </p>
-                                        <div class="badge-group">
-                                            <span>Integración</span>
-                                            <span>QA</span>
-                                            <span>Optimización</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            class="col-12 col-sm-6 col-lg-4 col-xl-2 d-flex justify-content-center div-card"
-                        >
-                            <div class="card-inner w-100">
-                                <div class="card w-100">
-                                    <img
-                                        src="../assets/img/persona1.jpg"
-                                        class="card-img-top"
-                                        alt="..."
-                                    />
-                                    <div class="card-body">
-                                        <h3 class="brand-heading">
-                                            Deiby Moreno
-                                        </h3>
-                                        <p>Full-Stack Developer</p>
-                                    </div>
-                                </div>
-                                <div class="card card-reves w-100">
-                                    <div class="card-body">
-                                        <h3 class="brand-heading">
-                                            Deiby Moreno
-                                        </h3>
-                                        <p>
-                                            Comprometido con entregar productos
-                                            útiles, bien diseñados y listos para
-                                            crecer.
-                                        </p>
-                                        <div class="badge-group">
-                                            <span>Producto</span>
-                                            <span>Escalabilidad</span>
-                                            <span>Innovación</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div
-                            class="col-12 col-sm-6 col-lg-4 col-xl-2 d-flex justify-content-center div-card"
-                        >
-                            <div class="card-inner w-100">
-                                <div class="card w-100">
-                                    <img
-                                        src="../assets/img/persona1.jpg"
-                                        class="card-img-top"
-                                        alt="..."
-                                    />
-                                    <div class="card-body">
-                                        <h3 class="brand-heading">
-                                            Andres Guzman
-                                        </h3>
-                                        <p>Full-Stack Developer</p>
-                                    </div>
-                                </div>
-                                <div class="card card-reves w-100">
-                                    <div class="card-body">
-                                        <h3 class="brand-heading">
-                                            Andrés Guzmán
-                                        </h3>
-                                        <p>
-                                            Combina desarrollo y soporte para
-                                            entregar productos modernos,
-                                            estables y fáciles de mantener.
-                                        </p>
-                                        <div class="badge-group">
-                                            <span>Full Stack</span>
-                                            <span>Soporte</span>
-                                            <span>Escalabilidad</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="cont-contactenos d-flex justify-content-center">
-                        <div class="cont-info-contact p-5">
-                            <h3 class="brand-heading display-5 text-white">
-                                ¿Necesitas un software de reservas?
-                            </h3>
-                            <p>
-                                Contactanos para obtener informacion sobre
-                                nuestros servicios y precios, la tecnologia
-                                avanza, el mundo avanza, tu que esperas para
-                                avanzar?
-                            </p>
-                            <button type="button" class="btn-vamos">
-                                Vamos
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <hr />
-
-        <!--estos son temporales como guia de hasta donde abarca mi seccion-->
-
-        <footer
-            class="py-3 border-top border-4 border-brand-green mt-auto bg-brand-dark"
-        >
-            <div class="container-fluid px-3 px-lg-5">
-                <div
-                    class="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3"
-                >
-                    <div class="d-flex align-items-center gap-2">
-                        <div
-                            class="d-flex align-items-center justify-content-center rounded-3 fw-bold footer-logo-box"
-                        >
-                            D
-                        </div>
-                        <span
-                            class="fs-6 text-white m-0 tracking-tight fw-bolder"
-                        >
-                            DEVPORTES
-                        </span>
-                    </div>
-                    <ul
-                        class="nav justify-content-center gap-3 gap-md-4 font-medium small"
-                    >
-                        <li class="nav-item">
-                            <a
-                                class="nav-link p-0 text-white-50 text-brand-green-hover transition-base"
-                                >Nuestras Canchas</a
-                            >
-                        </li>
-                        <li class="nav-item">
-                            <a
-                                href="./pages/nosotros.html"
-                                class="nav-link p-0 text-white-50 text-brand-green-hover transition-base"
-                                >Nosotros</a
-                            >
-                        </li>
-                        <li class="nav-item">
-                            <a
-                                class="nav-link p-0 text-white-50 text-brand-green-hover transition-base"
-                                >¿Cómo funciona?</a
-                            >
-                        </li>
-                        <li class="nav-item">
-                            <a
-                                href="#"
-                                class="nav-link p-0 text-white-50 text-brand-green-hover transition-base"
-                                >Galería</a
-                            >
-                        </li>
-                        <li class="nav-item">
-                            <a
-                                href="#"
-                                class="nav-link p-0 text-white-50 text-brand-green-hover transition-base"
-                                >Política de Privacidad</a
-                            >
-                        </li>
-                    </ul>
-                    <div class="text-center text-lg-end">
-                        <p class="m-0 text-white-50 text-tiny">
-                            &copy; 2026 Devportes.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </footer>
+  <body class="bg-light d-flex flex-column min-height-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top py-3 border-top border-4 border-brand-green shadow-sm">
+      <div class="container-fluid px-3 px-lg-5">
+        <a class="navbar-brand d-flex align-items-center gap-2 m-0" href="../index.html">
+          <div class="text-white d-flex align-items-center justify-content-center rounded-3 fw-bold logo-box">D</div>
+          <span class="fs-5 fw-black text-brand-dark tracking-tight">
+            DEV<span class="fw-bold text-brand-mid-green">PORTES</span>
+          </span>
+        </a>
 
         <button
-            id="btnScrollTop"
-            class="btn btn-brand"
-            aria-label="Subir al inicio"
-        >
-            <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                <path
-                    fill-rule="evenodd"
-                    d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"
-                />
-            </svg>
+          class="navbar-toggler p-2 text-secondary border-0"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarMenu"
+          aria-controls="navbarMenu"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+          <svg class="bi bi-list" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+            <path
+              fill-rule="evenodd"
+              d="M2.5 12.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1zm0-4a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1zm0-4a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1z" />
+          </svg>
         </button>
 
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-            crossorigin="anonymous"
-            defer
-        ></script>
+        <div class="collapse navbar-collapse mt-4 mt-lg-0 justify-content-lg-between" id="navbarMenu">
+          <ul class="navbar-nav mx-auto gap-lg-2 text-center my-3 my-lg-0 px-lg-4 text-nowrap">
+            <li class="nav-item">
+              <a class="nav-link fw-bold text-brand-mid-green px-2">Nuestras Canchas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link nav-link-custom transition-base px-2" href="./nosotros.html">Nosotros</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link nav-link-custom transition-base px-2">¿Cómo funciona?</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link nav-link-custom transition-base px-2" href="#">Galería</a>
+            </li>
+          </ul>
 
-        <script src="../JS/api/views/index.js" defer></script>
-    </body>
+          <div class="d-grid d-lg-flex align-items-center gap-3">
+            <a href="#" class="btn btn-outline-custom rounded-3 px-4 py-2 text-nowrap transition-base"> Iniciar Sesión </a>
+            <a
+              href="#"
+              class="btn btn-brand rounded-pill px-4 py-2 d-flex align-items-center justify-content-center gap-2 text-nowrap transition-base">
+              Reservar Ahora <span>&rarr;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- INICIO: MAURICIO -->
+
+    <section class="bg-hero py-5">
+      <div class="container py-lg-4 d-flex justify-content-center">
+        <div class="row align-items-center g-5">
+          <!-- Columna Izquierda: Texto y Botón -->
+          <div class="col-lg-5">
+            <h1 class="display-1 display-lg-2 fw-bold mb-3 brand-heading">
+              Equipo listo,
+              <span class="d-block">Cancha lista</span>
+            </h1>
+            <p class="text-secondary fs-5 mb-4">
+              Conectamos a apasionados del deporte con los mejores espacios de la ciudad. Reserva en segundos y sal a jugar.
+            </p>
+            <a href="#" class="btn btn-brand-dark text-decoration-none"> Nuestras canchas </a>
+          </div>
+
+          <!-- Der: Galería de Imágenes -->
+          <div class="col-lg-7">
+            <div class="row g-3">
+              <!-- Columna Interna Izquierda (2 imágenes apiladas) -->
+              <div class="col-6 d-flex flex-column gap-4">
+                <img
+                  src="https://images.unsplash.com/photo-1624280157150-4d1ed8632989"
+                  alt="Futbol"
+                  class="img-fluid rounded-custom object-fit-cover h-50" />
+                <img
+                  src="https://images.unsplash.com/photo-1624295059100-0ca889087b54?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNvY2NlciUyMHRlYW18ZW58MHx8MHx8fDA%3D"
+                  alt="Estiramiento"
+                  class="img-fluid rounded-custom object-fit-cover h-50" />
+              </div>
+              <!-- Columna Interna Derecha (1 imagen alta) -->
+              <div class="col-6">
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO17zIdKvi71mxolW2Q_BwD65ReoBtoVlDucL5sJT-LWceXi4OrIGEF7E"
+                  alt="Bienestar"
+                  class="img-fluid rounded-custom object-fit-cover w-100" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="m-0 p-0" />
+
+    <!-- SECCIÓN INFERIOR -->
+    <section class="bg-white py-5 d-flex justify-content-center">
+      <div class="container py-lg-4">
+        <div class="row g-5">
+          <!-- Columna Izquierda: Contenido de Texto -->
+          <div class="col-lg-6">
+            <h2 class="brand-heading fw-bold mb-3">Simplificamos la forma en que el deporte se vive y se comparte.</h2>
+            <p class="text-secondary small fs-6 mb-3">
+              Nacimos con la visión de eliminar las complicaciones al momento de organizar un partido. Unimos tecnología ágil y
+              gestión en tiempo real para que encontrar una cancha disponible sea tan rápido como dar un pase.
+            </p>
+            <p class="text-secondary small fs-6 mb-0">
+              Queremos activar a las ciudades impulsando la vida comunitaria, el rendimiento y el entretenimiento deportivo. Desde
+              partidos casuales con amigos hasta torneos locales, construimos las herramientas para que solo te preocupes por el
+              juego.
+            </p>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="video-container shadow-lg">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx-LfydjnpmTIVYLchDftbQhRLgCKgWv2m8ie0byY3yANaG7_LBdXnp60"
+                alt="Imagen de Reserva"
+                width="600"
+                height="350" />
+              <!-- Overlay con Botón "Reservar Ya" -->
+              <div class="reserve-btn-overlay">
+                <a href="#" class="btn-reserve"> Reservar ya <span class="ms-1">&gt;</span> </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL: MAURICIO -->
+
+    <section class="about-santiago p-2">
+      <div class="container-fluid">
+        <div class="row text-center mb-5">
+          <!-- Primera fila -->
+          <div class="col-12 d-flex justify-content-center align-items-center">
+            <h3 class="display-1 mt-5 brand-heading">¿Cómo funciona Golaya.com?</h3>
+          </div>
+          <div>
+            <hr class="linea-about" />
+          </div>
+          <div class="col">
+            <div>
+              <i class="bi bi-1-square-fill icono-grande"></i>
+            </div>
+            <h3 class="h3 brand-heading">Registrate/Inicia Sesión</h3>
+            <p>
+              Pegueloooo Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet quaerat, odit minus nobis id neque, minima
+              quisquam saepe, a aspernatur vitae culpa molestias quae. Quam illo impedit debitis doloremque modi?
+            </p>
+          </div>
+          <div class="col">
+            <div>
+              <i class="bi bi-2-square-fill icono-grande"></i>
+            </div>
+            <h3 class="h3 brand-heading">¡Reserva!</h3>
+            <p>
+              Sobeloooo Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam molestias, atque odio reprehenderit unde
+              iusto voluptas! Tempore, quia a natus hic, tenetur nostrum, soluta quam dolorum in voluptas sint facilis.
+            </p>
+          </div>
+          <div class="col">
+            <div>
+              <i class="bi bi-3-square-fill icono-grande"></i>
+            </div>
+            <h3 class="h3 brand-heading">Ven y disfruta de TUS espacios</h3>
+            <p>
+              Añañaaai Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam molestias, atque odio reprehenderit unde
+              iusto voluptas! Tempore, quia a natus hic, tenetur nostrum, soluta quam dolorum in voluptas sint facilis.
+            </p>
+          </div>
+        </div>
+        <hr class="linea-about" />
+        <div class="row text-center">
+          <!-- Segunda fila -->
+          <div class="col d-flex justify-content-center align-items-center">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt ad non error est quaerat fugiat modi ut exercitationem
+            earum deleniti, recusandae labore! Ipsum odio autem voluptatibus saepe quibusdam in harum?
+          </div>
+          <div class="col d-flex justify-content-center align-items-center">
+            <img class="img-fluid imgEquipo" src="../assets/img/equipoCasaRoca.jpeg" alt="Equipo Casa Roca" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="historia">
+      <div class="container">
+        <div class="row align-items-center gy-5 mt-4">
+          <div class="col-lg-7 container">
+            <h2 class="titulo brand-heading display-1 row justify-content-center">Nuestra Mision</h2>
+
+            <p>
+              Nuestra plataforma nació con el propósito de facilitar la reserva de canchas deportivas de una manera rápida, segura
+              y completamente en línea. Queremos que cada jugador pueda organizar sus partidos sin perder tiempo realizando
+              llamadas o visitando diferentes escenarios deportivos.
+            </p>
+
+            <p>
+              Con el paso del tiempo hemos trabajado para mejorar la experiencia de nuestros usuarios, ofreciendo una interfaz
+              sencilla, información actualizada sobre disponibilidad de horarios y un sistema que permite realizar reservas desde
+              cualquier dispositivo y de manera muy automatizada.
+            </p>
+
+            <p>
+              Nuestro compromiso es brindar un servicio confiable, moderno y accesible para fomentar el deporte, la integración
+              entre amigos, familias y equipos deportivos.
+            </p>
+          </div>
+
+          <div class="col-lg-5 text-center">
+            <img src="../assets/img/canchafutbol.jpg" class="imagen-historia shadow-lg" alt="Equipo" />
+          </div>
+        </div>
+
+        <hr />
+
+        <div class="row justify-content-center card-andres shadow border-2 rounded-5 container mt-3 p-5">
+          <div class="col-lg-12 text-center justify-content-center">
+            <h3 class="frase brand-heading">
+              Creemos que el deporte une a las personas. Nuestro objetivo es ofrecer una plataforma rápida, sencilla y confiable
+              para que reservar una cancha sea tan fácil como disfrutar del partido.
+            </h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------Seccion Equipo de Desarrollo ----------------- -->
+    <hr />
+    <section class="desarrollado-por">
+      <div class="container-fluid cont-info-comple">
+        <div class="div-titulo p-3">
+          <h2 class="brand-heading display-1">Desarrollado Por</h2>
+          <p>Una hermandad enfocada a entregar calidad antes que cantidad</p>
+        </div>
+
+        <div class="container-fluid cont-tarjetas">
+          <div class="row g-4 justify-content-center">
+            <div class="d-flex justify-content-center div-card">
+              <div class="card-inner w-100">
+                <div class="card w-100">
+                  <img src="../assets/img/camilo.png" class="card-img-top" alt="..." />
+                  <div class="card-body">
+                    <h3 class="brand-heading">Camilo Bermeo</h3>
+                    <p>Backend Developer</p>
+                  </div>
+                </div>
+                <div class="card card-reves w-100">
+                  <div class="card-body">
+                    <h3 class="brand-heading">Camilo Bermeo</h3>
+                    <p>Diseña soluciones de backend con enfoque en seguridad, escalabilidad y mantenimiento.</p>
+                    <div class="badge-group">
+                      <span>Backend</span>
+                      <span>APIs</span>
+                      <span>Calidad</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-4 col-xl-2 d-flex justify-content-center div-card">
+              <div class="card-inner w-100">
+                <div class="card w-100">
+                  <img src="https://avatars.githubusercontent.com/u/297007275?v=4" class="card-img-top" alt="..." />
+                  <div class="card-body">
+                    <h3 class="brand-heading">Mauricio Alvarez</h3>
+                    <p>Full-Stack Developer</p>
+                  </div>
+                </div>
+                <div class="card card-reves w-100">
+                  <div class="card-body">
+                    <h3 class="brand-heading">Mauricio Alvarez</h3>
+                    <p>Apasionado por construir experiencias claras, intuitivas y con enfoque en el usuario.</p>
+                    <div class="badge-group">
+                      <span>Frontend</span>
+                      <span>UX</span>
+                      <span>Diseño</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4 col-xl-2 d-flex justify-content-center div-card">
+              <div class="card-inner w-100">
+                <div class="card w-100">
+                  <img src="../assets/img/persona1.jpg" class="card-img-top" alt="..." />
+                  <div class="card-body">
+                    <h3 class="brand-heading">Felipe Bejarano</h3>
+                    <p>Full-Stack Developer</p>
+                  </div>
+                </div>
+                <div class="card card-reves w-100">
+                  <div class="card-body">
+                    <h3 class="brand-heading">Felipe Bejarano</h3>
+                    <p>Especialista en integrar sistemas con enfoque en calidad, orden y mantenibilidad.</p>
+                    <div class="badge-group">
+                      <span>Integración</span>
+                      <span>QA</span>
+                      <span>Optimización</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4 col-xl-2 d-flex justify-content-center div-card">
+              <div class="card-inner w-100">
+                <div class="card w-100">
+                  <img src="../assets/img/persona1.jpg" class="card-img-top" alt="..." />
+                  <div class="card-body">
+                    <h3 class="brand-heading">Deiby Moreno</h3>
+                    <p>Full-Stack Developer</p>
+                  </div>
+                </div>
+                <div class="card card-reves w-100">
+                  <div class="card-body">
+                    <h3 class="brand-heading">Deiby Moreno</h3>
+                    <p>Comprometido con entregar productos útiles, bien diseñados y listos para crecer.</p>
+                    <div class="badge-group">
+                      <span>Producto</span>
+                      <span>Escalabilidad</span>
+                      <span>Innovación</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-4 col-xl-2 d-flex justify-content-center div-card">
+              <div class="card-inner w-100">
+                <div class="card w-100">
+                  <img src="../assets/img/persona1.jpg" class="card-img-top" alt="..." />
+                  <div class="card-body">
+                    <h3 class="brand-heading">Andres Guzman</h3>
+                    <p>Full-Stack Developer</p>
+                  </div>
+                </div>
+                <div class="card card-reves w-100">
+                  <div class="card-body">
+                    <h3 class="brand-heading">Andrés Guzmán</h3>
+                    <p>Combina desarrollo y soporte para entregar productos modernos, estables y fáciles de mantener.</p>
+                    <div class="badge-group">
+                      <span>Full Stack</span>
+                      <span>Soporte</span>
+                      <span>Escalabilidad</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="cont-contactenos d-flex justify-content-center">
+            <div class="cont-info-contact p-5">
+              <h3 class="brand-heading display-5 text-white">¿Necesitas un software de reservas?</h3>
+              <p>
+                Contactanos para obtener informacion sobre nuestros servicios y precios, la tecnologia avanza, el mundo avanza, tu
+                que esperas para avanzar?
+              </p>
+              <button type="button" class="btn-vamos">Vamos</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <hr />
+
+    <!-- Esta es la sección del Footer  -->
+    <footer class="py-3 border-top border-4 border-brand-green mt-auto bg-brand-dark">
+      <div class="container-fluid px-3 px-lg-5">
+        <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3">
+          <div class="d-flex align-items-center gap-2">
+            <div class="d-flex align-items-center justify-content-center rounded-3 fw-bold footer-logo-box">D</div>
+            <span class="fs-6 text-white m-0 tracking-tight fw-bolder"> DEVPORTES </span>
+          </div>
+          <ul class="nav justify-content-center gap-3 gap-md-4 font-medium small">
+            <li class="nav-item">
+              <a class="nav-link p-0 text-white-50 text-brand-green-hover transition-base">Nuestras Canchas</a>
+            </li>
+            <li class="nav-item">
+              <a href="./pages/nosotros.html" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base"
+                >Nosotros</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link p-0 text-white-50 text-brand-green-hover transition-base">¿Cómo funciona?</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base">Galería</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base">Política de Privacidad</a>
+            </li>
+          </ul>
+          <div class="text-center text-lg-end">
+            <p class="m-0 text-white-50 text-tiny">&copy; 2026 Devportes.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <button id="btnScrollTop" class="btn btn-brand" aria-label="Subir al inicio">
+      <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+        <path
+          fill-rule="evenodd"
+          d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z" />
+      </svg>
+    </button>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+      defer></script>
+
+    <script src="../js/views/index.js" defer></script>
+  </body>
 </html>

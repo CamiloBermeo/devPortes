@@ -254,10 +254,6 @@
   font-weight: 500;
   transition: all 0.2s ease-in-out;
 }
-.btn-brand-dark:hover {
-  background-color: var(--color-terceario);
-  color: #ffffff;
-}
 .rounded-custom {
   border-radius: 1rem;
 }

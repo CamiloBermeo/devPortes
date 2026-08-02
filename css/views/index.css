@@ -66,17 +66,6 @@
   border-color: var(--color-terceario);
 }
 
-.btn-brand {
-  color: #fff;
-  background-color: var(--color-primario);
-  font-weight: 700;
-}
-
-.btn-brand:hover {
-  color: #fff;
-  background-color: var(--color-secundario);
-}
-
 /* Fondo de la sección similar al de la imagen */
 .bg-process-section {
   background-color: #f7f7f8;

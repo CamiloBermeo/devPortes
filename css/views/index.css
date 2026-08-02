@@ -6,7 +6,9 @@
 .bg-brand-mid-green {
   background-color: var(--color-secundario);
 }
-
+.bg-brand-dark {
+  background-color: var(--color-dark);
+}
 .text-brand-mid-green {
   color: var(--color-secundario);
 }
@@ -37,6 +39,9 @@
 .text-xxs-custom {
   font-size: 10px;
 }
+.text-tiny {
+  font-size: 0.75rem;
+}
 
 /* Estilos Sección Principal */
 .hero-section {
@@ -49,6 +54,29 @@
 /* Estilos para botones y enlaces */
 .transition-base {
   transition: all 0.2s ease-in-out;
+}
+
+.btn-outline-custom {
+  color: var(--color-dark);
+  border: 1px solid var(--color-dark);
+  background: transparent;
+}
+
+.btn-outline-custom:hover {
+  color: #fff;
+  background-color: var(--color-terceario);
+  border-color: var(--color-terceario);
+}
+
+.btn-brand {
+  color: #fff;
+  background-color: var(--color-primario);
+  font-weight: 700;
+}
+
+.btn-brand:hover {
+  color: #fff;
+  background-color: var(--color-secundario);
 }
 
 /* Fondo de la sección similar al de la imagen */

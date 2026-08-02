@@ -54,6 +54,13 @@ hr {
   border-color: var(--color-primario);
 }
 
+.logo-box {
+  width: 38px;
+  height: 38px;
+  font-size: 1.125rem;
+  background-color: var(--color-terceario);
+}
+
 .nav-link-custom {
   color: var(--color-dark);
   font-weight: 500;
@@ -74,6 +81,11 @@ hr {
 
 .text-brand-green-hover:hover {
   color: var(--color-primario) !important;
+}
+
+/* 4. BOTONES Y COMPONENTES REUTILIZABLES */
+.transition-base {
+  transition: all 0.2s ease-in-out;
 }
 
 .btn-outline-custom {
@@ -124,6 +136,10 @@ hr {
 
 .bg-brand-dark {
   background-color: var(--color-dark);
+}
+
+.text-brand-dark {
+  color: var(--color-dark);
 }
 
 .text-tiny {

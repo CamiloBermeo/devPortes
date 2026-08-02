@@ -51,18 +51,6 @@
   transition: all 0.2s ease-in-out;
 }
 
-.btn-outline-custom {
-  color: var(--color-dark);
-  border: 1px solid var(--color-dark);
-  background: transparent;
-}
-
-.btn-outline-custom:hover {
-  color: #fff;
-  background-color: var(--color-terceario);
-  border-color: var(--color-terceario);
-}
-
 /* Fondo de la sección similar al de la imagen */
 .bg-process-section {
   background-color: #f7f7f8;

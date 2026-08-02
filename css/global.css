@@ -54,13 +54,6 @@ hr {
   border-color: var(--color-primario);
 }
 
-.logo-box {
-  width: 38px;
-  height: 38px;
-  font-size: 1.125rem;
-  background-color: var(--color-terceario);
-}
-
 .nav-link-custom {
   color: var(--color-dark);
   font-weight: 500;
@@ -131,10 +124,6 @@ hr {
 
 .bg-brand-dark {
   background-color: var(--color-dark);
-}
-
-.text-brand-dark {
-  color: var(--color-dark);
 }
 
 .text-tiny {

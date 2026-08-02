@@ -146,10 +146,6 @@ hr {
   color: var(--color-dark);
 }
 
-.border-brand-green {
-  border-color: var(--color-primario);
-}
-
 .text-tiny {
   font-size: 0.75rem;
 }

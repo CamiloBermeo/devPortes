@@ -12,9 +12,7 @@
 .text-brand-mid-green {
   color: var(--color-secundario);
 }
-.text-brand-dark {
-  color: var(--color-dark);
-}
+
 .cursor-pointer {
   cursor: pointer;
 }

@@ -50,6 +50,9 @@ hr {
   background-color: var(--color-terceario);
 }
 
+.text-brand-mid-green {
+  color: var(--color-secundario);
+}
 .border-brand-green {
   border-color: var(--color-primario);
 }

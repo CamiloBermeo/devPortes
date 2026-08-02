@@ -15,15 +15,6 @@
 .text-brand-dark {
   color: var(--color-dark);
 }
-.border-brand-green {
-  border-color: var(--color-primario);
-}
-.logo-box {
-  width: 38px;
-  height: 38px;
-  font-size: 1.125rem;
-  background-color: var(--color-terceario);
-}
 .cursor-pointer {
   cursor: pointer;
 }

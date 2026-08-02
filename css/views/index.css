@@ -56,15 +56,6 @@
   transition: all 0.2s ease-in-out;
 }
 
-.nav-link-custom {
-  color: var(--color-dark);
-  font-weight: 500;
-}
-
-.nav-link-custom:hover {
-  color: var(--color-primario);
-}
-
 .btn-outline-custom {
   color: var(--color-dark);
   border: 1px solid var(--color-dark);

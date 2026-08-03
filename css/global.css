@@ -15,6 +15,8 @@
   --color-dark: #1c1c1c;
 }
 
+/* ESTILOS BASE */
+
 * {
   margin: 0;
   padding: 0;
@@ -50,15 +52,6 @@ hr {
   background-color: var(--color-terceario);
 }
 
-.text-brand-mid-green {
-  color: var(--color-secundario);
-}
-
-/* NAV */
-.border-brand-green {
-  border-color: var(--color-primario);
-}
-
 .nav-link-custom {
   color: var(--color-dark);
   font-weight: 500;
@@ -77,14 +70,7 @@ hr {
   color: var(--color-dark);
 }
 
-.text-brand-green-hover:hover {
-  color: var(--color-primario) !important;
-}
-
-/* 4. BOTONES Y COMPONENTES REUTILIZABLES */
-.transition-base {
-  transition: all 0.2s ease-in-out;
-}
+/* BOTONES Y COMPONENTES*/
 
 .btn-outline-custom {
   color: var(--color-dark);
@@ -109,6 +95,43 @@ hr {
   background-color: var(--color-secundario);
 }
 
+/* CLASES DE UTILIDAD GLOBALES */
+.transition-base {
+  transition: all 0.2s ease-in-out;
+}
+
+.brand-heading {
+  font-family: var(--font-tercearia);
+  font-weight: 800;
+  color: var(--color-dark);
+}
+
+.border-brand-green {
+  border-color: var(--color-primario);
+}
+
+.bg-brand-dark {
+  background-color: var(--color-dark);
+}
+
+.text-brand-dark {
+  color: var(--color-dark);
+}
+
+.text-tiny {
+  font-size: 0.75rem;
+}
+
+.text-brand-green-hover:hover {
+  color: var(--color-primario) !important;
+}
+
+.text-brand-mid-green {
+  color: var(--color-secundario);
+}
+
+/* ESTILOS COMPLEMENTOS JS */
+
 /* Botón flotante para scroll top */
 #btnScrollTop {
   position: fixed;
@@ -123,23 +146,4 @@ hr {
   align-items: center;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   transition: background-color 0.3s ease;
-}
-
-/* 5. CLASES DE UTILIDAD GLOBALES */
-.brand-heading {
-  font-family: var(--font-tercearia);
-  font-weight: 800;
-  color: var(--color-dark);
-}
-
-.bg-brand-dark {
-  background-color: var(--color-dark);
-}
-
-.text-brand-dark {
-  color: var(--color-dark);
-}
-
-.text-tiny {
-  font-size: 0.75rem;
 }

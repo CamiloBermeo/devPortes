@@ -6,9 +6,6 @@
 .bg-brand-mid-green {
   background-color: var(--color-secundario);
 }
-.bg-brand-dark {
-  background-color: var(--color-dark);
-}
 
 .cursor-pointer {
   cursor: pointer;

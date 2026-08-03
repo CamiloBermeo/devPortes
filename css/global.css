@@ -2,68 +2,68 @@
 ajostes globles de boostrap etc */
 
 :root {
-    /* Fuentes */
-    --font-principal: "inter bold", sans-serif;
-    --font-secundaria: "Inter", sans-serif;
-    --font-tercearia: "Bebas Neue", sans-serif;
+  /* Fuentes */
+  --font-principal: 'inter bold', sans-serif;
+  --font-secundaria: 'Inter', sans-serif;
+  --font-tercearia: 'Bebas Neue', sans-serif;
 
-    /* 5 Colores del sistema */
-    --color-primario: #40b622;
-    --color-secundario: #216e2a;
-    --color-terceario: #224330;
-    --color-exito: #5bbe49;
-    --color-cuaternario: #a1c9f5;
-    --color-fondo: #f8f9fa;
-    --color-texto: #1c1c1c;
-    --color-dark: #1c1c1c;
+  /* 5 Colores del sistema */
+  --color-primario: #40b622;
+  --color-secundario: #216e2a;
+  --color-terceario: #224330;
+  --color-exito: #5bbe49;
+  --color-cuaternario: #a1c9f5;
+  --color-fondo: #f8f9fa;
+  --color-texto: #1c1c1c;
+  --color-dark: #1c1c1c;
 }
 
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-link-custom {
-    color: var(--color-dark);
-    font-weight: 500;
+  color: var(--color-dark);
+  font-weight: 500;
 }
 
 .nav-link-custom:hover {
-    color: var(--color-primario);
+  color: var(--color-primario);
 }
 
 .footer-logo-box {
-    width: 32px;
-    height: 32px;
-    font-size: 1rem;
-    background-color: #ffffff;
-    color: var(--color-dark);
+  width: 32px;
+  height: 32px;
+  font-size: 1rem;
+  background-color: #ffffff;
+  color: var(--color-dark);
 }
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 body {
-    font-family: var(--font-secundaria); /* Parrafos y cuerpo */
-    background: linear-gradient(to bottom, #f8f9fa, #ffffff);
-    color: var(--color-dark);
+  font-family: var(--font-secundaria); /* Parrafos y cuerpo */
+  background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+  color: var(--color-dark);
 }
 
 hr {
-    border: none;
-    height: 2px;
-    background: #d9d9d9;
+  border: none;
+  height: 2px;
+  background: #d9d9d9;
 }
 
 .brand-heading-alt {
-    font-family: var(--font-principal);
-    font-weight: 800;
-    color: var(--color-dark);
+  font-family: var(--font-principal);
+  font-weight: 800;
+  color: var(--color-dark);
 }
 
 .brand-heading {
-    font-family: "Bebas Neue", sans-serif;
-    font-weight: 800;
-    color: var(--color-dark);
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 800;
+  color: var(--color-dark);
 }

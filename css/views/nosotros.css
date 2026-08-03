@@ -1,8 +1,6 @@
 @import '../global.css';
+
 .about-santiago {
-  min-height: 100vh;
-}
-.about-santiago .container-fluid {
   min-height: 100vh;
   display: flex;
   flex-direction: column;

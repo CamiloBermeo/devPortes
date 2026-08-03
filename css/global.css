@@ -53,6 +53,8 @@ hr {
 .text-brand-mid-green {
   color: var(--color-secundario);
 }
+
+/* NAV */
 .border-brand-green {
   border-color: var(--color-primario);
 }

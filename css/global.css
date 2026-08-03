@@ -95,6 +95,31 @@ hr {
   background-color: var(--color-secundario);
 }
 
+.reserve-btn-overlay {
+  width: 100%;
+  height: auto;
+  display: flex;
+  margin-top: 2rem;
+  justify-content: flex-start;
+}
+
+.btn-reserve {
+  background-color: var(--color-dark);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 0.75rem 1.75rem;
+  border-radius: 50rem;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-reserve:hover {
+  background-color: var(--color-secundario);
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
 /* CLASES DE UTILIDAD GLOBALES */
 .transition-base {
   transition: all 0.2s ease-in-out;

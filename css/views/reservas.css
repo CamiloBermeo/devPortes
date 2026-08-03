@@ -1,1 +1,177 @@
-/*  */
+@import '../global.css';
+
+body {
+  background: #f3f4f6;
+}
+
+.seccion-visuales {
+  padding-top: 1.25rem;
+}
+
+.carousel-marcas {
+  overflow: hidden;
+  padding: 0.35rem 0;
+}
+
+.carousel-marcas .carousel-inner {
+  overflow: visible;
+}
+
+.carousel-marcas .carousel-item {
+  transition: transform 0.6s ease-in-out;
+}
+
+.carousel-marcas .carousel-item img {
+  width: 110px;
+  height: 78px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  opacity: 0.92;
+}
+
+@media (max-width: 767px) {
+  .carousel-marcas .carousel-item img {
+    width: 84px;
+    height: 60px;
+  }
+}
+
+.menu-pasos {
+  background: #d8d8d8;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.paso {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.9rem;
+  border-radius: 1rem;
+  background: #ececec;
+  color: #3e3e3e;
+}
+
+.paso.activo {
+  background: #1f1f1f;
+  color: #ffffff;
+}
+
+.icono-paso {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.4);
+  font-size: 1.15rem;
+  flex-shrink: 0;
+}
+
+.panel-formulario {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+}
+
+.titulo-formulario {
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  font-weight: 800;
+}
+
+.texto-secundario {
+  color: #6b7280;
+}
+
+.form-control,
+.form-select {
+  background: #f9fafb;
+  border: 1px solid #d1d5db;
+  border-radius: 0.85rem;
+  padding: 0.8rem 0.95rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 0.2rem rgba(64, 182, 34, 0.18);
+}
+
+.btn-siguiente {
+  background: #1f1f1f;
+  color: #ffffff;
+  border-radius: 0.8rem;
+  padding: 0.75rem 1.4rem;
+  font-weight: 700;
+}
+
+.btn-siguiente:hover {
+  background: #000000;
+  color: #ffffff;
+}
+
+.resumen-reserva {
+  background: #4f4f4f;
+  color: #ffffff;
+}
+
+.titulo-resumen {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.tarjeta-cancha {
+  background: #626262;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.nombre-cancha {
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.texto-cancha {
+  color: #e5e7eb;
+  font-size: 0.92rem;
+}
+
+.fila-detalle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.fila-detalle:last-child {
+  border-bottom: none;
+}
+
+.fila-detalle span {
+  color: #d1d5db;
+}
+
+.footer-logo-box {
+  width: 32px;
+  height: 32px;
+  font-size: 1rem;
+  background: #ffffff;
+  color: #1f1f1f;
+}
+
+@media (max-width: 991px) {
+  .menu-pasos {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .paso {
+    min-width: 170px;
+  }
+}

@@ -4,6 +4,45 @@ body {
   background: #f3f4f6;
 }
 
+main.container-fluid {
+  max-width: 1500px;
+  width: 100%;
+}
+
+.main-reservas-row {
+  min-height: 580px;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+}
+
+.cont-pasos,
+.col-lg-8,
+.col-lg-3 {
+  align-items: stretch;
+}
+
+.menu-pasos,
+.panel-formulario,
+.resumen-reserva {
+  height: 100%;
+}
+
+.cont-pasos {
+  width: 14rem;
+  flex: 0 0 14rem;
+}
+
+.panel-formulario {
+  width: 100%;
+}
+
+.resumen-reserva {
+  width: 100%;
+  max-width: 320px;
+  margin-left: auto;
+}
+
 .seccion-visuales {
   padding-top: 1.25rem;
 }
@@ -44,8 +83,11 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
+  
 }
-
+.cont-pasos{
+    width: 15em;
+}
 .paso {
   display: flex;
   align-items: center;
@@ -76,6 +118,9 @@ body {
 .panel-formulario {
   background: #ffffff;
   border: 1px solid #e5e7eb;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
 }
 
 .titulo-formulario {

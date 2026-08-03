@@ -1,13 +1,10 @@
-/* Aca se colocan todo lo que sea global, por ejemplo los colores globales, la tipografia,
-ajostes globles de boostrap etc */
-
 :root {
   /* Fuentes */
   --font-principal: 'inter bold', sans-serif;
   --font-secundaria: 'Inter', sans-serif;
   --font-tercearia: 'Bebas Neue', sans-serif;
 
-  /* 5 Colores del sistema */
+  /* Colores del Sistema */
   --color-primario: #40b622;
   --color-secundario: #216e2a;
   --color-terceario: #224330;
@@ -18,9 +15,41 @@ ajostes globles de boostrap etc */
   --color-dark: #1c1c1c;
 }
 
+/* ESTILOS BASE */
+
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: var(--font-secundaria);
+  background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+  color: var(--color-dark);
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity));
+}
+
+hr {
+  border: none;
+  height: 2px;
+  background: #d9d9d9;
+}
+
+/* 2. NAVBAR / NAVEGACIÓN */
+.logo-box {
+  width: 38px;
+  height: 38px;
+  font-size: 1.125rem;
+  background-color: var(--color-terceario);
 }
 
 .nav-link-custom {
@@ -32,6 +61,7 @@ ajostes globles de boostrap etc */
   color: var(--color-primario);
 }
 
+/* 3. FOOTER / PIE DE PÁGINA */
 .footer-logo-box {
   width: 32px;
   height: 32px;
@@ -40,30 +70,105 @@ ajostes globles de boostrap etc */
   color: var(--color-dark);
 }
 
-html {
-  scroll-behavior: smooth;
-}
+/* BOTONES Y COMPONENTES*/
 
-body {
-  font-family: var(--font-secundaria); /* Parrafos y cuerpo */
-  background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+.btn-outline-custom {
   color: var(--color-dark);
+  border: 1px solid var(--color-dark);
+  background: transparent;
 }
 
-hr {
-  border: none;
-  height: 2px;
-  background: #d9d9d9;
+.btn-outline-custom:hover {
+  color: #ffffff;
+  background-color: var(--color-terceario);
+  border-color: var(--color-terceario);
 }
 
-.brand-heading-alt {
-  font-family: var(--font-principal);
-  font-weight: 800;
-  color: var(--color-dark);
+.btn-brand {
+  color: #ffffff;
+  background-color: var(--color-primario);
+  font-weight: 700;
+}
+
+.btn-brand:hover {
+  color: #ffffff;
+  background-color: var(--color-secundario);
+}
+
+.reserve-btn-overlay {
+  width: 100%;
+  height: auto;
+  display: flex;
+  margin-top: 2rem;
+  justify-content: flex-start;
+}
+
+.btn-reserve {
+  background-color: var(--color-dark);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 0.75rem 1.75rem;
+  border-radius: 50rem;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-reserve:hover {
+  background-color: var(--color-secundario);
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+/* CLASES DE UTILIDAD GLOBALES */
+.transition-base {
+  transition: all 0.2s ease-in-out;
 }
 
 .brand-heading {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: var(--font-tercearia);
   font-weight: 800;
   color: var(--color-dark);
+}
+
+.border-brand-green {
+  border-color: var(--color-primario);
+}
+
+.bg-brand-dark {
+  background-color: var(--color-dark);
+}
+
+.text-brand-dark {
+  color: var(--color-dark);
+}
+
+.text-tiny {
+  font-size: 0.75rem;
+}
+
+.text-brand-green-hover:hover {
+  color: var(--color-primario) !important;
+}
+
+.text-brand-mid-green {
+  color: var(--color-secundario);
+}
+
+/* ESTILOS COMPLEMENTOS JS */
+
+/* Botón flotante para scroll top */
+#btnScrollTop {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  display: none; /* Oculto hasta activar por JS */
+  z-index: 999;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
 }

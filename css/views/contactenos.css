@@ -191,6 +191,7 @@
 }
 .boton-enviar-form:hover{
     background-color: var(--color-secundario);
+    color:white;
 }
 .mapa{
     width: 90%;

@@ -1,0 +1,65 @@
+/* Botón FAQ */
+.btn-faq {
+  background: linear-gradient(135deg, #0d6e3d, #198754);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-weight: bold;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  animation: pulse 2s infinite;
+}
+
+/* Hover */
+.btn-faq:hover {
+  transform: translateY(-5px) scale(1.08);
+  box-shadow: 0 15px 35px rgba(25, 135, 84, 0.45);
+}
+
+/* Click */
+.btn-faq:active {
+  transform: scale(0.92);
+}
+
+/* Brillo */
+.btn-faq::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: rgba(172, 144, 144, 0.35);
+  transform: skewX(-25deg);
+}
+
+.btn-faq:hover::before {
+  animation: brillo 0.8s linear;
+}
+
+@keyframes brillo {
+  100% {
+    left: 150%;
+  }
+}
+
+/* Pulso */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(25, 135, 84, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 18px rgba(243, 245, 244, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(234, 238, 238, 0);
+  }
+}
+
+/* Hover */
+.btn-faq:hover {
+  color: white;
+  transform: translateY(-5px) scale(1.08);
+  box-shadow: 0 15px 35px rgba(25, 135, 84, 0.45);
+}

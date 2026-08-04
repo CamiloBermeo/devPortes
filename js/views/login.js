@@ -401,4 +401,5 @@ document.addEventListener ('DOMContentLoaded', () => {
 
     // Cargar borradores o datos de inicio al arrancar la vista
     cargarDatosLocalStorage ();
+
 });

@@ -6,9 +6,10 @@ class AppNavbar extends HTMLElement {
     const pagesPath = isInsidePages ? './' : './pages/';
 
     const currentPage = path.split('/').pop() || 'index.html';
+    this.classList.add('sticky-top', 'd-block');
 
     this.innerHTML = `
-    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top py-3 border-top border-4 border-brand-green shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 border-top border-4 border-brand-green shadow-sm">
       <div class="container-fluid px-3 px-lg-5">
         <a class="navbar-brand d-flex align-items-center gap-2 m-0" href="${basePath}index.html">
           <div class="text-white d-flex align-items-center justify-content-center rounded-3 fw-bold logo-box">D</div>
@@ -53,9 +54,6 @@ class AppNavbar extends HTMLElement {
           <div class="d-grid d-lg-flex align-items-center gap-3">
             <a href="${pagesPath}login.html" class="btn btn-outline-custom rounded-3 px-4 py-2 text-nowrap transition-base">
               Iniciar Sesión
-            </a>
-            <a href="${basePath}index.html#instalaciones" class="btn btn-brand rounded-pill px-4 py-2 d-flex align-items-center justify-content-center gap-2 text-nowrap transition-base">
-              Reservar Ahora <span>&rarr;</span>
             </a>
           </div>
         </div>

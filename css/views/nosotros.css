@@ -16,9 +16,9 @@
   height: auto;
   border-radius: 10px;
 }
-.linea-about{
-    width: 50%;      /* o 40%, 50%, etc. */
-    margin: 0 auto;
+.linea-about {
+  width: 50%; /* o 40%, 50%, etc. */
+  margin: 0 auto;
 }
 /* ----------------- Seccion Equipo de Desarrollo ------------------ */
 .cont-info-comple {

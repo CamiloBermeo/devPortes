@@ -1,22 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    /* ==========================================================
-     (INICIO DE SESIÓN <-> REGISTRO)
-     ========================================================== */
+    // --- Elementos para alternar entre el panel de Login y Registro ---
     const tarjetaAutenticacion = document.getElementById('tarjetaAutenticacion');
     const btnIrARegistro = document.getElementById('btnIrARegistro');
     const btnIrAInicioSesion = document.getElementById('btnIrAInicioSesion');
     const btnRegistroMovil = document.getElementById('btnRegistroMovil');
     const btnInicioSesionMovil = document.getElementById('btnInicioSesionMovil');
 
+    // Cambiar a la vista de registro en pantalla grande
     btnIrARegistro?.addEventListener('click', () => {
         tarjetaAutenticacion.classList.add('register-active');
     });
 
+    // Volver a la vista de inicio de sesión en pantalla grande
     btnIrAInicioSesion?.addEventListener('click', () => {
         tarjetaAutenticacion.classList.remove('register-active');
     });
 
+    // Navegación rápida para pantallas móviles
     btnRegistroMovil?.addEventListener('click', () => {
         tarjetaAutenticacion.classList.add('register-active');
     });
@@ -26,14 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    /* ==========================================================
-     EXPRESIONES REGULARES Y FUNCIONES AUXILIARES
-     ========================================================== */
+    // --- Expresiones regulares y utilidades visuales ---
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const regexNombre = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{3,50}$/;
-    const regexCedula = /^\d{6,11}$/;
-    const regexTelefono = /^\d{7,10}$/;
+    const regexCedula = /^\d{6,11}$/;       // Acepta entre 6 y 11 números
+    const regexTelefono = /^\d{7,10}$/;     // Acepta entre 7 y 10 números
 
+    // Muestra el borde rojo y el texto de error correspondiente
     function marcarInvalido(inputElement, mensaje) {
         const fieldGroup = inputElement.closest('.field-group');
         if (!fieldGroup) return;
@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Marca el campo como correcto (borde verde)
     function marcarValido(inputElement) {
         const fieldGroup = inputElement.closest('.field-group');
         if (!fieldGroup) return;
@@ -55,10 +56,12 @@ document.addEventListener('DOMContentLoaded', () => {
         fieldGroup.classList.add('is-valid');
     }
 
+    // Remueve letras o caracteres especiales para campos que son puramente numéricos
     function permitirSoloNumeros(inputElement) {
         inputElement.value = inputElement.value.replace(/\D/g, '');
     }
 
+    // Limpia los estados de validación cuando reiniciamos el formulario
     function limpiarErroresFormulario() {
         document.querySelectorAll('.field-group').forEach(group => {
             group.classList.remove('is-invalid', 'is-valid');
@@ -66,16 +69,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    /* ==========================================================
-     REFERENCIAS A ELEMENTOS DEL FORMULARIO
-     ========================================================== */
-    // --- Login ---
+    // --- Referencias a las entradas de los formularios ---
+    // Formulario de Inicio de Sesión
     const formLogin = document.getElementById('formularioInicioSesion');
     const inputCorreoLogin = document.getElementById('campoCorreoInicioSesion');
     const inputPassLogin = document.getElementById('campoContrasenaInicioSesion');
     const checkRecordarme = document.getElementById('checkRecordarme');
 
-    // --- Registro ---
+    // Formulario de Registro
     const formRegistro = document.getElementById('formularioRegistro');
     const inputNombreReg = document.getElementById('campoNombreRegistro');
     const inputCedulaReg = document.getElementById('campoCedulaRegistro');
@@ -86,18 +87,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const checkTerminosReg = document.getElementById('checkTerminosRegistro');
 
 
-    /* ==========================================================
-      LOCALSTORAGE (PERSISTENCIA Y USUARIOS)
-     ========================================================== */
+    // --- Manejo de LocalStorage (persistencia de datos local) ---
     const KEY_BORRADOR_REGISTRO = 'devportes_borrador_registro';
     const KEY_USUARIOS_BD = 'devportes_usuarios';
     const KEY_RECORDAR_CORREO = 'devportes_correo_recordado';
 
+    // Recupera la lista de usuarios guardados previamente
     function obtenerUsuariosGuardados() {
         const data = localStorage.getItem(KEY_USUARIOS_BD);
         return data ? JSON.parse(data) : [];
     }
 
+    // Auto-guardado para que el usuario no pierda lo que escribió si recarga la página sin querer
     function guardarBorradorRegistro() {
         const borrador = {
             nombre: inputNombreReg.value,
@@ -108,7 +109,9 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem(KEY_BORRADOR_REGISTRO, JSON.stringify(borrador));
     }
 
+    // Restaura datos al cargar la app
     function cargarDatosLocalStorage() {
+        // Carga el borrador del registro
         const borradorGuardado = localStorage.getItem(KEY_BORRADOR_REGISTRO);
         if (borradorGuardado) {
             const datos = JSON.parse(borradorGuardado);
@@ -118,6 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (datos.correo) inputCorreoReg.value = datos.correo;
         }
 
+        // Si guardó su correo en el login anteriormente, lo colocamos de una
         const correoRecordado = localStorage.getItem(KEY_RECORDAR_CORREO);
         if (correoRecordado) {
             inputCorreoLogin.value = correoRecordado;
@@ -125,14 +129,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Borra el borrador del registro cuando el usuario completa el proceso con éxito
     function borrarBorradorRegistro() {
         localStorage.removeItem(KEY_BORRADOR_REGISTRO);
     }
 
 
-    /* ==========================================================
-     VALIDACIONES INDIVIDUALES POR CAMPO
-     ========================================================== */
+    // --- Validaciones campo por campo ---
 
     function validarNombre() {
         const valor = inputNombreReg.value.trim();
@@ -185,6 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return false;
         }
 
+        // Revisamos que no intente registrar un correo que ya exista
         const usuarios = obtenerUsuariosGuardados();
         const existe = usuarios.some(u => u.correo === valor);
         if (existe) {
@@ -196,44 +200,35 @@ document.addEventListener('DOMContentLoaded', () => {
         return true;
     }
 
-    // --- CONTRASEÑA SEGURA CON PARÁMETROS ESTÁNDAR ---
+    // Evalúa los requisitos estándar de seguridad para la contraseña
+    function evaluarSeguridadPass(valor) {
+        if (valor === '') return 'Contraseña requerida';
+        if (valor.length < 8) return 'Mínimo 8 caracteres';
+        if (!/[A-Z]/.test(valor)) return 'Incluye una mayúscula (A-Z)';
+        if (!/[a-z]/.test(valor)) return 'Incluye una minúscula (a-z)';
+        if (!/\d/.test(valor)) return 'Incluye al menos un número';
+        if (!/[@$!%*?&.#\-_]/.test(valor)) return 'Incluye un símbolo (@, $, !, %, etc.)';
+        return null;
+    }
+
     function validarPassRegistro() {
         const valor = inputPassReg.value;
+        const errorSeguridad = evaluarSeguridadPass(valor);
 
-        if (valor === '') {
-            marcarInvalido(inputPassReg, 'Contraseña requerida');
-            return false;
-        }
-        if (valor.length < 8) {
-            marcarInvalido(inputPassReg, 'Mínimo 8 caracteres');
-            return false;
-        }
-        if (!/[A-Z]/.test(valor)) {
-            marcarInvalido(inputPassReg, 'Incluye una mayúscula (A-Z)');
-            return false;
-        }
-        if (!/[a-z]/.test(valor)) {
-            marcarInvalido(inputPassReg, 'Incluye una minúscula (a-z)');
-            return false;
-        }
-        if (!/\d/.test(valor)) {
-            marcarInvalido(inputPassReg, 'Incluye al menos un número');
-            return false;
-        }
-        if (!/[@$!%*?&.#\-_]/.test(valor)) {
-            marcarInvalido(inputPassReg, 'Incluye un símbolo (@, $, !, %, etc.)');
+        if (errorSeguridad) {
+            marcarInvalido(inputPassReg, errorSeguridad);
             return false;
         }
 
         marcarValido(inputPassReg);
 
+        // Si ya hay algo en la confirmación, revalidamos para verificar coincidencia
         if (inputConfirmPassReg.value.length > 0) {
             validarCoincidenciaPass();
         }
         return true;
     }
 
-    // --- CONFIRMAR CONTRASEÑA ---
     function validarCoincidenciaPass() {
         const pass = inputPassReg.value;
         const confirmPass = inputConfirmPassReg.value;
@@ -244,11 +239,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (pass !== confirmPass) {
             marcarInvalido(inputConfirmPassReg, 'Las contraseñas no coinciden');
-            return false;
-        }
-
-        if (!validarPassRegistro()) {
-            marcarInvalido(inputConfirmPassReg, 'La contraseña no es segura');
             return false;
         }
 
@@ -289,10 +279,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    /* ==========================================================
-     LISTENERS EN TIEMPO REAL
-     ========================================================== */
-    // Registro
+    // --- Listeners para validar y guardar borrador mientras el usuario escribe ---
+    // En el formulario de registro
     inputNombreReg?.addEventListener('input', () => { validarNombre(); guardarBorradorRegistro(); });
     inputCedulaReg?.addEventListener('input', () => { validarCedula(); guardarBorradorRegistro(); });
     inputTelefonoReg?.addEventListener('input', () => { validarTelefono(); guardarBorradorRegistro(); });
@@ -301,16 +289,14 @@ document.addEventListener('DOMContentLoaded', () => {
     inputConfirmPassReg?.addEventListener('input', validarCoincidenciaPass);
     checkTerminosReg?.addEventListener('change', validarTerminos);
 
-    // Login
+    // En el formulario de inicio de sesión
     inputCorreoLogin?.addEventListener('input', validarCorreoLogin);
     inputPassLogin?.addEventListener('input', validarPassLogin);
 
 
-    /* ==========================================================
-     ENVÍO DE FORMULARIOS (SUBMIT)
-     ========================================================== */
+    // --- Procesamiento de formularios al enviar ---
 
-    // --- SUBMIT REGISTRO ---
+    // Envío del registro
     formRegistro?.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -338,18 +324,20 @@ document.addEventListener('DOMContentLoaded', () => {
             usuarios.push(nuevoUsuario);
             localStorage.setItem(KEY_USUARIOS_BD, JSON.stringify(usuarios));
 
+            // Limpiamos borrador y campos
             borrarBorradorRegistro();
             formRegistro.reset();
             limpiarErroresFormulario();
 
             alert(`¡Registro exitoso, ${nuevoUsuario.nombre}! Tu cuenta fue guardada en el sistema.`);
 
+            // Pasamos al panel de login con el correo prellenado
             inputCorreoLogin.value = nuevoUsuario.correo;
             tarjetaAutenticacion.classList.remove('register-active');
         }
     });
 
-    // --- SUBMIT INICIO DE SESIÓN ---
+    // Envío del inicio de sesión
     formLogin?.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -366,12 +354,14 @@ document.addEventListener('DOMContentLoaded', () => {
             );
 
             if (usuarioEncontrado) {
+                // Guardamos o borramos preferencia de recordar correo
                 if (checkRecordarme && checkRecordarme.checked) {
                     localStorage.setItem(KEY_RECORDAR_CORREO, correoIngresado);
                 } else {
                     localStorage.removeItem(KEY_RECORDAR_CORREO);
                 }
 
+                // Guardamos datos de sesión activa
                 localStorage.setItem('devportes_sesion_activa', JSON.stringify({
                     nombre: usuarioEncontrado.nombre,
                     correo: usuarioEncontrado.correo
@@ -386,9 +376,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    /* ==========================================================
-     MOSTRAR / OCULTAR CONTRASEÑA (INTERACTIVIDAD CON EL OJO)
-     ========================================================== */
+    // --- Interacción para mostrar u ocultar contraseña con el botón del ojito ---
     document.querySelectorAll('.btn-toggle-password').forEach(btn => {
         btn.addEventListener('click', () => {
             const input = btn.parentElement.querySelector('input');
@@ -406,5 +394,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Cargar borradores o datos de inicio al arrancar la vista
     cargarDatosLocalStorage();
 });

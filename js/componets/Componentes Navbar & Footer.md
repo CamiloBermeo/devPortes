@@ -60,13 +60,13 @@ Abre `js/components.js` y edita la plantilla en el método `connectedCallback()`
 1. **Si agregas una nueva página en la carpeta `/pages/` (ej:
    `contacto.html`):**
 
-   ```HTML
+```HTML
    <li class="nav-item">
      <a class="nav-link ${currentPage === 'contacto.html' ? 'fw-bold text-brand-mid-green' : 'nav-link-custom'} transition-base px-2" href="${pagesPath}contacto.html">
        Contacto
      </a>
    </li>
-   ```
+```
 
 1. Al guardar, todas las páginas del sitio web mostrarán automáticamente el
    nuevo enlace.

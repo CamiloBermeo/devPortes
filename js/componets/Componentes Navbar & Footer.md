@@ -1,4 +1,7 @@
+# H1 nav_footer.js
+
 Este proyecto utiliza **Web Components (Custom Elements)** nativos de JavaScript
+
 para renderizar el menú de navegación (`<app-navbar>`) y el pie de página
 (`<app-footer>`) de forma centralizada sin frameworks externos.
 

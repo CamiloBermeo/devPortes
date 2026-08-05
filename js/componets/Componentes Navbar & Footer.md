@@ -17,17 +17,14 @@ inserta las etiquetas personalizadas y enlaza el archivo `components.js`:
     <!-- Tus estilos -->
   </head>
   <body>
-
     <!-- 1. Insertar Navbar -->
     <app-navbar></app-navbar>
 
     <main>
       <!-- En lo que vayas a trabajar -->
     </main>
-
     <!-- 2. Insertar Footer -->
     <app-footer></app-footer>
-
     <!-- 3. Cargar el script de componentes al final -->
     <script src="js/components.js" defer></script>
   </body>

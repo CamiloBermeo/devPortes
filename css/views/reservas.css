@@ -10,17 +10,253 @@
   background-color: #ffffff;
   min-height: 480px;
 }
-.titulo-formulario{
+
+.titulo-formulario {
   text-align: center;
 }
-.texto-secundario{
-text-align: center;
-font-weight: lighter;
+
+.texto-secundario {
+  text-align: center;
+  font-weight: lighter;
 }
-.titulo-imput{
+
+.titulo-imput {
   font-size: small;
   font-weight: bolder;
   margin-bottom: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   ESTILOS DEL PASO 2: selector de fecha y horarios.
+   Aquí se define el look del calendario, la lista de horarios y el bloque de selección.
+   -------------------------------------------------------------------------- */
+
+.paso-2-layout {
+  margin-top: 0.5rem;
+}
+
+.calendar-card,
+.horarios-card {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+}
+
+.calendar-card {
+  max-width: 360px;
+  padding: 0.75rem !important;
+}
+
+.horarios-card {
+  min-height: 100%;
+}
+
+.calendar-header {
+  margin-bottom: 0.5rem;
+}
+
+.calendar-header .calendar-title {
+  letter-spacing: 0.08em;
+  font-size: 0.95rem;
+}
+
+#horariosDisponibles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.btn-horario {
+  border: 1px solid #6c757d;
+  color: #212529;
+  background-color: #ffffff;
+  font-size: 0.60rem;
+  font-weight: bold;
+  padding: 0.35rem 0.2rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-horario:hover {
+  background-color: #e9ecef;
+}
+
+/* Estado seleccionado igual a tu imagen */
+.btn-horario.active {
+  background-color: #495057 !important;
+  color: #ffffff !important;
+  border-color: #495057 !important;
+}
+
+.calendar-weekdays,
+.calendar-days {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.35rem;
+}
+
+.calendar-weekdays {
+  margin-bottom: 0.5rem;
+  text-align: center;
+  font-size: 0.72rem;
+  color: #6c757d;
+}
+
+.calendar-days .day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: #212529;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+}
+
+.calendar-days .day:hover {
+  background: #eef2ff;
+}
+
+.calendar-days .day-selected {
+  background: #111827;
+  color: #ffffff;
+  font-weight: 700;
+  border-color: #111827;
+}
+
+.calendar-days .day-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: #f3f4f6;
+}
+
+.calendar-days .day-empty {
+  background: transparent;
+  border: 0;
+  cursor: default;
+}
+
+.titulo-horarios {
+  color: #111827;
+}
+
+.horario-grid .btn-horario {
+  flex: 1 1 120px;
+  background: #e5e7eb;
+  color: #111827;
+  border: 0;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.55rem 0.75rem;
+}
+
+.horario-grid .btn-horario:hover {
+  background: #d1d5db;
+}
+
+.horario-grid .btn-horario.active {
+  background: #0f172a;
+  color: #ffffff;
+}
+
+.seleccion-actual {
+  background: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   ESTILOS DEL RESUMEN LATERAL: card compacta tipo wireframe.
+   Se usa una estructura tipo tarjeta con cabecera oscura, imagen grande,
+   filas de detalle y espacios dedicados para iconos de apoyo visual.
+   -------------------------------------------------------------------------- */
+
+.resumen-wireframe {
+  width: 100%;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+}
+
+.resumen-header {
+  background: linear-gradient(180deg, #0f172a 0%, #1f2937 100%);
+  padding: 1rem 1.1rem;
+}
+
+.titulo-resumen {
+  color: #ffffff;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.resumen-body {
+  background: #ffffff;
+}
+
+.resumen-imagen {
+  border: 1px solid #e5e7eb;
+  height: 170px;
+}
+
+.resumen-imagen img {
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.resumen-titulo-row {
+  align-items: flex-start;
+}
+
+.nombre-cancha {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+.texto-cancha {
+  margin: 0;
+}
+
+.tarjeta-cancha {
+  background: #ffffff;
+}
+
+.fila-detalle {
+  font-size: 0.85rem;
+}
+
+.detalle-meta {
+  min-width: 0;
+}
+
+.detalle-icon {
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #f1f3f5;
+  color: #6c757d;
+  flex-shrink: 0;
+}
+
+.detalle-icon i {
+  font-size: 0.8rem;
+}
+
+.fila-detalle span {
+  color: #6c757d;
+}
+
+.fila-detalle strong {
+  color: #111827;
+  font-weight: 700;
+}
+
+.resumen-wireframe .badge {
+  background: #f1f3f5;
+  color: #111827;
+  font-weight: 700;
 }
 /* Cada bloque de la barra lateral izquierda representa un paso del proceso de reserva. */
 .menu-pasos .paso {

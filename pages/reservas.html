@@ -13,41 +13,13 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
   <link rel="stylesheet" href="../css/views/reservas.css" />
+  <link rel="stylesheet" href="../css/global.css" />
 </head>
 
 <body class="body-reservas">
 
   <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top py-3 border-top border-4 border-brand-green shadow-sm">
-    <div class="container-fluid px-3 px-lg-5">
-      <a class="navbar-brand d-flex align-items-center gap-2 m-0" href="../index.html">
-        <div class="text-white d-flex align-items-center justify-content-center rounded-3 fw-bold logo-box">D</div>
-        <span class="fs-5 fw-black text-brand-dark tracking-tight">
-          DEV<span class="fw-bold text-brand-mid-green">PORTES</span>
-        </span>
-      </a>
-
-      <button class="navbar-toggler p-2 text-secondary border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse mt-4 mt-lg-0 justify-content-lg-between" id="navbarMenu">
-        <ul class="navbar-nav mx-auto gap-lg-2 text-center my-3 my-lg-0 px-lg-4 text-nowrap">
-          <li class="nav-item"><a class="nav-link fw-bold text-brand-mid-green px-2" href="#canchas">Nuestras Canchas</a></li>
-          <li class="nav-item"><a class="nav-link nav-link-custom px-2" href="./nosotros.html">Nosotros</a></li>
-          <li class="nav-item"><a class="nav-link nav-link-custom px-2" href="#proceso">¿Cómo funciona?</a></li>
-          <li class="nav-item"><a class="nav-link nav-link-custom px-2" href="#">Galería</a></li>
-        </ul>
-
-        <div class="d-grid d-lg-flex align-items-center gap-3">
-          <a href="#" class="btn btn-outline-custom rounded-3 px-4 py-2">Iniciar Sesión</a>
-          <a href="#" class="btn btn-brand rounded-pill px-4 py-2 d-flex align-items-center justify-content-center gap-2">
-            Reservar Ahora <span>&rarr;</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </nav>
+  <app-navbar></app-navbar>
 
   <!-- CONTENIDO PRINCIPAL -->
   <main class="container-fluid px-3 px-lg-4 py-3 py-lg-3">
@@ -89,7 +61,7 @@
 
       <!-- PANEL CENTRAL: Aquí se cambia entre los cuatro formularios del wizard de reservas. -->
       <section class="col-12 col-lg-7 d-flex">
-        <div class="panel-formulario rounded-4 shadow-sm py-2 px-4 py-lg-4 px-lg-5 w-100 position-relative overflow-hidden">
+        <div class="panel-formulario rounded-4 shadow-sm py-2 px-3 py-lg-4 px-lg-4 w-100 position-relative overflow-hidden">
           
           <!-- PASO 1: Información personal del cliente. Aquí se recoge la identificación del usuario. -->
           <div id="paso-1" class="paso-formulario activo">
@@ -116,19 +88,19 @@
             <div class="row g-3">
               <div class="col-12 col-md-6">
                 <label for="nombreCompleto" class="form-label titulo-imput">Nombre Completo</label>
-                <input id="nombreCompleto" type="text" class="form-control" placeholder="Juan Pérez" />
+                <input id="nombreCompleto" type="text" class="form-control" placeholder="Ej: Juan Pérez" />
               </div>
               <div class="col-12 col-md-6">
                 <label for="cedula" class="form-label titulo-imput">Cédula</label>
-                <input id="cedula" type="text" class="form-control" placeholder="1020496863" />
+                <input id="cedula" type="text" class="form-control" placeholder="Ej: 1020496863" />
               </div>
               <div class="col-12 col-md-6">
                 <label for="celular" class="form-label titulo-imput">Celular</label>
-                <input id="celular" type="tel" class="form-control" placeholder="3001234567" />
+                <input id="celular" type="tel" class="form-control" placeholder="Ej: 3001234567" />
               </div>
               <div class="col-12 col-md-6">
                 <label for="correo" class="form-label titulo-imput">Correo</label>
-                <input id="correo" type="email" class="form-control" placeholder="correo@ejemplo.com" />
+                <input id="correo" type="email" class="form-control" placeholder="Ej: correo@ejemplo.com" />
               </div>
               <div class="col-12">
                 <label for="metodoPago" class="form-label titulo-imput">Método de Pago</label>
@@ -150,38 +122,83 @@
 
           <!-- PASO 2: Fecha y hora de la reserva. Aquí se elige cuándo se quiere jugar. -->
           <div id="paso-2" class="paso-formulario">
-            <div class="mb-4">
-              <h2 class="titulo-formulario mb-2">Datos de la Reserva</h2>
-              <p class="texto-secundario mb-0">Selecciona la fecha, la hora y la duración de tu reserva.</p>
+            <!-- Encabezado del paso 2: mantiene el mismo patrón del paso 1 con título y texto descriptivo. -->
+            <div class="div-titulo-formulario mb-3 text-center text-md-start">
+              <h2 class="titulo-formulario mb-1">Ahora Elegirás Tu Fecha y Hora</h2>
+              <p class="texto-secundario mb-0">Elige la fecha y hora que te quede mejor y puntualmente te esperaremos.</p>
             </div>
 
-            <div class="row g-3">
-              <div class="col-12 col-md-6">
-                <label for="tipoCancha" class="form-label">Tipo de Cancha</label>
-                <select id="tipoCancha" class="form-select">
-                  <option value="Fútbol 7" selected>Fútbol 7 - Sintética #1</option>
-                  <option value="Fútbol 5">Fútbol 5 - Sintética #2</option>
-                  <option value="Fútbol 11">Fútbol 11 - Césped Natural</option>
-                </select>
+            <!-- Contenedor principal del selector de fecha y horarios. -->
+            <div class="paso-2-layout row g-4 align-items-start">
+              <!-- Calendario: se genera dinámicamente en JavaScript para que sea funcional y cambie de mes. -->
+              <div class="col-12 col-lg-6 mb-2 p-1">
+                <div class="calendar-card rounded-4 p-2 p-md-3">
+                  <div class="calendar-header d-flex align-items-center justify-content-between mb-1">
+                    <button type="button" id="prevMonthBtn" class="btn btn-link p-0 text-dark fs-4" aria-label="Mes anterior">&#8249;</button>
+                    <div id="currentMonthLabel" class="calendar-title fw-bold text-center">JULIO</div>
+                    <button type="button" id="nextMonthBtn" class="btn btn-link p-0 text-dark fs-4" aria-label="Mes siguiente">&#8250;</button>
+                  </div>
+
+                  <div class="calendar-weekdays d-grid">
+                    <span>Lun</span>
+                    <span>Mar</span>
+                    <span>Mié</span>
+                    <span>Jue</span>
+                    <span>Vie</span>
+                    <span>Sáb</span>
+                    <span>Dom</span>
+                  </div>
+
+                  <div id="calendarDays" class="calendar-days d-grid"></div>
+                </div>
               </div>
-              <div class="col-12 col-md-6">
-                <label for="fechaReserva" class="form-label">Fecha</label>
-                <input id="fechaReserva" type="date" class="form-control" />
-              </div>
-              <div class="col-12 col-md-6">
-                <label for="horaReserva" class="form-label">Hora de Inicio</label>
-                <input id="horaReserva" type="time" class="form-control" />
-              </div>
-              <div class="col-12 col-md-6">
-                <label for="duracion" class="form-label">Duración</label>
-                <select id="duracion" class="form-select">
-                  <option value="1 hora" selected>1 hora</option>
-                  <option value="2 horas">2 horas</option>
-                  <option value="3 horas">3 horas</option>
-                </select>
+
+              <!-- Horarios: se renderizan con JavaScript para que el usuario pueda seleccionar una hora disponible. -->
+              <div class="col-12 col-lg-6 p-1">
+                <div class="horarios-card rounded-4 p-2 p-md-3">
+                  <h3 class="titulo-horarios fs-5 fw-bold mb-3">Horarios disponibles</h3>
+                  <div id="horariosDisponibles" class="mb-4 "></div>
+
+                  <!-- Resumen de la selección actual, actualizado por JavaScript cuando cambia la fecha o la hora. -->
+                  <div class="seleccion-actual rounded-3 p-3 border">
+                    <p class="mb-2 fw-semibold">Has elegido:</p>
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                      <i class="bi bi-calendar3-event fs-5 text-muted"></i>
+                      <span id="selectedDateText" class="fw-bold">Selecciona una fecha</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                      <i class="bi bi-clock fs-5 text-muted"></i>
+                      <span id="selectedTimeText" class="fw-bold">Selecciona una hora</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
+            <!-- Campos ocultos: mantienen los IDs usados por la lógica del wizard para no romper el flujo actual. -->
+            <div class="d-none">
+              <label for="tipoCancha" class="form-label titulo-imput">Tipo de Cancha</label>
+              <select id="tipoCancha" class="form-select">
+                <option value="Fútbol 7" selected>Fútbol 7 - Sintética #1</option>
+                <option value="Fútbol 5">Fútbol 5 - Sintética #2</option>
+                <option value="Fútbol 11">Fútbol 11 - Césped Natural</option>
+              </select>
+
+              <label for="fechaReserva" class="form-label titulo-imput">Fecha</label>
+              <input id="fechaReserva" type="date" class="form-control" />
+
+              <label for="horaReserva" class="form-label titulo-imput">Hora de Inicio</label>
+              <input id="horaReserva" type="time" class="form-control" />
+
+              <label for="duracion" class="form-label titulo-imput">Duración</label>
+              <select id="duracion" class="form-select">
+                <option value="1 hora" selected>1 hora</option>
+                <option value="2 horas">2 horas</option>
+                <option value="3 horas">3 horas</option>
+              </select>
+            </div>
+
+            <!-- Botones de navegación: siguen el mismo patrón del resto del wizard para mover al usuario al siguiente paso o retroceder. -->
             <div class="d-flex justify-content-between mt-4">
               <button type="button" class="btn btn-outline-secondary px-4 py-2 boton-anterior" data-prev="1">&larr; Volver</button>
               <button type="button" class="btn btn-dark px-4 py-2 rounded-3 boton-siguiente" data-next="3">Siguiente &rarr;</button>
@@ -248,32 +265,67 @@
 
       <!-- LATERAL DERECHO:Resumen dinámico con los datos que se van ingresando en los pasos anteriores. -->
       <aside class="col-12 col-lg-3 d-flex">
-        <div class="resumen-reserva rounded-4 shadow-sm p-4 w-100">
-          <h3 class="titulo-resumen fs-5 fw-bold mb-3">Tu Reserva</h3>
-          <div class="tarjeta-cancha">
-            <img src="../assets/img/canchafutbol.jpg" class="img-fluid rounded mb-4" alt="...">
-            <h4 class="nombre-cancha fs-6 fw-bold mb-1" id="resumenTituloCancha">Cancha Sintética # 1</h4>
-            <p class="texto-cancha small text-muted mb-3">4 x 4 (750 mts) <span class="badge text-bg-light ms-2">Sede Norte</span></p>
-            
-            <div class="fila-detalle d-flex justify-content-between small py-1 border-bottom">
-              <span>Tipo</span>
-              <strong id="resumenTipo">Fútbol 7</strong>
+        <div class="resumen-reserva resumen-wireframe rounded-4 shadow-sm overflow-hidden">
+          <!-- Encabezado de la card: conserva el título de la reserva en un bloque oscuro y compacto. -->
+          <div class="resumen-header">
+            <h3 class="titulo-resumen mb-0">Tu Reserva</h3>
+          </div>
+
+          <!-- Cuerpo de la card: aquí va la imagen, el nombre de la cancha y el detalle de la selección. -->
+          <div class="resumen-body p-3">
+            <!-- Imagen principal de la cancha para que la card se vea más cercana al wireframe. -->
+            <div class="resumen-imagen rounded-3 overflow-hidden mb-3">
+              <img src="../assets/img/canchafutbol.jpg" class="img-fluid w-100" alt="Cancha de fútbol">
             </div>
-            <div class="fila-detalle d-flex justify-content-between small py-1 border-bottom">
-              <span>Duración</span>
-              <strong id="resumenDuracion">1 hora</strong>
-            </div>
-            <div class="fila-detalle d-flex justify-content-between small py-1 border-bottom">
-              <span>Precio por Hora</span>
-              <strong>$80.000</strong>
-            </div>
-            <div class="fila-detalle d-flex justify-content-between small py-1 border-bottom">
-              <span>Fecha</span>
-              <strong id="resumenFecha" class="text-danger">Por seleccionar</strong>
-            </div>
-            <div class="fila-detalle d-flex justify-content-between small py-1">
-              <span>Hora</span>
-              <strong id="resumenHora" class="text-danger">Por seleccionar</strong>
+
+            <!-- Bloque del nombre de la cancha y el tipo/departamento de la sede. -->
+            <div class="tarjeta-cancha">
+              <div class="resumen-titulo-row d-flex align-items-center justify-content-between gap-2 mb-1">
+                <h4 class="nombre-cancha mb-0" id="resumenTituloCancha">Cancha Sintética # 1</h4>
+                <span class="badge text-bg-light">Sede Norte</span>
+              </div>
+              <p class="texto-cancha small text-muted mb-3">4 x 4 (750 mts)</p>
+
+              <!-- Fila de detalle con icono de referencia para mantener una lectura más clara y ordenada. -->
+              <div class="fila-detalle d-flex justify-content-between align-items-center small py-1 border-bottom">
+                <div class="detalle-meta d-flex align-items-center gap-2">
+                  <span class="detalle-icon"><i class="bi bi-trophy"></i></span>
+                  <span>Tipo</span>
+                </div>
+                <strong id="resumenTipo">Fútbol 7</strong>
+              </div>
+
+              <div class="fila-detalle d-flex justify-content-between align-items-center small py-1 border-bottom">
+                <div class="detalle-meta d-flex align-items-center gap-2">
+                  <span class="detalle-icon"><i class="bi bi-clock-history"></i></span>
+                  <span>Duración</span>
+                </div>
+                <strong id="resumenDuracion">1 hora</strong>
+              </div>
+
+              <div class="fila-detalle d-flex justify-content-between align-items-center small py-1 border-bottom">
+                <div class="detalle-meta d-flex align-items-center gap-2">
+                  <span class="detalle-icon"><i class="bi bi-cash-stack"></i></span>
+                  <span>Precio por Hora</span>
+                </div>
+                <strong>$80.000</strong>
+              </div>
+
+              <div class="fila-detalle d-flex justify-content-between align-items-center small py-1 border-bottom">
+                <div class="detalle-meta d-flex align-items-center gap-2">
+                  <span class="detalle-icon"><i class="bi bi-calendar3"></i></span>
+                  <span>Fecha</span>
+                </div>
+                <strong id="resumenFecha" class="text-danger">Por seleccionar</strong>
+              </div>
+
+              <div class="fila-detalle d-flex justify-content-between align-items-center small py-1">
+                <div class="detalle-meta d-flex align-items-center gap-2">
+                  <span class="detalle-icon"><i class="bi bi-alarm"></i></span>
+                  <span>Hora</span>
+                </div>
+                <strong id="resumenHora" class="text-danger">Por seleccionar</strong>
+              </div>
             </div>
           </div>
         </div>
@@ -283,48 +335,11 @@
   </main>
 
     <!-- Esta es la sección del Footer  -->
-    <footer class="py-3 border-top border-4 border-brand-green mt-auto bg-brand-dark">
-        <div class="container-fluid px-3 px-lg-5">
-            <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3">
-                <!-- Izquierda: Logo y Nombre -->
-                <div class="d-flex align-items-center gap-2">
-                    <div class="d-flex align-items-center justify-content-center rounded-3 fw-bold footer-logo-box">D
-                    </div>
-                    <span class="fs-6 fw-black tracking-tight text-white m-0 fw-bolder"> DEVPORTES </span>
-                </div>
+    <app-footer></app-footer>
 
-          <!-- Centro: Enlaces -->
-          <ul class="nav justify-content-center gap-3 gap-md-4 font-medium small">
-            <li class="nav-item">
-              <a href="#instalaciones" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base"
-                >Nuestras Canchas</a
-              >
-            </li>
-            <li class="nav-item">
-              <a href="./pages/nosotros.html" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base"
-                >Nosotros</a
-              >
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base">¿Cómo funciona?</a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base">Galería</a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base">Política de Privacidad</a>
-            </li>
-          </ul>
-
-                <!-- Derecha: Derechos reservados -->
-                <div class="text-center text-lg-end">
-                    <p class="m-0 text-white-50 text-tiny">&copy; 2026 Devportes.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../js/views/reservas.js" defer></script>
+  <script src="../js/componets/nav_footer.js" defer></script>
 </body>
 
 </html>

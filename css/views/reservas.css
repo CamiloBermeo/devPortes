@@ -1,1 +1,338 @@
-/*  */
+@import '../global.css';
+
+/* ==========================================================================
+   ESTILOS GENERALES Y PANEL DE PASOS
+   ========================================================================== */
+
+/* El contenedor central del formulario mantiene un alto mínimo para que todos los pasos se vean alineados. */
+
+.panel-formulario {
+  background-color: #ffffff;
+  min-height: 480px;
+}
+
+.titulo-formulario {
+  text-align: center;
+}
+
+.texto-secundario {
+  text-align: center;
+  font-weight: lighter;
+}
+
+.titulo-imput {
+  font-size: small;
+  font-weight: bolder;
+  margin-bottom: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   ESTILOS DEL PASO 2: selector de fecha y horarios.
+   Aquí se define el look del calendario, la lista de horarios y el bloque de selección.
+   -------------------------------------------------------------------------- */
+
+.paso-2-layout {
+  margin-top: 0.5rem;
+}
+
+.calendar-card,
+.horarios-card {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+}
+
+.calendar-card {
+  max-width: 360px;
+  padding: 0.75rem !important;
+}
+
+.horarios-card {
+  min-height: 100%;
+}
+
+.calendar-header {
+  margin-bottom: 0.5rem;
+}
+
+.calendar-header .calendar-title {
+  letter-spacing: 0.08em;
+  font-size: 0.95rem;
+}
+
+#horariosDisponibles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.btn-horario {
+  border: 1px solid #6c757d;
+  color: #212529;
+  background-color: #ffffff;
+  font-size: 0.60rem;
+  font-weight: bold;
+  padding: 0.35rem 0.2rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-horario:hover {
+  background-color: #e9ecef;
+}
+
+/* Estado seleccionado igual a tu imagen */
+.btn-horario.active {
+  background-color: #495057 !important;
+  color: #ffffff !important;
+  border-color: #495057 !important;
+}
+
+.calendar-weekdays,
+.calendar-days {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.35rem;
+}
+
+.calendar-weekdays {
+  margin-bottom: 0.5rem;
+  text-align: center;
+  font-size: 0.72rem;
+  color: #6c757d;
+}
+
+.calendar-days .day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: #212529;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+}
+
+.calendar-days .day:hover {
+  background: #eef2ff;
+}
+
+.calendar-days .day-selected {
+  background: #111827;
+  color: #ffffff;
+  font-weight: 700;
+  border-color: #111827;
+}
+
+.calendar-days .day-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: #f3f4f6;
+}
+
+.calendar-days .day-empty {
+  background: transparent;
+  border: 0;
+  cursor: default;
+}
+
+.titulo-horarios {
+  color: #111827;
+}
+
+.horario-grid .btn-horario {
+  flex: 1 1 120px;
+  background: #e5e7eb;
+  color: #111827;
+  border: 0;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.55rem 0.75rem;
+}
+
+.horario-grid .btn-horario:hover {
+  background: #d1d5db;
+}
+
+.horario-grid .btn-horario.active {
+  background: #0f172a;
+  color: #ffffff;
+}
+
+.seleccion-actual {
+  background: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   ESTILOS DEL RESUMEN LATERAL: card compacta tipo wireframe.
+   Se usa una estructura tipo tarjeta con cabecera oscura, imagen grande,
+   filas de detalle y espacios dedicados para iconos de apoyo visual.
+   -------------------------------------------------------------------------- */
+
+.resumen-wireframe {
+  width: 100%;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+}
+
+.resumen-header {
+  background: linear-gradient(180deg, #0f172a 0%, #1f2937 100%);
+  padding: 1rem 1.1rem;
+}
+
+.titulo-resumen {
+  color: #ffffff;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.resumen-body {
+  background: #ffffff;
+}
+
+.resumen-imagen {
+  border: 1px solid #e5e7eb;
+  height: 170px;
+}
+
+.resumen-imagen img {
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.resumen-titulo-row {
+  align-items: flex-start;
+}
+
+.nombre-cancha {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+.texto-cancha {
+  margin: 0;
+}
+
+.tarjeta-cancha {
+  background: #ffffff;
+}
+
+.fila-detalle {
+  font-size: 0.85rem;
+}
+
+.detalle-meta {
+  min-width: 0;
+}
+
+.detalle-icon {
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #f1f3f5;
+  color: #6c757d;
+  flex-shrink: 0;
+}
+
+.detalle-icon i {
+  font-size: 0.8rem;
+}
+
+.fila-detalle span {
+  color: #6c757d;
+}
+
+.fila-detalle strong {
+  color: #111827;
+  font-weight: 700;
+}
+
+.resumen-wireframe .badge {
+  background: #f1f3f5;
+  color: #111827;
+  font-weight: 700;
+}
+/* Cada bloque de la barra lateral izquierda representa un paso del proceso de reserva. */
+.menu-pasos .paso {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  color: #6c757d;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.menu-pasos{
+    height: 65%;
+}
+
+/* Cuando un paso está activo, se resalta para indicar en qué parte del flujo va el usuario. */
+.menu-pasos .paso.activo {
+  background-color: #f1f3f5;
+  color: #000000;
+  font-weight: bold;
+}
+
+/* El icono circular del paso se personaliza para que se vea como un indicador del estado actual. */
+.icono-paso {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Si el paso está activo, el icono cambia de color para reforzar visualmente el paso actual. */
+.menu-pasos .paso.activo .icono-paso {
+  background-color: #198754;
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   EXPLICACIÓN DEL SISTEMA DE ANIMACIÓN CSS DE PASOS:
+   
+   1. Ocultamos todos los '.paso-formulario' por defecto (display: none).
+   2. Cuando un paso tiene '.activo', se muestra y aplica una animación de entrada
+      usando 'translateX' para desplazarlo suavemente desde la derecha.
+   3. Cuando un paso tiene '.salida', se ejecuta la salida hacia la izquierda
+      con desvanecimiento (fade out).
+   4. '.entrada-regreso' se usa para el efecto de retroceso al paso anterior.
+   ========================================================================== */
+
+/* Cada panel del formulario empieza oculto y se activa con una clase de estado. */
+.paso-formulario {
+  display: none;
+  opacity: 0;
+  transform: translateX(30px); /* Inicia desplazado a la derecha */
+  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Estado activo: el panel visible entra con suavidad al centro de la vista. */
+.paso-formulario.activo {
+  display: block;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Estado de salida: al pasar al siguiente paso, el panel actual se desliza hacia la izquierda. */
+.paso-formulario.salida {
+  display: block;
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+/* Estado de retroceso: al volver al paso anterior, el siguiente panel entra desde la izquierda. */
+.paso-formulario.entrada-regreso {
+  display: block;
+  opacity: 0;
+  transform: translateX(-30px);
+}

@@ -44,46 +44,6 @@ hr {
   background: #d9d9d9;
 }
 
-/* 2. NAVBAR / NAVEGACIÓN */
-.logo-box {
-  width: 38px;
-  height: 38px;
-  font-size: 1.125rem;
-  background-color: var(--color-terceario);
-}
-
-.nav-link-custom {
-  color: var(--color-dark);
-  font-weight: 500;
-}
-
-.nav-link-custom:hover {
-  color: var(--color-primario);
-}
-
-/* 3. FOOTER / PIE DE PÁGINA */
-.footer-logo-box {
-  width: 32px;
-  height: 32px;
-  font-size: 1rem;
-  background-color: #ffffff;
-  color: var(--color-dark);
-}
-
-/* BOTONES Y COMPONENTES*/
-
-.btn-outline-custom {
-  color: var(--color-dark);
-  border: 1px solid var(--color-dark);
-  background: transparent;
-}
-
-.btn-outline-custom:hover {
-  color: #ffffff;
-  background-color: var(--color-terceario);
-  border-color: var(--color-terceario);
-}
-
 .btn-brand {
   color: #ffffff;
   background-color: var(--color-primario);
@@ -95,7 +55,7 @@ hr {
   background-color: var(--color-secundario);
 }
 
-.reserve-btn-overlay {
+.btn-reserve-overlay {
   width: 100%;
   height: auto;
   display: flex;
@@ -120,39 +80,10 @@ hr {
   transform: scale(1.05);
 }
 
-/* CLASES DE UTILIDAD GLOBALES */
-.transition-base {
-  transition: all 0.2s ease-in-out;
-}
-
 .brand-heading {
   font-family: var(--font-tercearia);
   font-weight: 800;
   color: var(--color-dark);
-}
-
-.border-brand-green {
-  border-color: var(--color-primario);
-}
-
-.bg-brand-dark {
-  background-color: var(--color-dark);
-}
-
-.text-brand-dark {
-  color: var(--color-dark);
-}
-
-.text-tiny {
-  font-size: 0.75rem;
-}
-
-.text-brand-green-hover:hover {
-  color: var(--color-primario) !important;
-}
-
-.text-brand-mid-green {
-  color: var(--color-secundario);
 }
 
 /* ESTILOS COMPLEMENTOS JS */

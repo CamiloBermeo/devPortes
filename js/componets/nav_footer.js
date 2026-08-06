@@ -8,7 +8,7 @@ class AppNavbar extends HTMLElement {
     const currentPage = path.split('/').pop() || 'index.html';
     this.classList.add('sticky-top', 'd-block');
 
-    this.innerHTML = `
+    this.innerHTML = /*html*/ `
     <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 border-top border-4 border-brand-green shadow-sm">
       <div class="container-fluid px-3 px-lg-5">
         <a class="navbar-brand d-flex align-items-center gap-2 m-0" href="${basePath}index.html">
@@ -27,21 +27,35 @@ class AppNavbar extends HTMLElement {
           aria-expanded="false"
           aria-label="Toggle navigation">
           <svg class="bi bi-list" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M2.5 12.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1zm0-4a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1zm0-4a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1z"/>
+            <path
+              fill-rule="evenodd"
+              d="M2.5 12.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1zm0-4a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1zm0-4a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1z" />
           </svg>
         </button>
 
         <div class="collapse navbar-collapse mt-4 mt-lg-0 justify-content-lg-between" id="navbarMenu">
           <ul class="navbar-nav mx-auto gap-lg-2 text-center my-3 my-lg-0 px-lg-4 text-nowrap">
             <li class="nav-item">
-              <a class="nav-link ${currentPage === 'index.html' || currentPage === '' ? 'fw-bold text-brand-mid-green' : 'nav-link-custom'} transition-base px-2" href="${basePath}index.html">Inicio</a>
+              <a
+                class="nav-link ${currentPage === 'index.html' || currentPage === '' ? 'fw-bold text-brand-mid-green' : 'nav-link-custom'} transition-base px-2"
+                href="${basePath}index.html"
+                >Inicio</a
+              >
             </li>
 
             <li class="nav-item">
-              <a class="nav-link ${currentPage === 'nosotros.html' ? 'fw-bold text-brand-mid-green' : 'nav-link-custom'} transition-base px-2" href="${pagesPath}nosotros.html">Nosotros</a>
+              <a
+                class="nav-link ${currentPage === 'nosotros.html' ? 'fw-bold text-brand-mid-green' : 'nav-link-custom'} transition-base px-2"
+                href="${pagesPath}nosotros.html"
+                >Nosotros</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link ${currentPage === 'contactenos.html' ? 'fw-bold text-brand-mid-green' : 'nav-link-custom'} transition-base px-2" href="${pagesPath}contactenos.html">Contáctenos</a>
+              <a
+                class="nav-link ${currentPage === 'contactenos.html' ? 'fw-bold text-brand-mid-green' : 'nav-link-custom'} transition-base px-2"
+                href="${pagesPath}contactenos.html"
+                >Contáctenos</a
+              >
             </li>
             <li class="nav-item">
               <a class="nav-link nav-link-custom transition-base px-2" href="#">¿Cómo funciona?</a>
@@ -70,7 +84,7 @@ class AppFooter extends HTMLElement {
     const basePath = isInsidePages ? '../' : './';
     const pagesPath = isInsidePages ? './' : './pages/';
 
-    this.innerHTML = `
+    this.innerHTML = /*html*/ `
     <footer class="py-3 border-top border-4 border-brand-green mt-auto bg-brand-dark">
       <div class="container-fluid px-3 px-lg-5">
         <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3">
@@ -84,7 +98,9 @@ class AppFooter extends HTMLElement {
               <a href="${basePath}index.html" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base">Inicio</a>
             </li>
             <li class="nav-item">
-              <a href="${pagesPath}nosotros.html" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base">Nosotros</a>
+              <a href="${pagesPath}nosotros.html" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base"
+                >Nosotros</a
+              >
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base">¿Cómo funciona?</a>

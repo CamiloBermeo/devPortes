@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar Sesión - DEVPORTES</title>
+
+    <link rel="preconnect" href="https://googleapis.com" />
+    <link rel="preconnect" href="https://gstatic.com" crossorigin />
+    <link href="https://googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+    <!-- Iconos Oficiales de Bootstrap -->
+    <link rel="stylesheet" href="https://jsdelivr.net" />
+
+    <!-- Enlace a los estilos -->
+    <link rel="stylesheet" href="../CSS/views/admin-login.css" />
+  </head>
+  <body>
+    <!-- Contenedor centrado -->
+    <div class="login-container">
+      <form class="login-form">
+        <div class="brand-header">
+          <h2 class="form-title">¡INICIAR SESION!</h2>
+          <p class="form-subtitle">Ingresa tus datos para iniciar sesion.</p>
+        </div>
+
+        <!-- Campos de Entrada -->
+        <div class="input-group">
+          <div class="input-wrapper">
+            <input type="email" placeholder="Correo Electrónico" required />
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div class="input-wrapper">
+            <input type="password" placeholder="Contraseña" required />
+          </div>
+        </div>
+
+        <!-- Opciones del Formulario -->
+        <div class="form-options">
+          <label class="remember-me">
+            <input type="checkbox" />
+            <span>Recordarme</span>
+          </label>
+          <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+        </div>
+
+        <!-- Botón Principal Premium -->
+        <button type="submit" class="btn-submit">Iniciar Sesión</button>
+      </form>
+    </div>
+  </body>
+</html>

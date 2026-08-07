@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // ---------------- inicio y referencias del formulario ----------------
+  // Este bloque obtiene los elementos HTML que serán utilizados por el wizard.
   // Aquí se seleccionan todos los paneles del formulario y los botones de navegación.
   const pasos = Array.from(document.querySelectorAll('.paso-formulario'));
   const elementosPaso = Array.from(document.querySelectorAll('.paso'));
@@ -17,13 +19,54 @@ document.addEventListener('DOMContentLoaded', () => {
   const fechaReservaInput = document.getElementById('fechaReserva');
   const horaReservaInput = document.getElementById('horaReserva');
 
+  // ---------------- fin inicio y referencias del formulario ----------------
+
+  // ---------------- configuracion de campos ----------------
+  // Define los campos que se guardan y los mensajes del paso 1.
+  const claveReservaLocal = 'devPortesReservaEnCurso';
+  const camposPersistentes = [
+    'nombreCompleto',
+    'cedula',
+    'celular',
+    'correo',
+    'metodoPago',
+    'tipoCancha',
+    'fechaReserva',
+    'horaReserva',
+    'duracion'
+  ];
+
+  const camposPaso1 = [
+    { id: 'nombreCompleto', mensaje: 'Ingresa tu nombre completo.' },
+    { id: 'cedula', mensaje: 'Ingresa tu cédula.' },
+    { id: 'celular', mensaje: 'Ingresa tu número celular.' },
+    { id: 'correo', mensaje: 'Ingresa un correo válido.' },
+    { id: 'metodoPago', mensaje: 'Selecciona un método de pago.' }
+  ];
+
+  // ---------------- fin configuracion de campos ----------------
+
+  // ---------------- estado del calendario y cancha ----------------
+  // Conserva la fecha, la hora, el código y los datos de la cancha elegida.
   // El calendario trabaja con un estado interno para navegar entre meses y mantener la fecha elegida.
   const estadoCalendario = {
     fechaActual: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
     fechaSeleccionada: null,
-    horaSeleccionada: null
+    horaSeleccionada: null,
+    codigoReserva: null
   };
 
+  const datosCancha = {
+    titulo: 'Cancha Sintética # 1',
+    tipo: 'Fútbol 7',
+    superficie: '4 x 4 (750 mts)',
+    precio: '$80.000',
+    imagen: '../assets/img/canchafutbol.jpg'
+  };
+
+  // ---------------- fin estado del calendario y cancha ----------------
+
+  // ---------------- horarios disponibles ----------------
   // Esta lista define las franjas horarias disponibles que el usuario puede elegir en el paso 2.
   const horariosDisponiblesLista = [
     { display: '8:00 - 9:00 AM', value: '08:00' },
@@ -37,6 +80,83 @@ document.addEventListener('DOMContentLoaded', () => {
     { display: '9:00 - 10:00 PM', value: '21:00' }
   ];
 
+  // ---------------- fin horarios disponibles ----------------
+
+  // ---------------- persistencia en localStorage ----------------
+  // Guarda y restaura los datos para conservar la reserva después de recargar.
+  const guardarReservaLocal = (pasoActual = obtenerPasoActual()) => {
+    const campos = {};
+
+    camposPersistentes.forEach((id) => {
+      const campo = document.getElementById(id);
+      if (campo) campos[id] = campo.value;
+    });
+
+    const reservaPara = document.querySelector('input[name="reservaPara"]:checked');
+
+    localStorage.setItem(claveReservaLocal, JSON.stringify({
+      campos,
+      reservaPara: reservaPara?.value || 'mi',
+      fechaActual: estadoCalendario.fechaActual.toISOString(),
+      fechaSeleccionada: estadoCalendario.fechaSeleccionada,
+      horaSeleccionada: estadoCalendario.horaSeleccionada,
+      codigoReserva: estadoCalendario.codigoReserva,
+      cancha: datosCancha,
+      pasoActual
+    }));
+  };
+
+  const restaurarReservaLocal = () => {
+    const reservaGuardada = localStorage.getItem(claveReservaLocal);
+    if (!reservaGuardada) return 1;
+
+    try {
+      const reserva = JSON.parse(reservaGuardada);
+
+      Object.entries(reserva.campos || {}).forEach(([id, valor]) => {
+        const campo = document.getElementById(id);
+        if (campo) campo.value = valor;
+      });
+
+      const opcionReserva = document.querySelector(
+        `input[name="reservaPara"][value="${reserva.reservaPara || 'mi'}"]`
+      );
+      if (opcionReserva) opcionReserva.checked = true;
+
+      if (reserva.fechaActual) estadoCalendario.fechaActual = new Date(reserva.fechaActual);
+      estadoCalendario.fechaSeleccionada = reserva.fechaSeleccionada || null;
+      estadoCalendario.horaSeleccionada = reserva.horaSeleccionada || null;
+      estadoCalendario.codigoReserva = reserva.codigoReserva || null;
+      Object.assign(datosCancha, reserva.cancha || {});
+
+      return Number(reserva.pasoActual) || 1;
+    } catch {
+      localStorage.removeItem(claveReservaLocal);
+      return 1;
+    }
+  };
+
+  // ---------------- fin persistencia en localStorage ----------------
+
+  // ---------------- datos de cancha recibidos desde el índice ----------------
+  // Lee los parámetros de la URL enviados por "Reservar este espacio".
+  const aplicarCanchaDesdeUrl = () => {
+    const parametros = new URLSearchParams(window.location.search);
+    const titulo = parametros.get('titulo');
+
+    if (!titulo) return false;
+
+    datosCancha.titulo = titulo;
+    datosCancha.tipo = parametros.get('tipo') || datosCancha.tipo;
+    datosCancha.superficie = parametros.get('superficie') || datosCancha.superficie;
+    datosCancha.precio = parametros.get('precio') || datosCancha.precio;
+    datosCancha.imagen = parametros.get('imagen') || datosCancha.imagen;
+    return true;
+  };
+
+  // ---------------- fin datos de cancha recibidos desde el índice ----------------
+
+  // ---------------- funciones auxiliares y formatos ----------------
   // Esta función detecta qué paso está activo actualmente para saber a dónde ir.
   const obtenerPasoActual = () => {
     const pasoActivo = document.querySelector('.paso-formulario.activo');
@@ -67,6 +187,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
+  // ---------------- fin funciones auxiliares y formatos ----------------
+
+  // ---------------- actualizacion de resumenes ----------------
+  // Actualiza la card lateral y la vista previa del paso 3.
   // Esta función actualiza el panel lateral de resumen con los datos de cancha, fecha y hora.
   const actualizarResumen = () => {
     const tipoCancha = document.getElementById('tipoCancha')?.value || 'Fútbol 7';
@@ -74,15 +198,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const horaReserva = horaReservaInput?.value || '';
     const duracion = document.getElementById('duracion')?.value || '1 hora';
 
-    document.getElementById('resumenTipo').textContent = tipoCancha;
+    document.getElementById('resumenTipo').textContent = datosCancha.tipo;
     document.getElementById('resumenDuracion').textContent = duracion;
     document.getElementById('resumenFecha').textContent = formatearFechaParaResumen(fechaReserva);
     document.getElementById('resumenHora').textContent = formatearHoraParaResumen(horaReserva);
-    document.getElementById('resumenTituloCancha').textContent = tipoCancha === 'Fútbol 11'
-      ? 'Cancha Césped Natural'
-      : tipoCancha === 'Fútbol 5'
-        ? 'Cancha Sintética # 2'
-        : 'Cancha Sintética # 1';
+    document.getElementById('resumenTituloCancha').textContent = datosCancha.titulo;
+    document.getElementById('resumenSuperficie').textContent = datosCancha.superficie;
+    document.getElementById('resumenTipoCancha').textContent = datosCancha.tipo;
+    document.getElementById('resumenPrecio').textContent = datosCancha.precio;
+    const imagenCancha = document.getElementById('resumenImagenCancha');
+    imagenCancha.src = datosCancha.imagen;
+    imagenCancha.alt = datosCancha.titulo;
 
     if (selectedDateText) {
       selectedDateText.textContent = formatearFechaParaResumen(fechaReserva);
@@ -100,13 +226,55 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('vistaCelular').textContent = document.getElementById('celular')?.value || '-';
     document.getElementById('vistaCorreo').textContent = document.getElementById('correo')?.value || '-';
     document.getElementById('vistaPago').textContent = document.getElementById('metodoPago')?.value || '-';
-    document.getElementById('vistaCancha').textContent = document.getElementById('tipoCancha')?.value || '-';
+    document.getElementById('vistaCancha').textContent = datosCancha.titulo || '-';
     document.getElementById('vistaFecha').textContent = formatearFechaParaResumen(fechaReservaInput?.value || '') || '-';
     document.getElementById('vistaHora').textContent = formatearHoraParaResumen(horaReservaInput?.value || '') || '-';
     document.getElementById('vistaDuracion').textContent = document.getElementById('duracion')?.value || '-';
   };
 
+  // ---------------- fin actualizacion de resumenes ----------------
+
+  // ---------------- validacion del paso 1 ----------------
+  // Marca los campos faltantes o inválidos cuando el usuario pulsa Siguiente.
+  const validarPaso1 = () => {
+    let formularioValido = true;
+
+    camposPaso1.forEach(({ id, mensaje }) => {
+      const campo = document.getElementById(id);
+      const mensajeError = document.getElementById(`error${id.charAt(0).toUpperCase()}${id.slice(1)}`);
+      const estaVacio = !campo.value.trim();
+      const correoInvalido = id === 'correo' && !estaVacio && !campo.checkValidity();
+      const tieneError = estaVacio || correoInvalido;
+
+      campo.classList.toggle('campo-error', tieneError);
+      campo.classList.toggle('campo-valido', !tieneError);
+      campo.setAttribute('aria-invalid', String(tieneError));
+
+      if (mensajeError) {
+        mensajeError.textContent = tieneError
+          ? (correoInvalido ? 'Escribe un correo con formato válido.' : mensaje)
+          : '';
+      }
+
+      if (tieneError) formularioValido = false;
+    });
+
+    return formularioValido;
+  };
+
+  const limpiarErrorCampo = (id) => {
+    const campo = document.getElementById(id);
+    const mensajeError = document.getElementById(`error${id.charAt(0).toUpperCase()}${id.slice(1)}`);
+
+    campo?.classList.remove('campo-error');
+    campo?.removeAttribute('aria-invalid');
+    if (mensajeError) mensajeError.textContent = '';
+  };
+
+  // ---------------- fin validacion del paso 1 ----------------
+
   // Este bloque es el punto central donde se cambia de panel: oculta los otros pasos y muestra el solicitado.
+  // ---------------- navegacion entre pasos ----------------
   const mostrarPaso = (nuevoPaso) => {
     // Primero se ocultan todos los pasos para evitar que varios paneles queden visibles.
     pasos.forEach((paso) => {
@@ -133,10 +301,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cuando se entra al paso 4 se genera el código de reserva que aparecerá en la pantalla final.
     if (nuevoPaso === 4) {
-      const codigo = `#DEV-${Math.floor(1000 + Math.random() * 9000)}`;
-      document.getElementById('codigoReserva').textContent = codigo;
+      if (!estadoCalendario.codigoReserva) {
+        estadoCalendario.codigoReserva = `#DEV-${Math.floor(1000 + Math.random() * 9000)}`;
+      }
+      document.getElementById('codigoReserva').textContent = estadoCalendario.codigoReserva;
     }
+
+    guardarReservaLocal(nuevoPaso);
   };
+
+  // ---------------- fin navegacion entre pasos ----------------
 
   // Este helper convierte una fecha JS en el formato que usa el input tipo date de HTML.
   const formatearFechaInput = (fecha) => {
@@ -145,6 +319,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const day = String(fecha.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   };
+
+  // ---------------- calendario ----------------
+  // Dibuja los días del mes y permite seleccionar una fecha.
 
   // Esta función pinta el calendario del mes actual según el estado interno de navegación.
   const renderCalendar = () => {
@@ -193,6 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
         renderCalendar();
         actualizarResumen();
         actualizarVistaPrevia();
+        guardarReservaLocal();
       });
 
       calendarDays.appendChild(diaButton);
@@ -222,13 +400,17 @@ document.addEventListener('DOMContentLoaded', () => {
         renderHorarios();
         actualizarResumen();
         actualizarVistaPrevia();
+        guardarReservaLocal();
       });
 
       horariosDisponibles.appendChild(horarioButton);
     });
   };
 
+  // ---------------- fin calendario ----------------
+
   // Los botones del calendario cambian el mes visible y repintan el selector.
+  // ---------------- controles del calendario ----------------
   prevMonthBtn?.addEventListener('click', () => {
     estadoCalendario.fechaActual = new Date(
       estadoCalendario.fechaActual.getFullYear(),
@@ -236,6 +418,7 @@ document.addEventListener('DOMContentLoaded', () => {
       1
     );
     renderCalendar();
+    guardarReservaLocal();
   });
 
   nextMonthBtn?.addEventListener('click', () => {
@@ -245,8 +428,12 @@ document.addEventListener('DOMContentLoaded', () => {
       1
     );
     renderCalendar();
+    guardarReservaLocal();
   });
 
+  // ---------------- fin controles del calendario ----------------
+
+  // ---------------- botones de navegacion ----------------
   // Los botones Siguiente ejecutan la validación y luego llaman a mostrarPaso para ir al siguiente panel.
   botonesSiguiente.forEach((boton) => {
     boton.addEventListener('click', () => {
@@ -254,13 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const siguientePaso = Number(boton.dataset.next);
 
       if (pasoActual === 1) {
-        const nombre = document.getElementById('nombreCompleto')?.value.trim();
-        const cedula = document.getElementById('cedula')?.value.trim();
-        const celular = document.getElementById('celular')?.value.trim();
-        const correo = document.getElementById('correo')?.value.trim();
-
-        if (!nombre || !cedula || !celular || !correo) {
-          alert('Completa tus datos personales antes de continuar.');
+        if (!validarPaso1()) {
           return;
         }
       }
@@ -288,12 +469,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // ---------------- fin botones de navegacion ----------------
+
+  // ---------------- eventos de campos ----------------
   // Cada vez que cambian los campos del paso 2 se actualiza el resumen del lado derecho.
   ['tipoCancha', 'fechaReserva', 'horaReserva', 'duracion'].forEach((id) => {
     const input = document.getElementById(id);
     if (input) {
-      input.addEventListener('input', actualizarResumen);
-      input.addEventListener('change', actualizarResumen);
+      input.addEventListener('input', () => {
+        actualizarResumen();
+        guardarReservaLocal();
+      });
+      input.addEventListener('change', () => {
+        actualizarResumen();
+        guardarReservaLocal();
+      });
     }
   });
 
@@ -301,31 +491,42 @@ document.addEventListener('DOMContentLoaded', () => {
   ['nombreCompleto', 'cedula', 'celular', 'correo', 'metodoPago'].forEach((id) => {
     const input = document.getElementById(id);
     if (input) {
-      input.addEventListener('input', actualizarVistaPrevia);
-      input.addEventListener('change', actualizarVistaPrevia);
+      input.addEventListener('input', () => {
+        limpiarErrorCampo(id);
+        actualizarVistaPrevia();
+        guardarReservaLocal();
+      });
+      input.addEventListener('change', () => {
+        limpiarErrorCampo(id);
+        actualizarVistaPrevia();
+        guardarReservaLocal();
+      });
     }
   });
 
+  document.querySelectorAll('input[name="reservaPara"]').forEach((opcion) => {
+    opcion.addEventListener('change', () => guardarReservaLocal());
+  });
+
+  // ---------------- fin eventos de campos ----------------
+
+  // ---------------- reinicio de reserva ----------------
   // Si el usuario quiere hacer otra reserva, se limpia el formulario y se vuelve al paso inicial.
   if (botonReiniciar) {
     botonReiniciar.addEventListener('click', () => {
-      const camposFormulario = [
-        'nombreCompleto',
-        'cedula',
-        'celular',
-        'correo',
-        'metodoPago',
-        'tipoCancha',
-        'fechaReserva',
-        'horaReserva',
-        'duracion'
-      ];
-
-      camposFormulario.forEach((id) => {
+      camposPersistentes.forEach((id) => {
         const elemento = document.getElementById(id);
         if (elemento) {
           elemento.value = '';
         }
+      });
+
+      camposPaso1.forEach(({ id }) => {
+        const campo = document.getElementById(id);
+        const mensajeError = document.getElementById(`error${id.charAt(0).toUpperCase()}${id.slice(1)}`);
+        campo?.classList.remove('campo-error', 'campo-valido');
+        campo?.removeAttribute('aria-invalid');
+        if (mensajeError) mensajeError.textContent = '';
       });
 
       estadoCalendario.fechaSeleccionada = null;
@@ -337,13 +538,21 @@ document.addEventListener('DOMContentLoaded', () => {
       actualizarResumen();
       actualizarVistaPrevia();
       mostrarPaso(1);
+      localStorage.removeItem(claveReservaLocal);
     });
   }
 
-  // Se inicializan los datos por defecto al cargar la página para que el primer paso se vea limpio y estable.
+  // ---------------- fin reinicio de reserva ----------------
+
+  // ---------------- inicializacion ----------------
+  // Se recuperan los datos guardados y se pinta el paso correspondiente.
+  const pasoGuardado = restaurarReservaLocal();
+  aplicarCanchaDesdeUrl();
   renderCalendar();
   renderHorarios();
   actualizarResumen();
   actualizarVistaPrevia();
-  mostrarPaso(1);
+  mostrarPaso(pasoGuardado);
+
+  // ---------------- fin inicializacion ----------------
 });

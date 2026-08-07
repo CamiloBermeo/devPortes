@@ -200,7 +200,7 @@
 .mapa {
   width: 90%;
   max-width: 1000px; /* Igual que la card */
-  margin: 3rem auto;
+  margin:0 auto 3rem;
 }
 .mapa iframe {
   width: 100%;
@@ -216,7 +216,7 @@
   border: none;
   border-radius: 50px;
   font-weight: bold;
-  position: relative;
+  /* position: relative; */
   overflow: hidden;
   transition: all 0.3s ease;
   animation: pulse 2s infinite;

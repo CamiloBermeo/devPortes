@@ -325,4 +325,22 @@
   .gallery-img-sub {
     height: 150px;
   }
+
+  .modal-dialog {
+    margin: 0.5rem;
+  }
+
+  .modal .border-top {
+    flex-wrap: wrap;
+  }
+
+  .modal .border-top > div,
+  .modal .border-top > a {
+    flex: 1 1 100%;
+  }
+
+  .modal .border-top > a {
+    white-space: normal !important;
+    text-align: center;
+  }
 }

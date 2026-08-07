@@ -26,7 +26,8 @@
 
 .panel-formulario {
   background-color: #ffffff;
-  min-height: 480px;
+  min-height: 100%;
+  min-width: 0;
 }
 
 /* ---------------- fin estilos generales del modulo de reservas ---------------- */
@@ -59,10 +60,16 @@
 }
 .div-seleccion{
   display: flex;
-  
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
   align-items: center;
   justify-content: space-between;
-  text-align: center;
+  text-align: left;
+}
+
+.div-seleccion > div {
+  min-width: 0;
+  flex: 1 1 180px;
 }
 .panel-formulario .campo-error {
   border-color: #b42318;
@@ -188,6 +195,7 @@
 }
 
 .calendar-card {
+  width: 100%;
   max-width: 360px;
   padding: 0.75rem !important;
 }
@@ -208,11 +216,13 @@
 
 #horariosDisponibles {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
 }
 
 .btn-horario {
+  min-width: 0;
+  width: 100%;
   border: 1px solid var(--color-secundario);
   color: var(--color-texto);
   background-color: var(--color-fondo);
@@ -327,6 +337,7 @@
 
 .resumen-wireframe {
   width: 100%;
+  min-width: 0;
   background: var(--color-fondo);
   color: var(--color-texto);
 }
@@ -449,7 +460,7 @@
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, opacity 0.3s ease;
 }
 .menu-pasos{
-  width: 10%;
+  width: 100%;
   height: 100%;
   padding: 0.5rem;
   background-color: var(--color-fondo);
@@ -532,3 +543,76 @@
 }
 
 /* ---------------- fin estilos de animacion entre pasos ---------------- */
+
+/* ---------------- ajustes responsivos del wizard ---------------- */
+/* En móvil se apilan las columnas y se reducen espacios para evitar desbordes. */
+@media (max-width: 575.98px) {
+  .main-reservas-row {
+    --bs-gutter-x: 0.75rem;
+  }
+
+  .panel-formulario {
+    min-height: 0;
+  }
+
+  .div-titulo-formulario,
+  .paso-formulario > .mb-2 {
+    text-align: center;
+  }
+
+  .titulo-formulario {
+    font-size: 1.65rem;
+  }
+
+  .texto-secundario {
+    font-size: 0.9rem;
+  }
+
+  #horariosDisponibles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .btn-horario {
+    font-size: 0.68rem;
+  }
+
+  .div-seleccion {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .div-seleccion > div {
+    flex-basis: auto;
+  }
+
+  .dato-confirmacion {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .paso-formulario .d-flex.justify-content-between {
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .paso-formulario .d-flex.justify-content-between > button {
+    flex: 1 1 140px;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .menu-pasos .paso {
+    padding-inline: 0.5rem;
+  }
+
+  .text-pasos h3 {
+    font-size: 1rem;
+  }
+
+  .text-pasos p {
+    font-size: 0.75rem;
+  }
+}
+
+/* ---------------- fin ajustes responsivos del wizard ---------------- */

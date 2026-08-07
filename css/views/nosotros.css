@@ -11,9 +11,19 @@
 .icono-grande {
   font-size: 50px;
 }
-.imgEquipo {
+.parrafo-pasos{
+  text-align: justify;
+}
+/* .imgEquipo {
   max-width: 25%;
   height: auto;
+  border-radius: 10px;
+} */
+ .imgEquipo {
+  width: 100%;
+  max-width: 430px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
   border-radius: 10px;
 }
 .linea-about {
@@ -271,7 +281,9 @@
   object-fit: cover;
   transition: transform 0.3s ease;
 }
-
+#frasePersonal{
+  font-style: italic;
+}
 /* FINAL MAURICIO */
 
 @media (max-width: 992px) {

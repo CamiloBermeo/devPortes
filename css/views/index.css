@@ -37,19 +37,7 @@
   min-height: 90vh;
   background:
     linear-gradient(rgba(34, 67, 48, 0.65), rgba(28, 28, 28, 0.8)),
-    url('./assets/img/fondo.jpg') center/cover no-repeat;
-}
-
-.btn-outline-custom {
-  color: var(--color-dark);
-  border: 1px solid var(--color-dark);
-  background: transparent;
-}
-
-.btn-outline-custom:hover {
-  color: #fff;
-  background-color: var(--color-terceario);
-  border-color: var(--color-terceario);
+    url('../assets/img/fondo.webp') center/cover no-repeat;
 }
 
 /* Fondo de la sección similar al de la imagen */

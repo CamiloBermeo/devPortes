@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdminCanchas - Panel de Control</title>
+
+    <!-- Fuentes oficiales de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+            rel="stylesheet">
+
+    <!-- Hoja de estilos principal -->
+    <link rel="stylesheet" href="../css/views/panel-administrador.css">
+
+    <!-- Librerías de gráficos e íconos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+<!-- Encabezado superior para pantallas móviles -->
+<header class="mobile-header">
+    <div class="brand">
+        <div class="brand-icon">
+            <i data-lucide="layout-grid"></i>
+        </div>
+        <span class="brand-name">AdminCanchas</span>
+    </div>
+    <button class="mobile-toggle-btn" id="mobileToggleBtn" aria-label="Abrir menú de navegación">
+        <i data-lucide="menu"></i>
+    </button>
+</header>
+
+<!-- Capa oscura semitransparente para cuando se despliega el menú en celulares -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- Menú lateral navegable -->
+<aside class="sidebar" id="sidebar">
+    <div class="brand brand-desktop">
+        <div class="brand-icon">
+            <i data-lucide="layout-grid"></i>
+        </div>
+        <span class="brand-name">AdminCanchas</span>
+    </div>
+
+    <!-- Navegación principal -->
+    <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-target="dashboard-view"> <i data-lucide="bar-chart-3"></i> <span>Dashboard</span>
+        </a> <a href="#" class="nav-item" data-target="reservas-view"> <i data-lucide="calendar"></i>
+        <span>Reservas</span> </a> <a href="#" class="nav-item" data-target="canchas-view"> <i
+            data-lucide="circle-dot"></i> <span>Canchas</span> </a> <a
+            href="#" class="nav-item" data-target="clientes-view"> <i
+            data-lucide="users"></i> <span>Clientes</span> </a>
+    </nav>
+
+    <!-- Botón de cierre de sesión -->
+    <div class="sidebar-footer">
+        <a href="#" class="nav-item nav-logout" id="logoutBtn"> <i data-lucide="log-out"></i> <span>Cerrar sesión</span>
+        </a>
+    </div>
+</aside>
+
+<!-- Área de contenido principal -->
+<main class="main-content">
+
+    <!-- PANTALLA 1: DASHBOARD Y MÉTRICAS -->
+    <section id="dashboard-view" class="view-section active">
+        <div class="filter-bar">
+            <div class="filter-group">
+                <label for="fechaDesde">Desde:</label> <input type="date" id="fechaDesde" value="2026-08-01"> <label
+                    for="fechaHasta">Hasta:</label> <input type="date" id="fechaHasta" value="2026-08-31">
+            </div>
+
+            <div class="btn-group" id="periodFilterGroup">
+                <button class="btn-time" data-period="dia">Día</button>
+                <button class="btn-time active" data-period="semana">Semana</button>
+                <button class="btn-time" data-period="mes">Mes</button>
+            </div>
+        </div>
+
+        <!-- Tarjetas de indicadores KPI -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <span class="kpi-title">Ingresos Totales</span>
+                <div class="kpi-value">$2,450.000</div>
+                <span class="kpi-sub badge-up">↑ 12% vs periodo anterior</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-title">Cancha 1 (Sintética)</span>
+                <div class="kpi-value text-green">$1,100.000</div>
+                <span class="kpi-sub">45% del total</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-title">Cancha 2 (Fútbol 8)</span>
+                <div class="kpi-value text-purple">$850.000</div>
+                <span class="kpi-sub">35% del total</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-title">Cancha 3 (Pádel)</span>
+                <div class="kpi-value text-orange">$500.000</div>
+                <span class="kpi-sub">20% del total</span>
+            </div>
+        </div>
+
+        <!-- Sección de gráficos del dashboard -->
+        <div class="dashboard-grid">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Ingresos por Cancha</h3>
+                    <i data-lucide="trending-up" class="icon-accent"></i>
+                </div>
+                <div class="chart-container">
+                    <canvas id="incomeChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Distribución General</h3>
+                </div>
+                <div class="chart-container">
+                    <canvas id="doughnutChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta adaptada para resumen con botón responsivo -->
+        <div class="card card-margin-top">
+            <div class="card-header card-header-responsive">
+                <div class="card-header-title">
+                    <h3>Resumen Ejecutivo del Dashboard</h3>
+                </div>
+                <button class="btn-ver-mas" data-modal="dashboard">Ver más información</button>
+            </div>
+            <p class="text-muted">Vista rápida de métricas clave del sistema e ingresos registrados en la sede
+                actual.</p>
+        </div>
+    </section>
+
+    <!-- PANTALLA 2: RESERVAS -->
+    <section id="reservas-view" class="view-section">
+        <div class="preview-header">
+            <div>
+                <h2>Próximas Reservas Confirmadas</h2>
+                <p class="text-muted">Partidos agendados para la jornada de hoy.</p>
+            </div>
+            <button class="btn-ver-mas" data-modal="reservas">Ver más información</button>
+        </div>
+
+        <div class="preview-grid">
+            <div class="card card-preview">
+                <div class="card-header">
+                    <span class="badge-tag green">18:00 - 19:30</span> <span class="text-muted">Cancha 1</span>
+                </div>
+                <h4>Carlos Bermeo</h4>
+                <p class="text-muted">Fútbol 5 Sintético • Pagado</p>
+            </div>
+
+            <div class="card card-preview">
+                <div class="card-header">
+                    <span class="badge-tag orange">19:30 - 21:00</span> <span class="text-muted">Cancha 3</span>
+                </div>
+                <h4>Andrés Gómez</h4>
+                <p class="text-muted">Pádel • Pendiente $70.000</p>
+            </div>
+
+            <div class="card card-preview">
+                <div class="card-header">
+                    <span class="badge-tag green">21:00 - 22:30</span> <span class="text-muted">Cancha 2</span>
+                </div>
+                <h4>Mariana López</h4>
+                <p class="text-muted">Fútbol 8 • Pagado</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PANTALLA 3: CANCHAS -->
+    <section id="canchas-view" class="view-section">
+        <div class="preview-header">
+            <div>
+                <h2>Estado de Escenarios Deportivos</h2>
+                <p class="text-muted">Disponibilidad técnica de cada espacio en tiempo real.</p>
+            </div>
+            <button class="btn-ver-mas" data-modal="canchas">Ver más información</button>
+        </div>
+
+        <div class="preview-grid">
+            <div class="card card-preview">
+                <div class="status-indicator online">Disponible</div>
+                <h3>Cancha 1 - Sintética</h3>
+                <p class="text-muted">Capacidad: 10 personas | Tarifa: $90.000/hr</p>
+            </div>
+
+            <div class="card card-preview">
+                <div class="status-indicator online">Disponible</div>
+                <h3>Cancha 2 - Fútbol 8</h3>
+                <p class="text-muted">Capacidad: 16 personas | Tarifa: $120.000/hr</p>
+            </div>
+
+            <div class="card card-preview">
+                <div class="status-indicator maintenance">Mantenimiento mañana</div>
+                <h3>Cancha 3 - Pádel</h3>
+                <p class="text-muted">Capacidad: 4 personas | Tarifa: $70.000/hr</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PANTALLA 4: CLIENTES -->
+    <section id="clientes-view" class="view-section">
+        <div class="preview-header">
+            <div>
+                <h2>Directorio de Clientes</h2>
+                <p class="text-muted">Gestiona el listado completo con opciones para consultar, editar o eliminar.</p>
+            </div>
+            <button class="btn-ver-mas" data-modal="clientes">Ver lista y gestionar</button>
+        </div>
+
+        <!-- Tarjetas interactivas con botones de acción visibles en móvil y PC -->
+        <div class="preview-grid" id="clientesGridPreview"></div>
+    </section>
+
+</main>
+
+<!-- VENTANA MODAL REUTILIZABLE -->
+<div class="modal-overlay" id="infoModal">
+    <div class="modal-card">
+        <div class="modal-header">
+            <h3 id="modalTitle">Información del Módulo</h3>
+            <button class="close-btn" id="closeModalBtn" aria-label="Cerrar ventana">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+        <div class="modal-body" id="modalBody">
+            <!-- El contenido se inyecta dinámicamente mediante JS -->
+        </div>
+    </div>
+</div>
+
+<!-- Archivo JavaScript con la lógica de negocio -->
+<script src="../js/views/panel-administrador.js"></script>
+</body>
+</html>

@@ -66,9 +66,7 @@ class AppNavbar extends HTMLElement {
           </ul>
 
           <div class="d-grid d-lg-flex align-items-center gap-3">
-            <a href="${pagesPath}login.html" class="btn btn-outline-custom rounded-3 px-4 py-2 text-nowrap transition-base">
-              Iniciar Sesión
-            </a>
+            <a href="${pagesPath}login.html" class="btn btn-brand rounded-2 px-5 py-2 text-nowrap transition-base"> ¡Únete! </a>
           </div>
         </div>
       </div>

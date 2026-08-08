@@ -33,10 +33,10 @@ body {
   flex-direction: column;
   min-height: 100vh;
   font-family: var(--font-secundaria);
-  background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+  background-color: #f8f9fa;
   color: var(--color-dark);
-  --bs-bg-opacity: 1;
-  background-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity));
+  margin: 0;
+  padding: 0;
 }
 
 hr {

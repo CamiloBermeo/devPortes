@@ -91,6 +91,7 @@
   display: flex;
   align-items: center;
   gap: 1.25rem;
+  word-break: break-word; /* Evita desbordamiento de textos largos como el correo */
 }
 
 .datos-contacto i {
@@ -205,19 +206,19 @@
 }
 
 .mapa h2 {
-  font-size: 2.8rem;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
   color: var(--color-terceario);
 }
 
 .mapa h3.texto {
-  font-size: 1.15rem;
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
   font-weight: 500;
   color: var(--color-secundario);
 }
 
 .mapa h4.texto {
   font-family: var(--font-tercearia);
-  font-size: 1.8rem;
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
   color: var(--color-primario);
   letter-spacing: 1px;
 }
@@ -229,6 +230,11 @@
   border-radius: 20px;
   box-shadow: 0 15px 35px color-mix(in srgb, var(--color-terceario) 8%, transparent);
   margin-top: 1.5rem;
+}
+
+/* FAQ Flotante */
+:root {
+  --faq-bottom: 2rem;
 }
 
 .btn-faq {
@@ -257,10 +263,12 @@
 .faq-contenedor {
   position: fixed;
   left: 2rem;
-  bottom: calc(var(--faq-bottom) + 75px);
+  bottom: calc(var(--faq-bottom) + 60px);
   width: 380px;
   max-width: calc(100vw - 4rem);
   z-index: 1055;
+  max-height: 70vh;
+  overflow-y: auto;
 }
 
 .faq-contenedor .card {
@@ -297,30 +305,69 @@
   }
 }
 
-@media (max-width: 767.98px) {
-  .card-form-contacto {
-    width: 95%;
-  }
-
+@media (max-width: 991.98px) {
   .panel-izquierdo,
   .panel-derecho {
-    padding: 2.5rem 1.5rem;
+    padding: 2.5rem 1.75rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .card-form-contacto {
+    width: 100%;
+    border-radius: 16px;
   }
 
-  .mapa h2 {
-    font-size: 2.2rem;
+  .panel-izquierdo {
+    padding: 2rem 1.25rem;
   }
 
+  .panel-derecho {
+    padding: 2rem 1.25rem;
+  }
+
+  .datos-contacto {
+    margin: 1.5rem 0;
+    gap: 1.25rem;
+  }
+
+  .redes {
+    padding-top: 1.5rem;
+  }
+
+  .redes h5 {
+    margin-bottom: 1rem !important;
+  }
+
+  .boton-enviar-form {
+    width: 100%; /* Botón full-width en pantallas pequeñas */
+    padding: 0.85rem 1rem;
+  }
+
+  .mapa iframe {
+    height: 350px; /* Reducción de altura del mapa en celulares */
+    border-radius: 12px;
+  }
+
+  /* FAQ Flotante en Móviles */
   .btn-faq {
-    left: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
     bottom: 1rem;
     padding: 0.75rem 1.25rem;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .btn-faq:hover {
+    transform: translateX(-50%) translateY(-3px);
   }
 
   .faq-contenedor {
     left: 1rem;
-    bottom: calc(var(--faq-bottom) + 65px);
-    max-width: calc(100vw - 2rem);
+    right: 1rem;
+    bottom: 4.5rem;
+    width: auto;
+    max-width: 100%;
   }
 }

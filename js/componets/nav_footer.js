@@ -5,8 +5,15 @@ class AppNavbar extends HTMLElement {
     const basePath = isInsidePages ? '../' : './';
     const pagesPath = isInsidePages ? './' : './pages/';
 
-    const currentPage = path.split('/').pop() || 'index.html';
+    // Obtener el nombre del archivo actual limpiando posibles hashes o parámetros query
+    const currentPage = path.split('/').pop().split('#')[0].split('?')[0] || 'index.html';
+    const currentHash = window.location.hash;
+
     this.classList.add('sticky-top', 'd-block');
+
+    // La URL de "¿Cómo funciona?" depende de si ya estás en nosotros.html o en otra página
+    const isNosotrosPage = currentPage === 'nosotros.html';
+    const comoFuncionaUrl = isNosotrosPage ? '#comoFunciona' : `${pagesPath}nosotros.html#comoFunciona`;
 
     this.innerHTML = /*html*/ `
     <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 border-top border-4 border-brand-green shadow-sm">
@@ -45,7 +52,7 @@ class AppNavbar extends HTMLElement {
 
             <li class="nav-item">
               <a
-                class="nav-link ${currentPage === 'nosotros.html' ? 'fw-bold text-brand-mid-green' : 'nav-link-custom'} transition-base px-2"
+                class="nav-link ${isNosotrosPage && currentHash !== '#comoFunciona' ? 'fw-bold text-brand-mid-green' : 'nav-link-custom'} transition-base px-2"
                 href="${pagesPath}nosotros.html"
                 >Nosotros</a
               >
@@ -58,7 +65,11 @@ class AppNavbar extends HTMLElement {
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link nav-link-custom transition-base px-2" href="#">¿Cómo funciona?</a>
+              <a
+                class="nav-link ${isNosotrosPage && currentHash === '#comoFunciona' ? 'fw-bold text-brand-mid-green' : 'nav-link-custom'} transition-base px-2"
+                href="${comoFuncionaUrl}"
+                >¿Cómo funciona?</a
+              >
             </li>
             <li class="nav-item">
               <a class="nav-link nav-link-custom transition-base px-2" href="#">Galería</a>
@@ -82,44 +93,66 @@ class AppFooter extends HTMLElement {
     const basePath = isInsidePages ? '../' : './';
     const pagesPath = isInsidePages ? './' : './pages/';
 
+    const currentPage = path.split('/').pop().split('#')[0].split('?')[0] || 'index.html';
+    const isNosotrosPage = currentPage === 'nosotros.html';
+
+    const comoFuncionaUrl = isNosotrosPage ? '#comoFunciona' : `${pagesPath}nosotros.html#comoFunciona`;
+
     this.innerHTML = /*html*/ `
-    <footer class="py-3 border-top border-4 border-brand-green mt-auto bg-brand-dark">
+    <footer class="py-4 border-top border-4 border-brand-green mt-auto bg-brand-dark text-white-50">
       <div class="container-fluid px-3 px-lg-5">
-        <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3">
-          <div class="d-flex align-items-center gap-2">
+        <div class="row g-3 align-items-center justify-content-between text-center text-xl-start">
+          <!-- Logo y Marca -->
+          <div class="col-12 col-xl-3 d-flex justify-content-center justify-content-xl-start align-items-center gap-2">
             <div class="d-flex align-items-center justify-content-center rounded-3 fw-bold footer-logo-box">D</div>
-            <span class="fs-6 fw-black tracking-tight text-white m-0 fw-bolder"> DEVPORTES </span>
+            <span class="fs-6 fw-black tracking-tight text-white m-0 fw-bolder">DEVPORTES</span>
           </div>
 
-          <ul class="nav justify-content-center gap-3 gap-md-4 font-medium small">
-            <li class="nav-item">
-              <a href="${basePath}index.html" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base">Inicio</a>
-            </li>
-            <li class="nav-item">
-              <a href="${pagesPath}nosotros.html" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base"
-                >Nosotros</a
-              >
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base">¿Cómo funciona?</a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base">Galería</a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link p-0 text-white-50 text-brand-green-hover transition-base">Política de Privacidad</a>
-            </li>
-          </ul>
+          <!-- Navegación Responsiva en 1 sola Fila -->
+          <div class="col-12 col-xl-6">
+            <ul
+              class="nav justify-content-center gap-2 gap-md-3 gap-lg-4 font-medium small m-0 p-0 text-nowrap flex-wrap flex-sm-nowrap">
+              <li class="nav-item">
+                <a href="${basePath}index.html" class="nav-link p-1 footer-link transition-base">Inicio</a>
+              </li>
+              <li class="nav-item">
+                <a href="${pagesPath}nosotros.html" class="nav-link p-1 footer-link transition-base">Nosotros</a>
+              </li>
+              <li class="nav-item">
+                <a href="${comoFuncionaUrl}" class="nav-link p-1 footer-link transition-base">¿Cómo funciona?</a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link p-1 footer-link transition-base">Galería</a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link p-1 footer-link transition-base">Política de Privacidad</a>
+              </li>
+            </ul>
+          </div>
 
-          <div class="text-center text-lg-end">
-            <p class="m-0 text-white-50 text-tiny">&copy; ${new Date().getFullYear()} Devportes.</p>
+          <!-- Copyright (Con margen derecho para evitar solapamiento) -->
+          <div class="col-12 col-xl-3 text-center text-xl-end pe-xl-5">
+            <p class="m-0 text-tiny text-white-50">&copy; ${new Date().getFullYear()} Devportes. Todos los derechos reservados.</p>
           </div>
         </div>
       </div>
     </footer>
     `;
   }
-}
+} // Script de scroll validando estrictamente la existencia del elemento en la vista actual
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.location.hash) {
+    const targetId = window.location.hash;
+    // Solo busca e intenta hacer scroll si el elemento existe en el HTML actual
+    const targetElement = document.querySelector(targetId);
+
+    if (targetElement) {
+      setTimeout(() => {
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+  }
+});
 
 customElements.define('app-navbar', AppNavbar);
 customElements.define('app-footer', AppFooter);

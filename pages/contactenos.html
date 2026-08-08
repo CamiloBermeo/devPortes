@@ -1,132 +1,132 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contáctanos</title>
+<html lang="es">
 
-    <!-- Google Fonts (Brand Kit: Inter & Bebas Neue) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Inter:wght@400;500;700;800&amp;display=swap"
-      rel="stylesheet" />
-    <!-- BOOTSTRAP -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
-    <!-- COMPONENTES -->
-    <link rel="stylesheet" href="../css/components/navbar-footer.css" />
-    <!-- ESTILOS PERSONALIZADOS -->
-    <link rel="stylesheet" href="../css/views/contactenos.css" />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contáctanos</title>
 
-  <body>
-    <main>
-      <app-navbar></app-navbar>
-      <!-- FORMULARIO - SANTIAGO ↓ -->
-      <section class="formulario-contactenos">
-        <div class="container">
-          <h2 class="text-center mb-5">CONTÁCTENOS</h2>
-          <div class="card-form-contacto">
-            <div class="row gx-0">
-              <div class="col-12 col-md-4">
-                <div class="panel-izquierdo">
-                  <h4 class="text-center">Ponte en contacto</h4>
-                  <div class="datos-contacto">
-                    <div class="dato">
-                      <i class="bi bi-geo-alt fs-4"></i>
-                      <p>Ak 14 #24 -57 sur, Bogotá</p>
-                    </div>
-                    <div class="dato">
-                      <i class="bi bi-envelope-arrow-up-fill fs-4"></i>
-                      <p>info_canchas@golaya.com</p>
-                    </div>
-                    <div class="dato">
-                      <i class="bi bi-telephone-inbound-fill fs-4"></i>
-                      <p>(+57) 312 461 2796</p>
-                    </div>
+  <!-- Google Fonts (Brand Kit: Inter & Bebas Neue) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Inter:wght@400;500;700;800&amp;display=swap"
+    rel="stylesheet" />
+  <!-- BOOTSTRAP -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+  <!-- COMPONENTES -->
+  <link rel="stylesheet" href="../css/components/navbar-footer.css" />
+  <!-- ESTILOS PERSONALIZADOS -->
+  <link rel="stylesheet" href="../css/views/contactenos.css" />
+</head>
+
+<body>
+  <main>
+    <app-navbar></app-navbar>
+    <!-- FORMULARIO - SANTIAGO ↓ -->
+    <section class="formulario-contactenos">
+      <div class="container">
+        <h2 class="text-center mb-5">CONTÁCTENOS</h2>
+        <div class="card-form-contacto">
+          <div class="row gx-0">
+            <div class="col-12 col-md-4">
+              <div class="panel-izquierdo">
+                <h4 class="text-center">Ponte en contacto</h4>
+                <div class="datos-contacto">
+                  <div class="dato">
+                    <i class="bi bi-geo-alt fs-4"></i>
+                    <p class="texto">Ak 14 #24 -57 sur, Bogotá</p>
                   </div>
-                  <div class="redes">
-                    <h5 class="mb-5">Redes Sociales</h5>
-                    <nav class="d-flex justify-content-between gap-3">
-                      <a href=""><i class="bi bi-facebook fs-2"></i></a>
-                      <a href=""><i class="bi bi-instagram fs-2"></i></a>
-                      <a href=""><i class="bi bi-tiktok fs-2"></i></a>
-                      <a href=""><i class="bi bi-whatsapp fs-2"></i></a>
-                    </nav>
+                  <div class="dato">
+                    <i class="bi bi-envelope-arrow-up-fill fs-4"></i>
+                    <p class="texto">info_canchas@golaya.com</p>
                   </div>
+                  <div class="dato">
+                    <i class="bi bi-telephone-inbound-fill fs-4"></i>
+                    <p class="texto">(+57) 312 461 2796</p>
+                  </div>
+                </div>
+                <div class="redes">
+                  <h5 class="mb-5 texto">Redes Sociales</h5>
+                  <nav class="d-flex justify-content-between gap-3">
+                    <a href=""><i class="icono-redes bi bi-facebook fs-2"></i></a>
+                    <a href=""><i class="icono-redes bi bi-instagram fs-2"></i></a>
+                    <a href=""><i class="icono-redes bi bi-tiktok fs-2"></i></a>
+                    <a href=""><i class="icono-redes bi bi-whatsapp fs-2"></i></a>
+                  </nav>
                 </div>
               </div>
-              <div class="col-12 col-md-8">
-                <div class="panel-derecho">
-                  <h4 class="text-center mb-5">Envíanos un mensaje</h4>
-                  <form>
-                    <div class="row">
-                      <div class="col-12 col-md-6 mb-3">
-                        <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" />
-                      </div>
-                      <div class="col-12 col-md-6 mb-3">
-                        <label for="categoria" class="form-label">Categoría</label>
-                        <select id="categoria" class="form-select">
-                          <option selected disabled>Seleccione una categoría</option>
-                          <option>Información de tarifas</option>
-                          <option>Torneos o eventos</option>
-                          <option>Convenios empresariales</option>
-                          <option>Sugerencias</option>
-                          <option>Reportar un problema</option>
-                          <option>Otro</option>
-                        </select>
-                      </div>
+            </div>
+            <div class="col-12 col-md-8">
+              <div class="panel-derecho">
+                <h4 class="text-center mb-5">Envíanos un mensaje</h4>
+                <form>
+                  <div class="row">
+                    <div class="col-12 col-md-6 mb-3">
+                      <label for="nombre" class="form-label texto">Nombre</label>
+                      <input type="text" class="form-control input-form" id="nombre" />
                     </div>
-                    <div class="row">
-                      <div class="col-12 col-md-6 mb-3">
-                        <label for="telefono" class="form-label">Teléfono</label>
-                        <input type="tel" class="form-control" id="telefono" />
-                      </div>
-                      <div class="col-12 col-md-6 mb-3">
-                        <label for="correo" class="form-label">Correo</label>
-                        <input type="email" class="form-control" id="correo" />
-                      </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <label for="categoria" class="form-label texto">Categoría</label>
+                      <select id="categoria" class="form-select input-form texto">
+                        <option selected disabled>Seleccione una categoría</option>
+                        <option>Información de tarifas</option>
+                        <option>Torneos o eventos</option>
+                        <option>Convenios empresariales</option>
+                        <option>Sugerencias</option>
+                        <option>Reportar un problema</option>
+                        <option>Otro</option>
+                      </select>
                     </div>
-                    <div class="mb-3">
-                      <label for="asunto" class="form-label">Asunto</label>
-                      <input type="text" class="form-control" id="asunto" />
+                  </div>
+                  <div class="row">
+                    <div class="col-12 col-md-6 mb-3">
+                      <label for="telefono" class="form-label texto">Teléfono</label>
+                      <input type="tel" class="form-control input-form" id="telefono" />
                     </div>
-                    <div class="mb-4">
-                      <label for="mensaje" class="form-label">Mensaje</label>
-                      <textarea class="form-control" rows="5"></textarea>
+                    <div class="col-12 col-md-6 mb-3">
+                      <label for="correo" class="form-label texto">Correo</label>
+                      <input type="email" class="form-control input-form" id="correo" />
                     </div>
-                    <div class="text-center">
-                      <button class="btn boton-enviar-form rounded-pill">Enviar mensaje</button>
-                    </div>
-                  </form>
-                </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="asunto" class="form-label texto">Asunto</label>
+                    <input type="text" class="form-control input-form" id="asunto" />
+                  </div>
+                  <div class="mb-4">
+                    <label for="mensaje" class="form-label texto">Mensaje</label>
+                    <textarea class="form-control input-form" rows="5"></textarea>
+                  </div>
+                  <div class="text-center">
+                    <button class="btn boton-enviar-form rounded-pill">Enviar mensaje</button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
         </div>
-      </section>
-      <!-- Section de ubicacion -->
-      <section class="ubicacion">
-        <div class="container">
-          <div class="mapa">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3977.0755734084787!2d-74.10732752418674!3d4.58045114268655!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f998926db5195%3A0x18f33fee205e787f!2sCanchas%20Golaya!5e0!3m2!1ses!2sco!4v1785826628420!5m2!1ses!2sco"
-              width="800"
-              height="600"
-              style="border: 0"
-              allowfullscreen=""
-              loading="lazy"
-              referrerpolicy="strict-origin-when-cross-origin">
-            </iframe>
-          </div>
+      </div>
+    </section>
+    <!-- Section de ubicacion -->
+    <section class="ubicacion">
+      <div class="container">
+        <div class="mapa">
+          <h2 class="text-center">TU PRÓXIMO PARTIDO ESTÁ MÁS CERCA DE LO QUE CREES</h2>
+          <h3 class="text-center texto">Estamos ubicados en un lugar de fácil acceso</h3>
+          <h4 class="text-center texto">¡Te esperamos en Golaya!</h4>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3977.0755734084787!2d-74.10732752418674!3d4.58045114268655!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f998926db5195%3A0x18f33fee205e787f!2sCanchas%20Golaya!5e0!3m2!1ses!2sco!4v1785826628420!5m2!1ses!2sco"
+            width="800" height="600" allowfullscreen="" loading="lazy" class="mt-2"
+            referrerpolicy="strict-origin-when-cross-origin">
+          </iframe>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- PREGUNTAS FRECUENTES - ANDRES ↓ -->
+    <!-- PREGUNTAS FRECUENTES - ANDRES ↓ -->
 
-      <a
+    <!-- <a
         class="btn btn-faq rounded-pill position-fixed bottom-0 start-0 m-4 px-4 py-3 shadow-lg"
         data-bs-toggle="collapse"
         href="#faq"
@@ -136,78 +136,181 @@
         style="z-index: 1060">
         <i class="bi bi-chat-dots-fill me-2"></i>
         Preguntas Frecuentes
-      </a>
+      </a> -->
 
-      <!-- Contenedor del acordeón -->
-      <div class="collapse position-fixed start-0 ms-4" id="faq" style="width: 360px; bottom: 90px; z-index: 1055">
-        <div class="card shadow-lg">
-          <div class="card-body">
-            <div class="accordion" id="accordionFAQ">
-              <!-- Pregunta 1 -->
-              <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#pregunta1">
-                    ¿Cómo reservo una cancha?
-                  </button>
-                </h2>
+    <!-- Santiago's job-->
+    <a class="btn btn-faq" data-bs-toggle="collapse" href="#faq" role="button" aria-expanded="false"
+      aria-controls="faq">
+      <i class="bi bi-chat-dots-fill me-2"></i>
+      Preguntas Frecuentes
+    </a>
 
-                <div id="pregunta1" class="accordion-collapse collapse show" data-bs-parent="#accordionFAQ">
-                  <div class="accordion-body">
-                    Selecciona la cancha, la fecha y la hora disponibles. Luego completa tus datos y confirma la reserva.
-                  </div>
+    <!-- <div class="collapse position-fixed start-0 ms-4" id="faq" style="width: 360px; bottom: 90px; z-index: 1055">
+      <div class="card shadow-lg">
+        <div class="card-body">
+          <div class="accordion" id="accordionFAQ">
+            
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#pregunta1">
+                  ¿Cómo reservo una cancha?
+                </button>
+              </h2>
+
+              <div id="pregunta1" class="accordion-collapse collapse show" data-bs-parent="#accordionFAQ">
+                <div class="accordion-body">
+                  Selecciona la cancha, la fecha y la hora disponibles. Luego completa tus datos y confirma la reserva.
                 </div>
               </div>
+            </div>
 
-              <!-- Pregunta 2 -->
-              <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pregunta2">
-                    ¿Qué métodos de pago aceptan?
-                  </button>
-                </h2>
+            
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#pregunta2">
+                  ¿Qué métodos de pago aceptan?
+                </button>
+              </h2>
 
-                <div id="pregunta2" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
-                  <div class="accordion-body">Aceptamos Nequi, Daviplata, transferencia bancaria y pago en efectivo.</div>
+              <div id="pregunta2" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                <div class="accordion-body">Aceptamos Nequi, Daviplata, transferencia bancaria y pago en efectivo.</div>
+              </div>
+            </div>
+
+            
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#pregunta3">
+                  ¿Puedo cancelar o modificar una reserva?
+                </button>
+              </h2>
+
+              <div id="pregunta3" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                <div class="accordion-body">
+                  Sí. Puedes cancelar o modificar tu reserva con al menos 24 horas de anticipación, sujeto a
+                  disponibilidad.
                 </div>
               </div>
+            </div>
 
-              <!-- Pregunta 3 -->
-              <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pregunta3">
-                    ¿Puedo cancelar o modificar una reserva?
-                  </button>
-                </h2>
+           
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#pregunta4">
+                  ¿Cuál es el horario de atención?
+                </button>
+              </h2>
 
-                <div id="pregunta3" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
-                  <div class="accordion-body">
-                    Sí. Puedes cancelar o modificar tu reserva con al menos 24 horas de anticipación, sujeto a disponibilidad.
-                  </div>
-                </div>
-              </div>
-
-              <!-- Pregunta 4 -->
-              <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pregunta4">
-                    ¿Cuál es el horario de atención?
-                  </button>
-                </h2>
-
-                <div id="pregunta4" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
-                  <div class="accordion-body">Atendemos de lunes a domingo de 6:00 a. m. a 10:00 p. m.</div>
-                </div>
+              <div id="pregunta4" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                <div class="accordion-body">Atendemos de lunes a domingo de 6:00 a. m. a 10:00 p. m.</div>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div> -->
 
-      <app-footer></app-footer>
-    </main>
+    <!-- Santiago's job -->
+    <div class="faq-contenedor collapse" id="faq">
+      <div class="card shadow-lg">
+        <div class="card-body">
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
-    <script src="js/views/contactenos.js" defer></script>
-    <script src="../js/componets/nav_footer.js" defer></script>
-  </body>
+          <div class="accordion" id="accordionFAQ">
+
+            <!-- Pregunta 1 -->
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#pregunta1">
+                  ¿Cómo reservo una cancha?
+                </button>
+              </h2>
+
+              <div id="pregunta1" class="accordion-collapse collapse show" data-bs-parent="#accordionFAQ">
+
+                <div class="accordion-body">
+                  Selecciona la cancha, la fecha y la hora disponibles.
+                  Luego completa tus datos y confirma la reserva.
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Pregunta 2 -->
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#pregunta2">
+                  ¿Qué métodos de pago aceptan?
+                </button>
+              </h2>
+
+              <div id="pregunta2" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+
+                <div class="accordion-body">
+                  Aceptamos Nequi, Daviplata, transferencia bancaria y
+                  pago en efectivo.
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Pregunta 3 -->
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#pregunta3">
+                  ¿Puedo cancelar o modificar una reserva?
+                </button>
+              </h2>
+
+              <div id="pregunta3" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+
+                <div class="accordion-body">
+                  Sí. Puedes cancelar o modificar tu reserva con al
+                  menos 24 horas de anticipación, sujeto a disponibilidad.
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Pregunta 4 -->
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#pregunta4">
+                  ¿Cuál es el horario de atención?
+                </button>
+              </h2>
+
+              <div id="pregunta4" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+
+                <div class="accordion-body">
+                  Atendemos de lunes a domingo de 6:00 a. m. a 10:00 p. m.
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+    <app-footer></app-footer>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+  <script src="../js/views/contactenos.js" defer></script>
+  <script src="../js/componets/nav_footer.js" defer></script>
+</body>
+
 </html>

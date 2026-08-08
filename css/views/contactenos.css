@@ -349,7 +349,6 @@
     border-radius: 12px;
   }
 
-  /* FAQ Flotante en Móviles */
   .btn-faq {
     left: 50%;
     transform: translateX(-50%);

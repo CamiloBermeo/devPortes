@@ -65,12 +65,12 @@
                   <div class="row">
                     <div class="col-12 col-md-6 mb-3">
                       <label for="nombre" class="form-label texto">Nombre</label>
-                      <input type="text" class="form-control input-form" id="nombre" />
+                      <input type="text" class="form-control input-form" placeholder="Tu nombre aquí..." id="nombre" required/>
                     </div>
                     <div class="col-12 col-md-6 mb-3">
                       <label for="categoria" class="form-label texto">Categoría</label>
-                      <select id="categoria" class="form-select input-form texto">
-                        <option selected disabled>Seleccione una categoría</option>
+                      <select id="categoria" class="form-select input-form texto" required>
+                        <option selected disabled value="">Seleccione una categoría</option>
                         <option>Información de tarifas</option>
                         <option>Torneos o eventos</option>
                         <option>Convenios empresariales</option>
@@ -83,20 +83,20 @@
                   <div class="row">
                     <div class="col-12 col-md-6 mb-3">
                       <label for="telefono" class="form-label texto">Teléfono</label>
-                      <input type="tel" class="form-control input-form" id="telefono" />
+                      <input type="tel" class="form-control input-form" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" placeholder="Ej. 3124612798" id="telefono" required/>
                     </div>
                     <div class="col-12 col-md-6 mb-3">
                       <label for="correo" class="form-label texto">Correo</label>
-                      <input type="email" class="form-control input-form" id="correo" />
+                      <input type="email" class="form-control input-form" placeholder="Ej. tu_nombre@tu_dominio.com" id="correo" required />
                     </div>
                   </div>
                   <div class="mb-3">
                     <label for="asunto" class="form-label texto">Asunto</label>
-                    <input type="text" class="form-control input-form" id="asunto" />
+                    <input type="text" class="form-control input-form" placeholder="Detalla tu requerimiento" id="asunto" required/>
                   </div>
                   <div class="mb-4">
                     <label for="mensaje" class="form-label texto">Mensaje</label>
-                    <textarea class="form-control input-form" rows="5"></textarea>
+                    <textarea class="form-control input-form" rows="5" placeholder="Escribe aquí tu mensaje..." required></textarea>
                   </div>
                   <div class="text-center">
                     <button class="btn boton-enviar-form rounded-pill">Enviar mensaje</button>
@@ -231,8 +231,9 @@
               <div id="pregunta1" class="accordion-collapse collapse show" data-bs-parent="#accordionFAQ">
 
                 <div class="accordion-body">
+                  Inicia sesión o regístrate,
                   Selecciona la cancha, la fecha y la hora disponibles.
-                  Luego completa tus datos y confirma la reserva.
+                  ¡Confirma tu reserva y listo!
                 </div>
 
               </div>

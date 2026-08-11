@@ -240,7 +240,7 @@
 .btn-faq {
   position: fixed;
   left: 2rem;
-  bottom: var(--faq-bottom);
+  bottom: calc(2rem + var(--faq-offset, 0px));
   z-index: 1060;
   background: linear-gradient(135deg, var(--color-secundario), var(--color-primario));
   color: #ffffff;
@@ -250,7 +250,9 @@
   font-weight: 700;
   padding: 0.85rem 1.75rem;
   box-shadow: 0 10px 25px color-mix(in srgb, var(--color-secundario) 35%, transparent);
-  transition: all 0.3s ease;
+  transition:
+    bottom 0.1s ease-out,
+    transform 0.3s ease;
   animation: pulse 2.5s infinite;
 }
 
@@ -263,12 +265,13 @@
 .faq-contenedor {
   position: fixed;
   left: 2rem;
-  bottom: calc(var(--faq-bottom) + 60px);
+  bottom: calc(5.5rem + var(--faq-offset, 0px));
   width: 380px;
   max-width: calc(100vw - 4rem);
   z-index: 1055;
   max-height: 70vh;
   overflow-y: auto;
+  transition: bottom 0.1s ease-out;
 }
 
 .faq-contenedor .card {
@@ -352,7 +355,7 @@
   .btn-faq {
     left: 50%;
     transform: translateX(-50%);
-    bottom: 1rem;
+    bottom: calc(1rem + var(--faq-offset, 0px));
     padding: 0.75rem 1.25rem;
     font-size: 0.85rem;
     white-space: nowrap;
@@ -365,7 +368,7 @@
   .faq-contenedor {
     left: 1rem;
     right: 1rem;
-    bottom: 4.5rem;
+    bottom: calc(4.5rem + var(--faq-offset, 0px));
     width: auto;
     max-width: 100%;
   }

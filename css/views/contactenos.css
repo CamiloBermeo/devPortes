@@ -240,7 +240,7 @@
 .btn-faq {
   position: fixed;
   left: 2rem;
-  bottom: calc(2rem + var(--faq-offset, 0px));
+  bottom: calc(1rem + var(--faq-offset, 0px));
   z-index: 1060;
   background: linear-gradient(135deg, var(--color-secundario), var(--color-primario));
   color: #ffffff;
@@ -353,7 +353,7 @@
   }
 
   .btn-faq {
-    left: 50%;
+    left: 10%;
     transform: translateX(-50%);
     bottom: calc(1rem + var(--faq-offset, 0px));
     padding: 0.75rem 1.25rem;

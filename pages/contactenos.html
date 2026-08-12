@@ -78,11 +78,11 @@
                     <div class="col-12 col-md-6 mb-3">
                       <label for="nombre" class="form-label texto">Nombre</label>
                       <input type="text" name="name" class="form-control input-form" placeholder="Tu nombre aquí..."
-                        id="nombre" required />
+                        id="nombre" />
                     </div>
                     <div class="col-12 col-md-6 mb-3">
                       <label for="categoria" class="form-label texto">Categoría</label>
-                      <select id="categoria" name="request-type" class="form-select input-form texto" required>
+                      <select id="categoria" name="request-type" class="form-select input-form texto" >
                         <option selected disabled value="">Seleccione una categoría</option>
                         <option>Información de tarifas</option>
                         <option>Torneos o eventos</option>
@@ -97,23 +97,23 @@
                     <div class="col-12 col-md-6 mb-3">
                       <label for="telefono" class="form-label texto">Teléfono</label>
                       <input type="tel" name="phone-number" class="form-control input-form"
-                        pattern="[0-9]{3}[0-9]{3}[0-9]{4}" placeholder="Ej. 3124612798" id="telefono" required />
+                        pattern="[0-9]{3}[0-9]{3}[0-9]{4}" placeholder="Ej. 3124612798" id="telefono" />
                     </div>
                     <div class="col-12 col-md-6 mb-3">
                       <label for="correo" class="form-label texto">Correo</label>
                       <input type="email" name="email" class="form-control input-form"
-                        placeholder="Ej. tu_nombre@tu_dominio.com" id="correo" required />
+                        placeholder="Ej. tu_nombre@tu_dominio.com" id="correo" />
                     </div>
                   </div>
                   <div class="mb-3">
                     <label for="asunto" class="form-label texto">Asunto</label>
                     <input type="text" name="title" class="form-control input-form"
-                      placeholder="Detalla tu requerimiento" id="asunto" required />
+                      placeholder="Detalla tu requerimiento" id="asunto"  />
                   </div>
                   <div class="mb-4">
                     <label for="mensaje" class="form-label texto">Mensaje</label>
                     <textarea class="form-control input-form" name="message" rows="5"
-                      placeholder="Escribe aquí tu mensaje..." required></textarea>
+                      placeholder="Escribe aquí tu mensaje..." id="mensaje" ></textarea>
                   </div>
                   <div class="text-center">
                     <button class="btn boton-enviar-form rounded-pill">Enviar mensaje</button>

@@ -11,7 +11,7 @@
 .icono-grande {
   font-size: 50px;
 }
-.parrafo-pasos{
+.parrafo-pasos {
   text-align: justify;
 }
 /* .imgEquipo {
@@ -19,7 +19,7 @@
   height: auto;
   border-radius: 10px;
 } */
- .imgEquipo {
+.imgEquipo {
   width: 100%;
   max-width: 430px;
   aspect-ratio: 4 / 3;
@@ -281,8 +281,9 @@
   object-fit: cover;
   transition: transform 0.3s ease;
 }
-#frasePersonal{
+#frasePersonal {
   font-style: italic;
+  font-size: 0.7rem;
 }
 /* FINAL MAURICIO */
 
@@ -319,5 +320,122 @@
 
   .card {
     padding: 20px;
+  }
+}
+/* ==========================================
+   SECCIÓN MISIÓN Y VISIÓN
+   ========================================== */
+.historia {
+  padding: 4rem 0;
+  background-color: #ffffff;
+}
+
+.titulo {
+  color: var(--color-terceario);
+  font-weight: 700;
+}
+
+.historia p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  text-align: left;
+  color: var(--color-texto);
+}
+
+.imagen-historia {
+  width: 100%;
+  max-width: 520px;
+  border-radius: 20px;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  object-fit: cover;
+}
+
+.imagen-historia:hover {
+  transform: translateY(-5px);
+}
+
+.card-andres {
+  background: var(--color-fondo);
+  box-shadow: 0 20px 40px color-mix(in srgb, var(--color-terceario) 15%, transparent) !important;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.card-andres:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 30px color-mix(in srgb, var(--color-terceario) 12%, transparent) !important;
+}
+
+.frase {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-terceario);
+}
+
+/* Adaptación Responsive */
+@media (max-width: 768px) {
+  .historia {
+    padding: 2.5rem 0;
+  }
+
+  .frase {
+    font-size: 1.25rem;
+  }
+}
+
+/* ==========================================
+   SECCIÓN CÓMO FUNCIONA & TESTIMONIO
+   ========================================== */
+.about-santiago {
+  position: relative;
+}
+
+/* Tarjetas individuales de cada paso */
+.card-paso {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.card-paso:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Alineación limpia de textos */
+.parrafo-pasos {
+  text-align: left;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Imagen del equipo responsive */
+.imgEquipo {
+  width: 100%;
+  max-width: 400px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+/* Ajustes Responsivos */
+@media (max-width: 991.98px) {
+  .parrafo-pasos {
+    text-align: center;
+  }
+
+  .imgEquipo {
+    max-width: 100%;
+    height: 220px;
+  }
+}
+
+@media (max-width: 576px) {
+  .card-paso {
+    padding: 1.5rem !important;
   }
 }

@@ -68,7 +68,7 @@
               <div class="col-12 col-lg-8">
                 <div class="panel-derecho">
                   <h4 class="text-center mb-4 mb-md-5 brand-heading fs-3">Envíanos un mensaje</h4>
-                  <form id="form" action="https://formspree.io/f/xeajeepl" method="POST">
+                  <form id="form" action="https://formspree.io/f/xeajeepl" method="POST" novalidate>
                     <div class="row">
                       <div class="col-12 col-sm-6 mb-3">
                         <label for="nombre" class="form-label texto">Nombre</label>
@@ -78,11 +78,11 @@
                           class="form-control input-form"
                           placeholder="Tu nombre aquí..."
                           id="nombre"
-                          required />
+                          />
                       </div>
                       <div class="col-12 col-sm-6 mb-3">
                         <label for="categoria" class="form-label texto">Categoría</label>
-                        <select id="categoria" name="request-type" class="form-select input-form texto" required>
+                        <select id="categoria" name="request-type" class="form-select input-form texto">
                           <option selected disabled value="">Seleccione una categoría</option>
                           <option>Información de tarifas</option>
                           <option>Torneos o eventos</option>
@@ -100,10 +100,9 @@
                           type="tel"
                           name="phone-number"
                           class="form-control input-form"
-                          pattern="[0-9]{10}"
                           placeholder="Ej. 3124612798"
                           id="telefono"
-                          required />
+                          />
                       </div>
                       <div class="col-12 col-sm-6 mb-3">
                         <label for="correo" class="form-label texto">Correo</label>
@@ -113,7 +112,7 @@
                           class="form-control input-form"
                           placeholder="Ej. tu_nombre@tu_dominio.com"
                           id="correo"
-                          required />
+                          />
                       </div>
                     </div>
                     <div class="mb-3">
@@ -122,9 +121,9 @@
                         type="text"
                         name="title"
                         class="form-control input-form"
-                        placeholder="Detalla tu requerimiento"
+                        placeholder="Detalla tu requerimiento (min 8 - max 35 caracteres)"
                         id="asunto"
-                        required />
+                        />
                     </div>
                     <div class="mb-4">
                       <label for="mensaje" class="form-label texto">Mensaje</label>
@@ -133,7 +132,8 @@
                         name="message"
                         rows="4"
                         placeholder="Escribe aquí tu mensaje..."
-                        required></textarea>
+                        id="mensaje"
+                        ></textarea>
                     </div>
                     <div class="text-center">
                       <button type="submit" class="btn boton-enviar-form rounded-pill">Enviar mensaje</button>

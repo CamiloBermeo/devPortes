@@ -2,10 +2,20 @@
 
 Sistema web para la administración y reserva de complejos deportivos. Desarrollado como proyecto integrador para el bootcamp Generation.
 
+## Demo | Index
+
 <img width="1294" height="686" alt="image" src="https://github.com/user-attachments/assets/da5cbad9-8bc8-4b68-97f8-de81f5597a53" />
 
+> [**Vista el Index**](https://camilobermeo.github.io/devPortes/)
 
-**Demo:** [https://camilobermeo.github.io/devPortes/](https://camilobermeo.github.io/devPortes/)
+
+
+## Demo | Panel de administrador
+
+<img width="1296" height="704" alt="image" src="https://github.com/user-attachments/assets/2f7a79ef-325a-4fa4-8882-dc84d590cbb8" />
+
+> [Panel de Administrador](https://camilobermeo.github.io/devPortes/pages/panel-administrador.html)
+
 
 ## Funcionalidades
 

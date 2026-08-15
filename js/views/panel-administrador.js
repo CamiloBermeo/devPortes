@@ -1,3 +1,5 @@
+import { obtenerCanchas, guardarCanchas } from '../api/canchas.js';
+
 // Listado local de clientes
 let listaClientes = [
   {
@@ -38,44 +40,25 @@ let listaClientes = [
   },
 ];
 
-// Listado inicial de 10 Canchas (cumple con el criterio de 10 productos)
-let listaCanchas = [
-  { id: 1, nombre: 'Cancha 1 - Sintética', tipo: 'Fútbol 5', capacidad: 10, tarifa: 90000, estado: 'Disponible' },
-  { id: 2, nombre: 'Cancha 2 - Fútbol 8', tipo: 'Fútbol 8', capacidad: 16, tarifa: 120000, estado: 'Disponible' },
-  { id: 3, nombre: 'Cancha 3 - Pádel Panorámica', tipo: 'Pádel', capacidad: 4, tarifa: 70000, estado: 'Mantenimiento' },
-  { id: 4, nombre: 'Cancha 4 - Tenis Polvo de Ladrillo', tipo: 'Tenis', capacidad: 2, tarifa: 60000, estado: 'Disponible' },
-  { id: 5, nombre: 'Cancha 5 - Baloncesto Indoor', tipo: 'Baloncesto', capacidad: 10, tarifa: 80000, estado: 'Disponible' },
-  { id: 6, nombre: 'Cancha 6 - Voleibol Playa', tipo: 'Voleibol', capacidad: 12, tarifa: 65000, estado: 'Disponible' },
-  { id: 7, nombre: 'Cancha 7 - Césped Natural', tipo: 'Fútbol 11', capacidad: 22, tarifa: 200000, estado: 'Disponible' },
-  { id: 8, nombre: 'Cancha 8 - Squash Profesional', tipo: 'Squash', capacidad: 2, tarifa: 55000, estado: 'Disponible' },
-  { id: 9, nombre: 'Cancha 9 - Pádel Cubierta', tipo: 'Pádel', capacidad: 4, tarifa: 75000, estado: 'Disponible' },
-  { id: 10, nombre: 'Cancha 10 - Futsal Duela', tipo: 'Futsal', capacidad: 10, tarifa: 85000, estado: 'Disponible' },
-];
-
 document.addEventListener('DOMContentLoaded', () => {
-  // Inicializamos los íconos de Lucide
   if (window.lucide) {
     lucide.createIcons();
   }
 
-  // Renderizado de las gráficas
   const incomeChart = renderGraficoBarra();
   renderGraficoDoughnut();
 
-  // Activación de módulos responsivos e interactivos
   activarMenuMovil();
   activarNavegacionMenu();
   if (incomeChart) activarFiltrosTiempo(incomeChart);
   activarCerrarSesion();
 
-  // Pintado dinámico de clientes, canchas, formulario y modales
   renderClientesGrid();
   renderCanchasGrid();
   activarFormularioCanchas();
   activarModalGeneral();
 });
 
-// Despliega y oculta la barra lateral en celulares
 function activarMenuMovil() {
   const toggleBtn = document.getElementById('mobileToggleBtn');
   const sidebar = document.getElementById('sidebar');
@@ -96,7 +79,6 @@ function activarMenuMovil() {
   }
 }
 
-// Alterna de forma limpia entre las diferentes vistas
 function activarNavegacionMenu() {
   const itemsMenu = document.querySelectorAll('.sidebar-nav .nav-item');
   const sidebar = document.getElementById('sidebar');
@@ -120,7 +102,6 @@ function activarNavegacionMenu() {
       itemsMenu.forEach((i) => i.classList.remove('active'));
       item.classList.add('active');
 
-      // Si se navega en un celular, cerramos la barra lateral
       if (window.innerWidth <= 768 && sidebar && overlay) {
         sidebar.classList.remove('open');
         overlay.classList.remove('active');
@@ -142,7 +123,6 @@ function activarNavegacionMenu() {
   });
 }
 
-// Acción del botón para cerrar sesión
 function activarCerrarSesion() {
   const btnLogout = document.getElementById('logoutBtn');
   if (btnLogout) {
@@ -155,13 +135,6 @@ function activarCerrarSesion() {
   }
 }
 
-// Muestra la lista de componentes en formato JSON en la consola
-function imprimirCanchasJSONEnConsola() {
-  console.log('--- CATÁLOGO DE CANCHAS (FORMATO JSON) ---');
-  console.log(JSON.stringify(listaCanchas, null, 2));
-}
-
-// Renderiza las tarjetas de clientes
 function renderClientesGrid() {
   const contenedor = document.getElementById('clientesGridPreview');
   if (!contenedor) return;
@@ -200,24 +173,33 @@ function renderClientesGrid() {
   if (window.lucide) lucide.createIcons();
 }
 
-// Renderiza las tarjetas de canchas (Sin duplicar)
+// Renderiza las tarjetas de canchas con miniatura de foto usando LocalStorage
 function renderCanchasGrid() {
   const contenedor = document.getElementById('canchasGridPreview');
   if (!contenedor) return;
 
   contenedor.innerHTML = '';
+  const canchas = obtenerCanchas();
 
-  listaCanchas.forEach((cancha) => {
+  canchas.forEach((cancha) => {
     const card = document.createElement('div');
     card.className = 'card user-card-full';
 
     const badgeClass = cancha.estado === 'Disponible' ? 'green' : 'orange';
+    const tarifaNumerica = cancha.tarifa || parseInt(cancha.precio?.replace(/\D/g, '') || '0', 10) || 0;
+    const nombreMostrar = cancha.titulo || cancha.nombre;
+    const imagenSrc = cancha.imagen || 'https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format';
 
     card.innerHTML = `
       <div class="user-card-header" style="display: flex; align-items: center; gap: 12px">
-        <div class="sport-badge-icon">${cancha.id}</div>
-        <div>
-          <h4 style="font-size: 1rem; font-weight: 700">${cancha.nombre}</h4>
+        <img
+          src="${imagenSrc}"
+          alt="${nombreMostrar}"
+          style="width: 48px; height: 48px; object-fit: cover; border-radius: 8px; flex-shrink: 0" />
+        <div style="flex: 1; overflow: hidden">
+          <h4 style="font-size: 1rem; font-weight: 700; margin: 0; text-overflow: ellipsis; white-space: nowrap; overflow: hidden">
+            ${nombreMostrar}
+          </h4>
           <span class="badge-tag ${badgeClass}">${cancha.estado}</span>
         </div>
       </div>
@@ -233,7 +215,7 @@ function renderCanchasGrid() {
         </div>
         <div class="card-info-row">
           <span class="text-muted">Tarifa:</span>
-          <strong class="text-green">$${cancha.tarifa.toLocaleString('es-CO')}/hr</strong>
+          <strong class="text-green">$${tarifaNumerica.toLocaleString('es-CO')}/hr</strong>
         </div>
       </div>
 
@@ -248,10 +230,8 @@ function renderCanchasGrid() {
   });
 
   if (window.lucide) lucide.createIcons();
-  imprimirCanchasJSONEnConsola();
 }
 
-// Captura datos del formulario e ingresa una nueva cancha al arreglo
 function activarFormularioCanchas() {
   const form = document.getElementById('formNuevaCancha');
   if (!form) return;
@@ -263,19 +243,34 @@ function activarFormularioCanchas() {
     const tipo = document.getElementById('canchaTipo').value.trim();
     const capacidad = parseInt(document.getElementById('canchaCapacidad').value, 10);
     const tarifa = parseFloat(document.getElementById('canchaTarifa').value);
+    const imagenInput = document.getElementById('canchaImagen');
+    const imagenUrl =
+      imagenInput && imagenInput.value.trim()
+        ? imagenInput.value.trim()
+        : 'https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format';
 
     if (!nombre || !tipo || isNaN(capacidad) || isNaN(tarifa)) return;
 
+    const canchas = obtenerCanchas();
+    const nuevoId = canchas.length > 0 ? Math.max(...canchas.map((c) => c.id)) + 1 : 1;
+
     const nuevaCancha = {
-      id: listaCanchas.length > 0 ? Math.max(...listaCanchas.map((c) => c.id)) + 1 : 1,
+      id: nuevoId,
+      titulo: nombre,
       nombre: nombre,
       tipo: tipo,
-      capacidad: capacidad,
+      superficie: 'Sintética Standard',
+      precio: `$${tarifa.toLocaleString('es-CO')}`,
       tarifa: tarifa,
+      capacidad: capacidad,
       estado: 'Disponible',
+      imagen: imagenUrl,
+      descripcion: 'Espacio deportivo acondicionado recientemente para partidos generales.',
+      detalles: [`Capacidad ideal: ${capacidad} personas`, 'Iluminación estándar', 'Petos y balón básico incluidos'],
     };
 
-    listaCanchas.push(nuevaCancha);
+    canchas.push(nuevaCancha);
+    guardarCanchas(canchas);
     form.reset();
 
     renderCanchasGrid();
@@ -287,21 +282,29 @@ function activarFormularioCanchas() {
   });
 }
 
-// Acciones globales para Canchas (Ver, Editar, Eliminar)
 window.abrirPerfilCancha = function (id) {
-  const cancha = listaCanchas.find((c) => c.id === id);
+  const canchas = obtenerCanchas();
+  const cancha = canchas.find((c) => c.id === id);
   if (!cancha) return;
 
   const modal = document.getElementById('infoModal');
   const modalTitle = document.getElementById('modalTitle');
   const modalBody = document.getElementById('modalBody');
 
-  modalTitle.textContent = 'Detalles del Espacio Deportivo';
+  const tarifaNumerica = cancha.tarifa || parseInt(cancha.precio?.replace(/\D/g, '') || '0', 10) || 0;
+  const imagenSrc = cancha.imagen || 'https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format';
 
+  modalTitle.textContent = 'Detalles del Espacio Deportivo';
   modalBody.innerHTML = `
+    <div style="text-align: center; margin-bottom: 12px">
+      <img
+        src="${imagenSrc}"
+        alt="${cancha.titulo || cancha.nombre}"
+        style="width: 100%; max-height: 180px; object-fit: cover; border-radius: 8px; border: 1px solid #e2e8f0" />
+    </div>
     <div class="cliente-detalle-header">
       <div>
-        <h3 style="font-size: 1.2rem; margin-bottom: 4px">${cancha.nombre}</h3>
+        <h3 style="font-size: 1.2rem; margin-bottom: 4px">${cancha.titulo || cancha.nombre}</h3>
         <span class="badge-tag ${cancha.estado === 'Disponible' ? 'green' : 'orange'}">${cancha.estado}</span>
       </div>
     </div>
@@ -309,29 +312,37 @@ window.abrirPerfilCancha = function (id) {
     <div class="cliente-info-box" style="margin-top: 1rem">
       <p class="cliente-info-item"><strong>Deporte / Categoría:</strong> ${cancha.tipo}</p>
       <p class="cliente-info-item"><strong>Capacidad Permitida:</strong> ${cancha.capacidad} personas</p>
-      <p class="cliente-info-item"><strong>Tarifa por Hora:</strong> $${cancha.tarifa.toLocaleString('es-CO')}</p>
+      <p class="cliente-info-item"><strong>Tarifa por Hora:</strong> $${tarifaNumerica.toLocaleString('es-CO')}</p>
     </div>
   `;
 
   modal.classList.add('open');
 };
 
-// Edición con Modal Elegante (Sin Prompt)
 window.editarCancha = function (id) {
-  const cancha = listaCanchas.find((c) => c.id === id);
+  const canchas = obtenerCanchas();
+  const cancha = canchas.find((c) => c.id === id);
   if (!cancha) return;
 
   const modal = document.getElementById('infoModal');
   const modalTitle = document.getElementById('modalTitle');
   const modalBody = document.getElementById('modalBody');
+  const tarifaNumerica = cancha.tarifa || parseInt(cancha.precio?.replace(/\D/g, '') || '0', 10) || 0;
+  const imagenActual = cancha.imagen || 'https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format';
 
   modalTitle.textContent = 'Editar Cancha / Escenario';
-
   modalBody.innerHTML = `
     <form id="formEditarCanchaModal" class="form-modal-layout">
+      <div style="text-align: center; margin-bottom: 12px;">
+        <img id="editPreviewImg" src="${imagenActual}" alt="Vista previa" style="width: 100%; max-height: 160px; object-fit: cover; border-radius: 8px; border: 1px solid #e2e8f0;" />
+      </div>
+      <div class="form-group">
+        <label>URL de la Imagen / Foto:</label>
+        <input type="url" id="editImagen" class="form-input" value="${imagenActual}" required />
+      </div>
       <div class="form-group">
         <label>Nombre del Espacio:</label>
-        <input type="text" id="editNombre" class="form-input" value="${cancha.nombre}" required />
+        <input type="text" id="editNombre" class="form-input" value="${cancha.titulo || cancha.nombre}" required />
       </div>
       <div class="form-group">
         <label>Deporte / Categoría:</label>
@@ -343,7 +354,7 @@ window.editarCancha = function (id) {
       </div>
       <div class="form-group">
         <label>Tarifa por Hora ($):</label>
-        <input type="number" id="editTarifa" class="form-input" value="${cancha.tarifa}" required />
+        <input type="number" id="editTarifa" class="form-input" value="${tarifaNumerica}" required />
       </div>
       <div class="form-group">
         <label>Estado:</label>
@@ -361,25 +372,48 @@ window.editarCancha = function (id) {
 
   modal.classList.add('open');
 
+  const inputImagen = document.getElementById('editImagen');
+  const imgPreview = document.getElementById('editPreviewImg');
+  inputImagen.addEventListener('input', () => {
+    imgPreview.src = inputImagen.value.trim() || 'https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format';
+  });
+
   document.getElementById('formEditarCanchaModal').addEventListener('submit', (e) => {
     e.preventDefault();
-    cancha.nombre = document.getElementById('editNombre').value.trim();
-    cancha.tipo = document.getElementById('editTipo').value.trim();
-    cancha.capacidad = parseInt(document.getElementById('editCapacidad').value, 10);
-    cancha.tarifa = parseFloat(document.getElementById('editTarifa').value);
-    cancha.estado = document.getElementById('editEstado').value;
+    const canchasActuales = obtenerCanchas();
+    const idx = canchasActuales.findIndex((c) => c.id === id);
 
-    renderCanchasGrid();
+    if (idx !== -1) {
+      const nuevoNombre = document.getElementById('editNombre').value.trim();
+      const nuevaTarifa = parseFloat(document.getElementById('editTarifa').value);
+
+      canchasActuales[idx].titulo = nuevoNombre;
+      canchasActuales[idx].nombre = nuevoNombre;
+      canchasActuales[idx].imagen = document.getElementById('editImagen').value.trim();
+      canchasActuales[idx].tipo = document.getElementById('editTipo').value.trim();
+      canchasActuales[idx].capacidad = parseInt(document.getElementById('editCapacidad').value, 10);
+      canchasActuales[idx].tarifa = nuevaTarifa;
+      canchasActuales[idx].precio = `$${nuevaTarifa.toLocaleString('es-CO')}`;
+      canchasActuales[idx].estado = document.getElementById('editEstado').value;
+
+      guardarCanchas(canchasActuales);
+      renderCanchasGrid();
+    }
     cerrarModal();
   });
 };
 
 window.eliminarCancha = function (id) {
-  const cancha = listaCanchas.find((c) => c.id === id);
+  const canchas = obtenerCanchas();
+  const cancha = canchas.find((c) => c.id === id);
   if (!cancha) return;
 
-  abrirModalConfirmacion(`¿Estás seguro de que deseas eliminar la <strong>${cancha.nombre}</strong> del catálogo?`, () => {
-    listaCanchas = listaCanchas.filter((c) => c.id !== id);
+  const nombreMostrar = cancha.titulo || cancha.nombre;
+  abrirModalConfirmacion(`¿Estás seguro de que deseas eliminar la <strong>${nombreMostrar}</strong> del catálogo?`, () => {
+    const canchasActuales = obtenerCanchas();
+    const canchasFiltradas = canchasActuales.filter((c) => c.id !== id);
+    guardarCanchas(canchasFiltradas);
+
     renderCanchasGrid();
 
     const modalBody = document.getElementById('modalBody');
@@ -389,7 +423,6 @@ window.eliminarCancha = function (id) {
   });
 };
 
-// Muestra el expediente del cliente en el modal
 window.abrirPerfilCliente = function (id) {
   const cliente = listaClientes.find((c) => c.id === id);
   if (!cliente) return;
@@ -399,7 +432,6 @@ window.abrirPerfilCliente = function (id) {
   const modalBody = document.getElementById('modalBody');
 
   modalTitle.textContent = 'Ficha Técnica del Cliente';
-
   modalBody.innerHTML = `
     <div class="cliente-detalle-header" style="display: flex; align-items: center; gap: 12px">
       <div class="avatar" style="width: 48px; height: 48px; font-size: 1.1rem">${cliente.iniciales}</div>
@@ -419,7 +451,6 @@ window.abrirPerfilCliente = function (id) {
   modal.classList.add('open');
 };
 
-// Modifica un cliente con Modal Elegante (Sin Prompt)
 window.editarCliente = function (id) {
   const cliente = listaClientes.find((c) => c.id === id);
   if (!cliente) return;
@@ -429,7 +460,6 @@ window.editarCliente = function (id) {
   const modalBody = document.getElementById('modalBody');
 
   modalTitle.textContent = 'Editar Cliente';
-
   modalBody.innerHTML = `
     <form id="formEditarClienteModal" class="form-modal-layout">
       <div class="form-group">
@@ -480,7 +510,6 @@ window.editarCliente = function (id) {
   });
 };
 
-// Elimina un cliente y actualiza todas las vistas
 window.eliminarCliente = function (id) {
   const cliente = listaClientes.find((c) => c.id === id);
   if (!cliente) return;
@@ -496,13 +525,11 @@ window.eliminarCliente = function (id) {
   });
 };
 
-// Cierra cualquier modal abierto
 window.cerrarModal = function () {
   const modal = document.getElementById('infoModal');
   if (modal) modal.classList.remove('open');
 };
 
-// Reemplazo visual elegante para confirmaciones (Sin Confirm Alert)
 function abrirModalConfirmacion(mensajeHTML, callbackConfirmar) {
   const modal = document.getElementById('infoModal');
   const modalTitle = document.getElementById('modalTitle');
@@ -527,7 +554,6 @@ function abrirModalConfirmacion(mensajeHTML, callbackConfirmar) {
   });
 }
 
-// Controlador general del modal flotante
 function activarModalGeneral() {
   const modal = document.getElementById('infoModal');
   const modalTitle = document.getElementById('modalTitle');
@@ -566,7 +592,6 @@ function activarModalGeneral() {
   }
 }
 
-// Crea la tabla de clientes en el modal
 function renderTablaClientesModal(contenedor) {
   if (!contenedor) return;
 
@@ -613,9 +638,10 @@ function renderTablaClientesModal(contenedor) {
   if (window.lucide) lucide.createIcons();
 }
 
-// Crea la tabla de canchas en el modal
 function renderTablaCanchasModal(contenedor) {
   if (!contenedor) return;
+
+  const canchas = obtenerCanchas();
 
   let html = `
     <p class="text-muted modal-subtext">Catálogo general de espacios deportivos registrados:</p>
@@ -632,13 +658,24 @@ function renderTablaCanchasModal(contenedor) {
         <tbody>
   `;
 
-  listaCanchas.forEach((c) => {
+  canchas.forEach((c) => {
     const badgeClass = c.estado === 'Disponible' ? 'green' : 'orange';
+    const tarifaNumerica = c.tarifa || parseInt(c.precio?.replace(/\D/g, '') || '0', 10) || 0;
+    const nombreMostrar = c.titulo || c.nombre;
+    const imagenSrc = c.imagen || 'https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format';
+
     html += `
       <tr>
-        <td><strong>${c.nombre}</strong> <br><span class="badge-tag ${badgeClass}">${c.estado}</span></td>
+        <td>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <img src="${imagenSrc}" alt="${nombreMostrar}" style="width: 32px; height: 32px; object-fit: cover; border-radius: 4px;" />
+            <div>
+              <strong>${nombreMostrar}</strong> <br><span class="badge-tag ${badgeClass}">${c.estado}</span>
+            </div>
+          </div>
+        </td>
         <td><span class="text-muted">${c.tipo}</span><br><span class="text-muted">${c.capacidad} personas</span></td>
-        <td>$${c.tarifa.toLocaleString('es-CO')}/hr</td>
+        <td>$${tarifaNumerica.toLocaleString('es-CO')}/hr</td>
         <td class="td-acciones">
           <button class="btn-action btn-edit" onclick="editarCancha(${c.id})">
             <i data-lucide="edit-3"></i> Editar
@@ -661,7 +698,6 @@ function renderTablaCanchasModal(contenedor) {
   if (window.lucide) lucide.createIcons();
 }
 
-// Información estática para los modales informativos
 const datosGeneralesModales = {
   dashboard: {
     titulo: 'Informe Completo del Dashboard',
@@ -673,7 +709,6 @@ const datosGeneralesModales = {
   },
 };
 
-// Gráfica de Barras para ingresos
 function renderGraficoBarra() {
   const ctx = document.getElementById('incomeChart')?.getContext('2d');
   if (!ctx) return null;
@@ -705,7 +740,6 @@ function renderGraficoBarra() {
   });
 }
 
-// Gráfica de Dona
 function renderGraficoDoughnut() {
   const ctx = document.getElementById('doughnutChart')?.getContext('2d');
   if (!ctx) return null;
@@ -735,7 +769,6 @@ function renderGraficoDoughnut() {
   });
 }
 
-// Filtro interactivo de períodos
 function activarFiltrosTiempo(chart) {
   const contenedor = document.getElementById('periodFilterGroup');
   if (!contenedor || !chart) return;

@@ -236,31 +236,160 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---------------- validacion del paso 1 ----------------
   // Marca los campos faltantes o inválidos cuando el usuario pulsa Siguiente.
-  const validarPaso1 = () => {
-    let formularioValido = true;
+  //Nombre↓
+  const regexNombre = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+  const validarNombre = () => {
+    const campo = document.getElementById('nombreCompleto');
+    const valor = campo.value.trim();
 
-    camposPaso1.forEach(({ id, mensaje }) => {
-      const campo = document.getElementById(id);
-      const mensajeError = document.getElementById(`error${id.charAt(0).toUpperCase()}${id.slice(1)}`);
-      const estaVacio = !campo.value.trim();
-      const correoInvalido = id === 'correo' && !estaVacio && !campo.checkValidity();
-      const tieneError = estaVacio || correoInvalido;
+    if (valor === '') {
+      marcarCampo(campo, false, 'Ingresa tu nombre completo.');
+      return false;
+    }
 
-      campo.classList.toggle('campo-error', tieneError);
-      campo.classList.toggle('campo-valido', !tieneError);
-      campo.setAttribute('aria-invalid', String(tieneError));
+    if (valor.length < 2) {
+      marcarCampo(campo, false, 'El nombre debe tener al menos 2 caracteres.');
+      return false;
+    }
 
-      if (mensajeError) {
-        mensajeError.textContent = tieneError
-          ? (correoInvalido ? 'Escribe un correo con formato válido.' : mensaje)
-          : '';
-      }
+    if (valor.length > 40) {
+      marcarCampo(campo, false, 'El nombre no puede superar los 40 caracteres.');
+      return false;
+    }
 
-      if (tieneError) formularioValido = false;
-    });
+    if (!regexNombre.test(valor)) {
+      marcarCampo(campo, false, 'El nombre solo puede contener letras y espacios.');
+      return false;
+    }
 
-    return formularioValido;
+    marcarCampo(campo, true, '');
+    return true;
   };
+  //CEDULA↓
+  const regexDocumento = /^[0-9\s-]+$/;
+  const validarCedula = () => {
+    const campo = document.getElementById('cedula');
+    const valor = campo.value.trim();
+
+    if (valor === '') {
+      marcarCampo(campo, false, 'Ingresa tu documento.');
+      return false;
+    }
+
+    if (valor.length > 15) {
+      marcarCampo(campo, false, 'El documento no puede superar los 15 caracteres.');
+      return false;
+    }
+
+    if (!regexDocumento.test(valor)) {
+      marcarCampo(campo, false, 'El documento contiene caracteres no permitidos.');
+      return false;
+    }
+
+    marcarCampo(campo, true, '');
+    return true;
+  };
+  //CELULAR↓
+  const regexCelular = /^\d+$/;
+  const validarCelular = () => {
+    const campo = document.getElementById('celular');
+    const valor = campo.value.trim();
+    if (valor === '') {
+      marcarCampo(campo, false, 'Ingresa tu número celular.');
+      return false;
+    }
+    if (!regexCelular.test(valor)) {
+      marcarCampo(campo, false, 'El celular solo puede contener números.');
+      return false;
+    }
+    if (valor.length !== 10) {
+      marcarCampo(campo, false, 'El celular debe tener 10 dígitos.');
+      return false;
+    }
+    marcarCampo(campo, true, '');
+    return true;
+  };
+  //CORREO↓
+  const validarCorreo = () => {
+    const campo = document.getElementById('correo');
+    const valor = campo.value.trim();
+    if (valor === '') {
+      marcarCampo(campo, false, 'Ingresa tu correo.');
+      return false;
+    }
+    if (!campo.checkValidity()) {
+      marcarCampo(campo, false, 'Escribe un correo con formato válido.');
+      return false;
+    }
+    marcarCampo(campo, true, '');
+    return true;
+  };
+  //METODO PAGO↓
+  const validarMetodoPago = () => {
+    const campo = document.getElementById('metodoPago');
+    if (campo.value === '') {
+      marcarCampo(campo, false, 'Selecciona un método de pago.');
+      return false;
+    }
+    marcarCampo(campo, true, '');
+    return true;
+  };
+
+  const validarPaso1 = () => {
+    const nombreValido = validarNombre();
+    const cedulaValida = validarCedula();
+    const celularValido = validarCelular();
+    const correoValido = validarCorreo();
+    const metodoPagoValido = validarMetodoPago();
+    return (
+      nombreValido &&
+      cedulaValida &&
+      celularValido &&
+      correoValido &&
+      metodoPagoValido
+    );
+  };
+  const marcarCampo = (campo, esValido, mensaje) => {
+    const mensajeError = document.getElementById(
+      `error${campo.id.charAt(0).toUpperCase()}${campo.id.slice(1)}`
+    );
+
+    campo.classList.toggle('campo-error', !esValido);
+    campo.classList.toggle('campo-valido', esValido);
+
+    campo.setAttribute('aria-invalid', String(!esValido));
+
+    if (mensajeError) {
+      mensajeError.textContent = esValido ? '' : mensaje;
+    }
+  };
+
+
+  // const validarPaso1 = () => {
+  //   let formularioValido = true;
+
+  //   camposPaso1.forEach(({ id, mensaje }) => {
+  //     const campo = document.getElementById(id);
+  //     const mensajeError = document.getElementById(`error${id.charAt(0).toUpperCase()}${id.slice(1)}`);
+  //     const estaVacio = !campo.value.trim();
+  //     const correoInvalido = id === 'correo' && !estaVacio && !campo.checkValidity();
+  //     const tieneError = estaVacio || correoInvalido;
+
+  //     campo.classList.toggle('campo-error', tieneError);
+  //     campo.classList.toggle('campo-valido', !tieneError);
+  //     campo.setAttribute('aria-invalid', String(tieneError));
+
+  //     if (mensajeError) {
+  //       mensajeError.textContent = tieneError
+  //         ? (correoInvalido ? 'Escribe un correo con formato válido.' : mensaje)
+  //         : '';
+  //     }
+
+  //     if (tieneError) formularioValido = false;
+  //   });
+
+  //   return formularioValido;
+  // };
 
   const limpiarErrorCampo = (id) => {
     const campo = document.getElementById(id);

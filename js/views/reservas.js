@@ -392,13 +392,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const celularValido = validarCelular();
     const correoValido = validarCorreo();
     const metodoPagoValido = validarMetodoPago();
-    console.log({
-      nombreValido,
-      cedulaValida,
-      celularValido,
-      correoValido,
-      metodoPagoValido
-    });
+
     return (
       nombreValido &&
       cedulaValida &&

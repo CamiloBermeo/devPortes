@@ -335,12 +335,25 @@ document.addEventListener('DOMContentLoaded', () => {
     return true;
   };
 
+  const nombre = document.getElementById('nombreCompleto');
+  const cedula = document.getElementById('cedula');
+  const celular = document.getElementById('celular');
+  const correo = document.getElementById('correo');
+  const metodoPago = document.getElementById('metodoPago');
+  nombre.addEventListener('blur', validarNombre);
+  cedula.addEventListener('blur', validarCedula);
+  celular.addEventListener('blur', validarCelular);
+  correo.addEventListener('blur', validarCorreo);
+  metodoPago.addEventListener('change', validarMetodoPago);
+
+
   const validarPaso1 = () => {
     const nombreValido = validarNombre();
     const cedulaValida = validarCedula();
     const celularValido = validarCelular();
     const correoValido = validarCorreo();
     const metodoPagoValido = validarMetodoPago();
+
     return (
       nombreValido &&
       cedulaValida &&

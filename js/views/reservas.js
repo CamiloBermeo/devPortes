@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const estadoCalendario = {
     fechaActual: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
     fechaSeleccionada: null,
-    horaSeleccionada: null,
+    horaSeleccionadas: [],
     codigoReserva: null
   };
 
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
       reservaPara: reservaPara?.value || 'mi',
       fechaActual: estadoCalendario.fechaActual.toISOString(),
       fechaSeleccionada: estadoCalendario.fechaSeleccionada,
-      horaSeleccionada: estadoCalendario.horaSeleccionada,
+      horaSeleccionadas: estadoCalendario.horaSeleccionadas,
       codigoReserva: estadoCalendario.codigoReserva,
       cancha: datosCancha,
       pasoActual
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (reserva.fechaActual) estadoCalendario.fechaActual = new Date(reserva.fechaActual);
       estadoCalendario.fechaSeleccionada = reserva.fechaSeleccionada || null;
-      estadoCalendario.horaSeleccionada = reserva.horaSeleccionada || null;
+      estadoCalendario.horaSeleccionadas = reserva.horaSeleccionadas || [];
       estadoCalendario.codigoReserva = reserva.codigoReserva || null;
       Object.assign(datosCancha, reserva.cancha || {});
 
@@ -193,19 +193,41 @@ document.addEventListener('DOMContentLoaded', () => {
   // Actualiza la card lateral y la vista previa del paso 3.
   // Esta función actualiza el panel lateral de resumen con los datos de cancha, fecha y hora.
   const actualizarResumen = () => {
+    const rangoHorario = obtenerRangoHorario();
     const tipoCancha = document.getElementById('tipoCancha')?.value || 'Fútbol 7';
     const fechaReserva = fechaReservaInput?.value || '';
-    const horaReserva = horaReservaInput?.value || '';
-    const duracion = document.getElementById('duracion')?.value || '1 hora';
+    // const horaReserva = horaReservaInput?.value || '';
+    // const duracion = document.getElementById('duracion')?.value || '1 hora';
+
 
     document.getElementById('resumenTipo').textContent = datosCancha.tipo;
-    document.getElementById('resumenDuracion').textContent = duracion;
+    // document.getElementById('resumenDuracion').textContent = duracion;
+    document.getElementById('resumenDuracion').textContent =
+      rangoHorario ? `${rangoHorario.duracion} ${rangoHorario.duracion === 1 ? 'hora' : 'horas'}` : 'Por seleccionar';
     document.getElementById('resumenFecha').textContent = formatearFechaParaResumen(fechaReserva);
-    document.getElementById('resumenHora').textContent = formatearHoraParaResumen(horaReserva);
+    // document.getElementById('resumenHora').textContent = formatearHoraParaResumen(horaReserva);
+    document.getElementById('resumenHora').textContent =
+      rangoHorario
+        ? `${formatearHoraParaResumen(rangoHorario.inicio)} - ${formatearHoraParaResumen(rangoHorario.fin)}`
+        : 'Por seleccionar';
     document.getElementById('resumenTituloCancha').textContent = datosCancha.titulo;
     document.getElementById('resumenSuperficie').textContent = datosCancha.superficie;
     document.getElementById('resumenTipoCancha').textContent = datosCancha.tipo;
     document.getElementById('resumenPrecio').textContent = datosCancha.precio;
+    const precioNumerico = Number(
+      datosCancha.precio.replace(/\D/g, '')
+    );
+
+    const total = rangoHorario
+      ? precioNumerico * rangoHorario.duracion
+      : 0;
+
+    document.getElementById('resumenTotal').textContent =
+      total.toLocaleString('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        maximumFractionDigits: 0
+      });
     const imagenCancha = document.getElementById('resumenImagenCancha');
     imagenCancha.src = datosCancha.imagen;
     imagenCancha.alt = datosCancha.titulo;
@@ -215,21 +237,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (selectedTimeText) {
-      selectedTimeText.textContent = formatearHoraParaResumen(horaReserva);
+      selectedTimeText.textContent = rangoHorario
+        ? `${formatearHoraParaResumen(rangoHorario.inicio)} - ${formatearHoraParaResumen(rangoHorario.fin)}`
+        : 'Selecciona una hora';
     }
   };
 
   // Esta función copia los datos del formulario al bloque de confirmación antes de mostrar el paso 3.
   const actualizarVistaPrevia = () => {
-    document.getElementById('vistaNombre').textContent = document.getElementById('nombreCompleto')?.value || '-';
-    document.getElementById('vistaCedula').textContent = document.getElementById('cedula')?.value || '-';
-    document.getElementById('vistaCelular').textContent = document.getElementById('celular')?.value || '-';
-    document.getElementById('vistaCorreo').textContent = document.getElementById('correo')?.value || '-';
-    document.getElementById('vistaPago').textContent = document.getElementById('metodoPago')?.value || '-';
-    document.getElementById('vistaCancha').textContent = datosCancha.titulo || '-';
-    document.getElementById('vistaFecha').textContent = formatearFechaParaResumen(fechaReservaInput?.value || '') || '-';
-    document.getElementById('vistaHora').textContent = formatearHoraParaResumen(horaReservaInput?.value || '') || '-';
-    document.getElementById('vistaDuracion').textContent = document.getElementById('duracion')?.value || '-';
+    document.getElementById('vistaNombre').textContent =
+      document.getElementById('nombreCompleto')?.value || '-';
+    document.getElementById('vistaCedula').textContent =
+      document.getElementById('cedula')?.value || '-';
+    document.getElementById('vistaCelular').textContent =
+      document.getElementById('celular')?.value || '-';
+    document.getElementById('vistaCorreo').textContent =
+      document.getElementById('correo')?.value || '-';
+    document.getElementById('vistaPago').textContent =
+      document.getElementById('metodoPago')?.value || '-';
+    document.getElementById('vistaCancha').textContent =
+      datosCancha.titulo || '-';
+    document.getElementById('vistaFecha').textContent =
+      formatearFechaParaResumen(fechaReservaInput?.value || '') || '-';
+    //obtenemos el rango de horas seleccionado
+    const rangoHorario = obtenerRangoHorario();
+    document.getElementById('vistaHora').textContent =
+      rangoHorario
+        ? `${formatearHoraParaResumen(rangoHorario.inicio)} - ${formatearHoraParaResumen(rangoHorario.fin)}`
+        : 'Por seleccionar';
+    document.getElementById('vistaDuracion').textContent =
+      rangoHorario
+        ? `${rangoHorario.duracion} ${rangoHorario.duracion === 1 ? 'hora' : 'horas'}`
+        : 'Por seleccionar';
   };
 
   // ---------------- fin actualizacion de resumenes ----------------
@@ -522,32 +561,103 @@ document.addEventListener('DOMContentLoaded', () => {
   // Esta función renderiza los horarios disponibles en botones dinámicos para seleccionar la hora.
   const renderHorarios = () => {
     if (!horariosDisponibles) return;
-
+    console.log("horaSeleccionadas:", estadoCalendario.horaSeleccionadas);
+    console.log("¿Es array?:", Array.isArray(estadoCalendario.horaSeleccionadas));
     horariosDisponibles.innerHTML = '';
 
     horariosDisponiblesLista.forEach((horario) => {
+      console.log("Creando botón:", horario.display);
       const horarioButton = document.createElement('button');
       horarioButton.type = 'button';
       horarioButton.className = 'btn btn-horario ';
       horarioButton.textContent = horario.display;
       horarioButton.dataset.value = horario.value;
 
-      if (estadoCalendario.horaSeleccionada === horario.value) {
+      if (estadoCalendario.horaSeleccionadas.includes(horario.value)) {
         horarioButton.classList.add('active');
       }
-
       horarioButton.addEventListener('click', () => {
-        estadoCalendario.horaSeleccionada = horario.value;
-        horaReservaInput.value = horario.value;
+        if (estadoCalendario.horaSeleccionadas.includes(horario.value)) {
+          estadoCalendario.horaSeleccionadas =
+            estadoCalendario.horaSeleccionadas.filter(
+              hora => hora !== horario.value
+            );
+        } else {
+          estadoCalendario.horaSeleccionadas.push(horario.value);
+        }
         renderHorarios();
         actualizarResumen();
         actualizarVistaPrevia();
         guardarReservaLocal();
       });
 
+      // horarioButton.addEventListener('click', () => {
+      //   estadoCalendario.horaSeleccionadas = horario.value;
+      //   horaReservaInput.value = horario.value;
+      //   renderHorarios();
+      //   actualizarResumen();
+      //   actualizarVistaPrevia();
+      //   guardarReservaLocal();
+      // });
+
       horariosDisponibles.appendChild(horarioButton);
     });
   };
+
+  const obtenerHorasOrdenadas = () => {
+    return [...estadoCalendario.horaSeleccionadas].sort();
+  };
+  const convertirAMinutos = (hora) => {
+    const [horas, minutos] = hora.split(':').map(Number);
+
+    return horas * 60 + minutos;
+  };
+  const validarHorariosContinuos = () => {
+    const horasOrdenadas = [...estadoCalendario.horaSeleccionadas].sort();
+
+    if (horasOrdenadas.length <= 1) {
+      return true;
+    }
+
+    for (let i = 1; i < horasOrdenadas.length; i++) {
+      const horaAnterior = convertirAMinutos(horasOrdenadas[i - 1]);
+      const horaActual = convertirAMinutos(horasOrdenadas[i]);
+
+      if (horaActual - horaAnterior !== 60) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+  const obtenerRangoHorario = () => {
+    const horasOrdenadas = [...estadoCalendario.horaSeleccionadas].sort();
+
+    if (horasOrdenadas.length === 0) {
+      return null;
+    }
+
+    const horaInicio = horasOrdenadas[0];
+
+    const ultimaHora = horasOrdenadas[horasOrdenadas.length - 1];
+    const minutosFin = convertirAMinutos(ultimaHora) + 60;
+
+    const horasFin = Math.floor(minutosFin / 60);
+    const minutosFinRestantes = minutosFin % 60;
+
+    const horaFin = `${String(horasFin).padStart(2, '0')}:${String(minutosFinRestantes).padStart(2, '0')}`;
+
+    return {
+      inicio: horaInicio,
+      fin: horaFin,
+      duracion: horasOrdenadas.length
+    };
+  };
+
+
+
+
+
 
   // ---------------- fin calendario ----------------
 
@@ -590,10 +700,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (pasoActual === 2) {
         const fecha = fechaReservaInput?.value;
-        const hora = horaReservaInput?.value;
+        const horas = estadoCalendario.horaSeleccionadas;
 
-        if (!fecha || !hora) {
-          alert('Selecciona la fecha y la hora para continuar.');
+        if (!fecha || horas.length === 0) {
+          alert('Selecciona la fecha y al menos una hora para continuar.');
+          return;
+        }
+
+        if (!validarHorariosContinuos()) {
+          alert('Las horas seleccionadas deben ser consecutivas.');
           return;
         }
       }
@@ -672,7 +787,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       estadoCalendario.fechaSeleccionada = null;
-      estadoCalendario.horaSeleccionada = null;
+      estadoCalendario.horaSeleccionadas = [];
       estadoCalendario.fechaActual = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
       renderCalendar();
       renderHorarios();

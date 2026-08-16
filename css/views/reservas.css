@@ -508,6 +508,127 @@ main {
 }
 
 /* ==========================================================================
+   MODAL SELECCIÓN DE CANCHAS - Tarjetas tipo galería
+   ========================================================================== */
+
+.card-seleccion-cancha {
+  background: #ffffff;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 2px solid transparent;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-seleccion-cancha:hover {
+  border-color: var(--color-primario);
+  box-shadow: 0 8px 20px rgba(64, 182, 34, 0.15);
+  transform: translateY(-3px);
+}
+
+.card-seleccion-cancha.seleccionada {
+  border-color: var(--color-primario);
+  box-shadow: 0 4px 14px rgba(64, 182, 34, 0.2);
+}
+
+.card-seleccion-img {
+  position: relative;
+  flex: 0 0 140px;
+  max-height: 140px;
+  overflow: hidden;
+}
+
+.card-seleccion-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.card-seleccion-cancha:hover .card-seleccion-img img {
+  transform: scale(1.06);
+}
+
+.seleccionada-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--color-primario);
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+}
+
+.card-seleccion-body {
+  padding: 0.75rem 0.85rem 0.4rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-seleccion-titulo {
+  font-family: var(--font-tercearia);
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--color-texto);
+  margin: 0 0 0.35rem;
+  line-height: 1.15;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-seleccion-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 0.4rem;
+}
+
+.card-seleccion-badges .badge {
+  font-size: 0.62rem;
+  font-weight: 600;
+  padding: 3px 7px;
+  white-space: nowrap;
+}
+
+.card-seleccion-precio {
+  margin-top: auto;
+  padding-top: 0.25rem;
+}
+
+.precio-valor {
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--color-primario);
+}
+
+.precio-label {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.card-seleccion-footer {
+  padding: 0.4rem 0.85rem 0.75rem;
+}
+
+.btn-seleccionar-cancha {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.45rem 1rem;
+}
+
+/* ==========================================================================
    ESTILOS DE ANIMACIÓN ENTRE PASOS
    ========================================================================== */
 

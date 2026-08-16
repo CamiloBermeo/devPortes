@@ -113,7 +113,7 @@ export function renderizarSelectorCanchas(canchas, contenedorId, canchaActualId)
                   const seleccionada = cancha.id === canchaActualId;
                   return `
                   <div class="col-12 col-md-6 col-lg-4">
-                    <article class="card-seleccion-cancha h-100 ${seleccionada ? 'seleccionada' : ''}" data-cancha-id="${cancha.id}">
+                    <article class="card-seleccion-cancha ${seleccionada ? 'seleccionada' : ''}" data-cancha-id="${cancha.id}">
                       <div class="card-seleccion-img">
                         <img src="${cancha.imagen}" alt="${cancha.titulo}" />
                         ${seleccionada ? '<span class="seleccionada-badge"><i class="bi bi-check-circle-fill me-1"></i>Seleccionada</span>' : ''}

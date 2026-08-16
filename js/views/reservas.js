@@ -739,7 +739,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---------------- inicializacion ----------------
   const pasoGuardado = restaurarReservaLocal();
   aplicarCanchaDesdeUrl();
-  renderizarSelector();
   renderCalendar();
   renderHorarios();
   actualizarResumen();

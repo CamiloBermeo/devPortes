@@ -307,13 +307,8 @@
               <h3 class="titulo-resumen mb-0">Tu Reserva</h3>
               <!-- BOTÓN AÑADIDO -->
               <!-- En reservas.html (reemplaza tu botón actual por este): -->
-              <button
-                type="button"
-                id="btnCambiarCancha"
-                class="btn btn-sm btn-outline-light"
-                data-bs-toggle="modal"
-                data-bs-target="#modalCambiarCancha">
-                <i class="bi bi-arrow-repeat me-1"></i>Cambiar
+              <button type="button" id="btnCambiarCancha" class="btn btn-sm btn-outline-light">
+                <i class="bi bi-arrow-repeat me-1"></i>Cambiar cancha
               </button>
             </div>
             <div class="resumen-body p-3">
@@ -328,7 +323,7 @@
               <div class="tarjeta-cancha">
                 <div class="resumen-titulo-row d-flex flex-wrap align-items-center justify-content-between gap-2 mb-1">
                   <h4 class="nombre-cancha mb-0" id="resumenTituloCancha">Cancha Sintética # 1</h4>
-                  <span class="badge text-bg-light">Sede Norte</span>
+                  <span class="badge bg-dark text-white">Sede Norte</span>
                 </div>
                 <p class="texto-cancha small text-muted mb-1" id="resumenSuperficie">4 x 4 (750 mts)</p>
                 <p class="texto-cancha small text-muted mb-3" id="resumenTipoCancha">Fútbol 7</p>
@@ -386,26 +381,8 @@
         </aside>
       </div>
     </main>
-    <!-- MODAL CAMBIAR CANCHA -->
-    <div class="modal fade" id="modalCambiarCancha" tabindex="-1" aria-labelledby="modalCambiarCanchaLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title fw-bold" id="modalCambiarCanchaLabel">
-              <i class="bi bi-trophy me-2 text-success"></i>Selecciona una Cancha
-            </h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-          </div>
-          <div class="modal-body">
-            <!-- El JS inyectará las tarjetas de las canchas aquí -->
-            <div id="listaCanchasModal" class="row g-3"></div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- Contenedor donde JS inyectará los modales dinámicos de selección de cancha -->
+    <div id="contenedor-modales-reserva"></div>
     <!-- FOOTER -->
     <app-footer></app-footer>
 

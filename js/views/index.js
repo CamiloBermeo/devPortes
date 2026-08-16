@@ -2,7 +2,7 @@ import { obtenerCanchas } from '../api/canchas.js';
 import { renderizarInstalaciones, renderizarModales } from '../componets/tarjeta_canchas.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  const canchas = obtenerCanchas();
+  const canchas = obtenerCanchas().filter((c) => c.estado === 'Disponible');
   renderizarInstalaciones(canchas);
   renderizarModales(canchas);
   inicializarScroll();

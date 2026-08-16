@@ -1,4 +1,4 @@
-import { obtenerCanchas, guardarCanchas } from '../api/canchas.js';
+import { obtenerCanchas, guardarCanchas, formatoTipo, tipoAArray } from '../api/canchas.js';
 
 // Listado local de clientes
 let listaClientes = [
@@ -207,7 +207,7 @@ function renderCanchasGrid() {
       <div class="user-card-body" style="margin: 12px 0">
         <div class="card-info-row">
           <span class="text-muted">Deporte:</span>
-          <strong>${cancha.tipo}</strong>
+          <strong>${formatoTipo(cancha)}</strong>
         </div>
         <div class="card-info-row">
           <span class="text-muted">Capacidad:</span>
@@ -258,7 +258,7 @@ function activarFormularioCanchas() {
       id: nuevoId,
       titulo: nombre,
       nombre: nombre,
-      tipo: tipo,
+      tipo: tipoAArray(tipo),
       superficie: 'Sintética Standard',
       precio: `$${tarifa.toLocaleString('es-CO')}`,
       tarifa: tarifa,
@@ -310,7 +310,7 @@ window.abrirPerfilCancha = function (id) {
     </div>
 
     <div class="cliente-info-box" style="margin-top: 1rem">
-      <p class="cliente-info-item"><strong>Deporte / Categoría:</strong> ${cancha.tipo}</p>
+      <p class="cliente-info-item"><strong>Deporte / Categoría:</strong> ${formatoTipo(cancha)}</p>
       <p class="cliente-info-item"><strong>Capacidad Permitida:</strong> ${cancha.capacidad} personas</p>
       <p class="cliente-info-item"><strong>Tarifa por Hora:</strong> $${tarifaNumerica.toLocaleString('es-CO')}</p>
     </div>
@@ -346,7 +346,7 @@ window.editarCancha = function (id) {
       </div>
       <div class="form-group">
         <label>Deporte / Categoría:</label>
-        <input type="text" id="editTipo" class="form-input" value="${cancha.tipo}" required />
+        <input type="text" id="editTipo" class="form-input" value="${formatoTipo(cancha)}" required />
       </div>
       <div class="form-group">
         <label>Capacidad (Personas):</label>
@@ -390,7 +390,7 @@ window.editarCancha = function (id) {
       canchasActuales[idx].titulo = nuevoNombre;
       canchasActuales[idx].nombre = nuevoNombre;
       canchasActuales[idx].imagen = document.getElementById('editImagen').value.trim();
-      canchasActuales[idx].tipo = document.getElementById('editTipo').value.trim();
+      canchasActuales[idx].tipo = tipoAArray(document.getElementById('editTipo').value.trim());
       canchasActuales[idx].capacidad = parseInt(document.getElementById('editCapacidad').value, 10);
       canchasActuales[idx].tarifa = nuevaTarifa;
       canchasActuales[idx].precio = `$${nuevaTarifa.toLocaleString('es-CO')}`;
@@ -674,7 +674,7 @@ function renderTablaCanchasModal(contenedor) {
             </div>
           </div>
         </td>
-        <td><span class="text-muted">${c.tipo}</span><br><span class="text-muted">${c.capacidad} personas</span></td>
+        <td><span class="text-muted">${formatoTipo(c)}</span><br><span class="text-muted">${c.capacidad} personas</span></td>
         <td>$${tarifaNumerica.toLocaleString('es-CO')}/hr</td>
         <td class="td-acciones">
           <button class="btn-action btn-edit" onclick="editarCancha(${c.id})">

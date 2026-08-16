@@ -1,5 +1,5 @@
-import { obtenerCanchas } from '../api/canchas.js';
-import { renderizarInstalaciones } from '../componets/tarjeta_canchas.js';
+import { obtenerCanchas, formatoTipo, tipoAArray } from '../api/canchas.js';
+import { renderizarSelectorCanchas } from '../componets/tarjeta_canchas.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // ---------------- inicio y referencias del formulario ----------------
@@ -52,69 +52,39 @@ document.addEventListener('DOMContentLoaded', () => {
   const datosCancha = {
     id: 1,
     titulo: 'Cancha Sintética # 1',
-    tipo: 'Fútbol 7',
+    tipo: ['Fútbol 7'],
     superficie: '4 x 4 (750 mts)',
     precio: '$80.000',
     imagen: '../assets/img/canchafutbol.jpg',
   };
 
-  // ---------------- integración de modal dinámico ----------------
-  const contenedorModal = document.getElementById('listaCanchasModal');
+  // ---------------- integración de modal de selección de canchas ----------------
   const btnCambiarCancha = document.getElementById('btnCambiarCancha');
 
-  // Función para renderizar las canchas como tarjetas de selección dentro del modal
-  const cargarCanchasEnModal = () => {
-    if (!contenedorModal) return;
-    const canchasActualizadas = obtenerCanchas();
-
-    contenedorModal.innerHTML = canchasActualizadas
-      .map((cancha) => {
-        const nombre = cancha.titulo || cancha.nombre;
-        const precio = cancha.precio || `$${(cancha.tarifa || 0).toLocaleString('es-CO')}`;
-        const esSeleccionada = datosCancha.id === cancha.id;
-
-        return `
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="card h-100 border-0 shadow-sm overflow-hidden ${esSeleccionada ? 'border border-2 border-success' : ''}">
-              <img src="${cancha.imagen}" class="card-img-top" alt="${nombre}" style="height: 140px; object-fit: cover;">
-              <div class="card-body p-3 d-flex flex-column justify-content-between">
-                <div>
-                  <h5 class="card-title fs-6 fw-bold mb-1">${nombre}</h5>
-                  <span class="badge bg-secondary mb-2">${cancha.tipo}</span>
-                  <p class="card-text text-muted text-xs mb-2">${cancha.superficie || 'Sintética Standard'}</p>
-                </div>
-                <div class="d-flex justify-content-between align-items-center mt-2 pt-2 border-top">
-                  <span class="fw-bold text-success">${precio}/hr</span>
-                  <button type="button" class="btn btn-sm ${esSeleccionada ? 'btn-success disabled' : 'btn-outline-primary'} btn-seleccionar-cancha" data-id="${cancha.id}">
-                    ${esSeleccionada ? 'Seleccionada' : 'Seleccionar'}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-      })
-      .join('');
+  const renderizarSelector = () => {
+    const canchasActualizadas = obtenerCanchas().filter((c) => c.estado === 'Disponible');
+    renderizarSelectorCanchas(canchasActualizadas, 'contenedor-modales-reserva', datosCancha.id);
   };
 
-  // 1. Recargar datos y abrir el Modal Bootstrap al hacer clic en "Cambiar"
+  // Abrir modal de selección al hacer clic en "Cambiar"
   btnCambiarCancha?.addEventListener('click', () => {
-    cargarCanchasEnModal();
-    const modalElement = document.getElementById('modalCambiarCancha');
+    renderizarSelector();
+    const modalElement = document.getElementById('modalSeleccionarCancha');
     if (modalElement && window.bootstrap) {
       const modalInstance = bootstrap.Modal.getOrCreateInstance(modalElement);
       modalInstance.show();
     }
   });
 
-  // 2. Listener delegado para seleccionar cancha mediante data-id
-  if (contenedorModal) {
-    contenedorModal.addEventListener('click', (e) => {
+  // Listener delegado para botones "Seleccionar" en el grid
+  const contenedorModales = document.getElementById('contenedor-modales-reserva');
+  if (contenedorModales) {
+    contenedorModales.addEventListener('click', (e) => {
       const btn = e.target.closest('.btn-seleccionar-cancha');
-      if (!btn) return;
+      if (!btn || btn.classList.contains('disabled')) return;
 
-      const canchaId = Number(btn.dataset.id);
-      const canchasActuales = obtenerCanchas();
+      const canchaId = Number(btn.dataset.canchaId);
+      const canchasActuales = obtenerCanchas().filter((c) => c.estado === 'Disponible');
       const canchaSeleccionada = canchasActuales.find((c) => c.id === canchaId);
 
       if (canchaSeleccionada) {
@@ -129,11 +99,11 @@ document.addEventListener('DOMContentLoaded', () => {
         actualizarVistaPrevia();
         guardarReservaLocal();
 
-        // Ocultar modal Bootstrap
-        const modalElement = document.getElementById('modalCambiarCancha');
+        // Cerrar modal
+        const modalElement = document.getElementById('modalSeleccionarCancha');
         if (modalElement && window.bootstrap) {
-          const modalInstance = bootstrap.Modal.getInstance(modalElement) || bootstrap.Modal.getOrCreateInstance(modalElement);
-          modalInstance.hide();
+          const modalInstance = bootstrap.Modal.getInstance(modalElement);
+          if (modalInstance) modalInstance.hide();
         }
       }
     });
@@ -207,12 +177,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---------------- datos de cancha recibidos desde la URL ----------------
   const aplicarCanchaDesdeUrl = () => {
     const parametros = new URLSearchParams(window.location.search);
-    const titulo = parametros.get('titulo');
+    const id = parametros.get('id');
 
-    if (!titulo) return false;
+    if (!id) return false;
 
-    datosCancha.titulo = titulo;
-    datosCancha.tipo = parametros.get('tipo') || datosCancha.tipo;
+    datosCancha.id = Number(id) || datosCancha.id;
+    datosCancha.titulo = parametros.get('titulo') || datosCancha.titulo;
+    datosCancha.tipo = tipoAArray(parametros.get('tipo')) || datosCancha.tipo;
     datosCancha.superficie = parametros.get('superficie') || datosCancha.superficie;
     datosCancha.precio = parametros.get('precio') || datosCancha.precio;
     datosCancha.imagen = parametros.get('imagen') || datosCancha.imagen;
@@ -251,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const fechaReserva = fechaReservaInput?.value || '';
 
     const elTipo = document.getElementById('resumenTipo');
-    if (elTipo) elTipo.textContent = datosCancha.tipo;
+    if (elTipo) elTipo.textContent = formatoTipo(datosCancha);
 
     const elDuracion = document.getElementById('resumenDuracion');
     if (elDuracion)
@@ -275,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (elSuperficie) elSuperficie.textContent = datosCancha.superficie;
 
     const elTipoCancha = document.getElementById('resumenTipoCancha');
-    if (elTipoCancha) elTipoCancha.textContent = datosCancha.tipo;
+    if (elTipoCancha) elTipoCancha.textContent = formatoTipo(datosCancha);
 
     const elPrecio = document.getElementById('resumenPrecio');
     if (elPrecio) elPrecio.textContent = datosCancha.precio;
@@ -768,6 +739,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---------------- inicializacion ----------------
   const pasoGuardado = restaurarReservaLocal();
   aplicarCanchaDesdeUrl();
+  renderizarSelector();
   renderCalendar();
   renderHorarios();
   actualizarResumen();

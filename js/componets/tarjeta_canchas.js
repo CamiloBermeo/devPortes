@@ -11,8 +11,8 @@ export function renderizarInstalaciones(canchas, contenedorId = 'contenedor-inst
     </div>
   `;
 
-  const cardHTML = (cancha, extraClass = '') => `
-    <article class="gallery-bento-item ${extraClass}"
+  const cardHTML = (cancha) => `
+    <article class="gallery-bento-item"
              data-bs-toggle="modal" data-bs-target="#modalCancha${cancha.id}">
       <img src="${cancha.imagen}" alt="${cancha.titulo}" loading="lazy" />
       <div class="gallery-bento-overlay">
@@ -24,12 +24,7 @@ export function renderizarInstalaciones(canchas, contenedorId = 'contenedor-inst
 
   const esUnaSola = canchas.length === 1;
 
-  const cards = canchas.map((c, i) => {
-    if (i === 0) return cardHTML(c, 'gallery-bento-hero');
-    if (i === 1 || i === 6) return cardHTML(c, 'gallery-bento-tall');
-    if (i === 3 || i === 7) return cardHTML(c, 'gallery-bento-wide');
-    return cardHTML(c);
-  }).join('');
+  const cards = canchas.map((c) => cardHTML(c)).join('');
 
   contenedor.innerHTML = `
     <div class="col-12">

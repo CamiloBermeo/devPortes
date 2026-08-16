@@ -81,8 +81,8 @@ export const canchasIniciales = [
   {
     id: 5,
     titulo: 'Zona de Entrenamiento',
-    tipo: ['Entrenamiento Indoor'],
-    superficie: 'Piso de Concreto Pulido Técnico',
+    tipo: ['Cancha Indoor'],
+    superficie: 'Piso de Concreto',
     precio: '$25.000',
     tarifa: 25000,
     capacidad: 12,

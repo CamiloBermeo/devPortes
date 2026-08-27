@@ -1,1 +1,1 @@
-// aca va la url base del backend o de otras apis externas y configuraciones necesarias
+export const API_URL = 'http://localhost:8080/api/v1';

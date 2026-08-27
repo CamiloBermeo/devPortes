@@ -1,3 +1,5 @@
+import { registrarUsuario, iniciarSesion } from '../api/auth.js';
+
 document.addEventListener('DOMContentLoaded', () => {
   /* ==========================================================
      (INICIO DE SESIÓN <-> REGISTRO)
@@ -215,16 +217,12 @@ document.addEventListener('DOMContentLoaded', () => {
       marcarInvalido(inputPassReg, 'Incluye al menos un número');
       return false;
     }
-    if (!/[@$!%*?&.#\-_]/.test(valor)) {
+    if (!/[-@$!%*?&#._]/.test(valor)) {
       marcarInvalido(inputPassReg, 'Incluye un símbolo (@, $, !, %, etc.)');
       return false;
     }
 
     marcarValido(inputPassReg);
-
-    if (inputConfirmPassReg.value.length > 0) {
-      validarCoincidenciaPass();
-    }
     return true;
   }
 
@@ -316,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
      ========================================================== */
 
   // --- SUBMIT REGISTRO ---
-  formRegistro?.addEventListener('submit', (e) => {
+  formRegistro?.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const esNombreValido = validarNombre();
@@ -336,33 +334,69 @@ document.addEventListener('DOMContentLoaded', () => {
       esConfirmValida &&
       esTerminosValido
     ) {
-      const usuarios = obtenerUsuariosGuardados();
-
-      const nuevoUsuario = {
-        id: Date.now(),
-        nombre: inputNombreReg.value.trim(),
-        cedula: inputCedulaReg.value.trim(),
-        telefono: inputTelefonoReg.value.trim(),
-        correo: inputCorreoReg.value.trim().toLowerCase(),
+      const datosRegistro = {
+        name: inputNombreReg.value.trim(),
+        identityDocument: inputCedulaReg.value.trim(),
+        phoneNumber: inputTelefonoReg.value.trim(),
+        email: inputCorreoReg.value.trim().toLowerCase(),
         password: inputPassReg.value,
       };
 
-      usuarios.push(nuevoUsuario);
-      localStorage.setItem(KEY_USUARIOS_BD, JSON.stringify(usuarios));
+      try {
+        const respuesta = await registrarUsuario(datosRegistro);
 
-      borrarBorradorRegistro();
-      formRegistro.reset();
-      limpiarErroresFormulario();
+        localStorage.setItem('devportes_token', respuesta.token);
+        localStorage.setItem(
+          'devportes_sesion_activa',
+          JSON.stringify({ nombre: respuesta.nameUser, correo: respuesta.email }),
+        );
 
-      alert(`¡Registro exitoso, ${nuevoUsuario.nombre}! Tu cuenta fue guardada en el sistema.`);
+        borrarBorradorRegistro();
+        formRegistro.reset();
+        limpiarErroresFormulario();
 
-      inputCorreoLogin.value = nuevoUsuario.correo;
-      tarjetaAutenticacion.classList.remove('register-active');
+        alert(`¡Registro exitoso, ${respuesta.nameUser}!`);
+
+        inputCorreoLogin.value = respuesta.email;
+        tarjetaAutenticacion.classList.remove('register-active');
+      } catch {
+        const usuarios = obtenerUsuariosGuardados();
+        const nuevoUsuario = {
+          id: Date.now(),
+          nombre: datosRegistro.name,
+          cedula: datosRegistro.identityDocument,
+          telefono: datosRegistro.phoneNumber,
+          correo: datosRegistro.email,
+          password: datosRegistro.password,
+        };
+
+        if (usuarios.some((u) => u.correo === nuevoUsuario.correo)) {
+          marcarInvalido(inputCorreoReg, 'Este correo ya está registrado');
+          return;
+        }
+
+        usuarios.push(nuevoUsuario);
+        localStorage.setItem(KEY_USUARIOS_BD, JSON.stringify(usuarios));
+
+        localStorage.setItem(
+          'devportes_sesion_activa',
+          JSON.stringify({ nombre: nuevoUsuario.nombre, correo: nuevoUsuario.correo }),
+        );
+
+        borrarBorradorRegistro();
+        formRegistro.reset();
+        limpiarErroresFormulario();
+
+        alert(`¡Registro exitoso, ${nuevoUsuario.nombre}! (modo local)`);
+
+        inputCorreoLogin.value = nuevoUsuario.correo;
+        tarjetaAutenticacion.classList.remove('register-active');
+      }
     }
   });
 
   // --- SUBMIT INICIO DE SESIÓN ---
-  formLogin?.addEventListener('submit', (e) => {
+  formLogin?.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const esCorreoValido = validarCorreoLogin();
@@ -372,28 +406,41 @@ document.addEventListener('DOMContentLoaded', () => {
       const correoIngresado = inputCorreoLogin.value.trim().toLowerCase();
       const passIngresada = inputPassLogin.value;
 
-      const usuarios = obtenerUsuariosGuardados();
-      const usuarioEncontrado = usuarios.find((user) => user.correo === correoIngresado && user.password === passIngresada);
+      if (checkRecordarme && checkRecordarme.checked) {
+        localStorage.setItem(KEY_RECORDAR_CORREO, correoIngresado);
+      } else {
+        localStorage.removeItem(KEY_RECORDAR_CORREO);
+      }
 
-      if (usuarioEncontrado) {
-        if (checkRecordarme && checkRecordarme.checked) {
-          localStorage.setItem(KEY_RECORDAR_CORREO, correoIngresado);
-        } else {
-          localStorage.removeItem(KEY_RECORDAR_CORREO);
-        }
+      try {
+        const respuesta = await iniciarSesion({ email: correoIngresado, password: passIngresada });
 
+        localStorage.setItem('devportes_token', respuesta.token);
         localStorage.setItem(
           'devportes_sesion_activa',
-          JSON.stringify({
-            nombre: usuarioEncontrado.nombre,
-            correo: usuarioEncontrado.correo,
-          }),
+          JSON.stringify({ correo: correoIngresado }),
         );
 
-        alert(`¡Bienvenido de nuevo, ${usuarioEncontrado.nombre}!`);
-      } else {
-        marcarInvalido(inputCorreoLogin, 'Credenciales incorrectas');
-        marcarInvalido(inputPassLogin, 'Verifica tu contraseña');
+        alert('¡Bienvenido de nuevo!');
+        window.location.href = '../index.html';
+      } catch {
+        const usuarios = obtenerUsuariosGuardados();
+        const usuarioEncontrado = usuarios.find(
+          (user) => user.correo === correoIngresado && user.password === passIngresada,
+        );
+
+        if (usuarioEncontrado) {
+          localStorage.setItem(
+            'devportes_sesion_activa',
+            JSON.stringify({ nombre: usuarioEncontrado.nombre, correo: usuarioEncontrado.correo }),
+          );
+
+          alert(`¡Bienvenido de nuevo, ${usuarioEncontrado.nombre}!`);
+          window.location.href = '../index.html';
+        } else {
+          marcarInvalido(inputCorreoLogin, 'Credenciales incorrectas');
+          marcarInvalido(inputPassLogin, 'Verifica tu contraseña');
+        }
       }
     }
   });

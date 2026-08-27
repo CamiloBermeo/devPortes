@@ -1,0 +1,488 @@
+/* Creamos las variables de los colores de la paleta que vamos a utilizar */
+@import '../global.css';
+.bg-brand-dark-green {
+  background-color: var(--color-terceario);
+}
+.bg-brand-mid-green {
+  background-color: var(--color-secundario);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+.max-w-650 {
+  max-width: 650px;
+}
+.max-w-520 {
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.text-md-custom {
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.text-sm-custom {
+  font-size: 0.875rem;
+}
+.text-xs-custom {
+  font-size: 11px;
+}
+.text-xxs-custom {
+  font-size: 10px;
+}
+
+/* Estilos Sección Principal */
+.hero-section {
+  min-height: 90vh;
+  background:
+    linear-gradient(rgba(34, 67, 48, 0.65), rgba(28, 28, 28, 0.8)),
+    url('/assets/img/fondo.webp') center/cover no-repeat;
+}
+
+/* Fondo de la sección similar al de la imagen */
+.bg-process-section {
+  background-color: #f7f7f8;
+}
+
+/* Espaciado de letras para el subtítulo (PROCESO) */
+.tracking-widest {
+  letter-spacing: 2px;
+}
+
+/* Efecto hover suave para las tarjetas */
+.step-card-custom {
+  border-radius: 1rem;
+  transition:
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease;
+}
+.step-card-custom:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.08);
+}
+
+/* Cajas negras para los números (01, 02, 03) */
+.step-number-box {
+  width: 48px;
+  height: 48px;
+  background-color: #000000;
+  color: #ffffff;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.15rem;
+}
+
+/* Color específico para los iconos al lado de los números */
+.step-icon-color {
+  color: #a1a1aa;
+}
+
+/* Cajas grises claras para los iconos de las tarjetas inferiores */
+.feature-icon-box {
+  width: 42px;
+  height: 42px;
+  background-color: #f3f4f6;
+  border-radius: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4b5563;
+  flex-shrink: 0; /* Evita que el ícono se aplaste */
+}
+
+/* Colores de texto ajustados a la imagen */
+.text-custom-gray {
+  color: #6b7280;
+}
+.title-step-h3 {
+  font-size: 1.15rem;
+}
+.text-step-p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.feature-title {
+  font-size: 0.9rem;
+}
+.feature-text {
+  font-size: 0.75rem;
+}
+
+/* Estos son los estilos para la galeria de imagenes */
+.gallery-img-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  display: block;
+  width: 100%;
+}
+
+.gallery-img-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition:
+    transform 0.3s ease-in-out,
+    filter 0.3s ease-in-out;
+}
+
+.gallery-img-container:hover img {
+  transform: scale(1.05);
+  filter: brightness(0.9);
+}
+
+/* Damos estilos para obtener las proporsiones exactas */
+.gallery-img-sub {
+  aspect-ratio: 4/3;
+}
+
+.gallery-img-main {
+  min-height: 350px;
+  height: 100%;
+}
+
+@media (min-width: 768px) {
+  .gallery-img-main {
+    min-height: 100%;
+  }
+}
+
+.img-grayscale img {
+  filter: grayscale(100%);
+}
+
+.img-grayscale:hover img {
+  filter: grayscale(0%);
+}
+
+/* ==========================================================================
+   GALERÍA FLEXBOX
+   ========================================================================== */
+
+.gallery-bento-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* --- Cards --- */
+
+.gallery-bento-item {
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: #0b0f19;
+  flex: 0 0 calc(33.333% - 8px);
+  height: 280px;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gallery-bento-item:first-child {
+  flex: 0 0 calc(66.666% - 4px);
+}
+
+.gallery-bento-item:last-child {
+  flex-grow: 1;
+}
+
+.gallery-bento-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), filter 0.4s ease;
+}
+
+/* Degradado para legibilidad */
+.gallery-bento-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.82) 0%, rgba(15, 23, 42, 0.15) 45%, transparent 100%);
+  z-index: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Overlay de texto */
+.gallery-bento-overlay {
+  position: absolute;
+  inset: 0;
+  padding: 18px 20px;
+  z-index: 2;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.gallery-bento-titulo {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  margin: 0;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.gallery-bento-item:first-child .gallery-bento-titulo {
+  font-size: 1.3rem;
+}
+
+/* Botón centrado "Más info" */
+.gallery-bento-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 8px 22px;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--color-texto);
+  font-size: 0.82rem;
+  font-weight: 700;
+  border-radius: 50px;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, background 0.2s ease;
+  white-space: nowrap;
+}
+
+.gallery-bento-item:first-child .gallery-bento-btn {
+  padding: 10px 26px;
+  font-size: 0.9rem;
+}
+
+.gallery-bento-item:hover .gallery-bento-btn {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.gallery-bento-btn:hover {
+  background: #ffffff;
+}
+
+/* Badges de tipo + precio */
+.gallery-bento-badges {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.gallery-bento-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.gallery-bento-item:first-child .gallery-bento-badge {
+  font-size: 0.75rem;
+  padding: 4px 12px;
+}
+
+.gallery-bento-badge-tipo {
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--color-terceario);
+}
+
+.gallery-bento-badge-precio {
+  background: rgba(34, 67, 48, 0.85);
+  color: #ffffff;
+}
+
+/* Hover */
+.gallery-bento-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px -4px rgba(0, 0, 0, 0.3);
+}
+
+.gallery-bento-item:hover img {
+  transform: scale(1.06);
+  filter: brightness(0.88);
+}
+
+.gallery-bento-item:hover::before {
+  opacity: 0.95;
+}
+
+.gallery-bento-item:active {
+  transform: scale(0.98);
+}
+
+/* Una sola cancha */
+.gallery-bento-grid.gallery-bento-single {
+  display: block;
+}
+
+.gallery-bento-grid.gallery-bento-single .gallery-bento-item {
+  flex: none;
+  width: 100%;
+  height: 400px;
+}
+
+/* ==========================================================================
+   RESPONSIVE — TABLET
+   ========================================================================== */
+
+@media (max-width: 1199.98px) {
+  .gallery-bento-item {
+    flex: 0 0 calc(50% - 6px);
+    height: 250px;
+  }
+
+  .gallery-bento-item:first-child {
+    flex: 0 0 100%;
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE — MÓVIL
+   ========================================================================== */
+
+@media (max-width: 767.98px) {
+  .gallery-bento-grid {
+    gap: 10px;
+  }
+
+  .gallery-bento-item {
+    flex: 0 0 calc(50% - 5px);
+    height: 220px;
+  }
+
+  .gallery-bento-item:first-child {
+    flex: 0 0 100%;
+  }
+
+  .gallery-bento-titulo {
+    font-size: 0.8rem;
+  }
+
+  .gallery-bento-item:first-child .gallery-bento-titulo {
+    font-size: 1rem;
+  }
+
+  .gallery-bento-overlay {
+    padding: 12px 14px;
+  }
+
+  .gallery-bento-badge {
+    font-size: 0.55rem;
+    padding: 2px 7px;
+  }
+
+  .gallery-bento-item:first-child .gallery-bento-badge {
+    font-size: 0.65rem;
+    padding: 3px 10px;
+  }
+
+  .gallery-bento-btn {
+    font-size: 0.72rem;
+    padding: 6px 16px;
+  }
+
+  .gallery-bento-item:first-child .gallery-bento-btn {
+    font-size: 0.82rem;
+    padding: 8px 22px;
+  }
+
+  /* Modal mobile: centrado + scrollable */
+  .modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+  }
+
+  .modal-dialog {
+    margin: 0;
+    max-width: calc(100% - 1rem);
+    max-height: calc(100dvh - 1rem);
+  }
+
+  .modal-content {
+    max-height: calc(100dvh - 1rem);
+    overflow-y: auto;
+  }
+
+  .modal-img-wrapper {
+    height: 160px;
+  }
+
+  .modal .border-top {
+    flex-wrap: wrap;
+  }
+
+  .modal .border-top > div,
+  .modal .border-top > a {
+    flex: 1 1 100%;
+  }
+
+  .modal .border-top > a {
+    white-space: normal !important;
+    text-align: center;
+    font-size: 0.82rem;
+    text-wrap: balance;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .gallery-bento-grid {
+    gap: 10px;
+  }
+
+  .gallery-bento-item {
+    flex: 0 0 100%;
+    height: 280px;
+  }
+
+  .gallery-bento-grid.gallery-bento-single .gallery-bento-item {
+    height: 300px;
+  }
+}
+
+/* ==========================================================================
+   MODAL IMAGEN
+   ========================================================================== */
+
+.modal-img-wrapper {
+  height: 220px;
+}
+
+@media (min-width: 768px) {
+  .modal-img-wrapper {
+    height: 400px;
+    min-height: unset;
+    max-height: 400px;
+    overflow: hidden;
+  }
+
+  .modal-lg {
+    max-width: 720px;
+  }
+}
+
+/* Badges dentro del modal */
+.modal-content .badge.bg-brand-dark {
+  background-color: var(--color-terceario) !important;
+  color: #ffffff;
+}
+
+.modal-content .badge.bg-secondary {
+  background-color: #64748b !important;
+  color: #ffffff;
+}

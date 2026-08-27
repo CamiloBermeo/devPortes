@@ -1,2 +1,109 @@
-/* Aca se colocan todo lo que sea global, por ejemplo los colores globales, la tipografia,
-ajostes globles de boostrap etc */
+:root {
+  /* Fuentes */
+  --font-principal: 'inter bold', sans-serif;
+  --font-secundaria: 'Inter', sans-serif;
+  --font-tercearia: 'Bebas Neue', sans-serif;
+
+  /* Colores del Sistema */
+  --color-primario: #40b622;
+  --color-secundario: #216e2a;
+  --color-terceario: #224330;
+  --color-exito: #5bbe49;
+  --color-cuaternario: #a1c9f5;
+  --color-fondo: #f8f9fa;
+  --color-texto: #1c1c1c;
+  --color-dark: #1c1c1c;
+  --faq-bottom: 1.5rem;
+}
+
+/* ESTILOS BASE */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: var(--font-secundaria);
+  background-color: #f8f9fa;
+  color: var(--color-dark);
+  margin: 0;
+  padding: 0;
+}
+
+hr {
+  border: none;
+  height: 2px;
+  background: #d9d9d9;
+}
+
+.btn-brand {
+  color: #ffffff;
+  background-color: var(--color-primario);
+  font-weight: 700;
+}
+
+.btn-brand:hover {
+  color: #ffffff;
+  background-color: var(--color-secundario);
+}
+
+.btn-reserve-overlay {
+  width: 100%;
+  height: auto;
+  display: flex;
+  margin-top: 2rem;
+  justify-content: flex-start;
+}
+
+.btn-reserve {
+  background-color: var(--color-dark);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 0.75rem 1.75rem;
+  border-radius: 50rem;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-reserve:hover {
+  background-color: var(--color-secundario);
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+.brand-heading {
+  font-family: var(--font-tercearia);
+  font-weight: 800;
+  color: var(--color-dark);
+}
+
+/* ESTILOS COMPLEMENTOS JS */
+
+/* Botón flotante para scroll top */
+#btnScrollTop {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  display: none; /* Oculto hasta activar por JS */
+  z-index: 999;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+}
+#comoFunciona {
+  scroll-margin-top: 120px;
+}

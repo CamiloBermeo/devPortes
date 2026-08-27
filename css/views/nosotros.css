@@ -1,0 +1,441 @@
+@import '../global.css';
+
+.about-santiago {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.about-santiago .row {
+  flex: 1;
+}
+.icono-grande {
+  font-size: 50px;
+}
+.parrafo-pasos {
+  text-align: justify;
+}
+/* .imgEquipo {
+  max-width: 25%;
+  height: auto;
+  border-radius: 10px;
+} */
+.imgEquipo {
+  width: 100%;
+  max-width: 430px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.linea-about {
+  width: 50%; /* o 40%, 50%, etc. */
+  margin: 0 auto;
+}
+/* ----------------- Seccion Equipo de Desarrollo ------------------ */
+.cont-info-comple {
+  padding-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.div-titulo {
+  align-items: center;
+  text-align: center;
+}
+
+.cont-tarjetas {
+  padding: 2em 1rem;
+}
+
+.cont-tarjetas .div-card {
+  position: relative;
+  width: 100%;
+  max-width: 15rem;
+  min-height: 20rem;
+  margin: 1rem auto;
+  perspective: 1000px;
+  perspective-origin: center;
+}
+
+.cont-tarjetas .card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transform-style: preserve-3d;
+  pointer-events: auto;
+}
+
+.cont-tarjetas .div-card:hover .card-inner {
+  transform: rotateY(180deg);
+  pointer-events: auto;
+}
+
+.cont-tarjetas .card,
+.cont-tarjetas .card-reves {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 1em;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+.cont-tarjetas .card {
+  background-color: var(--color-terceario);
+  color: var(--color-fondo);
+}
+
+.cont-tarjetas .card-reves {
+  background-color: var(--color-primario);
+  color: var(--color-fondo);
+  transform: rotateY(180deg);
+  align-items: center;
+  text-align: center;
+  padding: 1.25rem;
+}
+
+.cont-tarjetas .card img {
+  border-radius: 1em;
+  height: 12rem;
+  object-fit: cover;
+}
+
+.cont-tarjetas .card-body {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 0.8rem;
+}
+
+.cont-tarjetas .card-body h3 {
+  color: var(--color-fondo);
+  font-size: 1.2em;
+  margin-bottom: 0.2rem;
+}
+
+.cont-tarjetas .card-body p {
+  color: var(--color-cuaternario);
+  margin: 0;
+}
+
+.cont-tarjetas .card-reves .card-body {
+  gap: 0.75rem;
+}
+
+.cont-tarjetas .card-reves .card-body h3 {
+  color: var(--color-fondo);
+  font-size: 1.1rem;
+}
+
+.cont-tarjetas .card-reves .card-body p {
+  color: var(--color-fondo);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.cont-tarjetas .card-reves .badge-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
+}
+
+.cont-tarjetas .card-reves .badge-group span {
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 0.3rem 0.6rem;
+  font-size: 0.72rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  justify-content: center;
+}
+
+.cont-tarjetas .card:hover {
+  cursor: pointer;
+  box-shadow: 0 10px 20px var(--color-primario);
+}
+
+.cont-contactenos {
+  display: flex;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.cont-info-contact {
+  background-color: var(--color-terceario);
+  text-align: center;
+  padding: 1em;
+  gap: 1em;
+  border-radius: 1em;
+  color: var(--color-fondo);
+  width: 100%;
+}
+
+.btn-vamos {
+  background-color: var(--color-primario);
+  color: var(--color-fondo);
+  border-color: var(--color-primario);
+  border-radius: 10px;
+  height: 2.5em;
+  width: 10em;
+}
+
+.btn-vamos:hover {
+  background-color: var(--color-exito);
+}
+/* ----------------- Fin Seccion de Desarrollo ---------------------*/
+
+/* -------------- seccion vision -------------- */
+
+.historia {
+  padding: 80px 0;
+}
+
+.titulo {
+  color: #198754;
+  font-weight: 700;
+  margin-bottom: 35px;
+  position: relative;
+  text-align: center;
+}
+
+.historia p {
+  font-size: 1.1rem;
+  line-height: 2;
+  text-align: justify;
+  color: #555;
+}
+
+.imagen-historia {
+  width: 100%;
+  max-width: 520px;
+  border-radius: 20px;
+  transition: 0.4s;
+  cursor: pointer;
+}
+
+.imagen-historia:hover {
+  transform: scale(1.05);
+}
+
+.card-andres {
+  background: #fff;
+  border-left: 8px solid #198754;
+  box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.15);
+  transition: 0.4s;
+}
+
+.card-andres:hover {
+  transform: translateY(-8px);
+  box-shadow: 0px 18px 40px rgba(0, 0, 0, 0.2);
+}
+
+.frase {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #222;
+  margin: 0;
+}
+
+/* ------------ cierre seccion vison ---------- */
+
+/* INICIO: MAURICIO */
+
+.bg-hero {
+  background-color: var(--color-fondo);
+}
+
+.btn-brand-dark {
+  background-color: var(--color-dark);
+  color: #ffffff;
+  border-radius: 50rem;
+  padding: 0.75rem 2rem;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+.rounded-custom {
+  border-radius: 1rem;
+}
+
+.video-container {
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.video-container img {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+#frasePersonal {
+  font-style: italic;
+  font-size: 0.7rem;
+}
+/* FINAL MAURICIO */
+
+@media (max-width: 992px) {
+  .titulo {
+    font-size: 3rem;
+  }
+
+  .imagen-historia {
+    margin-top: 30px;
+  }
+
+  .frase {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .historia {
+    padding: 50px 15px;
+  }
+
+  .titulo {
+    font-size: 2.3rem;
+  }
+
+  .historia p {
+    font-size: 1rem;
+  }
+
+  .frase {
+    font-size: 1.2rem;
+  }
+
+  .card {
+    padding: 20px;
+  }
+}
+/* ==========================================
+   SECCIÓN MISIÓN Y VISIÓN
+   ========================================== */
+.historia {
+  padding: 4rem 0;
+  background-color: #ffffff;
+}
+
+.titulo {
+  color: var(--color-terceario);
+  font-weight: 700;
+}
+
+.historia p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  text-align: left;
+  color: var(--color-texto);
+}
+
+.imagen-historia {
+  width: 100%;
+  max-width: 520px;
+  border-radius: 20px;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  object-fit: cover;
+}
+
+.imagen-historia:hover {
+  transform: translateY(-5px);
+}
+
+.card-andres {
+  background: var(--color-fondo);
+  box-shadow: 0 20px 40px color-mix(in srgb, var(--color-terceario) 15%, transparent) !important;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.card-andres:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 30px color-mix(in srgb, var(--color-terceario) 12%, transparent) !important;
+}
+
+.frase {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-terceario);
+}
+
+/* Adaptación Responsive */
+@media (max-width: 768px) {
+  .historia {
+    padding: 2.5rem 0;
+  }
+
+  .frase {
+    font-size: 1.25rem;
+  }
+}
+
+/* ==========================================
+   SECCIÓN CÓMO FUNCIONA & TESTIMONIO
+   ========================================== */
+.about-santiago {
+  position: relative;
+}
+
+/* Tarjetas individuales de cada paso */
+.card-paso {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.card-paso:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Alineación limpia de textos */
+.parrafo-pasos {
+  text-align: left;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Imagen del equipo responsive */
+.imgEquipo {
+  width: 100%;
+  max-width: 400px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+/* Ajustes Responsivos */
+@media (max-width: 991.98px) {
+  .parrafo-pasos {
+    text-align: center;
+  }
+
+  .imgEquipo {
+    max-width: 100%;
+    height: 220px;
+  }
+}
+
+@media (max-width: 576px) {
+  .card-paso {
+    padding: 1.5rem !important;
+  }
+}

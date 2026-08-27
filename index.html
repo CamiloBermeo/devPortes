@@ -1,11 +1,295 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GOLAYA</title>
-</head>
-<body>
-    
-</body>
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DevPortes - Complejo Deportivo y Reserva de Canchas</title>
+
+    <!-- Google Fonts (Brand Kit: Inter & Bebas Neue) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Inter:wght@400;500;700;800&amp;display=swap"
+      rel="stylesheet" />
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+    <!-- COMPONENTES -->
+    <link rel="stylesheet" href="../css/components/navbar-footer.css" />
+    <!-- ESTILOS PERSONALIZADOS -->
+    <link rel="stylesheet" href="./css/views/index.css" />
+  </head>
+
+  <body>
+    <app-navbar></app-navbar>
+
+    <!-- Sección principal de la página Index -->
+    <main>
+      <section class="text-white d-flex flex-column justify-content-between hero-section">
+        <div class="container d-flex flex-column align-items-center justify-content-center flex-grow-1 text-center px-4 py-5">
+          <div
+            class="d-inline-flex align-items-center gap-2 rounded-pill px-3 py-2 mb-4 border border-white-50 bg-brand-dark-green bg-opacity-60 small tracking-wider">
+            <span>⚡</span> 6 CANCHAS - RESERVA ONLINE 24/7
+          </div>
+
+          <h1 class="display-4 fw-black text-uppercase mb-3 lh-1 tracking-tight text-white max-w-650 brand-heading">
+            Reserva tu cancha en segundos
+          </h1>
+
+          <p class="text-white-50 mb-4 text-md-custom max-w-520">
+            Devportes pone a tu disposición canchas de fútbol, pádel, tenis, básquet y vóley. Sin llamadas, sin esperas — reserva
+            online y llega a jugar.
+          </p>
+
+          <div class="d-flex flex-column gap-3 text-nowrap justify-content-center flex-sm-row">
+            <a
+              href="#instalaciones"
+              class="btn btn-light text-brand-dark fw-bold px-4 py-3 rounded-pill d-flex align-items-center justify-content-center gap-2 transition-base text-sm-custom">
+              Ver nuestras canchas
+              <span class="fs-5">&rarr;</span>
+            </a>
+            <a
+              href="#"
+              class="btn btn-dark border border-white-50 text-white fw-medium px-4 py-3 rounded-pill d-flex align-items-center justify-content-center transition-base bg-opacity-25 text-sm-custom">
+              ¿Cómo funciona?
+            </a>
+          </div>
+        </div>
+
+        <div class="w-100 py-4 border-top border-white-10 bg-brand-dark">
+          <div class="container-fluid px-4 px-lg-5">
+            <div class="row text-center g-3 my-1">
+              <div class="col-6 col-md-3 border-end border-white-10">
+                <div class="fw-bold fs-3 text-white">6</div>
+                <div class="text-white-50 text-uppercase text-xxs-custom tracking-wider">Canchas Propias</div>
+              </div>
+              <div class="col-6 col-md-3 border-end-md border-white-10">
+                <div class="fw-bold fs-3 text-white">5 deportes</div>
+                <div class="text-white-50 text-uppercase text-xxs-custom tracking-wider">Disciplinas Disponibles</div>
+              </div>
+              <div class="col-6 col-md-3 border-end border-white-10">
+                <div class="fw-bold fs-3 text-white">4.9★</div>
+                <div class="text-white-50 text-uppercase text-xxs-custom tracking-wider">Calificación Promedio</div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="fw-bold fs-3 text-white">24/7</div>
+                <div class="text-white-50 text-uppercase text-xxs-custom tracking-wider">Reserva Online</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sección donde se muestras las instalaciones -->
+
+      <section id="instalaciones" class="py-5 bg-white">
+        <div class="container py-4">
+          <header class="text-center mb-5">
+            <h2 class="fs-2 fw-extrabold text-brand-dark tracking-tight brand-heading">Reserva cualquiera de nuestras canchas</h2>
+            <p class="text-muted mx-auto mt-2 mb-0 text-md-custom">
+              Espacios modernos, bien mantenidos y listos para que disfrutes tu deporte favorito.
+            </p>
+          </header>
+
+          <div id="contenedor-instalaciones" class="row g-3 align-items-stretch"></div>
+        </div>
+      </section>
+
+      <!-- Contenedor donde JS inyectará los modales dinámicos -->
+      <div id="contenedor-modales"></div>
+    </main>
+
+    <!-- SECCIÓN PROCESO -->
+    <section id="proceso" class="py-4 my-3 bg-process-section">
+      <div class="container py-5">
+        <!-- Cabecera de Sección -->
+        <header class="text-center mb-5">
+          <h2 class="fw-bolder text-dark mb-0 brand-heading" style="font-size: 2.25rem">Reserva en 3 pasos</h2>
+
+          <p class="text-muted mx-auto mt-2 mb-0 text-md-custom">
+            ¡Reservar cualquiera de nuestras instalaciones es super breve!
+          </p>
+        </header>
+
+        <!-- Tarjetas Principales (Los 3 pasos) -->
+        <div class="row g-4 mb-4">
+          <!-- Paso 1 -->
+          <div class="col-12 col-md-4">
+            <div class="card border-0 shadow-sm p-4 h-100 step-card-custom bg-white">
+              <div class="d-flex align-items-center gap-3 mb-4">
+                <div class="step-number-box">01</div>
+                <!-- Ícono Calendario -->
+                <svg
+                  class="step-icon-color"
+                  width="26"
+                  height="26"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  viewBox="0 0 24 24"
+                  stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+              </div>
+              <h3 class="fw-bold mb-2 text-dark title-step-h3 brand-heading">Elige tu cancha</h3>
+              <p class="text-custom-gray mb-0 text-step-p">
+                Revisa nuestras 5 canchas, sus precios, horarios disponibles y servicios incluidos.
+              </p>
+            </div>
+          </div>
+
+          <!-- Paso 2 -->
+          <div class="col-12 col-md-4">
+            <div class="card border-0 shadow-sm p-4 h-100 step-card-custom bg-white">
+              <div class="d-flex align-items-center gap-3 mb-4">
+                <div class="step-number-box">02</div>
+                <!-- Ícono Reloj -->
+                <svg
+                  class="step-icon-color"
+                  width="26"
+                  height="26"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  viewBox="0 0 24 24"
+                  stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+              </div>
+              <h3 class="fw-bold mb-2 text-dark title-step-h3 brand-heading">Selecciona el horario</h3>
+              <p class="text-custom-gray mb-0 text-step-p">
+                Escoge la fecha y la hora que mejor te quede. Disponibilidad en tiempo real.
+              </p>
+            </div>
+          </div>
+
+          <!-- Paso 3 -->
+          <div class="col-12 col-md-4">
+            <div class="card border-0 shadow-sm p-4 h-100 step-card-custom bg-white">
+              <div class="d-flex align-items-center gap-3 mb-4">
+                <div class="step-number-box">03</div>
+                <!-- Ícono Cara Feliz -->
+                <svg
+                  class="step-icon-color"
+                  width="26"
+                  height="26"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  viewBox="0 0 24 24"
+                  stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                  <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                  <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                </svg>
+              </div>
+              <h3 class="fw-bold mb-2 text-dark title-step-h3 brand-heading">¡Llega y juega!</h3>
+              <p class="text-custom-gray mb-0 text-step-p">
+                Recibe tu código de confirmación y preséntate en el complejo. Nosotros nos encargamos del resto.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjetas Pequeñas Inferiores -->
+        <div class="row g-4">
+          <!-- Beneficio 1 -->
+          <div class="col-12 col-md-4">
+            <div class="card border-0 shadow-sm p-3 step-card-custom bg-white d-flex flex-row align-items-center gap-3">
+              <div class="feature-icon-box">
+                <!-- Ícono Escudo -->
+                <svg
+                  width="20"
+                  height="20"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              </div>
+              <div>
+                <h4 class="fw-bold text-dark mb-0 feature-title brand-heading">Reserva 100% segura</h4>
+                <p class="text-custom-gray mb-0 feature-text">Tu reserva queda registrada al instante</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Beneficio 2 -->
+          <div class="col-12 col-md-4">
+            <div class="card border-0 shadow-sm p-3 step-card-custom bg-white d-flex flex-row align-items-center gap-3">
+              <div class="feature-icon-box">
+                <!-- Ícono Reloj Mini -->
+                <svg
+                  width="20"
+                  height="20"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+              </div>
+              <div>
+                <h4 class="fw-bold text-dark mb-0 feature-title brand-heading">Sin tiempos de espera</h4>
+                <p class="text-custom-gray mb-0 feature-text">Sin llamadas, sin filas, sin complicaciones</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Beneficio 3 -->
+          <div class="col-12 col-md-4">
+            <div class="card border-0 shadow-sm p-3 step-card-custom bg-white d-flex flex-row align-items-center gap-3">
+              <div class="feature-icon-box">
+                <!-- Ícono Mapa/Ubicación -->
+                <svg
+                  width="20"
+                  height="20"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+              </div>
+              <div>
+                <h4 class="fw-bold text-dark mb-0 feature-title brand-heading">Fácil de llegar</h4>
+                <p class="text-custom-gray mb-0 feature-text">Ubicados en zona céntrica con parqueadero</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- -----------------------footer -------------------------->
+    <app-footer></app-footer>
+    <!-- -----------------------Fin footer -------------------------->
+
+    <button id="btnScrollTop" class="btn btn-brand" aria-label="Subir al inicio">
+      <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+        <path
+          fill-rule="evenodd"
+          d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z" />
+      </svg>
+    </button>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script type="module" src="js/views/index.js"></script>
+    <script src="js/componets/nav_footer.js" defer></script>
+  </body>
 </html>

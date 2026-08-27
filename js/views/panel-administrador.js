@@ -314,6 +314,9 @@ window.abrirModalCrearCancha = function () {
     const canchas = obtenerCanchas();
     const nuevoId = canchas.length > 0 ? Math.max(...canchas.map((c) => c.id)) + 1 : 1;
 
+    const canchas = obtenerCanchas();
+    const nuevoId = canchas.length > 0 ? Math.max(...canchas.map((c) => c.id)) + 1 : 1;
+
     const nuevaCancha = {
       id: nuevoId,
       titulo,

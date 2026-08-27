@@ -55,7 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   renderClientesGrid();
   renderCanchasGrid();
-  activarFormularioCanchas();
   activarModalGeneral();
 });
 
@@ -232,55 +231,113 @@ function renderCanchasGrid() {
   if (window.lucide) lucide.createIcons();
 }
 
-function activarFormularioCanchas() {
-  const form = document.getElementById('formNuevaCancha');
-  if (!form) return;
+window.abrirModalCrearCancha = function () {
+  const modal = document.getElementById('infoModal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalBody = document.getElementById('modalBody');
+  const defaultImg = 'https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format';
 
-  form.addEventListener('submit', (e) => {
+  modalTitle.textContent = 'Crear Nueva Cancha';
+  modalBody.innerHTML = `
+    <form id="formCrearCanchaModal" class="form-modal-layout">
+      <div style="text-align: center; margin-bottom: 12px;">
+        <img id="crearPreviewImg" src="${defaultImg}" alt="Vista previa" style="width: 100%; max-height: 160px; object-fit: cover; border-radius: 8px; border: 1px solid #e2e8f0;" />
+      </div>
+      <div class="form-group">
+        <label>URL de la Imagen / Foto:</label>
+        <input type="url" id="crearImagen" class="form-input" value="${defaultImg}" required />
+      </div>
+      <div class="form-group">
+        <label>Nombre del Espacio:</label>
+        <input type="text" id="crearTitulo" class="form-input" placeholder="Ej: Cancha 11 - Césped" required />
+      </div>
+      <div class="form-group">
+        <label>Deporte / Categoría (separar con coma):</label>
+        <input type="text" id="crearTipo" class="form-input" placeholder="Ej: Fútbol 11, Pádel" required />
+      </div>
+      <div class="form-group">
+        <label>Superficie:</label>
+        <input type="text" id="crearSuperficie" class="form-input" placeholder="Ej: Césped Sintético 4G" required />
+      </div>
+      <div class="form-group">
+        <label>Tarifa por Hora ($):</label>
+        <input type="number" id="crearTarifa" class="form-input" placeholder="45000" required />
+      </div>
+      <div class="form-group">
+        <label>Capacidad (Personas):</label>
+        <input type="number" id="crearCapacidad" class="form-input" placeholder="22" required />
+      </div>
+      <div class="form-group">
+        <label>Estado:</label>
+        <select id="crearEstado" class="form-input">
+          <option value="Disponible">Disponible</option>
+          <option value="Mantenimiento">Mantenimiento</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Descripción:</label>
+        <textarea id="crearDescripcion" class="form-input" rows="3" placeholder="Describe el espacio deportivo..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Detalles (uno por línea):</label>
+        <textarea id="crearDetalles" class="form-input" rows="4" placeholder="Capacidad ideal: 22 personas&#10;Iluminación LED&#10;Petos y balón incluidos"></textarea>
+      </div>
+      <div class="modal-form-actions">
+        <button type="button" class="btn-secondary" onclick="cerrarModal()">Cancelar</button>
+        <button type="submit" class="btn-primary-modal">Crear Cancha</button>
+      </div>
+    </form>
+  `;
+
+  modal.classList.add('open');
+
+  const inputImagen = document.getElementById('crearImagen');
+  const imgPreview = document.getElementById('crearPreviewImg');
+  inputImagen.addEventListener('input', () => {
+    imgPreview.src = inputImagen.value.trim() || defaultImg;
+  });
+
+  document.getElementById('formCrearCanchaModal').addEventListener('submit', (e) => {
     e.preventDefault();
 
-    const nombre = document.getElementById('canchaNombre').value.trim();
-    const tipo = document.getElementById('canchaTipo').value.trim();
-    const capacidad = parseInt(document.getElementById('canchaCapacidad').value, 10);
-    const tarifa = parseFloat(document.getElementById('canchaTarifa').value);
-    const imagenInput = document.getElementById('canchaImagen');
-    const imagenUrl =
-      imagenInput && imagenInput.value.trim()
-        ? imagenInput.value.trim()
-        : 'https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format';
+    const titulo = document.getElementById('crearTitulo').value.trim();
+    const tipo = document.getElementById('crearTipo').value.trim();
+    const superficie = document.getElementById('crearSuperficie').value.trim();
+    const tarifa = parseFloat(document.getElementById('crearTarifa').value);
+    const capacidad = parseInt(document.getElementById('crearCapacidad').value, 10);
+    const estado = document.getElementById('crearEstado').value;
+    const imagen = document.getElementById('crearImagen').value.trim() || defaultImg;
+    const descripcion = document.getElementById('crearDescripcion').value.trim();
+    const detallesRaw = document.getElementById('crearDetalles').value.trim();
+    const detalles = detallesRaw ? detallesRaw.split('\n').filter((l) => l.trim()) : [];
 
-    if (!nombre || !tipo || isNaN(capacidad) || isNaN(tarifa)) return;
+    const canchas = obtenerCanchas();
+    const nuevoId = canchas.length > 0 ? Math.max(...canchas.map((c) => c.id)) + 1 : 1;
 
     const canchas = obtenerCanchas();
     const nuevoId = canchas.length > 0 ? Math.max(...canchas.map((c) => c.id)) + 1 : 1;
 
     const nuevaCancha = {
       id: nuevoId,
-      titulo: nombre,
-      nombre: nombre,
+      titulo,
+      nombre: titulo,
       tipo: tipoAArray(tipo),
-      superficie: 'Sintética Standard',
+      superficie,
       precio: `$${tarifa.toLocaleString('es-CO')}`,
-      tarifa: tarifa,
-      capacidad: capacidad,
-      estado: 'Disponible',
-      imagen: imagenUrl,
-      descripcion: 'Espacio deportivo acondicionado recientemente para partidos generales.',
-      detalles: [`Capacidad ideal: ${capacidad} personas`, 'Iluminación estándar', 'Petos y balón básico incluidos'],
+      tarifa,
+      capacidad,
+      estado,
+      imagen,
+      descripcion,
+      detalles,
     };
 
     canchas.push(nuevaCancha);
     guardarCanchas(canchas);
-    form.reset();
-
     renderCanchasGrid();
-
-    const modalBody = document.getElementById('modalBody');
-    if (document.getElementById('infoModal').classList.contains('open') && document.querySelector('.tabla-modal-canchas')) {
-      renderTablaCanchasModal(modalBody);
-    }
+    cerrarModal();
   });
-}
+};
 
 window.abrirPerfilCancha = function (id) {
   const canchas = obtenerCanchas();
@@ -329,6 +386,7 @@ window.editarCancha = function (id) {
   const modalBody = document.getElementById('modalBody');
   const tarifaNumerica = cancha.tarifa || parseInt(cancha.precio?.replace(/\D/g, '') || '0', 10) || 0;
   const imagenActual = cancha.imagen || 'https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format';
+  const detallesRaw = Array.isArray(cancha.detalles) ? cancha.detalles.join('\n') : '';
 
   modalTitle.textContent = 'Editar Cancha / Escenario';
   modalBody.innerHTML = `
@@ -345,16 +403,20 @@ window.editarCancha = function (id) {
         <input type="text" id="editNombre" class="form-input" value="${cancha.titulo || cancha.nombre}" required />
       </div>
       <div class="form-group">
-        <label>Deporte / Categoría:</label>
+        <label>Deporte / Categoría (separar con coma):</label>
         <input type="text" id="editTipo" class="form-input" value="${formatoTipo(cancha)}" required />
       </div>
       <div class="form-group">
-        <label>Capacidad (Personas):</label>
-        <input type="number" id="editCapacidad" class="form-input" value="${cancha.capacidad}" required />
+        <label>Superficie:</label>
+        <input type="text" id="editSuperficie" class="form-input" value="${cancha.superficie || ''}" required />
       </div>
       <div class="form-group">
         <label>Tarifa por Hora ($):</label>
         <input type="number" id="editTarifa" class="form-input" value="${tarifaNumerica}" required />
+      </div>
+      <div class="form-group">
+        <label>Capacidad (Personas):</label>
+        <input type="number" id="editCapacidad" class="form-input" value="${cancha.capacidad}" required />
       </div>
       <div class="form-group">
         <label>Estado:</label>
@@ -362,6 +424,14 @@ window.editarCancha = function (id) {
           <option value="Disponible" ${cancha.estado === 'Disponible' ? 'selected' : ''}>Disponible</option>
           <option value="Mantenimiento" ${cancha.estado === 'Mantenimiento' ? 'selected' : ''}>Mantenimiento</option>
         </select>
+      </div>
+      <div class="form-group">
+        <label>Descripción:</label>
+        <textarea id="editDescripcion" class="form-input" rows="3">${cancha.descripcion || ''}</textarea>
+      </div>
+      <div class="form-group">
+        <label>Detalles (uno por línea):</label>
+        <textarea id="editDetalles" class="form-input" rows="4">${detallesRaw}</textarea>
       </div>
       <div class="modal-form-actions">
         <button type="button" class="btn-secondary" onclick="cerrarModal()">Cancelar</button>
@@ -386,15 +456,19 @@ window.editarCancha = function (id) {
     if (idx !== -1) {
       const nuevoNombre = document.getElementById('editNombre').value.trim();
       const nuevaTarifa = parseFloat(document.getElementById('editTarifa').value);
+      const detallesRaw = document.getElementById('editDetalles').value.trim();
 
       canchasActuales[idx].titulo = nuevoNombre;
       canchasActuales[idx].nombre = nuevoNombre;
       canchasActuales[idx].imagen = document.getElementById('editImagen').value.trim();
       canchasActuales[idx].tipo = tipoAArray(document.getElementById('editTipo').value.trim());
-      canchasActuales[idx].capacidad = parseInt(document.getElementById('editCapacidad').value, 10);
+      canchasActuales[idx].superficie = document.getElementById('editSuperficie').value.trim();
       canchasActuales[idx].tarifa = nuevaTarifa;
       canchasActuales[idx].precio = `$${nuevaTarifa.toLocaleString('es-CO')}`;
+      canchasActuales[idx].capacidad = parseInt(document.getElementById('editCapacidad').value, 10);
       canchasActuales[idx].estado = document.getElementById('editEstado').value;
+      canchasActuales[idx].descripcion = document.getElementById('editDescripcion').value.trim();
+      canchasActuales[idx].detalles = detallesRaw ? detallesRaw.split('\n').filter((l) => l.trim()) : [];
 
       guardarCanchas(canchasActuales);
       renderCanchasGrid();
@@ -415,11 +489,6 @@ window.eliminarCancha = function (id) {
     guardarCanchas(canchasFiltradas);
 
     renderCanchasGrid();
-
-    const modalBody = document.getElementById('modalBody');
-    if (document.getElementById('infoModal').classList.contains('open') && document.querySelector('.tabla-modal-canchas')) {
-      renderTablaCanchasModal(modalBody);
-    }
   });
 };
 
@@ -569,10 +638,8 @@ function activarModalGeneral() {
         modalTitle.textContent = 'Gestión Global de Clientes';
         renderTablaClientesModal(modalBody);
         modal.classList.add('open');
-      } else if (clave === 'canchas') {
-        modalTitle.textContent = 'Catálogo General de Canchas';
-        renderTablaCanchasModal(modalBody);
-        modal.classList.add('open');
+      } else if (clave === 'crear-cancha') {
+        abrirModalCrearCancha();
       } else {
         const info = datosGeneralesModales[clave];
         if (info) {
@@ -621,66 +688,6 @@ function renderTablaClientesModal(contenedor) {
             <i data-lucide="edit-3"></i> Editar
           </button>
           <button class="btn-action btn-delete" onclick="eliminarCliente(${c.id})">
-            <i data-lucide="trash-2"></i> Eliminar
-          </button>
-        </td>
-      </tr>
-    `;
-  });
-
-  html += `
-        </tbody>
-      </table>
-    </div>
-  `;
-
-  contenedor.innerHTML = html;
-  if (window.lucide) lucide.createIcons();
-}
-
-function renderTablaCanchasModal(contenedor) {
-  if (!contenedor) return;
-
-  const canchas = obtenerCanchas();
-
-  let html = `
-    <p class="text-muted modal-subtext">Catálogo general de espacios deportivos registrados:</p>
-    <div class="tabla-modal-wrapper">
-      <table class="tabla-modal tabla-modal-canchas">
-        <thead>
-          <tr>
-            <th>Cancha</th>
-            <th>Tipo / Capacidad</th>
-            <th>Tarifa</th>
-            <th class="td-acciones">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-  `;
-
-  canchas.forEach((c) => {
-    const badgeClass = c.estado === 'Disponible' ? 'green' : 'orange';
-    const tarifaNumerica = c.tarifa || parseInt(c.precio?.replace(/\D/g, '') || '0', 10) || 0;
-    const nombreMostrar = c.titulo || c.nombre;
-    const imagenSrc = c.imagen || 'https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format';
-
-    html += `
-      <tr>
-        <td>
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <img src="${imagenSrc}" alt="${nombreMostrar}" style="width: 32px; height: 32px; object-fit: cover; border-radius: 4px;" />
-            <div>
-              <strong>${nombreMostrar}</strong> <br><span class="badge-tag ${badgeClass}">${c.estado}</span>
-            </div>
-          </div>
-        </td>
-        <td><span class="text-muted">${formatoTipo(c)}</span><br><span class="text-muted">${c.capacidad} personas</span></td>
-        <td>$${tarifaNumerica.toLocaleString('es-CO')}/hr</td>
-        <td class="td-acciones">
-          <button class="btn-action btn-edit" onclick="editarCancha(${c.id})">
-            <i data-lucide="edit-3"></i> Editar
-          </button>
-          <button class="btn-action btn-delete" onclick="eliminarCancha(${c.id})">
             <i data-lucide="trash-2"></i> Eliminar
           </button>
         </td>

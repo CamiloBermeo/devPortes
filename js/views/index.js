@@ -1,23 +1,22 @@
-document.addEventListener('hidden.bs.modal', function () {
-  document.body.style.overflow = 'auto';
-  document.body.style.paddingRight = '0px';
+import { obtenerCanchas } from '../api/canchas.js';
+import { renderizarInstalaciones, renderizarModales } from '../componets/tarjeta_canchas.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+  const canchas = obtenerCanchas().filter((c) => c.estado === 'Disponible');
+  renderizarInstalaciones(canchas);
+  renderizarModales(canchas);
+  inicializarScroll();
 });
 
-// Aqui mostramos el boton para volver al inicio segun el scroll de la página wb
-const btnScrollTop = document.getElementById('btnScrollTop');
+function inicializarScroll() {
+  const btnScrollTop = document.getElementById('btnScrollTop');
+  if (!btnScrollTop) return;
 
-window.addEventListener('scroll', () => {
-  // Aparece después de bajar 300px
-  if (window.scrollY > 300) {
-    btnScrollTop.style.display = 'flex';
-  } else {
-    btnScrollTop.style.display = 'none';
-  }
-});
-
-btnScrollTop.addEventListener('click', () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth',
+  window.addEventListener('scroll', () => {
+    btnScrollTop.style.display = window.scrollY > 300 ? 'flex' : 'none';
   });
-});
+
+  btnScrollTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}

@@ -23,10 +23,9 @@
     <app-navbar></app-navbar>
 
     <!-- CONTENIDO PRINCIPAL -->
-    <main class="container-fluid px-3 px-lg-4 py-3 py-lg-3">
-      <div class="row d-flex g-4 align-items-stretch justify-content-center main-reservas-row">
+    <main class="container-fluid px-2 px-lg-4 py-3">
+      <div class="row d-flex g-3 g-lg-4 align-items-stretch justify-content-center main-reservas-row">
         <!-- ---------------- lateral izquierdo: indicador de pasos ---------------- -->
-        <!-- Muestra el paso actual y mantiene atenuados los pasos pendientes. -->
         <aside class="cont-pasos col-12 col-lg-2 d-flex">
           <div class="menu-pasos rounded-4 shadow-sm w-100">
             <div class="paso activo" data-step="1">
@@ -60,168 +59,153 @@
           </div>
         </aside>
 
-        <!-- ---------------- fin lateral izquierdo ---------------- -->
-
         <!-- ---------------- panel central: wizard de reservas ---------------- -->
-        <!-- Este contenedor muestra un solo bloque de paso a la vez. -->
         <section class="col-12 col-lg-7 d-flex">
-          <div class="panel-formulario rounded-4 shadow-sm py-2 px-3 py-lg-4 px-lg-4 w-100 position-relative overflow-hidden">
+          <div class="panel-formulario rounded-4 shadow-sm p-3 p-lg-4 w-100 position-relative overflow-hidden">
             <!-- ---------------- paso 1: informacion personal ---------------- -->
-            <!-- Recoge los datos del cliente y valida los campos antes de avanzar. -->
-
             <div id="paso-1" class="paso-formulario activo">
-              <div class="div-titulo-formulario mb-3 text-center text-md-start">
-                <h2 class="titulo-formulario mb-1">Ingresa tu Información Personal</h2>
-                <p class="texto-secundario mb-0">
-                  Por favor ingresa tu información personal así sabremos que eres tú cuando llegues.
-                </p>
-              </div>
+              <div>
+                <div class="div-titulo-formulario mb-3 text-center text-md-start">
+                  <h2 class="titulo-formulario mb-1">Ingresa tu Información Personal</h2>
+                  <p class="texto-secundario mb-0">
+                    Por favor ingresa tu información personal así sabremos que eres tú cuando llegues.
+                  </p>
+                </div>
 
-              <!-- Opción ¿Para quién reservas? (Figma) -->
-              <div class="d-flex p-3 mb-2 gap-5 bg-light border-0 rounded-3">
-                <label class="fw-bold mb-2">¿Para quién reservas?</label>
-                <div class="d-flex gap-5">
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="reservaPara" id="reservaParaMi" value="mi" checked />
-                    <label class="form-check-label" for="reservaParaMi">Para mí</label>
+                <div
+                  class="d-flex flex-column flex-md-row align-items-md-center p-3 mb-3 gap-2 gap-md-5 bg-light border-0 rounded-3">
+                  <label class="fw-bold mb-0">¿Para quién reservas?</label>
+                  <div class="d-flex flex-wrap gap-3 gap-md-5">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="reservaPara" id="reservaParaMi" value="mi" checked />
+                      <label class="form-check-label" for="reservaParaMi">Para mí</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="reservaPara" id="reservaTercero" value="tercero" />
+                      <label class="form-check-label" for="reservaTercero">Para un tercero</label>
+                    </div>
                   </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="reservaPara" id="reservaTercero" value="tercero" />
-                    <label class="form-check-label" for="reservaTercero">Para un tercero</label>
+                </div>
+
+                <div class="row g-3">
+                  <div class="col-12 col-md-6">
+                    <label for="nombreCompleto" class="form-label titulo-imput">Nombre Completo</label>
+                    <input id="nombreCompleto" type="text" class="form-control" placeholder="Ej: Juan Pérez" />
+                    <small class="mensaje-error" id="errorNombreCompleto" aria-live="polite"></small>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label for="cedula" class="form-label titulo-imput">Cédula</label>
+                    <input id="cedula" type="text" class="form-control" placeholder="Ej: 1020496863" />
+                    <small class="mensaje-error" id="errorCedula" aria-live="polite"></small>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label for="celular" class="form-label titulo-imput">Celular</label>
+                    <input id="celular" type="tel" class="form-control" placeholder="Ej: 3001234567" />
+                    <small class="mensaje-error" id="errorCelular" aria-live="polite"></small>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label for="correo" class="form-label titulo-imput">Correo</label>
+                    <input id="correo" type="email" class="form-control" placeholder="Ej: correo@ejemplo.com" />
+                    <small class="mensaje-error" id="errorCorreo" aria-live="polite"></small>
+                  </div>
+                  <div class="col-12">
+                    <label for="metodoPago" class="form-label titulo-imput">Método de Pago</label>
+                    <select id="metodoPago" class="form-select">
+                      <option selected disabled value="">Selecciona el método de pago</option>
+                      <option value="NEQUI">NEQUI</option>
+                      <option value="Daviplata">Daviplata</option>
+                      <option value="Transferencia">Transferencia</option>
+                      <option value="Efectivo">Efectivo</option>
+                    </select>
+                    <small class="mensaje-error" id="errorMetodoPago" aria-live="polite"></small>
                   </div>
                 </div>
               </div>
 
-              <div class="row g-3">
-                <div class="col-12 col-md-6">
-                  <label for="nombreCompleto" class="form-label titulo-imput">Nombre Completo</label>
-                  <input id="nombreCompleto" type="text" class="form-control" placeholder="Ej: Juan Pérez" />
-                  <small class="mensaje-error" id="errorNombreCompleto" aria-live="polite"></small>
-                </div>
-                <div class="col-12 col-md-6">
-                  <label for="cedula" class="form-label titulo-imput">Cédula</label>
-                  <input id="cedula" type="text" class="form-control" placeholder="Ej: 1020496863" />
-                  <small class="mensaje-error" id="errorCedula" aria-live="polite"></small>
-                </div>
-                <div class="col-12 col-md-6 mt-0">
-                  <label for="celular" class="form-label titulo-imput">Celular</label>
-                  <input id="celular" type="tel" class="form-control" placeholder="Ej: 3001234567" />
-                  <small class="mensaje-error" id="errorCelular" aria-live="polite"></small>
-                </div>
-                <div class="col-12 col-md-6 mt-0">
-                  <label for="correo" class="form-label titulo-imput">Correo</label>
-                  <input id="correo" type="email" class="form-control" placeholder="Ej: correo@ejemplo.com" />
-                  <small class="mensaje-error" id="errorCorreo" aria-live="polite"></small>
-                </div>
-                <div class="col-12 mt-0">
-                  <label for="metodoPago" class="form-label titulo-imput">Método de Pago</label>
-                  <select id="metodoPago" class="form-select">
-                    <option value="" selected>Selecciona el método de pago</option>
-                    <option value="NEQUI">NEQUI</option>
-                    <option value="Daviplata">Daviplata</option>
-                    <option value="Transferencia">Transferencia</option>
-                    <option value="Efectivo">Efectivo</option>
-                  </select>
-                  <small class="mensaje-error" id="errorMetodoPago" aria-live="polite"></small>
-                </div>
-              </div>
-
-              <div class="d-flex justify-content-end mt-1">
+              <div class="d-flex justify-content-end mt-4">
                 <button type="button" class="btn btn-dark px-4 py-2 rounded-3 boton-siguiente" data-next="2">
                   Siguiente &rarr;
                 </button>
               </div>
             </div>
 
-            <!-- ---------------- fin paso 1 ---------------- -->
-
-            <!-- PASO 2: Fecha y hora de la reserva. Aquí se elige cuándo se quiere jugar. -->
             <!-- ---------------- paso 2: fecha y hora ---------------- -->
-            <!-- Permite navegar por el calendario y elegir un horario disponible. -->
             <div id="paso-2" class="paso-formulario">
-              <!-- Encabezado del paso 2: mantiene el mismo patrón del paso 1 con título y texto descriptivo. -->
-              <div class="div-titulo-formulario mb-3 text-center text-md-start">
-                <h2 class="titulo-formulario mb-1">Ahora Elegirás Tu Fecha y Hora</h2>
-                <p class="texto-secundario mb-0">Elige la fecha y hora que te quede mejor y puntualmente te esperaremos.</p>
-              </div>
-
-              <!-- Contenedor principal del selector de fecha y horarios. -->
-              <div class="paso-2-layout row g-4 align-items-start">
-                <!-- Calendario: se genera dinámicamente en JavaScript para que sea funcional y cambie de mes. -->
-                <div class="col-12 col-lg-6 mb-2 mt-0 p-1">
-                  <div class="calendar-card rounded-4 p-2 p-md-3">
-                    <div class="calendar-header d-flex align-items-center justify-content-between mb-1">
-                      <button type="button" id="prevMonthBtn" class="btn btn-link p-0 text-dark fs-4" aria-label="Mes anterior">
-                        &#8249;
-                      </button>
-                      <div id="currentMonthLabel" class="calendar-title fw-bold text-center">JULIO</div>
-                      <button type="button" id="nextMonthBtn" class="btn btn-link p-0 text-dark fs-4" aria-label="Mes siguiente">
-                        &#8250;
-                      </button>
-                    </div>
-
-                    <div class="calendar-weekdays d-grid">
-                      <span>Lun</span>
-                      <span>Mar</span>
-                      <span>Mié</span>
-                      <span>Jue</span>
-                      <span>Vie</span>
-                      <span>Sáb</span>
-                      <span>Dom</span>
-                    </div>
-
-                    <div id="calendarDays" class="calendar-days d-grid"></div>
-                  </div>
+              <div>
+                <div class="div-titulo-formulario mb-3 text-center text-md-start">
+                  <h2 class="titulo-formulario mb-1">Ahora Elegirás Tu Fecha y Hora</h2>
+                  <p class="texto-secundario mb-0">Elige la fecha y hora que te quede mejor y puntualmente te esperaremos.</p>
                 </div>
 
-                <!-- Horarios: se renderizan con JavaScript para que el usuario pueda seleccionar una hora disponible. -->
-                <div class="col-12 col-lg-6 p-1 mt-0">
-                  <div class="horarios-card rounded-4 p-2 p-md-3">
-                    <h3 class="titulo-horarios fs-5 fw-bold mb-3">Horarios disponibles</h3>
-                    <div id="horariosDisponibles" class="mb-4"></div>
+                <div class="paso-2-layout row g-3 align-items-start">
+                  <div class="col-12 col-lg-6">
+                    <div class="calendar-card rounded-4 p-2 p-md-3">
+                      <div class="calendar-header d-flex align-items-center justify-content-between mb-1">
+                        <button
+                          type="button"
+                          id="prevMonthBtn"
+                          class="btn btn-link p-0 text-dark fs-4 text-decoration-none"
+                          aria-label="Mes anterior">
+                          &#8249;
+                        </button>
+                        <div id="currentMonthLabel" class="calendar-title fw-bold text-center">JULIO</div>
+                        <button
+                          type="button"
+                          id="nextMonthBtn"
+                          class="btn btn-link p-0 text-dark fs-4 text-decoration-none"
+                          aria-label="Mes siguiente">
+                          &#8250;
+                        </button>
+                      </div>
 
-                    <!-- Resumen de la selección actual, actualizado por JavaScript cuando cambia la fecha o la hora. -->
-                    <div class="seleccion-actual rounded-3 p-3 border">
-                      <p class="mb-2 fw-semibold">Has elegido:</p>
-                      <div class="div-seleccion">
-                        <div class="d-flex align-items-center gap-2 ">
-                          <i class="bi bi-calendar3-event fs-5 text-muted"></i>
-                          <span id="selectedDateText" class="fw-bold">Selecciona una fecha</span>
-                        </div>
-                        <div class="d-flex align-items-center gap-2">
-                          <i class="bi bi-clock fs-5 text-muted"></i>
-                          <span id="selectedTimeText" class="fw-bold">Selecciona una hora</span>
+                      <div class="calendar-weekdays d-grid">
+                        <span>Lun</span>
+                        <span>Mar</span>
+                        <span>Mié</span>
+                        <span>Jue</span>
+                        <span>Vie</span>
+                        <span>Sáb</span>
+                        <span>Dom</span>
+                      </div>
+
+                      <div id="calendarDays" class="calendar-days d-grid"></div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="horarios-card rounded-4 p-2 p-md-3">
+                      <h3 class="titulo-horarios fs-5 fw-bold mb-3">Horarios disponibles</h3>
+                      <div id="horariosDisponibles" class="mb-3"></div>
+
+                      <div class="seleccion-actual rounded-3 p-3 border">
+                        <p class="mb-2 fw-semibold">Has elegido:</p>
+                        <div class="div-seleccion">
+                          <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-calendar3-event fs-5 text-muted"></i>
+                            <span id="selectedDateText" class="fw-bold">Selecciona una fecha</span>
+                          </div>
+                          <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-clock fs-5 text-muted"></i>
+                            <span id="selectedTimeText" class="fw-bold">Selecciona una hora</span>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
+
+                <div class="d-none">
+                  <input id="fechaReserva" type="date" />
+                  <input id="horaReserva" type="time" />
+                  <select id="tipoCancha">
+                    <option value="Fútbol 7" selected>Fútbol 7</option>
+                  </select>
+                  <select id="duracion">
+                    <option value="1 hora" selected>1 hora</option>
+                  </select>
+                </div>
               </div>
 
-              <!-- Campos ocultos: mantienen los IDs usados por la lógica del wizard para no romper el flujo actual. -->
-              <div class="d-none">
-                <label for="tipoCancha" class="form-label titulo-imput">Tipo de Cancha</label>
-                <select id="tipoCancha" class="form-select">
-                  <option value="Fútbol 7" selected>Fútbol 7 - Sintética #1</option>
-                  <option value="Fútbol 5">Fútbol 5 - Sintética #2</option>
-                  <option value="Fútbol 11">Fútbol 11 - Césped Natural</option>
-                </select>
-
-                <label for="fechaReserva" class="form-label titulo-imput">Fecha</label>
-                <input id="fechaReserva" type="date" class="form-control" />
-
-                <label for="horaReserva" class="form-label titulo-imput">Hora de Inicio</label>
-                <input id="horaReserva" type="time" class="form-control" />
-
-                <label for="duracion" class="form-label titulo-imput">Duración</label>
-                <select id="duracion" class="form-select">
-                  <option value="1 hora" selected>1 hora</option>
-                  <option value="2 horas">2 horas</option>
-                  <option value="3 horas">3 horas</option>
-                </select>
-              </div>
-
-              <!-- Botones de navegación: siguen el mismo patrón del resto del wizard para mover al usuario al siguiente paso o retroceder. -->
               <div class="d-flex justify-content-between mt-4">
                 <button type="button" class="btn btn-outline-secondary px-4 py-2 boton-anterior" data-prev="1">
                   &larr; Volver
@@ -232,39 +216,55 @@
               </div>
             </div>
 
-            <!-- ---------------- fin paso 2 ---------------- -->
-
-            <!-- PASO 3: Confirmación del pedido. Aquí se muestra un resumen antes de confirmar la reserva. -->
             <!-- ---------------- paso 3: confirmacion ---------------- -->
-            <!-- Presenta los datos personales y de la cancha antes de confirmar. -->
             <div id="paso-3" class="paso-formulario">
-              <div class="mb-2">
-                <h2 class="titulo-formulario mb-1">Confirmación de Reserva</h2>
-                <p class="texto-secundario mb-0">Verifica que los datos ingresados sean correctos antes de confirmar.</p>
-              </div>
+              <div>
+                <div class="mb-3">
+                  <h2 class="titulo-formulario mb-1">Confirmación de Reserva</h2>
+                  <p class="texto-secundario mb-0">Verifica que los datos ingresados sean correctos antes de confirmar.</p>
+                </div>
 
-              <div class="card p-3 border-0 bg-light rounded-3 mb-3">
-                <h5 class="fw-bold mb-3 text-success"><i class="bi bi-person-check me-2"></i>Datos del Cliente</h5>
-                <div class="row g-2 small">
-                  <div class="col-6 dato-confirmacion"><i class="bi bi-person-vcard" aria-hidden="true"></i><strong>Nombre:</strong> <span id="vistaNombre">-</span></div>
-                  <div class="col-6 dato-confirmacion"><i class="bi bi-card-text" aria-hidden="true"></i><strong>Cédula:</strong> <span id="vistaCedula">-</span></div>
-                  <div class="col-6 dato-confirmacion"><i class="bi bi-phone" aria-hidden="true"></i><strong>Celular:</strong> <span id="vistaCelular">-</span></div>
-                  <div class="col-6 dato-confirmacion"><i class="bi bi-envelope" aria-hidden="true"></i><strong>Correo:</strong> <span id="vistaCorreo">-</span></div>
-                  <div class="col-12 dato-confirmacion"><i class="bi bi-wallet2" aria-hidden="true"></i><strong>Método de Pago:</strong> <span id="vistaPago">-</span></div>
+                <div class="card p-3 border-0 bg-light rounded-3 mb-3">
+                  <h5 class="fw-bold mb-3 text-success"><i class="bi bi-person-check me-2"></i>Datos del Cliente</h5>
+                  <div class="row g-2 small">
+                    <div class="col-12 col-md-6 dato-confirmacion">
+                      <i class="bi bi-person-vcard"></i><strong>Nombre:</strong> <span id="vistaNombre">-</span>
+                    </div>
+                    <div class="col-12 col-md-6 dato-confirmacion">
+                      <i class="bi bi-card-text"></i><strong>Cédula:</strong> <span id="vistaCedula">-</span>
+                    </div>
+                    <div class="col-12 col-md-6 dato-confirmacion">
+                      <i class="bi bi-phone"></i><strong>Celular:</strong> <span id="vistaCelular">-</span>
+                    </div>
+                    <div class="col-12 col-md-6 dato-confirmacion">
+                      <i class="bi bi-envelope"></i><strong>Correo:</strong> <span id="vistaCorreo">-</span>
+                    </div>
+                    <div class="col-12 dato-confirmacion">
+                      <i class="bi bi-wallet2"></i><strong>Método de Pago:</strong> <span id="vistaPago">-</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card p-3 border-0 bg-light rounded-3">
+                  <h5 class="fw-bold mb-3 text-success"><i class="bi bi-calendar-event me-2"></i>Detalles del Evento</h5>
+                  <div class="row g-2 small">
+                    <div class="col-12 col-md-6 dato-confirmacion">
+                      <i class="bi bi-trophy"></i><strong>Cancha:</strong> <span id="vistaCancha">-</span>
+                    </div>
+                    <div class="col-12 col-md-6 dato-confirmacion">
+                      <i class="bi bi-calendar3"></i><strong>Fecha:</strong> <span id="vistaFecha">-</span>
+                    </div>
+                    <div class="col-12 col-md-6 dato-confirmacion">
+                      <i class="bi bi-clock"></i><strong>Hora:</strong> <span id="vistaHora">-</span>
+                    </div>
+                    <div class="col-12 col-md-6 dato-confirmacion">
+                      <i class="bi bi-hourglass-split"></i><strong>Duración:</strong> <span id="vistaDuracion">-</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div class="card p-3 border-0 bg-light rounded-3">
-                <h5 class="fw-bold mb-3 text-success"><i class="bi bi-calendar-event me-2"></i>Detalles del Evento</h5>
-                <div class="row g-2 small">
-                  <div class="col-6 dato-confirmacion"><i class="bi bi-trophy" aria-hidden="true"></i><strong>Cancha:</strong> <span id="vistaCancha">-</span></div>
-                  <div class="col-6 dato-confirmacion"><i class="bi bi-calendar3" aria-hidden="true"></i><strong>Fecha:</strong> <span id="vistaFecha">-</span></div>
-                  <div class="col-6 dato-confirmacion"><i class="bi bi-clock" aria-hidden="true"></i><strong>Hora:</strong> <span id="vistaHora">-</span></div>
-                  <div class="col-6 dato-confirmacion"><i class="bi bi-hourglass-split" aria-hidden="true"></i><strong>Duración:</strong> <span id="vistaDuracion">-</span></div>
-                </div>
-              </div>
-
-              <div class="d-flex justify-content-between mt-3">
+              <div class="d-flex justify-content-between mt-4">
                 <button type="button" class="btn btn-outline-secondary px-4 py-2 boton-anterior" data-prev="2">
                   &larr; Volver
                 </button>
@@ -274,63 +274,63 @@
               </div>
             </div>
 
-            <!-- ---------------- fin paso 3 ---------------- -->
-
-            <!-- PASO 4: Estado final de éxito. Aquí aparece la confirmación de que la reserva quedó hecha. -->
             <!-- ---------------- paso 4: reserva completada ---------------- -->
-            <!-- Muestra el código generado y permite iniciar una nueva reserva. -->
-            <div id="paso-4" class="paso-formulario text-center py-4">
-              <div class="mb-3 text-success display-1">
-                <i class="bi bi-check-circle-fill"></i>
-              </div>
-              <h2 class="titulo-formulario mb-2">¡Reserva Exitosa!</h2>
-              <p class="texto-secundario mb-4">
-                Hemos registrado tu cupo correctamente. Te enviamos un comprobante al correo registrado.
-              </p>
-
-              <div class="p-3 bg-light rounded-3 d-inline-block text-start mb-4 border">
-                <p class="m-0 small">
-                  <strong>Código de Reserva:</strong> <span class="text-primary fw-bold" id="codigoReserva">#DEV-8932</span>
+            <div id="paso-4" class="paso-formulario text-center py-4 my-auto">
+              <div>
+                <div class="mb-3 text-success display-1">
+                  <i class="bi bi-check-circle-fill"></i>
+                </div>
+                <h2 class="titulo-formulario mb-2">¡Reserva Exitosa!</h2>
+                <p class="texto-secundario mb-4">
+                  Hemos registrado tu cupo correctamente. Te enviamos un comprobante al correo registrado.
                 </p>
+
+                <div class="p-3 bg-light rounded-3 d-inline-block text-start mb-4 border">
+                  <p class="m-0 small">
+                    <strong>Código de Reserva:</strong> <span class="text-primary fw-bold" id="codigoReserva">#DEV-8932</span>
+                  </p>
+                </div>
               </div>
 
               <div>
                 <button type="button" class="btn btn-dark px-4 py-2 rounded-3" id="botonReiniciar">Hacer otra reserva</button>
+              </div>
             </div>
-
-            <!-- ---------------- fin paso 4 ---------------- -->
           </div>
         </section>
 
-        <!-- ---------------- fin panel central ---------------- -->
-
-        <!-- LATERAL DERECHO:Resumen dinámico con los datos que se van ingresando en los pasos anteriores. -->
-        <!-- ---------------- tarjeta lateral de resumen ---------------- -->
-        <!-- Se actualiza con la cancha recibida desde el índice y con la fecha/hora elegidas. -->
+        <!-- ---------------- lateral derecho: resumen ---------------- -->
         <aside class="col-12 col-lg-3 d-flex">
-          <div class="resumen-reserva resumen-wireframe rounded-4 shadow-sm overflow-hidden">
-            <!-- Encabezado de la card: conserva el título de la reserva en un bloque oscuro y compacto. -->
-            <div class="resumen-header">
+          <!-- En pages/reservas.html, dentro de <aside class="col-12 col-lg-3 d-flex"> -->
+          <div class="resumen-resumen rounded-4 shadow-sm overflow-hidden w-100">
+            <div class="resumen-header d-flex justify-content-between align-items-center px-3 py-2">
               <h3 class="titulo-resumen mb-0">Tu Reserva</h3>
+              <!-- BOTÓN AÑADIDO -->
+              <!-- En reservas.html (reemplaza tu botón actual por este): -->
+              <button type="button" id="btnCambiarCancha" class="btn btn-sm btn-outline-light">
+                <i class="bi bi-arrow-repeat me-1"></i>Cambiar cancha
+              </button>
             </div>
-
-            <!-- Cuerpo de la card: aquí va la imagen, el nombre de la cancha y el detalle de la selección. -->
             <div class="resumen-body p-3">
-              <!-- Imagen principal de la cancha para que la card se vea más cercana al wireframe. -->
-                <div class="resumen-imagen rounded-3 overflow-hidden mb-3">
-                <img id="resumenImagenCancha" src="../assets/img/canchafutbol.jpg" class="img-fluid w-100" alt="Cancha de fútbol" />
+              <div class="resumen-imagen rounded-3 overflow-hidden mb-3 position-relative">
+                <img
+                  id="resumenImagenCancha"
+                  src="../assets/img/canchafutbol.jpg"
+                  class="img-fluid w-100"
+                  alt="Cancha de fútbol" />
+                <button type="button" id="btnMasInfoCancha" class="btn-mas-info-overlay">
+                  <i class="bi bi-info-circle me-1"></i>Más info
+                </button>
               </div>
 
-              <!-- Bloque del nombre de la cancha y el tipo/departamento de la sede. -->
               <div class="tarjeta-cancha">
-                <div class="resumen-titulo-row d-flex align-items-center justify-content-between gap-2 mb-1">
+                <div class="resumen-titulo-row d-flex flex-wrap align-items-center justify-content-between gap-2 mb-1">
                   <h4 class="nombre-cancha mb-0" id="resumenTituloCancha">Cancha Sintética # 1</h4>
-                  <span class="badge text-bg-light">Sede Norte</span>
+                  <span class="badge bg-dark text-white">Sede Norte</span>
                 </div>
                 <p class="texto-cancha small text-muted mb-1" id="resumenSuperficie">4 x 4 (750 mts)</p>
                 <p class="texto-cancha small text-muted mb-3" id="resumenTipoCancha">Fútbol 7</p>
 
-                <!-- Fila de detalle con icono de referencia para mantener una lectura más clara y ordenada. -->
                 <div class="fila-detalle d-flex justify-content-between align-items-center small py-1 border-bottom">
                   <div class="detalle-meta d-flex align-items-center gap-2">
                     <span class="detalle-icon"><i class="bi bi-trophy"></i></span>
@@ -352,7 +352,15 @@
                     <span class="detalle-icon"><i class="bi bi-cash-stack"></i></span>
                     <span>Precio por Hora</span>
                   </div>
-                    <strong id="resumenPrecio">$80.000</strong>
+                  <strong id="resumenPrecio">$80.000</strong>
+                </div>
+
+                <div class="fila-detalle d-flex justify-content-between align-items-center small py-1 border-bottom">
+                  <div class="detalle-meta d-flex align-items-center gap-2">
+                    <span class="detalle-icon"><i class="bi bi-currency-dollar"></i></span>
+                    <span>Total</span>
+                  </div>
+                  <strong id="resumenTotal">$80.000</strong>
                 </div>
 
                 <div class="fila-detalle d-flex justify-content-between align-items-center small py-1 border-bottom">
@@ -374,16 +382,16 @@
             </div>
           </div>
         </aside>
-
-        <!-- ---------------- fin tarjeta lateral de resumen ---------------- -->
       </div>
     </main>
-
-    <!-- Esta es la sección del Footer  -->
+    <!-- Contenedor donde JS inyectará los modales dinámicos de selección de cancha -->
+    <div id="contenedor-modales-reserva"></div>
+    <!-- FOOTER -->
     <app-footer></app-footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../js/views/reservas.js" defer></script>
-    <script src="../js/componets/nav_footer.js" defer></script>
+    <script type="module" src="../js/api/canchas.js"></script>
+    <script type="module" src="../js/views/reservas.js"></script>
+    <script type="module" src="../js/componets/nav_footer.js"></script>
   </body>
 </html>

@@ -72,3 +72,43 @@
 .tracking-tight {
   letter-spacing: -0.5px;
 }
+
+/* Color hover suave para enlaces del footer */
+
+.text-brand-green-hover {
+  transition: color 0.3s ease;
+}
+
+.text-brand-green-hover:hover,
+.text-brand-green-hover:focus {
+  color: var(--brand-green, #224330) !important; /* Reemplaza por tu variable de color verde */
+}
+
+/* Ajustes responsivos para texto pequeño */
+.text-tiny {
+  font-size: 0.8rem;
+}
+
+/* En pantallas móviles pequeñas evita que las palabras se rompan feo */
+@media (max-width: 576px) {
+  footer .nav-link {
+    font-size: 0.9rem;
+  }
+}
+
+/* Color de enlaces del footer con alto contraste */
+.footer-link {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.footer-link:hover,
+.footer-link:focus {
+  color: var(--color-secundario, #28a745) !important; /* Verde dinámico al pasar el cursor */
+}
+
+/* Evitar choque con el botón flotante (verde) */
+@media (min-width: 992px) {
+  footer .container-fluid {
+    padding-right: 4rem !important; /* Espacio reservado para el botón flotante */
+  }
+}

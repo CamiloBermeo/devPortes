@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="es">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DevPortes - Complejo Deportivo y Reserva de Canchas</title>
@@ -10,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Inter:wght@400;500;700;800&amp;display=swap"
-        rel="stylesheet" />
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Inter:wght@400;500;700;800&amp;display=swap"
+      rel="stylesheet" />
     <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
@@ -82,6 +81,7 @@
       </section>
 
       <!-- Sección donde se muestras las instalaciones -->
+
       <section id="instalaciones" class="py-5 bg-white">
         <div class="container py-4">
           <header class="text-center mb-5">
@@ -91,295 +91,13 @@
             </p>
           </header>
 
-          <div class="row g-3 align-items-stretch">
-            <!-- Esta columna se acomoda a la izquierda -->
-            <div class="col-12 col-md-5 d-flex flex-column">
-              <article
-                class="gallery-img-container shadow-sm cursor-pointer gallery-img-main grow"
-                data-bs-toggle="modal"
-                data-bs-target="#modalCancha1">
-                <img src="https://images.unsplash.com/photo-1665113721297-dfa3f38de996" alt="Cancha de Fútbol Principal" />
-                <div class="gallery-badge">
-                  <span>Ver Cancha</span>
-                  <small>Haz clic para ver detalles &rarr;</small>
-                </div>
-                <div class="gallery-badge">
-                  <span>Ver Cancha</span>
-                  <small>Haz clic para ver detalles &rarr;</small>
-                </div>
-              </article>
-            </div>
-
-            <!-- Esta columna se acodomoda a la derecha -->
-            <div class="col-12 col-md-7">
-              <div class="row g-3">
-                <div class="col-6">
-                  <article
-                    class="gallery-img-container shadow-sm cursor-pointer gallery-img-sub"
-                    data-bs-toggle="modal"
-                    data-bs-target="#modalCancha2">
-                    <img src="https://images.unsplash.com/photo-1544698310-74ea9d1c8258" alt="Coliseo Cubierto" />
-                    <div class="gallery-badge">
-                      <span>Ver Cancha</span>
-                      <small>Haz clic para ver detalles &rarr;</small>
-                    </div>
-                    <div class="gallery-badge">
-                      <span>Ver Cancha</span>
-                      <small>Haz clic para ver detalles &rarr;</small>
-                    </div>
-                  </article>
-                </div>
-                <div class="col-6">
-                  <article
-                    class="gallery-img-container shadow-sm cursor-pointer gallery-img-sub"
-                    data-bs-toggle="modal"
-                    data-bs-target="#modalCancha3">
-                    <img src="https://images.unsplash.com/photo-1622279457486-62dcc4a431d6" alt="Cancha de Tenis" />
-                    <div class="gallery-badge">
-                      <span>Ver Cancha</span>
-                      <small>Haz clic para ver detalles &rarr;</small>
-                    </div>
-                    <div class="gallery-badge">
-                      <span>Ver Cancha</span>
-                      <small>Haz clic para ver detalles &rarr;</small>
-                    </div>
-                  </article>
-                </div>
-                <div class="col-6">
-                  <article
-                    class="gallery-img-container shadow-sm cursor-pointer gallery-img-sub"
-                    data-bs-toggle="modal"
-                    data-bs-target="#modalCancha4">
-                    <img src="https://images.unsplash.com/photo-1626224583764-f87db24ac4ea" alt="Cancha de Pádel" />
-                    <div class="gallery-badge">
-                      <span>Ver Cancha</span>
-                      <small>Haz clic para ver detalles &rarr;</small>
-                    </div>
-                    <div class="gallery-badge">
-                      <span>Ver Cancha</span>
-                      <small>Haz clic para ver detalles &rarr;</small>
-                    </div>
-                  </article>
-                </div>
-                <div class="col-6">
-                  <article
-                    class="gallery-img-container shadow-sm cursor-pointer gallery-img-sub img-grayscale"
-                    data-bs-toggle="modal"
-                    data-bs-target="#modalCancha5">
-                    <img src="https://images.unsplash.com/photo-1781786501670-82355e5b12c4" alt="Cancha de Básquet" />
-                    <div class="gallery-badge">
-                      <span>Ver Cancha</span>
-                      <small>Haz clic para ver detalles &rarr;</small>
-                    </div>
-                    <div class="gallery-badge">
-                      <span>Ver Cancha</span>
-                      <small>Haz clic para ver detalles &rarr;</small>
-                    </div>
-                  </article>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div id="contenedor-instalaciones" class="row g-3 align-items-stretch"></div>
         </div>
       </section>
+
+      <!-- Contenedor donde JS inyectará los modales dinámicos -->
+      <div id="contenedor-modales"></div>
     </main>
-
-    <!-- FIX: corregí la estructura de los modales de canchas para eliminar cierres anidados, contenido duplicado y bloques rotos que impedían abrir correctamente cada modal. -->
-
-    <!-- MODAL CANCHA 1 -->
-    <div class="modal fade" id="modalCancha1" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content border-0 rounded-4 overflow-hidden shadow-lg">
-                <div class="row g-0">
-                    <div class="col-12 col-md-5 bg-dark d-flex modal-img-wrapper">
-                        <img src="https://images.unsplash.com/photo-1665113721297-dfa3f38de996?q=80&w=687&auto=format&fit=crop"
-                            class="w-100 h-100 object-fit-cover" alt="Cancha 1" />
-                    </div>
-                    <div class="col-12 col-md-7 p-4 d-flex flex-column justify-content-between bg-white">
-                        <div>
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h3 class="fs-5 fw-bold text-brand-dark m-0 brand-heading">Estadio Principal - Fútbol 11</h3>
-                                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <span class="badge bg-brand-mid-green mb-3 px-2.5 py-1.5 fw-semibold">Grama Natural Pro</span>
-                            <p class="text-muted small lh-base mb-4">
-                                Nuestra joya del complejo. Una cancha con medidas oficiales óptima para partidos grandes de 11 contra 11. Cuenta con drenaje profesional de alta velocidad e iluminación LED de nivel de torneo para partidos nocturnos impecables.
-                            </p>
-                            <ul class="list-unstyled small text-brand-dark mb-4">
-                                <li class="mb-1">✔️ Capacidad ideal: 22 jugadores</li>
-                                <li class="mb-1">✔️ Graderías laterales para acompañantes</li>
-                                <li class="mb-1">✔️ Incluye petos de entrenamiento y balones oficiales</li>
-                            </ul>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center pt-3 border-top border-light gap-2">
-                            <div>
-                                <span class="text-muted d-block text-uppercase tracking-wider text-nowrap text-xxs-custom">Precio por Hora</span>
-                                <span class="fw-bold fs-5 text-brand-dark">$60.000</span>
-                            </div>
-                            <a href="./pages/reservas.html?titulo=Estadio%20Principal%20-%20Futbol%2011&tipo=Futbol%2011&superficie=Grama%20Natural%20Pro&precio=%2460.000&imagen=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1665113721297-dfa3f38de996%3Fq%3D80%26w%3D687%26auto%3Dformat%26fit%3Dcrop" class="btn btn-brand rounded-pill px-4 py-2 small text-nowrap transition-base text-sm-custom">
-                              Reservar este espacio</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL CANCHA 2 -->
-    <div class="modal fade" id="modalCancha2" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content border-0 rounded-4 overflow-hidden shadow-lg">
-                <div class="row g-0">
-                    <div class="col-12 col-md-5 bg-dark d-flex modal-img-wrapper">
-                        <img src="https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format"
-                            class="w-100 h-100 object-fit-cover" width="500" height="500" alt="Cancha 2" />
-                    </div>
-                    <div class="col-12 col-md-7 p-4 d-flex flex-column justify-content-between bg-white">
-                        <div>
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h3 class="fs-5 fw-bold text-brand-dark m-0 brand-heading">Coliseo Multi-deporte Cubierto</h3>
-                                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <span class="badge bg-brand-dark-green mb-3 px-2 py-1 fw-semibold">Madera Pulida / PVC</span>
-                            <p class="text-muted small lh-base mb-4">
-                                Espacio totalmente techado y protegido del clima. Su suelo amortiguado reduce el impacto en las articulaciones. Ideal tanto para fútbol de salón (fútsal) como para intensos partidos de baloncesto o vóley.
-                            </p>
-                            <ul class="list-unstyled small text-brand-dark mb-4">
-                                <li class="mb-1">✔️ Tableros de baloncesto hidráulicos ajustables</li>
-                                <li class="mb-1">✔️ Excelente ventilación e iluminación cenital</li>
-                                <li class="mb-1">✔️ Arcos de fútsal con mallas reforzadas</li>
-                            </ul>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center pt-3 border-top border-light gap-2">
-                            <div>
-                                <span class="text-muted d-block text-uppercase tracking-wider text-nowrap text-xxs-custom">Precio por Hora</span>
-                                <span class="fw-bold fs-5 text-brand-dark">$45.000</span>
-                            </div>
-                            <a href="./pages/reservas.html?titulo=Coliseo%20Multi-deporte%20Cubierto&tipo=Futbol%20Sala%20%2F%20Baloncesto&superficie=Madera%20Pulida%20%2F%20PVC&precio=%2445.000&imagen=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1544698310-74ea9d1c8258%3Fauto%3Dformat" class="btn btn-brand rounded-pill px-4 py-2 small text-nowrap transition-base text-sm-custom">
-                              Reservar este espacio</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL CANCHA 3 -->
-    <div class="modal fade" id="modalCancha3" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content border-0 rounded-4 overflow-hidden shadow-lg">
-                <div class="row g-0">
-                    <div class="col-12 col-md-5 bg-dark d-flex modal-img-wrapper">
-                        <img src="https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?auto=format"
-                            class="w-100 h-100 object-fit-cover" alt="Cancha 3" />
-                    </div>
-                    <div class="col-12 col-md-7 p-4 d-flex flex-column justify-content-between bg-white">
-                        <div>
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h3 class="fs-5 fw-bold text-brand-dark m-0 brand-heading">Cancha de Tenis - Pista Rápida</h3>
-                                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <span class="badge bg-brand-mid-green mb-3 px-2.5 py-1.5 fw-semibold">Superficie Sintética Rápida</span>
-                            <p class="text-muted small lh-base mb-4">
-                                Diseñada para amantes de la velocidad y precisión. Malla tensada reglamentaria con líneas nítidas. Perfecta para singles competitivos o partidos dinámicos de dobles.
-                            </p>
-                            <ul class="list-unstyled small text-brand-dark mb-4">
-                                <li class="mb-1">✔️ Excelente rebote controlado de bola</li>
-                                <li class="mb-1">✔️ Entorno libre de ruidos disruptivos</li>
-                                <li class="mb-1">✔️ Alquiler disponible de raquetas y tubos de bolas</li>
-                            </ul>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center pt-3 border-top border-light gap-2">
-                            <div>
-                                <span class="text-muted d-block text-uppercase tracking-wider text-nowrap text-xxs-custom">Precio por Hora</span>
-                                <span class="fw-bold fs-5 text-brand-dark">$35.000</span>
-                            </div>
-                            <a href="./pages/reservas.html?titulo=Cancha%20de%20Tenis%20-%20Pista%20Rapida&tipo=Tenis&superficie=Superficie%20Sintetica%20Rapida&precio=%2435.000&imagen=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1622279457486-62dcc4a431d6%3Fauto%3Dformat" class="btn btn-brand rounded-pill px-4 py-2 small text-nowrap transition-base text-sm-custom">
-                              Reservar este espacio</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL CANCHA 4 -->
-    <div class="modal fade" id="modalCancha4" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content border-0 rounded-4 overflow-hidden shadow-lg">
-                <div class="row g-0">
-                    <div class="col-12 col-md-5 bg-dark d-flex modal-img-wrapper">
-                        <img src="https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format"
-                            class="w-100 h-100 object-fit-cover" width="500" height="500" alt="Cancha 4" />
-                    </div>
-                    <div class="col-12 col-md-7 p-4 d-flex flex-column justify-content-between bg-white">
-                        <div>
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h3 class="fs-5 fw-bold text-brand-dark m-0 brand-heading">Cancha de Pádel Azul Celeste</h3>
-                                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <span class="badge bg-dark mb-3 px-2 py-1 fw-semibold">Vidrio Templado Panorámico</span>
-                            <p class="text-muted small lh-base mb-4">
-                                Disfruta del deporte con mayor crecimiento mundial en una cancha de especificaciones profesionales. Alfombra azul texturizada de última generación que evita resbalones indeseados y paredes de cristal templado perfectas para rebotes limpios.
-                            </p>
-                            <ul class="list-unstyled small text-brand-dark mb-4">
-                                <li class="mb-1">✔️ Estructura panorámica de alta visibilidad</li>
-                                <li class="mb-1">✔️ Iluminación LED antideslumbrante orientada al cielo</li>
-                                <li class="mb-1">✔️ Zona de descanso integrada para hidratación</li>
-                            </ul>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center pt-3 border-top border-light gap-2">
-                            <div>
-                                <span class="text-muted d-block text-uppercase tracking-wider text-nowrap text-xxs-custom">Precio por Hora</span>
-                                <span class="fw-bold fs-5 text-brand-dark">$40.000</span>
-                            </div>
-                            <a href="./pages/reservas.html?titulo=Cancha%20de%20Padel%20Azul%20Celeste&tipo=Padel&superficie=Vidrio%20Templado%20Panoramico&precio=%2440.000&imagen=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1626224583764-f87db24ac4ea%3Fauto%3Dformat" class="btn btn-brand rounded-pill px-4 py-2 small text-nowrap transition-base text-sm-custom">
-                              Reservar este espacio</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL CANCHA 5 -->
-    <div class="modal fade" id="modalCancha5" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content border-0 rounded-4 overflow-hidden shadow-lg">
-                <div class="row g-0">
-                    <div class="col-12 col-md-5 bg-dark d-flex modal-img-wrapper">
-                        <img src="https://images.unsplash.com/photo-1781786501670-82355e5b12c4?q=80&w=1470&auto=format&fit=crop"
-                            class="w-100 h-100 object-fit-cover" alt="Cancha 5" />
-                    </div>
-                    <div class="col-12 col-md-7 p-4 d-flex flex-column justify-content-between bg-white">
-                        <div>
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h3 class="fs-5 fw-bold text-brand-dark m-0 brand-heading">Espacio de Entrenamiento Indoor</h3>
-                                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <span class="badge bg-brand-dark-green mb-3 px-2.5 py-1.5 fw-semibold">Piso de Concreto Pulido Técnico</span>
-                            <p class="text-muted small lh-base mb-4">
-                                Diseñada especialmente para sesiones enfocadas en la técnica, lanzamientos individuales, entrenamientos personalizados o partidos informales de formato 3x3. Un entorno minimalista y tranquilo para pulir tus habilidades.
-                            </p>
-                            <ul class="list-unstyled small text-brand-dark mb-4">
-                                <li class="mb-1">✔️ Excelente acústica y concentración</li>
-                                <li class="mb-1">✔️ Redes de aro en nylon de alta densidad</li>
-                                <li class="mb-1">✔️ Ideal para prácticas libres o rutinas físicas</li>
-                            </ul>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center pt-3 border-top border-light gap-2">
-                            <div>
-                                <span class="text-muted d-block text-uppercase tracking-wider text-nowrap text-xxs-custom">Precio por Hora</span>
-                                <span class="fw-bold fs-5 text-brand-dark">$25.000</span>
-                            </div>
-                            <a href="./pages/reservas.html?titulo=Espacio%20de%20Entrenamiento%20Indoor&tipo=Entrenamiento%20Indoor&superficie=Piso%20de%20Concreto%20Pulido%20Tecnico&precio=%2425.000&imagen=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1781786501670-82355e5b12c4%3Fq%3D80%26w%3D1470%26auto%3Dformat%26fit%3Dcrop" class="btn btn-brand rounded-pill px-4 py-2 small text-nowrap transition-base text-sm-custom">
-                              Reservar este espacio</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- SECCIÓN PROCESO -->
     <section id="proceso" class="py-4 my-3 bg-process-section">
@@ -559,18 +277,19 @@
         </div>
       </div>
     </section>
-<!-- -----------------------footer -------------------------->
+    <!-- -----------------------footer -------------------------->
     <app-footer></app-footer>
-<!-- -----------------------Fin footer -------------------------->
+    <!-- -----------------------Fin footer -------------------------->
 
     <button id="btnScrollTop" class="btn btn-brand" aria-label="Subir al inicio">
-        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-            <path fill-rule="evenodd"
-                d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z" />
-        </svg>
+      <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+        <path
+          fill-rule="evenodd"
+          d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z" />
+      </svg>
     </button>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
-    <script src="js/views/index.js" defer></script>
+    <script type="module" src="js/views/index.js"></script>
     <script src="js/componets/nav_footer.js" defer></script>
   </body>
 </html>

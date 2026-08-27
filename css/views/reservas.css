@@ -1,22 +1,37 @@
 @import '../global.css';
 
-/* ---------------- estilos generales del modulo de reservas ---------------- */
-/* Define la tipografía, el ancho de la distribución y la apariencia base. */
 /* ==========================================================================
-   ESTILOS GENERALES Y PANEL DE PASOS
+   ESTRUCTURA BASE Y COBERTURA DE PANTALLA (100vh / 100dvh)
    ========================================================================== */
 
-/* El contenedor central del formulario mantiene un alto mínimo para que todos los pasos se vean alineados. */
+html {
+  height: 100%;
+}
 
+/* Fuerza al cuerpo a tomar el alto completo del Viewport de forma dinámica */
 .body-reservas {
   font-family: var(--font-secundaria);
   color: var(--color-texto);
+  min-height: 100dvh; /* Soporte para barras navegables móviles */
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-fondo);
+}
+
+/* Expande el contenedor principal entre el Navbar y el Footer */
+main {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .main-reservas-row {
   width: 100%;
   max-width: 1440px;
   margin-inline: auto;
+  flex: 1; /* Permite estirarse verticalmente */
 }
 
 .main-reservas-row > aside,
@@ -26,13 +41,17 @@
 
 .panel-formulario {
   background-color: #ffffff;
-  min-height: 480px;
+  min-height: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-/* ---------------- fin estilos generales del modulo de reservas ---------------- */
+/* ==========================================================================
+   ESTILOS DE VALIDACIÓN Y CONFIRMACIÓN
+   ========================================================================== */
 
-/* ---------------- estilos de validacion y confirmacion ---------------- */
-/* Da feedback visual a los campos y organiza los datos del paso 3. */
 .titulo-formulario {
   text-align: center;
   font-family: var(--font-tercearia);
@@ -57,13 +76,21 @@
   color: #b42318;
   font-size: 0.78rem;
 }
-.div-seleccion{
+
+.div-seleccion {
   display: flex;
-  
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
   align-items: center;
   justify-content: space-between;
-  text-align: center;
+  text-align: left;
 }
+
+.div-seleccion > div {
+  min-width: 0;
+  flex: 1 1 180px;
+}
+
 .panel-formulario .campo-error {
   border-color: #b42318;
   box-shadow: 0 0 0 0.2rem rgba(180, 35, 24, 0.12);
@@ -99,9 +126,10 @@
   overflow-wrap: anywhere;
 }
 
-/* ---------------- fin estilos de validacion y confirmacion ---------------- */
+/* ==========================================================================
+   TIPOGRAFÍAS Y COMPONENTES DEL FORMULARIO
+   ========================================================================== */
 
-/* ---------------- tipografias y componentes del formulario ---------------- */
 .panel-formulario,
 .panel-formulario input,
 .panel-formulario select,
@@ -167,15 +195,9 @@
   border-color: var(--color-secundario);
 }
 
-/* ---------------- fin tipografias y componentes del formulario ---------------- */
-
-/* --------------------------------------------------------------------------
-   ESTILOS DEL PASO 2: selector de fecha y horarios.
-   Aquí se define el look del calendario, la lista de horarios y el bloque de selección.
-   -------------------------------------------------------------------------- */
-
-/* ---------------- estilos paso 2: calendario y horarios ---------------- */
-/* Controla el calendario, los horarios disponibles y la selección actual. */
+/* ==========================================================================
+   ESTILOS PASO 2: CALENDARIO Y HORARIOS
+   ========================================================================== */
 
 .paso-2-layout {
   margin-top: 0.5rem;
@@ -188,7 +210,8 @@
 }
 
 .calendar-card {
-  max-width: 360px;
+  width: 100%;
+  max-width: 100%;
   padding: 0.75rem !important;
 }
 
@@ -208,17 +231,19 @@
 
 #horariosDisponibles {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
 }
 
 .btn-horario {
+  min-width: 0;
+  width: 100%;
   border: 1px solid var(--color-secundario);
   color: var(--color-texto);
   background-color: var(--color-fondo);
-  font-size: 0.60rem;
+  font-size: 0.7rem;
   font-weight: bold;
-  padding: 0.35rem 0.2rem;
+  padding: 0.4rem 0.2rem;
   border-radius: 8px;
   transition: all 0.2s ease;
 }
@@ -227,7 +252,6 @@
   background-color: var(--color-cuaternario);
 }
 
-/* Estado seleccionado igual a tu imagen */
 .btn-horario.active {
   background-color: var(--color-secundario) !important;
   color: #ffffff !important;
@@ -310,23 +334,18 @@
 .seleccion-actual {
   background: var(--color-fondo);
 }
-.boton-siguiente:hover{
+
+.boton-siguiente:hover {
   background-color: var(--color-terceario);
 }
 
-/* ---------------- fin estilos paso 2: calendario y horarios ---------------- */
-
-/* --------------------------------------------------------------------------
-   ESTILOS DEL RESUMEN LATERAL: card compacta tipo wireframe.
-   Se usa una estructura tipo tarjeta con cabecera oscura, imagen grande,
-   filas de detalle y espacios dedicados para iconos de apoyo visual.
-   -------------------------------------------------------------------------- */
-
-/* ---------------- estilos tarjeta lateral de resumen ---------------- */
-/* Muestra la cancha seleccionada, precio, fecha, hora y duración. */
+/* ==========================================================================
+   ESTILOS TARJETA LATERAL DE RESUMEN
+   ========================================================================== */
 
 .resumen-wireframe {
   width: 100%;
+  min-width: 0;
   background: var(--color-fondo);
   color: var(--color-texto);
 }
@@ -355,6 +374,32 @@
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+.btn-mas-info-overlay {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(28, 28, 28, 0.7);
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-mas-info-overlay:hover {
+  background: rgba(28, 28, 28, 0.9);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
 .resumen-titulo-row {
@@ -414,21 +459,29 @@
   font-weight: 700;
 }
 
-/* ---------------- fin estilos tarjeta lateral de resumen ---------------- */
+/* ==========================================================================
+   ESTILOS PANEL LATERAL DE PASOS
+   ========================================================================== */
 
-/* Cada bloque de la barra lateral izquierda representa un paso del proceso de reserva. */
+.menu-pasos {
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem;
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
 
-/* ---------------- estilos panel lateral de pasos ---------------- */
-/* Resalta el paso actual y atenúa los pasos que aún no están seleccionados. */
-
-/*---------------------- estilos para los pasos -------------------------------*/
-.text-pasos h3{
+.text-pasos h3 {
   font-family: var(--font-tercearia);
   font-size: 1.2rem;
   line-height: 1.1;
   margin: 0;
 }
-.text-pasos p{
+
+.text-pasos p {
   font-family: var(--font-secundaria);
   font-size: 0.85rem;
   line-height: 1.25;
@@ -446,26 +499,21 @@
   border-radius: 10px;
   color: var(--color-secundario);
   opacity: 0.55;
-  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, opacity 0.3s ease;
-}
-.menu-pasos{
-  width: 10%;
-  height: 100%;
-  padding: 0.5rem;
-  background-color: var(--color-fondo);
-  color: var(--color-texto);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease,
+    opacity 0.3s ease;
 }
 
-/* Cuando un paso está activo, se resalta para indicar en qué parte del flujo va el usuario. */
 .menu-pasos .paso.activo {
-  background-color: var(--color-fondo);
+  background-color: #ffffff;
   border-color: var(--color-primario);
   color: var(--color-texto);
   font-weight: bold;
   opacity: 1;
 }
 
-/* El icono circular del paso se personaliza para que se vea como un indicador del estado actual. */
 .icono-paso {
   width: 32px;
   height: 32px;
@@ -479,56 +527,259 @@
   justify-content: center;
 }
 
-/* Si el paso está activo, el icono cambia de color para reforzar visualmente el paso actual. */
 .menu-pasos .paso.activo .icono-paso {
   background-color: var(--color-primario);
   border-color: var(--color-primario);
   color: #ffffff;
 }
 
-/* ---------------- fin estilos panel lateral de pasos ---------------- */
-
-/* ---------------- estilos de animacion entre pasos ---------------- */
-/* Controla la entrada y salida visual de cada bloque del wizard. */
-/* ========================================================================== 
-   EXPLICACIÓN DEL SISTEMA DE ANIMACIÓN CSS DE PASOS:
-   
-   1. Ocultamos todos los '.paso-formulario' por defecto (display: none).
-   2. Cuando un paso tiene '.activo', se muestra y aplica una animación de entrada
-      usando 'translateX' para desplazarlo suavemente desde la derecha.
-   3. Cuando un paso tiene '.salida', se ejecuta la salida hacia la izquierda
-      con desvanecimiento (fade out).
-   4. '.entrada-regreso' se usa para el efecto de retroceso al paso anterior.
+/* ==========================================================================
+   MODAL SELECCIÓN DE CANCHAS - Tarjetas tipo galería
    ========================================================================== */
 
-/* Cada panel del formulario empieza oculto y se activa con una clase de estado. */
+.card-seleccion-cancha {
+  background: #ffffff;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 2px solid transparent;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-seleccion-cancha:hover {
+  border-color: var(--color-primario);
+  box-shadow: 0 8px 20px rgba(64, 182, 34, 0.15);
+  transform: translateY(-3px);
+}
+
+.card-seleccion-cancha.seleccionada {
+  border-color: var(--color-primario);
+  box-shadow: 0 4px 14px rgba(64, 182, 34, 0.2);
+}
+
+.card-seleccion-img {
+  position: relative;
+  flex: 0 0 140px;
+  max-height: 140px;
+  overflow: hidden;
+}
+
+.card-seleccion-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.card-seleccion-cancha:hover .card-seleccion-img img {
+  transform: scale(1.06);
+}
+
+.seleccionada-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--color-primario);
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+}
+
+.card-seleccion-body {
+  padding: 0.75rem 0.85rem 0.4rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-seleccion-titulo {
+  font-family: var(--font-tercearia);
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--color-texto);
+  margin: 0 0 0.35rem;
+  line-height: 1.15;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-seleccion-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 0.4rem;
+}
+
+.card-seleccion-badges .badge {
+  font-size: 0.62rem;
+  font-weight: 600;
+  padding: 3px 7px;
+  white-space: nowrap;
+}
+
+.card-seleccion-precio {
+  margin-top: auto;
+  padding-top: 0.25rem;
+}
+
+.precio-valor {
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--color-primario);
+}
+
+.precio-label {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.card-seleccion-footer {
+  padding: 0.4rem 0.85rem 0.75rem;
+}
+
+.btn-seleccionar-cancha {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.45rem 1rem;
+}
+
+/* ==========================================================================
+   ESTILOS DE ANIMACIÓN ENTRE PASOS
+   ========================================================================== */
+
 .paso-formulario {
   display: none;
   opacity: 0;
-  transform: translateX(30px); /* Inicia desplazado a la derecha */
-  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(30px);
+  transition:
+    opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Estado activo: el panel visible entra con suavidad al centro de la vista. */
 .paso-formulario.activo {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100%;
   opacity: 1;
   transform: translateX(0);
 }
 
-/* Estado de salida: al pasar al siguiente paso, el panel actual se desliza hacia la izquierda. */
 .paso-formulario.salida {
-  display: block;
+  display: none;
   opacity: 0;
   transform: translateX(-30px);
 }
 
-/* Estado de retroceso: al volver al paso anterior, el siguiente panel entra desde la izquierda. */
 .paso-formulario.entrada-regreso {
-  display: block;
+  display: none;
   opacity: 0;
   transform: translateX(-30px);
 }
 
-/* ---------------- fin estilos de animacion entre pasos ---------------- */
+/* ==========================================================================
+   AJUSTES RESPONSIVOS Y MOBILE
+   ========================================================================== */
+
+@media (max-width: 991.98px) {
+  .menu-pasos {
+    flex-direction: row;
+    justify-content: space-between;
+    overflow-x: auto;
+  }
+
+  .menu-pasos .paso {
+    flex: 1;
+    min-height: auto;
+    min-width: 120px;
+    padding: 8px;
+    justify-content: center;
+  }
+
+  .text-pasos p {
+    display: none; /* Oculta subtítulos en pantallas pequeñas para optimizar espacio */
+  }
+}
+
+@media (max-width: 575.98px) {
+  .main-reservas-row {
+    --bs-gutter-x: 0.75rem;
+  }
+
+  .panel-formulario {
+    min-height: 0;
+    padding: 1rem !important;
+  }
+
+  .div-titulo-formulario,
+  .paso-formulario > .mb-2 {
+    text-align: center;
+  }
+
+  .titulo-formulario {
+    font-size: 1.4rem;
+  }
+
+  .texto-secundario {
+    font-size: 0.85rem;
+  }
+
+  #horariosDisponibles {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .btn-horario {
+    font-size: 0.68rem;
+  }
+
+  .div-seleccion {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .div-seleccion > div {
+    flex-basis: auto;
+  }
+
+  .dato-confirmacion {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .paso-formulario .d-flex.justify-content-between,
+  .paso-formulario .d-flex.justify-content-end {
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .paso-formulario .d-flex.justify-content-between > button,
+  .paso-formulario .d-flex.justify-content-end > button {
+    flex: 1 1 120px;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .menu-pasos .paso {
+    padding-inline: 0.5rem;
+  }
+
+  .text-pasos h3 {
+    font-size: 1rem;
+  }
+
+  .text-pasos p {
+    font-size: 0.75rem;
+  }
+}

@@ -2,6 +2,14 @@ import { registrarUsuario, iniciarSesion } from '../api/auth.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   /* ==========================================================
+     Auto-abrir pestaña de registro si ?tab=register
+     ========================================================== */
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('tab') === 'register') {
+    document.getElementById('btnIrARegistro')?.click();
+  }
+
+  /* ==========================================================
      (INICIO DE SESIÓN <-> REGISTRO)
      ========================================================== */
   const tarjetaAutenticacion = document.getElementById('tarjetaAutenticacion');
@@ -345,21 +353,31 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         const respuesta = await registrarUsuario(datosRegistro);
 
-        localStorage.setItem('devportes_token', respuesta.token);
-        localStorage.setItem(
-          'devportes_sesion_activa',
-          JSON.stringify({ nombre: respuesta.nameUser, correo: respuesta.email }),
-        );
+        const userProfile = {
+          nombre: respuesta.nameUser || datosRegistro.name,
+          correo: respuesta.email || datosRegistro.email,
+          cedula: datosRegistro.identityDocument,
+          telefono: datosRegistro.phoneNumber
+        };
+
+        localStorage.setItem('devportes_token', respuesta.token || 'local-token');
+        localStorage.setItem('devportes_sesion_activa', JSON.stringify(userProfile));
         document.dispatchEvent(new CustomEvent('session-change'));
 
         borrarBorradorRegistro();
         formRegistro.reset();
         limpiarErroresFormulario();
 
-        alert(`¡Registro exitoso, ${respuesta.nameUser}!`);
-
-        inputCorreoLogin.value = respuesta.email;
-        tarjetaAutenticacion.classList.remove('register-active');
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirect = urlParams.get('redirect');
+        if (redirect === 'reservas') {
+          const params = new URLSearchParams(window.location.search);
+          params.delete('redirect');
+          params.delete('tab');
+          window.location.href = `../pages/reservas.html?${params.toString()}`;
+        } else {
+          window.location.href = '../index.html';
+        }
       } catch {
         const usuarios = obtenerUsuariosGuardados();
         const nuevoUsuario = {
@@ -379,20 +397,31 @@ document.addEventListener('DOMContentLoaded', () => {
         usuarios.push(nuevoUsuario);
         localStorage.setItem(KEY_USUARIOS_BD, JSON.stringify(usuarios));
 
-        localStorage.setItem(
-          'devportes_sesion_activa',
-          JSON.stringify({ nombre: nuevoUsuario.nombre, correo: nuevoUsuario.correo }),
-        );
+        const userProfile = {
+          nombre: nuevoUsuario.nombre,
+          correo: nuevoUsuario.correo,
+          cedula: nuevoUsuario.cedula,
+          telefono: nuevoUsuario.telefono
+        };
+
+        localStorage.setItem('devportes_token', 'local-token');
+        localStorage.setItem('devportes_sesion_activa', JSON.stringify(userProfile));
         document.dispatchEvent(new CustomEvent('session-change'));
 
         borrarBorradorRegistro();
         formRegistro.reset();
         limpiarErroresFormulario();
 
-        alert(`¡Registro exitoso, ${nuevoUsuario.nombre}! (modo local)`);
-
-        inputCorreoLogin.value = nuevoUsuario.correo;
-        tarjetaAutenticacion.classList.remove('register-active');
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirect = urlParams.get('redirect');
+        if (redirect === 'reservas') {
+          const params = new URLSearchParams(window.location.search);
+          params.delete('redirect');
+          params.delete('tab');
+          window.location.href = `../pages/reservas.html?${params.toString()}`;
+        } else {
+          window.location.href = '../index.html';
+        }
       }
     }
   });
@@ -417,15 +446,27 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         const respuesta = await iniciarSesion({ email: correoIngresado, password: passIngresada });
 
+        const userProfile = {
+          nombre: respuesta.nameUser || '',
+          correo: correoIngresado,
+          cedula: respuesta.identityDocument || '',
+          telefono: respuesta.phoneNumber || ''
+        };
+
         localStorage.setItem('devportes_token', respuesta.token);
-        localStorage.setItem(
-          'devportes_sesion_activa',
-          JSON.stringify({ correo: correoIngresado }),
-        );
+        localStorage.setItem('devportes_sesion_activa', JSON.stringify(userProfile));
         document.dispatchEvent(new CustomEvent('session-change'));
 
-        alert('¡Bienvenido de nuevo!');
-        window.location.href = '../index.html';
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirect = urlParams.get('redirect');
+        if (redirect === 'reservas') {
+          const params = new URLSearchParams(window.location.search);
+          params.delete('redirect');
+          params.delete('tab');
+          window.location.href = `../pages/reservas.html?${params.toString()}`;
+        } else {
+          window.location.href = '../index.html';
+        }
       } catch {
         const usuarios = obtenerUsuariosGuardados();
         const usuarioEncontrado = usuarios.find(
@@ -433,14 +474,27 @@ document.addEventListener('DOMContentLoaded', () => {
         );
 
         if (usuarioEncontrado) {
-          localStorage.setItem(
-            'devportes_sesion_activa',
-            JSON.stringify({ nombre: usuarioEncontrado.nombre, correo: usuarioEncontrado.correo }),
-          );
+          const userProfile = {
+            nombre: usuarioEncontrado.nombre,
+            correo: usuarioEncontrado.correo,
+            cedula: usuarioEncontrado.cedula || '',
+            telefono: usuarioEncontrado.telefono || ''
+          };
+
+          localStorage.setItem('devportes_token', 'local-token');
+          localStorage.setItem('devportes_sesion_activa', JSON.stringify(userProfile));
           document.dispatchEvent(new CustomEvent('session-change'));
 
-          alert(`¡Bienvenido de nuevo, ${usuarioEncontrado.nombre}!`);
-          window.location.href = '../index.html';
+          const urlParams = new URLSearchParams(window.location.search);
+          const redirect = urlParams.get('redirect');
+          if (redirect === 'reservas') {
+            const params = new URLSearchParams(window.location.search);
+            params.delete('redirect');
+            params.delete('tab');
+            window.location.href = `../pages/reservas.html?${params.toString()}`;
+          } else {
+            window.location.href = '../index.html';
+          }
         } else {
           marcarInvalido(inputCorreoLogin, 'Credenciales incorrectas');
           marcarInvalido(inputPassLogin, 'Verifica tu contraseña');

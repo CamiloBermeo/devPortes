@@ -1,24 +1,32 @@
 class AppNavbar extends HTMLElement {
+  _listenersSetup;
+
   connectedCallback() {
+    this.render();
+    this._setupListeners();
+  }
+
+  render() {
     const path = window.location.pathname;
     const isInsidePages = path.includes('/pages/');
-    const basePath = isInsidePages ? '../' : './';
-    const pagesPath = isInsidePages ? './' : './pages/';
+    this.basePath = isInsidePages ? '../' : './';
+    this.pagesPath = isInsidePages ? './' : './pages/';
 
-    // Obtener el nombre del archivo actual limpiando posibles hashes o parámetros query
     const currentPage = path.split('/').pop().split('#')[0].split('?')[0] || 'index.html';
     const currentHash = window.location.hash;
 
     this.classList.add('sticky-top', 'd-block');
 
-    // La URL de "¿Cómo funciona?" depende de si ya estás en nosotros.html o en otra página
     const isNosotrosPage = currentPage === 'nosotros.html';
-    const comoFuncionaUrl = isNosotrosPage ? '#comoFunciona' : `${pagesPath}nosotros.html#comoFunciona`;
+    const comoFuncionaUrl = isNosotrosPage ? '#comoFunciona' : `${this.pagesPath}nosotros.html#comoFunciona`;
+
+    const isLoggedIn = this._checkSession();
+    const authButton = isLoggedIn ? this._renderLoggedInButton() : this._renderLoginButton();
 
     this.innerHTML = /*html*/ `
     <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 border-top border-4 border-brand-green shadow-sm">
       <div class="container-fluid px-3 px-lg-5">
-        <a class="navbar-brand d-flex align-items-center gap-2 m-0" href="${basePath}index.html">
+        <a class="navbar-brand d-flex align-items-center gap-2 m-0" href="${this.basePath}index.html">
           <div class="text-white d-flex align-items-center justify-content-center rounded-3 fw-bold logo-box">D</div>
           <span class="fs-5 fw-black text-brand-dark tracking-tight">
             DEV<span class="fw-bold text-brand-mid-green">PORTES</span>
@@ -36,7 +44,7 @@ class AppNavbar extends HTMLElement {
           <svg class="bi bi-list" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
             <path
               fill-rule="evenodd"
-              d="M2.5 12.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1zm0-4a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1zm0-4a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1z" />
+              d="M2.5 12.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0-1zm0-4a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0-1zm0-4a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0-1z" />
           </svg>
         </button>
 
@@ -45,7 +53,7 @@ class AppNavbar extends HTMLElement {
             <li class="nav-item">
               <a
                 class="nav-link ${currentPage === 'index.html' || currentPage === '' ? 'fw-bold text-brand-mid-green' : 'nav-link-custom'} transition-base px-2"
-                href="${basePath}index.html"
+                href="${this.basePath}index.html"
                 >Inicio</a
               >
             </li>
@@ -53,14 +61,14 @@ class AppNavbar extends HTMLElement {
             <li class="nav-item">
               <a
                 class="nav-link ${isNosotrosPage && currentHash !== '#comoFunciona' ? 'fw-bold text-brand-mid-green' : 'nav-link-custom'} transition-base px-2"
-                href="${pagesPath}nosotros.html"
+                href="${this.pagesPath}nosotros.html"
                 >Nosotros</a
               >
             </li>
             <li class="nav-item">
               <a
                 class="nav-link ${currentPage === 'contactenos.html' ? 'fw-bold text-brand-mid-green' : 'nav-link-custom'} transition-base px-2"
-                href="${pagesPath}contactenos.html"
+                href="${this.pagesPath}contactenos.html"
                 >Contáctenos</a
               >
             </li>
@@ -77,12 +85,53 @@ class AppNavbar extends HTMLElement {
           </ul>
 
           <div class="d-grid d-lg-flex align-items-center gap-3">
-            <a href="${pagesPath}login.html" class="btn btn-brand rounded-2 px-5 py-2 text-nowrap transition-base"> ¡Únete! </a>
+            ${authButton}
           </div>
         </div>
       </div>
     </nav>
     `;
+  }
+
+  /* ============================================
+     SESIÓN (temporal: localStorage, reemplazar
+     por API cuando haya backend desplegado)
+     ============================================ */
+
+  _checkSession() {
+    return !!localStorage.getItem('devportes_sesion_activa');
+  }
+
+  _getSessionData() {
+    try {
+      return JSON.parse(localStorage.getItem('devportes_sesion_activa') || '{}');
+    } catch {
+      return {};
+    }
+  }
+
+  _renderLoggedInButton() {
+    return `<a href="${this.pagesPath}usuario.html" class="btn btn-brand rounded-2 px-4 py-2 text-nowrap transition-base d-flex align-items-center gap-2">
+              <i class="bi bi-person-circle"></i> Mi perfil
+            </a>`;
+  }
+
+  _renderLoginButton() {
+    return `<a href="${this.pagesPath}login.html" class="btn btn-brand rounded-2 px-5 py-2 text-nowrap transition-base"> ¡Únete! </a>`;
+  }
+
+  _setupListeners() {
+    if (this._listenersSetup) return;
+    this._listenersSetup = true;
+
+    window.addEventListener('storage', () => this.render());
+    document.addEventListener('session-change', () => this.render());
+  }
+
+  _logout() {
+    localStorage.removeItem('devportes_token');
+    localStorage.removeItem('devportes_sesion_activa');
+    window.location.href = `${this.basePath}index.html`;
   }
 }
 

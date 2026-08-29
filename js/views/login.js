@@ -350,6 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
           'devportes_sesion_activa',
           JSON.stringify({ nombre: respuesta.nameUser, correo: respuesta.email }),
         );
+        document.dispatchEvent(new CustomEvent('session-change'));
 
         borrarBorradorRegistro();
         formRegistro.reset();
@@ -382,6 +383,7 @@ document.addEventListener('DOMContentLoaded', () => {
           'devportes_sesion_activa',
           JSON.stringify({ nombre: nuevoUsuario.nombre, correo: nuevoUsuario.correo }),
         );
+        document.dispatchEvent(new CustomEvent('session-change'));
 
         borrarBorradorRegistro();
         formRegistro.reset();
@@ -420,6 +422,7 @@ document.addEventListener('DOMContentLoaded', () => {
           'devportes_sesion_activa',
           JSON.stringify({ correo: correoIngresado }),
         );
+        document.dispatchEvent(new CustomEvent('session-change'));
 
         alert('¡Bienvenido de nuevo!');
         window.location.href = '../index.html';
@@ -434,6 +437,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'devportes_sesion_activa',
             JSON.stringify({ nombre: usuarioEncontrado.nombre, correo: usuarioEncontrado.correo }),
           );
+          document.dispatchEvent(new CustomEvent('session-change'));
 
           alert(`¡Bienvenido de nuevo, ${usuarioEncontrado.nombre}!`);
           window.location.href = '../index.html';

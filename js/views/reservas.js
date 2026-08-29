@@ -3,6 +3,17 @@ import { renderizarSelectorCanchas } from '../componets/tarjeta_canchas.js';
 import { estaLogueado, obtenerPerfilCompleto } from '../utils/auth.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
+  // ---------------- Guard: requerir autenticación ----------------
+  if (!estaLogueado()) {
+    const currentParams = new URLSearchParams(window.location.search);
+    const redirectParams = new URLSearchParams({
+      redirect: 'reservas',
+      ...Object.fromEntries(currentParams)
+    });
+    window.location.href = `./login.html?${redirectParams.toString()}&tab=register`;
+    return;
+  }
+
   // ---------------- inicio y referencias del formulario ----------------
   const pasos = Array.from(document.querySelectorAll('.paso-formulario'));
   const elementosPaso = Array.from(document.querySelectorAll('.paso'));

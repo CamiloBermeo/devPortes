@@ -1,4 +1,5 @@
 import { registrarUsuario, iniciarSesion } from '../api/auth.js';
+import { regexNombre, regexCedula, regexTelefono, regexCorreo, LONGITUD, soloNumeros, validarLongitud } from '../utils/validaciones.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   /* ==========================================================
@@ -37,11 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ==========================================================
      EXPRESIONES REGULARES Y FUNCIONES AUXILIARES
      ========================================================== */
-  const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const regexNombre = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{3,50}$/;
-  const regexCedula = /^\d{6,11}$/;
-  const regexTelefono = /^\d{7,10}$/;
-
   function marcarInvalido(inputElement, mensaje) {
     const fieldGroup = inputElement.closest('.field-group');
     if (!fieldGroup) return;
@@ -64,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function permitirSoloNumeros(inputElement) {
-    inputElement.value = inputElement.value.replace(/\D/g, '');
+    soloNumeros(inputElement);
   }
 
   function limpiarErroresFormulario() {
@@ -145,7 +141,10 @@ document.addEventListener('DOMContentLoaded', () => {
       marcarInvalido(inputNombreReg, 'El nombre es obligatorio');
       return false;
     } else if (!regexNombre.test(valor)) {
-      marcarInvalido(inputNombreReg, 'Usa solo letras (mín. 3)');
+      marcarInvalido(inputNombreReg, 'Usa solo letras');
+      return false;
+    } else if (!validarLongitud(valor, LONGITUD.nombre)) {
+      marcarInvalido(inputNombreReg, `Entre ${LONGITUD.nombre.min} y ${LONGITUD.nombre.max} caracteres`);
       return false;
     }
     marcarValido(inputNombreReg);
@@ -159,7 +158,10 @@ document.addEventListener('DOMContentLoaded', () => {
       marcarInvalido(inputCedulaReg, 'La cédula es requerida');
       return false;
     } else if (!regexCedula.test(valor)) {
-      marcarInvalido(inputCedulaReg, 'Entre 6 y 11 números');
+      marcarInvalido(inputCedulaReg, 'Solo números');
+      return false;
+    } else if (!validarLongitud(valor, LONGITUD.cedula)) {
+      marcarInvalido(inputCedulaReg, `Entre ${LONGITUD.cedula.min} y ${LONGITUD.cedula.max} dígitos`);
       return false;
     }
     marcarValido(inputCedulaReg);
@@ -173,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
       marcarInvalido(inputTelefonoReg, 'Teléfono requerido');
       return false;
     } else if (!regexTelefono.test(valor)) {
-      marcarInvalido(inputTelefonoReg, '7 a 10 dígitos');
+      marcarInvalido(inputTelefonoReg, `${LONGITUD.telefono.max} dígitos exactos`);
       return false;
     }
     marcarValido(inputTelefonoReg);
@@ -185,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (valor === '') {
       marcarInvalido(inputCorreoReg, 'Correo requerido');
       return false;
-    } else if (!regexEmail.test(valor)) {
+    } else if (!regexCorreo.test(valor)) {
       marcarInvalido(inputCorreoReg, 'Ingresa un correo válido');
       return false;
     }
@@ -271,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (valor === '') {
       marcarInvalido(inputCorreoLogin, 'Ingresa tu correo');
       return false;
-    } else if (!regexEmail.test(valor)) {
+    } else if (!regexCorreo.test(valor)) {
       marcarInvalido(inputCorreoLogin, 'Correo no válido');
       return false;
     }

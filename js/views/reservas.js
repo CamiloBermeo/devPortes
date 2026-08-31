@@ -1,6 +1,7 @@
 import { obtenerCanchas, formatoTipo, tipoAArray } from '../api/canchas.js';
 import { renderizarSelectorCanchas } from '../componets/tarjeta_canchas.js';
 import { estaLogueado, obtenerPerfilCompleto } from '../utils/auth.js';
+import { regexNombre, regexCedula, regexTelefono, LONGITUD, validarLongitud } from '../utils/validaciones.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
   // ---------------- Guard: requerir autenticación ----------------
@@ -385,7 +386,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   };
 
   // ---------------- validacion del paso 1 ----------------
-  const regexNombre = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
   const validarNombre = () => {
     const campo = document.getElementById('nombreCompleto');
     if (!campo) return true;
@@ -395,16 +395,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       marcarCampo(campo, false, 'Ingresa tu nombre completo.');
       return false;
     }
-    if (valor.length < 2) {
-      marcarCampo(campo, false, 'El nombre debe tener al menos 2 caracteres.');
-      return false;
-    }
-    if (valor.length > 40) {
-      marcarCampo(campo, false, 'El nombre no puede superar los 40 caracteres.');
-      return false;
-    }
     if (!regexNombre.test(valor)) {
       marcarCampo(campo, false, 'El nombre solo puede contener letras y espacios.');
+      return false;
+    }
+    if (!validarLongitud(valor, LONGITUD.nombre)) {
+      marcarCampo(campo, false, `Entre ${LONGITUD.nombre.min} y ${LONGITUD.nombre.max} caracteres.`);
       return false;
     }
 
@@ -412,7 +408,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     return true;
   };
 
-  const regexDocumento = /^[0-9\s-]+$/;
   const validarCedula = () => {
     const campo = document.getElementById('cedula');
     if (!campo) return true;
@@ -422,12 +417,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       marcarCampo(campo, false, 'Ingresa tu documento.');
       return false;
     }
-    if (valor.length > 15) {
-      marcarCampo(campo, false, 'El documento no puede superar los 15 caracteres.');
+    if (!regexCedula.test(valor)) {
+      marcarCampo(campo, false, 'Solo se permiten números.');
       return false;
     }
-    if (!regexDocumento.test(valor)) {
-      marcarCampo(campo, false, 'El documento contiene caracteres no permitidos.');
+    if (!validarLongitud(valor, LONGITUD.cedula)) {
+      marcarCampo(campo, false, `Entre ${LONGITUD.cedula.min} y ${LONGITUD.cedula.max} dígitos.`);
       return false;
     }
 
@@ -435,7 +430,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     return true;
   };
 
-  const regexCelular = /^\d+$/;
   const validarCelular = () => {
     const campo = document.getElementById('celular');
     if (!campo) return true;
@@ -445,12 +439,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       marcarCampo(campo, false, 'Ingresa tu número celular.');
       return false;
     }
-    if (!regexCelular.test(valor)) {
-      marcarCampo(campo, false, 'El celular solo puede contener números.');
-      return false;
-    }
-    if (valor.length !== 10) {
-      marcarCampo(campo, false, 'El celular debe tener 10 dígitos.');
+    if (!regexTelefono.test(valor)) {
+      marcarCampo(campo, false, 'El celular debe tener exactamente 10 dígitos.');
       return false;
     }
 
@@ -809,6 +799,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       actualizarVistaPrevia();
       mostrarPaso(1);
       localStorage.removeItem(claveReservaLocal);
+
+      if (userProfile) {
+        autollenarDatosUsuario(userProfile);
+      }
     });
   }
 

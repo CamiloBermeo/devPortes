@@ -1,7 +1,19 @@
 import { obtenerCanchas, formatoTipo, tipoAArray } from '../api/canchas.js';
 import { renderizarSelectorCanchas } from '../componets/tarjeta_canchas.js';
+import { estaLogueado, obtenerPerfilCompleto } from '../utils/auth.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  // ---------------- Guard: requerir autenticación ----------------
+  if (!estaLogueado()) {
+    const currentParams = new URLSearchParams(window.location.search);
+    const redirectParams = new URLSearchParams({
+      redirect: 'reservas',
+      ...Object.fromEntries(currentParams)
+    });
+    window.location.href = `./login.html?${redirectParams.toString()}&tab=register`;
+    return;
+  }
+
   // ---------------- inicio y referencias del formulario ----------------
   const pasos = Array.from(document.querySelectorAll('.paso-formulario'));
   const elementosPaso = Array.from(document.querySelectorAll('.paso'));
@@ -758,7 +770,14 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.querySelectorAll('input[name="reservaPara"]').forEach((opcion) => {
-    opcion.addEventListener('change', () => guardarReservaLocal());
+    opcion.addEventListener('change', () => {
+      guardarReservaLocal();
+      if (opcion.value === 'mi' && userProfile) {
+        autollenarDatosUsuario(userProfile);
+      } else if (opcion.value === 'tercero') {
+        limpiarDatosUsuario();
+      }
+    });
   });
 
   // ---------------- reinicio de reserva ----------------
@@ -796,9 +815,64 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---------------- inicializacion ----------------
   const pasoGuardado = restaurarReservaLocal();
   aplicarCanchaDesdeUrl();
+
+  let userProfile = null;
+  if (estaLogueado()) {
+    userProfile = await obtenerPerfilCompleto();
+  }
+
   renderCalendar();
   renderHorarios();
   actualizarResumen();
   actualizarVistaPrevia();
   mostrarPaso(pasoGuardado);
+
+  // Auto-fill on load if "Para mí" is selected
+  const reservaParaMi = document.getElementById('reservaParaMi');
+  if (reservaParaMi?.checked && userProfile) {
+    autollenarDatosUsuario(userProfile);
+  }
 });
+
+// New functions for auto-fill
+function autollenarDatosUsuario(data) {
+  const mapping = {
+    nombreCompleto: data.nombre,
+    cedula: data.cedula,
+    celular: data.telefono,
+    correo: data.correo
+  };
+  Object.entries(mapping).forEach(([id, value]) => {
+    const input = document.getElementById(id);
+    if (input && value) {
+      input.value = value;
+      input.readOnly = true;
+      input.style.backgroundColor = '#f8f9fa';
+      input.dispatchEvent(new Event('input'));
+    }
+  });
+  // Hint label
+  let hint = document.getElementById('autofill-hint');
+  if (!hint) {
+    hint = document.createElement('div');
+    hint.id = 'autofill-hint';
+    hint.className = 'text-success small mt-1';
+    document.querySelector('#paso-1 .div-titulo-formulario')?.after(hint);
+  }
+  hint.textContent = 'Datos de tu cuenta (solo lectura)';
+  hint.style.display = 'block';
+}
+
+function limpiarDatosUsuario() {
+  ['nombreCompleto', 'cedula', 'celular', 'correo'].forEach(id => {
+    const input = document.getElementById(id);
+    if (input) { 
+      input.value = ''; 
+      input.readOnly = false; 
+      input.style.backgroundColor = ''; 
+    }
+  });
+  const hint = document.getElementById('autofill-hint');
+  if (hint) hint.style.display = 'none';
+  actualizarVistaPrevia();
+}

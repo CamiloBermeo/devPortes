@@ -1,43 +1,48 @@
 # Tareas pendientes
 
-## Miscelaneos
+Este documento contiene las tareas que consideramos relevantes. Está todo
+dividido por sencciones para que no tenga perdida.
+
+## Frontend
+
+### Miscelaneos
 
 - [ ] Añadir pagina Galería.
-- [ ] Optimizar imagenes pasando las mismas a WEBP.
+- [ ] Optimizar imagenes pasando las mismas a WEBP (Usar github como hosting).
 
-## index
+### index
 
 - [ ] Hacer que los datos sean dinamicos | Revisar Hero Banner.
 
-## Nosotros
+### Nosotros
 
 - [ ] Al botón "vamos", falta modal de contacto al equipo de desarrollo.
 
-## Login/Register
+### Login/Register
 
-- [ ] Cambiar alert por un modal bonito
+- [ ] Cambiar alerts por un modal bonito
 
 - [ ] icono de carga en los botones de inicio de sesion y registrarse
 
-## Pag Reservas
+### Pag Reservas
 
 - [ ] arreglar colores del modal cambiar cancha
 
-### Paso 1
+#### Paso 1
 
 - [ ] centrar los paso y todo
 
-### Paso 2
+#### Paso 2
 
 - [ ] Arreglar tamaño de los seleccionadores de hora
 
-### Paso 3
+#### Paso 3
 
 - [ ] cambiar el texto del boton por ir a pagar
 
-### Paso 4 Modal de pago
+#### Paso 4 Modal de pago
 
-### Paso 5 - reservado
+#### Paso 5 - reservado
 
 - [ ] añadir seccion del qr para la ubicacion de la cancha con textos
   descriptivos

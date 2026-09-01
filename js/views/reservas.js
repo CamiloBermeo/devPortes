@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const currentParams = new URLSearchParams(window.location.search);
     const redirectParams = new URLSearchParams({
       redirect: 'reservas',
-      ...Object.fromEntries(currentParams)
+      ...Object.fromEntries(currentParams),
     });
     window.location.href = `./login.html?${redirectParams.toString()}&tab=register`;
     return;
@@ -88,9 +88,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!contenedor) return;
 
     const imagenSrc = cancha.imagen || '../assets/img/canchas/futbol-estadio-principal.webp';
-    const detallesHTML = Array.isArray(cancha.detalles) && cancha.detalles.length
-      ? cancha.detalles.map((d) => `<li class="mb-1">✔️ ${d}</li>`).join('')
-      : '';
+    const detallesHTML =
+      Array.isArray(cancha.detalles) && cancha.detalles.length
+        ? cancha.detalles.map((d) => `<li class="mb-1">✔️ ${d}</li>`).join('')
+        : '';
 
     contenedor.innerHTML = `
       <div class="modal fade" id="modalInfoCanchaReserva" tabindex="-1" aria-hidden="true">
@@ -109,13 +110,36 @@ document.addEventListener('DOMContentLoaded', async () => {
                   <div class="d-flex flex-wrap gap-2 mb-3">
                     ${cancha.superficie ? `<span class="badge bg-success px-2.5 py-1.5 fw-semibold">${cancha.superficie}</span>` : ''}
                     <span class="badge bg-dark px-2.5 py-1.5 fw-semibold">${formatoTipo(cancha)}</span>
-                    ${cancha.capacidad ? `<span class="badge bg-secondary px-2.5 py-1.5 fw-semibold"><i class="bi bi-people-fill me-1"></i>${cancha.capacidad} personas</span>` : ''}
+                    ${
+                      cancha.capacidad
+                        ? `<span class="badge bg-secondary px-2.5 py-1.5 fw-semibold"
+                      ><i class="bi bi-people-fill me-1"></i>${cancha.capacidad} personas</span
+                    >`
+                        : ''
+                    }
                   </div>
-                  ${cancha.descripcion ? `<p class="text-muted small lh-base mb-4">${cancha.descripcion}</p>` : ''}
-                  ${detallesHTML ? `<ul class="list-unstyled small mb-4">${detallesHTML}</ul>` : ''}
+                  ${
+                    cancha.descripcion
+                      ? `
+                  <p class="text-muted small lh-base mb-4">${cancha.descripcion}</p>
+                  `
+                      : ''
+                  } ${
+                    detallesHTML
+                      ? `
+                  <ul class="list-unstyled small mb-4">
+                    ${detallesHTML}
+                  </ul>
+                  `
+                      : ''
+                  }
                 </div>
                 <div class="pt-3 border-top border-light">
-                  <span class="text-muted d-block text-uppercase text-nowrap text-xxs-custom" style="letter-spacing:0.05em;font-size:0.65rem">Precio por Hora</span>
+                  <span
+                    class="text-muted d-block text-uppercase text-nowrap text-xxs-custom"
+                    style="letter-spacing: 0.05em; font-size: 0.65rem"
+                    >Precio por Hora</span
+                  >
                   <span class="fw-bold fs-5">${cancha.precio}</span>
                 </div>
               </div>
@@ -834,7 +858,7 @@ function autollenarDatosUsuario(data) {
     nombreCompleto: data.nombre,
     cedula: data.cedula,
     celular: data.telefono,
-    correo: data.correo
+    correo: data.correo,
   };
   Object.entries(mapping).forEach(([id, value]) => {
     const input = document.getElementById(id);
@@ -845,25 +869,15 @@ function autollenarDatosUsuario(data) {
       input.dispatchEvent(new Event('input'));
     }
   });
-  // Hint label
-  let hint = document.getElementById('autofill-hint');
-  if (!hint) {
-    hint = document.createElement('div');
-    hint.id = 'autofill-hint';
-    hint.className = 'text-success small mt-1';
-    document.querySelector('#paso-1 .div-titulo-formulario')?.after(hint);
-  }
-  hint.textContent = 'Datos de tu cuenta (solo lectura)';
-  hint.style.display = 'block';
 }
 
 function limpiarDatosUsuario() {
-  ['nombreCompleto', 'cedula', 'celular', 'correo'].forEach(id => {
+  ['nombreCompleto', 'cedula', 'celular', 'correo'].forEach((id) => {
     const input = document.getElementById(id);
-    if (input) { 
-      input.value = ''; 
-      input.readOnly = false; 
-      input.style.backgroundColor = ''; 
+    if (input) {
+      input.value = '';
+      input.readOnly = false;
+      input.style.backgroundColor = '';
     }
   });
   const hint = document.getElementById('autofill-hint');

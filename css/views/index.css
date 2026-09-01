@@ -37,7 +37,7 @@
   min-height: 90vh;
   background:
     linear-gradient(rgba(34, 67, 48, 0.65), rgba(28, 28, 28, 0.8)),
-    url('/assets/img/fondo.webp') center/cover no-repeat;
+    url('https://raw.githubusercontent.com/CamiloBermeo/devPortes/refs/heads/main/assets/img/fondo.webp') center/cover no-repeat;
 }
 
 /* Fondo de la sección similar al de la imagen */
@@ -182,7 +182,9 @@
   background-color: #0b0f19;
   flex: 0 0 calc(33.333% - 8px);
   height: 280px;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .gallery-bento-item:first-child {
@@ -198,7 +200,9 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), filter 0.4s ease;
+  transition:
+    transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+    filter 0.4s ease;
 }
 
 /* Degradado para legibilidad */
@@ -253,7 +257,9 @@
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.25s ease, background 0.2s ease;
+  transition:
+    opacity 0.25s ease,
+    background 0.2s ease;
   white-space: nowrap;
 }
 

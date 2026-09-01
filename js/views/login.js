@@ -1,4 +1,15 @@
+import { registrarUsuario, iniciarSesion } from '../api/auth.js';
+import { regexNombre, regexCedula, regexTelefono, regexCorreo, LONGITUD, soloNumeros, validarLongitud } from '../utils/validaciones.js';
+
 document.addEventListener('DOMContentLoaded', () => {
+  /* ==========================================================
+     Auto-abrir pestaña de registro si ?tab=register
+     ========================================================== */
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('tab') === 'register') {
+    document.getElementById('btnIrARegistro')?.click();
+  }
+
   /* ==========================================================
      (INICIO DE SESIÓN <-> REGISTRO)
      ========================================================== */
@@ -27,11 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ==========================================================
      EXPRESIONES REGULARES Y FUNCIONES AUXILIARES
      ========================================================== */
-  const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const regexNombre = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{3,50}$/;
-  const regexCedula = /^\d{6,11}$/;
-  const regexTelefono = /^\d{7,10}$/;
-
   function marcarInvalido(inputElement, mensaje) {
     const fieldGroup = inputElement.closest('.field-group');
     if (!fieldGroup) return;
@@ -54,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function permitirSoloNumeros(inputElement) {
-    inputElement.value = inputElement.value.replace(/\D/g, '');
+    soloNumeros(inputElement);
   }
 
   function limpiarErroresFormulario() {
@@ -135,7 +141,10 @@ document.addEventListener('DOMContentLoaded', () => {
       marcarInvalido(inputNombreReg, 'El nombre es obligatorio');
       return false;
     } else if (!regexNombre.test(valor)) {
-      marcarInvalido(inputNombreReg, 'Usa solo letras (mín. 3)');
+      marcarInvalido(inputNombreReg, 'Usa solo letras');
+      return false;
+    } else if (!validarLongitud(valor, LONGITUD.nombre)) {
+      marcarInvalido(inputNombreReg, `Entre ${LONGITUD.nombre.min} y ${LONGITUD.nombre.max} caracteres`);
       return false;
     }
     marcarValido(inputNombreReg);
@@ -149,7 +158,10 @@ document.addEventListener('DOMContentLoaded', () => {
       marcarInvalido(inputCedulaReg, 'La cédula es requerida');
       return false;
     } else if (!regexCedula.test(valor)) {
-      marcarInvalido(inputCedulaReg, 'Entre 6 y 11 números');
+      marcarInvalido(inputCedulaReg, 'Solo números');
+      return false;
+    } else if (!validarLongitud(valor, LONGITUD.cedula)) {
+      marcarInvalido(inputCedulaReg, `Entre ${LONGITUD.cedula.min} y ${LONGITUD.cedula.max} dígitos`);
       return false;
     }
     marcarValido(inputCedulaReg);
@@ -163,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
       marcarInvalido(inputTelefonoReg, 'Teléfono requerido');
       return false;
     } else if (!regexTelefono.test(valor)) {
-      marcarInvalido(inputTelefonoReg, '7 a 10 dígitos');
+      marcarInvalido(inputTelefonoReg, `${LONGITUD.telefono.max} dígitos exactos`);
       return false;
     }
     marcarValido(inputTelefonoReg);
@@ -175,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (valor === '') {
       marcarInvalido(inputCorreoReg, 'Correo requerido');
       return false;
-    } else if (!regexEmail.test(valor)) {
+    } else if (!regexCorreo.test(valor)) {
       marcarInvalido(inputCorreoReg, 'Ingresa un correo válido');
       return false;
     }
@@ -215,16 +227,12 @@ document.addEventListener('DOMContentLoaded', () => {
       marcarInvalido(inputPassReg, 'Incluye al menos un número');
       return false;
     }
-    if (!/[@$!%*?&.#\-_]/.test(valor)) {
+    if (!/[-@$!%*?&#._]/.test(valor)) {
       marcarInvalido(inputPassReg, 'Incluye un símbolo (@, $, !, %, etc.)');
       return false;
     }
 
     marcarValido(inputPassReg);
-
-    if (inputConfirmPassReg.value.length > 0) {
-      validarCoincidenciaPass();
-    }
     return true;
   }
 
@@ -265,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (valor === '') {
       marcarInvalido(inputCorreoLogin, 'Ingresa tu correo');
       return false;
-    } else if (!regexEmail.test(valor)) {
+    } else if (!regexCorreo.test(valor)) {
       marcarInvalido(inputCorreoLogin, 'Correo no válido');
       return false;
     }
@@ -316,7 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
      ========================================================== */
 
   // --- SUBMIT REGISTRO ---
-  formRegistro?.addEventListener('submit', (e) => {
+  formRegistro?.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const esNombreValido = validarNombre();
@@ -336,33 +344,92 @@ document.addEventListener('DOMContentLoaded', () => {
       esConfirmValida &&
       esTerminosValido
     ) {
-      const usuarios = obtenerUsuariosGuardados();
-
-      const nuevoUsuario = {
-        id: Date.now(),
-        nombre: inputNombreReg.value.trim(),
-        cedula: inputCedulaReg.value.trim(),
-        telefono: inputTelefonoReg.value.trim(),
-        correo: inputCorreoReg.value.trim().toLowerCase(),
+      const datosRegistro = {
+        name: inputNombreReg.value.trim(),
+        identityDocument: inputCedulaReg.value.trim(),
+        phoneNumber: inputTelefonoReg.value.trim(),
+        email: inputCorreoReg.value.trim().toLowerCase(),
         password: inputPassReg.value,
       };
 
-      usuarios.push(nuevoUsuario);
-      localStorage.setItem(KEY_USUARIOS_BD, JSON.stringify(usuarios));
+      try {
+        const respuesta = await registrarUsuario(datosRegistro);
 
-      borrarBorradorRegistro();
-      formRegistro.reset();
-      limpiarErroresFormulario();
+        const userProfile = {
+          nombre: respuesta.nameUser || datosRegistro.name,
+          correo: respuesta.email || datosRegistro.email,
+          cedula: datosRegistro.identityDocument,
+          telefono: datosRegistro.phoneNumber
+        };
 
-      alert(`¡Registro exitoso, ${nuevoUsuario.nombre}! Tu cuenta fue guardada en el sistema.`);
+        localStorage.setItem('devportes_token', respuesta.token || 'local-token');
+        localStorage.setItem('devportes_sesion_activa', JSON.stringify(userProfile));
+        document.dispatchEvent(new CustomEvent('session-change'));
 
-      inputCorreoLogin.value = nuevoUsuario.correo;
-      tarjetaAutenticacion.classList.remove('register-active');
+        borrarBorradorRegistro();
+        formRegistro.reset();
+        limpiarErroresFormulario();
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirect = urlParams.get('redirect');
+        if (redirect === 'reservas') {
+          const params = new URLSearchParams(window.location.search);
+          params.delete('redirect');
+          params.delete('tab');
+          window.location.href = `../pages/reservas.html?${params.toString()}`;
+        } else {
+          window.location.href = '../index.html';
+        }
+      } catch {
+        const usuarios = obtenerUsuariosGuardados();
+        const nuevoUsuario = {
+          id: Date.now(),
+          nombre: datosRegistro.name,
+          cedula: datosRegistro.identityDocument,
+          telefono: datosRegistro.phoneNumber,
+          correo: datosRegistro.email,
+          password: datosRegistro.password,
+        };
+
+        if (usuarios.some((u) => u.correo === nuevoUsuario.correo)) {
+          marcarInvalido(inputCorreoReg, 'Este correo ya está registrado');
+          return;
+        }
+
+        usuarios.push(nuevoUsuario);
+        localStorage.setItem(KEY_USUARIOS_BD, JSON.stringify(usuarios));
+
+        const userProfile = {
+          nombre: nuevoUsuario.nombre,
+          correo: nuevoUsuario.correo,
+          cedula: nuevoUsuario.cedula,
+          telefono: nuevoUsuario.telefono
+        };
+
+        localStorage.setItem('devportes_token', 'local-token');
+        localStorage.setItem('devportes_sesion_activa', JSON.stringify(userProfile));
+        document.dispatchEvent(new CustomEvent('session-change'));
+
+        borrarBorradorRegistro();
+        formRegistro.reset();
+        limpiarErroresFormulario();
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirect = urlParams.get('redirect');
+        if (redirect === 'reservas') {
+          const params = new URLSearchParams(window.location.search);
+          params.delete('redirect');
+          params.delete('tab');
+          window.location.href = `../pages/reservas.html?${params.toString()}`;
+        } else {
+          window.location.href = '../index.html';
+        }
+      }
     }
   });
 
   // --- SUBMIT INICIO DE SESIÓN ---
-  formLogin?.addEventListener('submit', (e) => {
+  formLogin?.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const esCorreoValido = validarCorreoLogin();
@@ -372,28 +439,68 @@ document.addEventListener('DOMContentLoaded', () => {
       const correoIngresado = inputCorreoLogin.value.trim().toLowerCase();
       const passIngresada = inputPassLogin.value;
 
-      const usuarios = obtenerUsuariosGuardados();
-      const usuarioEncontrado = usuarios.find((user) => user.correo === correoIngresado && user.password === passIngresada);
+      if (checkRecordarme && checkRecordarme.checked) {
+        localStorage.setItem(KEY_RECORDAR_CORREO, correoIngresado);
+      } else {
+        localStorage.removeItem(KEY_RECORDAR_CORREO);
+      }
 
-      if (usuarioEncontrado) {
-        if (checkRecordarme && checkRecordarme.checked) {
-          localStorage.setItem(KEY_RECORDAR_CORREO, correoIngresado);
+      try {
+        const respuesta = await iniciarSesion({ email: correoIngresado, password: passIngresada });
+
+        const userProfile = {
+          nombre: respuesta.nameUser || '',
+          correo: correoIngresado,
+          cedula: respuesta.identityDocument || '',
+          telefono: respuesta.phoneNumber || ''
+        };
+
+        localStorage.setItem('devportes_token', respuesta.token);
+        localStorage.setItem('devportes_sesion_activa', JSON.stringify(userProfile));
+        document.dispatchEvent(new CustomEvent('session-change'));
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirect = urlParams.get('redirect');
+        if (redirect === 'reservas') {
+          const params = new URLSearchParams(window.location.search);
+          params.delete('redirect');
+          params.delete('tab');
+          window.location.href = `../pages/reservas.html?${params.toString()}`;
         } else {
-          localStorage.removeItem(KEY_RECORDAR_CORREO);
+          window.location.href = '../index.html';
         }
-
-        localStorage.setItem(
-          'devportes_sesion_activa',
-          JSON.stringify({
-            nombre: usuarioEncontrado.nombre,
-            correo: usuarioEncontrado.correo,
-          }),
+      } catch {
+        const usuarios = obtenerUsuariosGuardados();
+        const usuarioEncontrado = usuarios.find(
+          (user) => user.correo === correoIngresado && user.password === passIngresada,
         );
 
-        alert(`¡Bienvenido de nuevo, ${usuarioEncontrado.nombre}!`);
-      } else {
-        marcarInvalido(inputCorreoLogin, 'Credenciales incorrectas');
-        marcarInvalido(inputPassLogin, 'Verifica tu contraseña');
+        if (usuarioEncontrado) {
+          const userProfile = {
+            nombre: usuarioEncontrado.nombre,
+            correo: usuarioEncontrado.correo,
+            cedula: usuarioEncontrado.cedula || '',
+            telefono: usuarioEncontrado.telefono || ''
+          };
+
+          localStorage.setItem('devportes_token', 'local-token');
+          localStorage.setItem('devportes_sesion_activa', JSON.stringify(userProfile));
+          document.dispatchEvent(new CustomEvent('session-change'));
+
+          const urlParams = new URLSearchParams(window.location.search);
+          const redirect = urlParams.get('redirect');
+          if (redirect === 'reservas') {
+            const params = new URLSearchParams(window.location.search);
+            params.delete('redirect');
+            params.delete('tab');
+            window.location.href = `../pages/reservas.html?${params.toString()}`;
+          } else {
+            window.location.href = '../index.html';
+          }
+        } else {
+          marcarInvalido(inputCorreoLogin, 'Credenciales incorrectas');
+          marcarInvalido(inputPassLogin, 'Verifica tu contraseña');
+        }
       }
     }
   });

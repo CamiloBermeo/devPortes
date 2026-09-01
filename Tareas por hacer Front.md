@@ -8,7 +8,7 @@ dividido por sencciones para que no tenga perdida.
 ### Miscelaneos
 
 - [ ] Añadir pagina Galería.
-- [ ] **Optimizar imagenes pasando las mismas a WEBP (Usar github como
+- [x] **Optimizar imagenes pasando las mismas a WEBP (Usar github como
   hosting).**
 
 ### index
@@ -87,9 +87,9 @@ dividido por sencciones para que no tenga perdida.
 
 ## Cliente
 
-- [ ] quitar boton de editar cliente
+- [x] quitar boton de editar cliente
 
 ### Gestión
 
-- [ ] sección en el sidebard para gestionar temas de métodos de pago y
+- [ ] sección en el sidebar para gestionar temas de métodos de pago y
   ubicaciones por ahora

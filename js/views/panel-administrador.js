@@ -161,7 +161,7 @@ function renderClientesGrid() {
 
       <div class="user-card-actions">
         <button class="btn-action btn-detail" onclick="abrirPerfilCliente(${cliente.id})"><i data-lucide="eye"></i> Ver</button>
-        <button class="btn-action btn-edit" onclick="editarCliente(${cliente.id})"><i data-lucide="edit-3"></i> Editar</button>
+        <button class="btn-action btn-delete" onclick="eliminarCliente(${cliente.id})"><i data-lucide="trash-2"></i> Eliminar</button>
       </div>
     `;
 

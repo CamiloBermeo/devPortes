@@ -161,7 +161,6 @@ function renderClientesGrid() {
 
       <div class="user-card-actions">
         <button class="btn-action btn-detail" onclick="abrirPerfilCliente(${cliente.id})"><i data-lucide="eye"></i> Ver</button>
-        <button class="btn-action btn-edit" onclick="editarCliente(${cliente.id})"><i data-lucide="edit-3"></i> Editar</button>
         <button class="btn-action btn-delete" onclick="eliminarCliente(${cliente.id})"><i data-lucide="trash-2"></i> Eliminar</button>
       </div>
     `;
@@ -187,7 +186,9 @@ function renderCanchasGrid() {
     const badgeClass = cancha.estado === 'Disponible' ? 'green' : 'orange';
     const tarifaNumerica = cancha.tarifa || parseInt(cancha.precio?.replace(/\D/g, '') || '0', 10) || 0;
     const nombreMostrar = cancha.titulo || cancha.nombre;
-    const imagenSrc = cancha.imagen || 'https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format';
+    const imagenSrc =
+      cancha.imagen ||
+      'https://raw.githubusercontent.com/CamiloBermeo/devPortes/fix/ImagesToWEBP/assets/img/canchas/baloncesto-coliseo.webp';
 
     card.innerHTML = `
       <div class="user-card-header" style="display: flex; align-items: center; gap: 12px">
@@ -235,13 +236,18 @@ window.abrirModalCrearCancha = function () {
   const modal = document.getElementById('infoModal');
   const modalTitle = document.getElementById('modalTitle');
   const modalBody = document.getElementById('modalBody');
-  const defaultImg = 'https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format';
+  const defaultImg =
+    'https://raw.githubusercontent.com/CamiloBermeo/devPortes/fix/ImagesToWEBP/assets/img/canchas/baloncesto-coliseo.webp';
 
   modalTitle.textContent = 'Crear Nueva Cancha';
   modalBody.innerHTML = `
     <form id="formCrearCanchaModal" class="form-modal-layout">
-      <div style="text-align: center; margin-bottom: 12px;">
-        <img id="crearPreviewImg" src="${defaultImg}" alt="Vista previa" style="width: 100%; max-height: 160px; object-fit: cover; border-radius: 8px; border: 1px solid #e2e8f0;" />
+      <div style="text-align: center; margin-bottom: 12px">
+        <img
+          id="crearPreviewImg"
+          src="${defaultImg}"
+          alt="Vista previa"
+          style="width: 100%; max-height: 160px; object-fit: cover; border-radius: 8px; border: 1px solid #e2e8f0" />
       </div>
       <div class="form-group">
         <label>URL de la Imagen / Foto:</label>
@@ -280,7 +286,11 @@ window.abrirModalCrearCancha = function () {
       </div>
       <div class="form-group">
         <label>Detalles (uno por línea):</label>
-        <textarea id="crearDetalles" class="form-input" rows="4" placeholder="Capacidad ideal: 22 personas&#10;Iluminación LED&#10;Petos y balón incluidos"></textarea>
+        <textarea
+          id="crearDetalles"
+          class="form-input"
+          rows="4"
+          placeholder="Capacidad ideal: 22 personas&#10;Iluminación LED&#10;Petos y balón incluidos"></textarea>
       </div>
       <div class="modal-form-actions">
         <button type="button" class="btn-secondary" onclick="cerrarModal()">Cancelar</button>
@@ -346,7 +356,9 @@ window.abrirPerfilCancha = function (id) {
   const modalBody = document.getElementById('modalBody');
 
   const tarifaNumerica = cancha.tarifa || parseInt(cancha.precio?.replace(/\D/g, '') || '0', 10) || 0;
-  const imagenSrc = cancha.imagen || 'https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format';
+  const imagenSrc =
+    cancha.imagen ||
+    'https://raw.githubusercontent.com/CamiloBermeo/devPortes/fix/ImagesToWEBP/assets/img/canchas/baloncesto-coliseo.webp';
 
   modalTitle.textContent = 'Detalles del Espacio Deportivo';
   modalBody.innerHTML = `
@@ -382,7 +394,9 @@ window.editarCancha = function (id) {
   const modalTitle = document.getElementById('modalTitle');
   const modalBody = document.getElementById('modalBody');
   const tarifaNumerica = cancha.tarifa || parseInt(cancha.precio?.replace(/\D/g, '') || '0', 10) || 0;
-  const imagenActual = cancha.imagen || 'https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format';
+  const imagenActual =
+    cancha.imagen ||
+    'https://raw.githubusercontent.com/CamiloBermeo/devPortes/fix/ImagesToWEBP/assets/img/canchas/baloncesto-coliseo.webp';
   const detallesRaw = Array.isArray(cancha.detalles) ? cancha.detalles.join('\n') : '';
 
   modalTitle.textContent = 'Editar Cancha / Escenario';
@@ -442,7 +456,9 @@ window.editarCancha = function (id) {
   const inputImagen = document.getElementById('editImagen');
   const imgPreview = document.getElementById('editPreviewImg');
   inputImagen.addEventListener('input', () => {
-    imgPreview.src = inputImagen.value.trim() || 'https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format';
+    imgPreview.src =
+      inputImagen.value.trim() ||
+      'https://raw.githubusercontent.com/CamiloBermeo/devPortes/fix/ImagesToWEBP/assets/img/canchas/baloncesto-coliseo.webp';
   });
 
   document.getElementById('formEditarCanchaModal').addEventListener('submit', (e) => {

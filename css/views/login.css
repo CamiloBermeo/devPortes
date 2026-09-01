@@ -18,7 +18,7 @@ body.login-page-bg {
   padding: 0;
   background-image:
     linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url('https://plus.unsplash.com/premium_photo-1676739102111-505f7d932e76?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDR8fHxlbnwwfHx8fHw%3D');
+    url('https://raw.githubusercontent.com/CamiloBermeo/devPortes/fix/ImagesToWEBP/assets/img/login/login_01.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -245,7 +245,7 @@ body.login-page-bg {
 /* Panel Derecho */
 .overlay-right {
   right: 0;
-  background-image: linear-gradient(135deg, rgba(15, 23, 42, 0.55), rgba(34, 67, 48, 0.6)), url('../../../assets/img/fondo.jpg');
+  background-image: linear-gradient(135deg, rgba(15, 23, 42, 0.55), rgba(34, 67, 48, 0.6)), url('../../../assets/img/fondo.webp');
   transform: translateX(0);
 }
 

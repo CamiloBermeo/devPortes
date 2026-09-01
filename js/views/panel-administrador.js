@@ -187,7 +187,7 @@ function renderCanchasGrid() {
     const badgeClass = cancha.estado === 'Disponible' ? 'green' : 'orange';
     const tarifaNumerica = cancha.tarifa || parseInt(cancha.precio?.replace(/\D/g, '') || '0', 10) || 0;
     const nombreMostrar = cancha.titulo || cancha.nombre;
-    const imagenSrc = cancha.imagen || 'https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format';
+    const imagenSrc = cancha.imagen || 'https://raw.githubusercontent.com/CamiloBermeo/devPortes/fix/ImagesToWEBP/assets/img/canchas/baloncesto-coliseo.webp';
 
     card.innerHTML = `
       <div class="user-card-header" style="display: flex; align-items: center; gap: 12px">
@@ -235,7 +235,7 @@ window.abrirModalCrearCancha = function () {
   const modal = document.getElementById('infoModal');
   const modalTitle = document.getElementById('modalTitle');
   const modalBody = document.getElementById('modalBody');
-  const defaultImg = 'https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format';
+  const defaultImg = 'https://raw.githubusercontent.com/CamiloBermeo/devPortes/fix/ImagesToWEBP/assets/img/canchas/baloncesto-coliseo.webp';
 
   modalTitle.textContent = 'Crear Nueva Cancha';
   modalBody.innerHTML = `
@@ -346,7 +346,7 @@ window.abrirPerfilCancha = function (id) {
   const modalBody = document.getElementById('modalBody');
 
   const tarifaNumerica = cancha.tarifa || parseInt(cancha.precio?.replace(/\D/g, '') || '0', 10) || 0;
-  const imagenSrc = cancha.imagen || 'https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format';
+  const imagenSrc = cancha.imagen || 'https://raw.githubusercontent.com/CamiloBermeo/devPortes/fix/ImagesToWEBP/assets/img/canchas/baloncesto-coliseo.webp';
 
   modalTitle.textContent = 'Detalles del Espacio Deportivo';
   modalBody.innerHTML = `
@@ -382,7 +382,7 @@ window.editarCancha = function (id) {
   const modalTitle = document.getElementById('modalTitle');
   const modalBody = document.getElementById('modalBody');
   const tarifaNumerica = cancha.tarifa || parseInt(cancha.precio?.replace(/\D/g, '') || '0', 10) || 0;
-  const imagenActual = cancha.imagen || 'https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format';
+  const imagenActual = cancha.imagen || 'https://raw.githubusercontent.com/CamiloBermeo/devPortes/fix/ImagesToWEBP/assets/img/canchas/baloncesto-coliseo.webp';
   const detallesRaw = Array.isArray(cancha.detalles) ? cancha.detalles.join('\n') : '';
 
   modalTitle.textContent = 'Editar Cancha / Escenario';
@@ -442,7 +442,7 @@ window.editarCancha = function (id) {
   const inputImagen = document.getElementById('editImagen');
   const imgPreview = document.getElementById('editPreviewImg');
   inputImagen.addEventListener('input', () => {
-    imgPreview.src = inputImagen.value.trim() || 'https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format';
+    imgPreview.src = inputImagen.value.trim() || 'https://raw.githubusercontent.com/CamiloBermeo/devPortes/fix/ImagesToWEBP/assets/img/canchas/baloncesto-coliseo.webp';
   });
 
   document.getElementById('formEditarCanchaModal').addEventListener('submit', (e) => {

@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     tipo: ['Fútbol 7'],
     superficie: '4 x 4 (750 mts)',
     precio: '$80.000',
-    imagen: '../assets/img/canchafutbol.jpg',
+    imagen: '../assets/img/canchas/futbol-estadio-principal.webp',
   };
 
   // ---------------- integración de modal de selección de canchas ----------------
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const contenedor = document.getElementById('contenedor-modales-reserva');
     if (!contenedor) return;
 
-    const imagenSrc = cancha.imagen || '../assets/img/canchafutbol.jpg';
+    const imagenSrc = cancha.imagen || '../assets/img/canchas/futbol-estadio-principal.webp';
     const detallesHTML = Array.isArray(cancha.detalles) && cancha.detalles.length
       ? cancha.detalles.map((d) => `<li class="mb-1">✔️ ${d}</li>`).join('')
       : '';

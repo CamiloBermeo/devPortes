@@ -311,7 +311,10 @@ document.addEventListener('DOMContentLoaded', () => {
     validarCorreoRegistro();
     guardarBorradorRegistro();
   });
-  inputPassReg?.addEventListener('input', validarPassRegistro);
+  inputPassReg?.addEventListener('input', () => {
+    validarPassRegistro();
+    validarCoincidenciaPass();
+  });
   inputConfirmPassReg?.addEventListener('input', validarCoincidenciaPass);
   checkTerminosReg?.addEventListener('change', validarTerminos);
 
@@ -370,16 +373,20 @@ document.addEventListener('DOMContentLoaded', () => {
         formRegistro.reset();
         limpiarErroresFormulario();
 
+        const tarjeta = document.getElementById('tarjetaAutenticacion');
+        tarjeta.classList.add('loading-active');
         const urlParams = new URLSearchParams(window.location.search);
         const redirect = urlParams.get('redirect');
-        if (redirect === 'reservas') {
-          const params = new URLSearchParams(window.location.search);
-          params.delete('redirect');
-          params.delete('tab');
-          window.location.href = `../pages/reservas.html?${params.toString()}`;
-        } else {
-          window.location.href = '../index.html';
-        }
+        setTimeout(() => {
+          if (redirect === 'reservas') {
+            const params = new URLSearchParams(window.location.search);
+            params.delete('redirect');
+            params.delete('tab');
+            window.location.href = `../pages/reservas.html?${params.toString()}`;
+          } else {
+            window.location.href = '../index.html';
+          }
+        }, 900);
       } catch {
         const usuarios = obtenerUsuariosGuardados();
         const nuevoUsuario = {
@@ -414,16 +421,20 @@ document.addEventListener('DOMContentLoaded', () => {
         formRegistro.reset();
         limpiarErroresFormulario();
 
+        const tarjeta = document.getElementById('tarjetaAutenticacion');
+        tarjeta.classList.add('loading-active');
         const urlParams = new URLSearchParams(window.location.search);
         const redirect = urlParams.get('redirect');
-        if (redirect === 'reservas') {
-          const params = new URLSearchParams(window.location.search);
-          params.delete('redirect');
-          params.delete('tab');
-          window.location.href = `../pages/reservas.html?${params.toString()}`;
-        } else {
-          window.location.href = '../index.html';
-        }
+        setTimeout(() => {
+          if (redirect === 'reservas') {
+            const params = new URLSearchParams(window.location.search);
+            params.delete('redirect');
+            params.delete('tab');
+            window.location.href = `../pages/reservas.html?${params.toString()}`;
+          } else {
+            window.location.href = '../index.html';
+          }
+        }, 900);
       }
     }
   });
@@ -459,16 +470,20 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('devportes_sesion_activa', JSON.stringify(userProfile));
         document.dispatchEvent(new CustomEvent('session-change'));
 
+        const tarjeta = document.getElementById('tarjetaAutenticacion');
+        tarjeta.classList.add('loading-active');
         const urlParams = new URLSearchParams(window.location.search);
         const redirect = urlParams.get('redirect');
-        if (redirect === 'reservas') {
-          const params = new URLSearchParams(window.location.search);
-          params.delete('redirect');
-          params.delete('tab');
-          window.location.href = `../pages/reservas.html?${params.toString()}`;
-        } else {
-          window.location.href = '../index.html';
-        }
+        setTimeout(() => {
+          if (redirect === 'reservas') {
+            const params = new URLSearchParams(window.location.search);
+            params.delete('redirect');
+            params.delete('tab');
+            window.location.href = `../pages/reservas.html?${params.toString()}`;
+          } else {
+            window.location.href = '../index.html';
+          }
+        }, 900);
       } catch {
         const usuarios = obtenerUsuariosGuardados();
         const usuarioEncontrado = usuarios.find(
@@ -487,16 +502,20 @@ document.addEventListener('DOMContentLoaded', () => {
           localStorage.setItem('devportes_sesion_activa', JSON.stringify(userProfile));
           document.dispatchEvent(new CustomEvent('session-change'));
 
+          const tarjeta = document.getElementById('tarjetaAutenticacion');
+          tarjeta.classList.add('loading-active');
           const urlParams = new URLSearchParams(window.location.search);
           const redirect = urlParams.get('redirect');
-          if (redirect === 'reservas') {
-            const params = new URLSearchParams(window.location.search);
-            params.delete('redirect');
-            params.delete('tab');
-            window.location.href = `../pages/reservas.html?${params.toString()}`;
-          } else {
-            window.location.href = '../index.html';
-          }
+          setTimeout(() => {
+            if (redirect === 'reservas') {
+              const params = new URLSearchParams(window.location.search);
+              params.delete('redirect');
+              params.delete('tab');
+              window.location.href = `../pages/reservas.html?${params.toString()}`;
+            } else {
+              window.location.href = '../index.html';
+            }
+          }, 900);
         } else {
           marcarInvalido(inputCorreoLogin, 'Credenciales incorrectas');
           marcarInvalido(inputPassLogin, 'Verifica tu contraseña');

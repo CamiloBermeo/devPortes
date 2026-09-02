@@ -21,7 +21,7 @@ dividido por sencciones para que no tenga perdida.
 
 ### Login/Register
 
-- [ ] **icono de carga en los botones de inicio de sesion y registrarse**
+- [x] **animación de carga en los botones de inicio de sesion y registrarse**
 
 ### Pag Reservas
 

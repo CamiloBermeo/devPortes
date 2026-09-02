@@ -1,4 +1,5 @@
 import { formatoTipo } from '../api/canchas.js';
+import { estaLogueado } from '../utils/auth.js';
 
 export function renderizarInstalaciones(canchas, contenedorId = 'contenedor-instalaciones') {
   const contenedor = document.getElementById(contenedorId);
@@ -70,9 +71,16 @@ export function renderizarModales(canchas, contenedorId = 'contenedor-modales') 
                   <span class="text-muted d-block text-uppercase tracking-wider text-nowrap text-xxs-custom">Precio por Hora</span>
                   <span class="fw-bold fs-5 text-brand-dark">${cancha.precio}</span>
                 </div>
-                <a href="./pages/reservas.html?id=${cancha.id}&titulo=${encodeURIComponent(cancha.titulo)}&tipo=${encodeURIComponent(formatoTipo(cancha))}&superficie=${encodeURIComponent(cancha.superficie)}&precio=${encodeURIComponent(cancha.precio)}&imagen=${encodeURIComponent(cancha.imagen)}" class="btn btn-brand rounded-pill px-4 py-2 small text-nowrap transition-base text-sm-custom">
+                <button type="button" 
+                  class="btn btn-brand rounded-pill px-4 py-2 small text-nowrap transition-base text-sm-custom btn-reservar-cancha"
+                  data-cancha-id="${cancha.id}"
+                  data-cancha-titulo="${cancha.titulo}"
+                  data-cancha-tipo="${formatoTipo(cancha)}"
+                  data-cancha-superficie="${cancha.superficie}"
+                  data-cancha-precio="${cancha.precio}"
+                  data-cancha-imagen="${cancha.imagen}">
                   Reservar este espacio
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -82,6 +90,64 @@ export function renderizarModales(canchas, contenedorId = 'contenedor-modales') 
   `,
     )
     .join('');
+
+  // Toast container (inject once per page)
+  if (!document.getElementById('toast-container')) {
+    const tc = document.createElement('div');
+    tc.id = 'toast-container';
+    tc.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+    tc.style.zIndex = '9999';
+    document.body.appendChild(tc);
+  }
+
+  contenedor.addEventListener('click', (e) => {
+    const btn = e.target.closest('.btn-reservar-cancha');
+    if (!btn) return;
+    
+    if (!estaLogueado()) {
+      mostrarToast('Inicia sesión para reservar');
+      setTimeout(() => {
+        const params = new URLSearchParams({
+          redirect: 'reservas',
+          id: btn.dataset.canchaId,
+          titulo: btn.dataset.canchaTitulo,
+          tipo: btn.dataset.canchaTipo,
+          superficie: btn.dataset.canchaSuperficie,
+          precio: btn.dataset.canchaPrecio,
+          imagen: btn.dataset.canchaImagen
+        });
+        window.location.href = `./pages/login.html?${params.toString()}&tab=register`;
+      }, 2000);
+      return;
+    }
+    
+    // Logged in: proceed to reservas
+    const params = new URLSearchParams({
+      id: btn.dataset.canchaId,
+      titulo: btn.dataset.canchaTitulo,
+      tipo: btn.dataset.canchaTipo,
+      superficie: btn.dataset.canchaSuperficie,
+      precio: btn.dataset.canchaPrecio,
+      imagen: btn.dataset.canchaImagen
+    });
+    window.location.href = `./pages/reservas.html?${params.toString()}`;
+  });
+
+  function mostrarToast(mensaje) {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = 'toast align-items-center text-bg-primary border-0';
+    toast.setAttribute('role', 'alert');
+    toast.innerHTML = `
+      <div class="d-flex">
+        <div class="toast-body">${mensaje}</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>`;
+    container.appendChild(toast);
+    const bsToast = new bootstrap.Toast(toast, { delay: 2000 });
+    bsToast.show();
+    toast.addEventListener('hidden.bs.toast', () => toast.remove());
+  }
 }
 
 export function renderizarSelectorCanchas(canchas, contenedorId, canchaActualId) {

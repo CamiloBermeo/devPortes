@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<<<<<<< HEAD
 
     <title>Usuario</title>
 
@@ -44,12 +45,41 @@
            INFORMACIÓN DEL USUARIO
       ========================================== -->
 
+=======
+    <title>Usuario</title>
+    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/icons/favicon/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/icons/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="../assets/icons/favicon/site.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Inter:wght@400;500;700;800&amp;display=swap"
+      rel="stylesheet" />
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+    <!-- COMPONENTES -->
+    <link rel="stylesheet" href="../css/components/navbar-footer.css" />
+    <!-- ESTILOS PERSONALIZADOS -->
+    <link rel="stylesheet" href="../css/views/usuario.css" />
+  </head>
+  <body>
+    <!-- BARRA DE NAVEGACIÓN SUPERIOR -->
+    <app-navbar></app-navbar>
+
+    <!-- CONTENEDOR PRINCIPAL DEL PANEL -->
+    <main class="panel-contenedor">
+      <!-- COLUMNA IZQUIERDA: INFORMACIÓN DEL USUARIO -->
+>>>>>>> 28c911fce6eb25102dadcace09438c957855a668
       <aside class="tarjeta-panel tarjeta-perfil">
         <div class="perfil-encabezado">
           <img
             src="https://img.magnific.com/vector-premium/vector-icono-usuario-fondo-azul-adecuado-diseno-web-etc_266866-110.jpg"
             alt="Foto de perfil"
             class="perfil-foto" />
+<<<<<<< HEAD
 
           <!-- ID para modificar desde JavaScript -->
           <h2 id="nombreUsuario">Camilo P</h2>
@@ -357,6 +387,76 @@
 
     <script src="../js/views/usuario.js"></script>
 
+=======
+          <h2>Camilo P</h2>
+          <p class="usuario-id">ID: #082026</p>
+        </div>
+
+        <div class="perfil-info">
+          <div class="info-item">
+            <span class="info-etiqueta">Email:</span>
+            <span class="info-valor">carlos.m@gmail.com</span>
+          </div>
+          <div class="info-item">
+            <span class="info-etiqueta">Teléfono:</span>
+            <span class="info-valor">300 123 456</span>
+          </div>
+          <div class="info-item">
+            <span class="info-etiqueta">Membresía:</span>
+            <span class="info-valor destacado-oro">Vip (Activa)</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- COLUMNA DERECHA HISTORIAL DE RESERVAS -->
+      <section class="tarjeta-panel tarjeta-historial">
+        <h3>Historial de Reservas</h3>
+
+        <table class="tabla-reservas">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Cancha</th>
+              <th>Hora</th>
+              <th>Tipo</th>
+              <th>Estado</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>10 Nov 2026</td>
+              <td>Pista 3 - Indoor</td>
+              <td>18:00 - 19:30</td>
+              <td>Dobles</td>
+              <td><span class="estado-badge completada">Completada</span></td>
+              <td><button class="btn-secundario btn-detalle" data-id="101">Ver Detalle</button></td>
+            </tr>
+            <tr>
+              <td>05 Nov 2026</td>
+              <td>Pista Central</td>
+              <td>20:00 - 21:30</td>
+              <td>Individual</td>
+              <td><span class="estado-badge completada">Completada</span></td>
+              <td><button class="btn-secundario btn-detalle" data-id="102">Ver Detalle</button></td>
+            </tr>
+            <tr>
+              <td>28 Oct 2026</td>
+              <td>Pista 2 - Arcilla</td>
+              <td>09:00 - 10:30</td>
+              <td>Dobles</td>
+              <td><span class="estado-badge cancelada">Cancelada</span></td>
+              <td><button class="btn-secundario btn-detalle" data-id="103">Ver Detalle</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+    <app-footer></app-footer>
+
+    <script src="../js/views/usuario.js"></script>
+    <script src="../js/componets/ball-logo.js"></script>
+>>>>>>> 28c911fce6eb25102dadcace09438c957855a668
     <script src="../js/componets/nav_footer.js" defer></script>
   </body>
 </html>

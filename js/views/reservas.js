@@ -321,8 +321,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const elPrecio = document.getElementById('resumenPrecio');
     if (elPrecio) elPrecio.textContent = datosCancha.precio;
 
-    const precioNumerico = Number(datosCancha.precio.replace(/\D/g, '')) || 0;
-    const total = rangoHorario ? precioNumerico * rangoHorario.duracion : 0;
+    const total = obtenerTotalReserva();
 
     const elTotal = document.getElementById('resumenTotal');
     if (elTotal) {
@@ -672,6 +671,116 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
   };
 
+  const obtenerTotalReserva = () => {
+    const rangoHorario = obtenerRangoHorario();
+
+    if (!rangoHorario) return 0;
+
+    const precioNumerico =
+      Number(String(datosCancha.precio).replace(/\D/g, '')) || 0;
+
+    return precioNumerico * rangoHorario.duracion;
+  };
+
+  const formatearPrecio = (valor) => {
+    return valor.toLocaleString('es-CO', {
+      style: 'currency',
+      currency: 'COP',
+      maximumFractionDigits: 0,
+    });
+  };
+  const mostrarModalPago = () => {
+    const total = obtenerTotalReserva();
+    const anticipo = total * 0.20;
+
+    const contenedor = document.getElementById('contenedor-modales-reserva');
+
+    if (!contenedor) return;
+
+    contenedor.innerHTML = `
+    <div
+      class="modal fade"
+      id="modalPagoReserva"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title">
+              Confirmación de reserva
+            </h5>
+          </div>
+
+          <div class="modal-body text-center">
+
+            <p>
+              Para confirmar tu reserva debes realizar un
+              <strong>pago inicial del 20%</strong>
+              del total del servicio.
+            </p>
+
+            <p>
+              <strong>Total de la reserva:</strong>
+              ${formatearPrecio(total)}
+            </p>
+
+            <p>
+              <strong>Pago requerido (20%):</strong>
+              <span class="text-success fw-bold">
+                ${formatearPrecio(anticipo)}
+              </span>
+            </p>
+
+          </div>
+
+          <div class="modal-footer justify-content-center">
+            <button
+              type="button"
+              class="btn btn-success px-4"
+              id="btnAceptarPago"
+            >
+              Aceptar
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  `;
+
+    const modalElement = document.getElementById('modalPagoReserva');
+
+    if (!modalElement || !window.bootstrap) return;
+
+    const modalInstance = bootstrap.Modal.getOrCreateInstance(
+      modalElement,
+      {
+        backdrop: 'static',
+        keyboard: false
+      }
+    );
+
+    modalElement.addEventListener(
+      'hidden.bs.modal',
+      () => {
+        modalElement.remove();
+      },
+      { once: true }
+    );
+
+    modalElement
+      .querySelector('#btnAceptarPago')
+      ?.addEventListener('click', () => {
+        modalInstance.hide();
+        mostrarPaso(4);
+      });
+
+    modalInstance.show();
+  };
+
+
   // ---------------- controles del calendario ----------------
   prevMonthBtn?.addEventListener('click', () => {
     estadoCalendario.fechaActual = new Date(
@@ -715,6 +824,12 @@ document.addEventListener('DOMContentLoaded', async () => {
           return;
         }
       }
+
+      if (pasoActual === 3 && siguientePaso === 4) {
+        mostrarModalPago();
+        return;
+      }
+
 
       actualizarResumen();
       mostrarPaso(siguientePaso);
@@ -860,10 +975,10 @@ function autollenarDatosUsuario(data) {
 function limpiarDatosUsuario() {
   ['nombreCompleto', 'cedula', 'celular', 'correo'].forEach(id => {
     const input = document.getElementById(id);
-    if (input) { 
-      input.value = ''; 
-      input.readOnly = false; 
-      input.style.backgroundColor = ''; 
+    if (input) {
+      input.value = '';
+      input.readOnly = false;
+      input.style.backgroundColor = '';
     }
   });
   const hint = document.getElementById('autofill-hint');

@@ -1,34 +1,16 @@
-/* =====================================================
-   VARIABLES DE DISEÑO
-   ===================================================== */
-
+/* VARIABLES DE DISEÑO (Colores corporativos de Devportes) */
 :root {
   --verde-devportes: #39b54a;
   --verde-hover: #2e933c;
-
   --fondo-gris: #f4f6f8;
   --blanco: #ffffff;
-
   --texto-oscuro: #1d2124;
   --texto-gris: #6c757d;
-
   --borde-suave: #e9ecef;
-
   --sombra: 0 4px 12px rgba(0, 0, 0, 0.05);
-
-  --rojo: #dc3545;
-  --rojo-hover: #bb2d3b;
-
-  --verde-claro: #e8f5e9;
-  --rojo-claro: #ffebee;
-  --amarillo-claro: #fff8e1;
-  --amarillo: #bfa100;
 }
 
-/* =====================================================
-   REGLAS GENERALES & FONDO DE CANCHA
-   ===================================================== */
-
+/* REGLAS GENERALES */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -36,55 +18,20 @@
   font-family: 'Segoe UI', Roboto, sans-serif;
 }
 
-html {
-  min-height: 100%;
-}
-
 body {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-
-  /* FONDO DE CANCHA GARANTIZADO */
-  background:
-    linear-gradient(rgba(10, 25, 15, 0.45), rgba(10, 25, 15, 0.45)),
-    url('https://images.pexels.com/photos/46798/the-ball-stadion-football-the-pitch-46798.jpeg?auto=compress&cs=tinysrgb&w=1920');
-
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-
+  background-color: var(--fondo-gris);
   color: var(--texto-oscuro);
 }
 
-/* =====================================================
-   FOOTER ANCLADO ABAJO
-   ===================================================== */
-
-app-footer {
-  display: block;
-  width: 100%;
-  margin-top: auto;
-}
-
-/* =====================================================
-   BARRA DE NAVEGACIÓN
-   ===================================================== */
-
+/* BARRA DE NAVEGACIÓN */
 .barra-navegacion {
   background-color: var(--blanco);
-
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   padding: 15px 40px;
-
   border-bottom: 1px solid var(--borde-suave);
 }
-
-/* LOGO */
 
 .logo-contenedor {
   display: flex;
@@ -95,11 +42,8 @@ app-footer {
 .logo-icono {
   background-color: #1a3a2a;
   color: var(--blanco);
-
   padding: 5px 12px;
-
   border-radius: 6px;
-
   font-weight: bold;
   font-size: 18px;
 }
@@ -107,22 +51,14 @@ app-footer {
 .logo-texto {
   font-weight: 800;
   letter-spacing: 1px;
-
   color: #1a3a2a;
 }
 
-/* MENÚ */
-
 .menu-navegacion a {
   text-decoration: none;
-
   color: var(--texto-gris);
-
   margin: 0 15px;
-
   font-weight: 500;
-
-  transition: color 0.2s ease;
 }
 
 .menu-navegacion a.activo,
@@ -130,390 +66,115 @@ app-footer {
   color: var(--verde-devportes);
 }
 
-/* AVATAR */
-
 .usuario-avatar img {
   width: 40px;
   height: 40px;
-
   border-radius: 50%;
-
   object-fit: cover;
 }
 
-/* =====================================================
-   MAQUETACIÓN PRINCIPAL
-   ===================================================== */
-
+/* MAQUETACIÓN EN GRID */
 .panel-contenedor {
-  width: 100%;
-  max-width: 1300px;
-
-  margin: 40px auto;
-
-  padding: 0 20px;
-
   display: grid;
-
   grid-template-columns: 350px 1fr;
-
   gap: 30px;
-
-  flex: 1;
+  max-width: 1300px;
+  margin: 40px auto;
+  padding: 0 20px;
 }
 
-/* =====================================================
-   TARJETAS GENERALES (EFECTO TRANSLÚCIDO Y CRISTAL)
-   ===================================================== */
-
+/* TARJETAS GENERALES */
 .tarjeta-panel {
-  background-color: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-
+  background-color: var(--blanco);
   border-radius: 12px;
-
   padding: 30px;
-
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
-
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: var(--sombra);
+  border: 1px solid var(--borde-suave);
 }
 
-/* =====================================================
-   COLUMNA PERFIL
-   ===================================================== */
-
-.tarjeta-perfil {
-  height: fit-content;
-}
-
-/* ENCABEZADO */
-
+/* COLUMNA PERFIL */
 .perfil-encabezado {
   text-align: center;
-
   margin-bottom: 25px;
 }
 
 .perfil-foto {
   width: 100px;
   height: 100px;
-
   border-radius: 50%;
-
   object-fit: cover;
-
   margin-bottom: 15px;
-
   border: 3px solid var(--borde-suave);
-}
-
-.perfil-encabezado h2 {
-  font-size: 28px;
-
-  margin-bottom: 5px;
-
-  color: var(--texto-oscuro);
 }
 
 .usuario-id {
   color: var(--texto-gris);
-
   font-size: 14px;
-
   margin-top: 5px;
 }
 
-/* =====================================================
-   INFORMACIÓN DEL PERFIL
-   ===================================================== */
-
 .perfil-info {
-  width: 100%;
 }
 
 .info-item {
   display: flex;
-
   justify-content: space-between;
-  align-items: center;
-
-  gap: 15px;
-
   padding: 12px 0;
-
   border-bottom: 1px solid var(--borde-suave);
-
   font-size: 14px;
 }
 
 .info-etiqueta {
   color: var(--texto-gris);
-
-  flex-shrink: 0;
-}
-
-.info-valor {
-  text-align: right;
-
-  word-break: break-word;
 }
 
 .destacado-oro {
-  color: var(--amarillo);
-
+  color: #bfa100;
   font-weight: bold;
 }
 
-/* =====================================================
-   BOTÓN EDITAR PERFIL
-   ===================================================== */
-
-.btn-editar-perfil {
-  width: 100%;
-
-  margin-top: 22px;
-
-  padding: 11px 15px;
-
-  background-color: transparent;
-
-  color: var(--verde-devportes);
-
-  border: 1px solid var(--verde-devportes);
-
-  border-radius: 7px;
-
-  font-size: 14px;
-
-  font-weight: 600;
-
-  cursor: pointer;
-
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease,
-    transform 0.1s ease;
-}
-
-.btn-editar-perfil i {
-  margin-right: 6px;
-}
-
-.btn-editar-perfil:hover {
+/* BOTONES */
+.btn-principal {
   background-color: var(--verde-devportes);
-
   color: var(--blanco);
+  border: none;
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    transform 0.1s;
 }
 
-.btn-editar-perfil:active {
+.btn-principal:hover {
+  background-color: var(--verde-hover);
+}
+
+.btn-principal:active {
   transform: scale(0.98);
 }
 
-/* =====================================================
-   CONTENEDOR DE RESERVAS
-   ===================================================== */
-
-.reservas-contenedor {
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 25px;
-
-  min-width: 0;
-}
-
-/* =====================================================
-   TÍTULOS DE LAS TARJETAS
-   ===================================================== */
-
-.tarjeta-historial h3,
-.tarjeta-pendientes h3 {
-  margin-bottom: 20px;
-
-  font-size: 20px;
-
-  color: var(--texto-oscuro);
-}
-
-/* =====================================================
-   RESERVAS PENDIENTES
-   ===================================================== */
-
-.tarjeta-pendientes {
-  padding: 25px 30px;
-}
-
-/* TÍTULO + CONTADOR */
-
-.titulo-seccion {
-  display: flex;
-
-  justify-content: space-between;
-  align-items: center;
-
-  gap: 15px;
-
-  margin-bottom: 20px;
-}
-
-.titulo-seccion h3 {
-  margin-bottom: 5px;
-}
-
-.titulo-seccion p {
-  color: var(--texto-gris);
-
-  font-size: 13px;
-}
-
-/* CONTADOR */
-
-.contador-pendientes {
-  min-width: 30px;
-  height: 30px;
-
-  display: flex;
-
-  justify-content: center;
-  align-items: center;
-
-  padding: 0 8px;
-
-  background-color: var(--amarillo-claro);
-
-  color: #9a7d00;
-
-  border-radius: 50%;
-
-  font-size: 13px;
-
-  font-weight: bold;
-}
-
-/* =====================================================
-   CADA RESERVA PENDIENTE
-   ===================================================== */
-
-.reserva-pendiente {
-  display: flex;
-
-  justify-content: space-between;
-  align-items: center;
-
-  gap: 20px;
-
-  padding: 18px;
-
-  margin-top: 15px;
-
-  background-color: rgba(255, 255, 255, 0.85);
-
+.btn-secundario {
+  background-color: transparent;
   border: 1px solid var(--borde-suave);
-
-  border-radius: 8px;
-
-  transition:
-    box-shadow 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.reserva-pendiente:hover {
-  border-color: #d5dadd;
-
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-/* INFORMACIÓN */
-
-.reserva-datos {
-  min-width: 0;
-}
-
-.reserva-datos h4 {
-  font-size: 16px;
-
-  margin-bottom: 10px;
-
-  color: var(--texto-oscuro);
-}
-
-.reserva-detalles {
-  display: flex;
-
-  flex-wrap: wrap;
-
-  gap: 15px;
-}
-
-.reserva-detalles span {
-  color: var(--texto-gris);
-
-  font-size: 13px;
-}
-
-.reserva-detalles i {
-  margin-right: 4px;
-
-  color: var(--verde-devportes);
-}
-
-/* =====================================================
-   BOTÓN CANCELAR RESERVA
-   ===================================================== */
-
-.btn-cancelar {
-  flex-shrink: 0;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  gap: 6px;
-
-  padding: 9px 14px;
-
-  background-color: var(--blanco);
-
-  color: var(--rojo);
-
-  border: 1px solid var(--rojo);
-
+  padding: 8px 14px;
   border-radius: 6px;
-
-  font-size: 13px;
-
-  font-weight: 600;
-
   cursor: pointer;
-
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease,
-    transform 0.1s ease;
+  font-size: 13px;
+  transition: background 0.2s;
 }
 
-.btn-cancelar:hover {
-  background-color: var(--rojo);
-
-  color: var(--blanco);
+.btn-secundario:hover {
+  background-color: var(--fondo-gris);
 }
 
-.btn-cancelar:active {
-  transform: scale(0.97);
-}
-
-/* =====================================================
-   TABLA DE RESERVAS
-   ===================================================== */
-
-.tabla-responsive {
-  width: 100%;
-
-  overflow-x: auto;
+/* TABLA DE RESERVAS */
+.tarjeta-historial h3 {
+  margin-bottom: 20px;
+  font-size: 20px;
 }
 
 .tabla-reservas {
@@ -523,513 +184,39 @@ app-footer {
 
 .tabla-reservas th {
   text-align: left;
-
   color: var(--texto-gris);
-
   font-size: 14px;
-
   padding: 12px;
-
   border-bottom: 2px solid var(--borde-suave);
-
-  white-space: nowrap;
 }
 
 .tabla-reservas td {
   padding: 16px 12px;
-
   border-bottom: 1px solid var(--borde-suave);
-
   font-size: 15px;
-
-  white-space: nowrap;
 }
 
-.tabla-reservas tbody tr:last-child td {
-  border-bottom: none;
-}
-
-/* =====================================================
-   BOTONES SECUNDARIOS
-   ===================================================== */
-
-.btn-secundario {
-  background-color: transparent;
-
-  color: var(--texto-oscuro);
-
-  border: 1px solid var(--borde-suave);
-
-  padding: 8px 14px;
-
-  border-radius: 6px;
-
-  cursor: pointer;
-
-  font-size: 13px;
-
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.btn-secundario:hover {
-  background-color: var(--fondo-gris);
-
-  border-color: #d4d9dd;
-}
-
-/* =====================================================
-   ESTADOS DE RESERVA
-   ===================================================== */
-
+/* ESTADOS DE RESERVA (BADGES) */
 .estado-badge {
-  display: inline-block;
-
   padding: 4px 10px;
-
   border-radius: 20px;
-
   font-size: 12px;
-
   font-weight: 600;
-
-  white-space: nowrap;
 }
-
-/* COMPLETADA */
 
 .estado-badge.completada {
-  background-color: var(--verde-claro);
-
+  background-color: #e8f5e9;
   color: #2e7d32;
 }
 
-/* CANCELADA */
-
 .estado-badge.cancelada {
-  background-color: var(--rojo-claro);
-
+  background-color: #ffebee;
   color: #c62828;
 }
 
-/* =====================================================
-   MODAL EDITAR PERFIL
-   ===================================================== */
-
-.modal-perfil {
-  display: none;
-
-  position: fixed;
-
-  inset: 0;
-
-  z-index: 9999;
-
-  background-color: rgba(0, 0, 0, 0.6);
-
-  align-items: center;
-
-  justify-content: center;
-
-  padding: 20px;
-}
-
-/* =====================================================
-   CONTENIDO DEL MODAL
-   ===================================================== */
-
-.modal-perfil-contenido {
-  position: relative;
-
-  width: 100%;
-
-  max-width: 480px;
-
-  max-height: 90vh;
-
-  overflow-y: auto;
-
-  background-color: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-
-  border-radius: 12px;
-
-  padding: 30px;
-
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-
-  animation: aparecerModal 0.2s ease;
-}
-
-/* ANIMACIÓN */
-
-@keyframes aparecerModal {
-  from {
-    opacity: 0;
-
-    transform: translateY(-15px);
-  }
-
-  to {
-    opacity: 1;
-
-    transform: translateY(0);
-  }
-}
-
-/* =====================================================
-   BOTÓN CERRAR MODAL
-   ===================================================== */
-
-.btn-cerrar-modal {
-  position: absolute;
-
-  top: 15px;
-
-  right: 15px;
-
-  width: 35px;
-
-  height: 35px;
-
-  display: flex;
-
-  justify-content: center;
-  align-items: center;
-
-  background-color: transparent;
-
-  color: var(--texto-gris);
-
-  border: none;
-
-  border-radius: 50%;
-
-  font-size: 17px;
-
-  cursor: pointer;
-
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
-}
-
-.btn-cerrar-modal:hover {
-  background-color: var(--fondo-gris);
-
-  color: var(--texto-oscuro);
-}
-
-/* =====================================================
-   ENCABEZADO DEL MODAL
-   ===================================================== */
-
-.modal-encabezado {
-  display: flex;
-
-  align-items: center;
-
-  gap: 15px;
-
-  margin-bottom: 25px;
-
-  padding-right: 35px;
-}
-
-.modal-encabezado h3 {
-  margin-bottom: 4px;
-
-  font-size: 21px;
-}
-
-.modal-encabezado p {
-  color: var(--texto-gris);
-
-  font-size: 13px;
-}
-
-/* ICONO */
-
-.icono-editar {
-  width: 45px;
-
-  height: 45px;
-
-  flex-shrink: 0;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  background-color: #e8f5e9;
-
-  color: var(--verde-devportes);
-
-  border-radius: 8px;
-
-  font-size: 21px;
-}
-
-/* =====================================================
-   CAMPOS DEL FORMULARIO
-   ===================================================== */
-
-.campo-formulario {
-  margin-bottom: 17px;
-}
-
-.campo-formulario label {
-  display: block;
-
-  margin-bottom: 7px;
-
-  color: var(--texto-oscuro);
-
-  font-size: 14px;
-
-  font-weight: 600;
-}
-
-.campo-formulario input {
-  width: 100%;
-
-  padding: 11px 12px;
-
-  background-color: var(--blanco);
-
-  color: var(--texto-oscuro);
-
-  border: 1px solid #d9dee2;
-
-  border-radius: 7px;
-
-  font-size: 14px;
-
-  outline: none;
-
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.campo-formulario input:focus {
-  border-color: var(--verde-devportes);
-
-  box-shadow: 0 0 0 3px rgba(57, 181, 74, 0.12);
-}
-
-/* =====================================================
-   BOTONES DEL MODAL
-   ===================================================== */
-
-.modal-botones {
-  display: flex;
-
-  justify-content: flex-end;
-
-  gap: 10px;
-
-  margin-top: 25px;
-}
-
-/* CANCELAR */
-
-.btn-modal-cancelar {
-  padding: 10px 17px;
-
-  background-color: var(--blanco);
-
-  color: var(--texto-gris);
-
-  border: 1px solid var(--borde-suave);
-
-  border-radius: 6px;
-
-  font-size: 14px;
-
-  cursor: pointer;
-
-  transition: background-color 0.2s ease;
-}
-
-.btn-modal-cancelar:hover {
-  background-color: var(--fondo-gris);
-}
-
-/* GUARDAR */
-
-.btn-modal-guardar {
-  display: flex;
-
-  align-items: center;
-
-  gap: 6px;
-
-  padding: 10px 17px;
-
-  background-color: var(--verde-devportes);
-
-  color: var(--blanco);
-
-  border: none;
-
-  border-radius: 6px;
-
-  font-size: 14px;
-
-  font-weight: 600;
-
-  cursor: pointer;
-
-  transition:
-    background-color 0.2s ease,
-    transform 0.1s ease;
-}
-
-.btn-modal-guardar:hover {
-  background-color: var(--verde-hover);
-}
-
-.btn-modal-guardar:active {
-  transform: scale(0.97);
-}
-
-/* =====================================================
-   DISEÑO RESPONSIVO
-   ===================================================== */
-
-/* TABLET */
-
-@media (max-width: 1100px) {
-  .panel-contenedor {
-    grid-template-columns: 300px 1fr;
-
-    gap: 20px;
-
-    padding: 0 15px;
-  }
-
-  .tarjeta-panel {
-    padding: 22px;
-  }
-
-  .reserva-pendiente {
-    align-items: flex-start;
-  }
-
-  .reserva-detalles {
-    flex-direction: column;
-
-    gap: 7px;
-  }
-}
-
-/* CELULAR */
-
+/* DISEÑO RESPONSIVO (Para celulares) */
 @media (max-width: 900px) {
   .panel-contenedor {
     grid-template-columns: 1fr;
-
-    margin: 25px auto;
-
-    flex: none;
-  }
-
-  .tarjeta-perfil {
-    width: 100%;
-  }
-
-  .reservas-contenedor {
-    width: 100%;
-  }
-}
-
-/* CELULAR PEQUEÑO */
-
-@media (max-width: 600px) {
-  .panel-contenedor {
-    margin: 20px auto;
-
-    padding: 0 12px;
-  }
-
-  .tarjeta-panel {
-    padding: 20px;
-  }
-
-  .perfil-foto {
-    width: 90px;
-
-    height: 90px;
-  }
-
-  .perfil-encabezado h2 {
-    font-size: 24px;
-  }
-
-  .titulo-seccion {
-    align-items: flex-start;
-  }
-
-  .reserva-pendiente {
-    flex-direction: column;
-
-    align-items: stretch;
-
-    gap: 15px;
-  }
-
-  .reserva-detalles {
-    flex-direction: column;
-
-    gap: 8px;
-  }
-
-  .btn-cancelar {
-    width: 100%;
-  }
-
-  .tabla-responsive {
-    overflow-x: auto;
-  }
-
-  .tabla-reservas {
-    min-width: 750px;
-  }
-
-  .modal-perfil {
-    padding: 12px;
-  }
-
-  .modal-perfil-contenido {
-    padding: 22px;
-
-    max-height: 92vh;
-  }
-
-  .modal-encabezado {
-    gap: 10px;
-  }
-
-  .icono-editar {
-    width: 40px;
-
-    height: 40px;
-
-    font-size: 18px;
-  }
-
-  .modal-botones {
-    flex-direction: column-reverse;
-  }
-
-  .btn-modal-cancelar,
-  .btn-modal-guardar {
-    width: 100%;
-
-    justify-content: center;
   }
 }

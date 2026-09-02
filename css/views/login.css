@@ -302,6 +302,39 @@ body.login-page-bg {
 }
 
 /* ==========================================================
+   OVERLAY DE CARGA (LOGIN/REGISTRO EXITOSO)
+   ========================================================== */
+.loading-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  z-index: 200;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.auth-card.loading-active .loading-overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+.loading-logo {
+  animation: ballSpin 1.2s linear infinite;
+}
+
+@keyframes ballSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================================
    RESPONSIVE (Móviles y Tablets)
    ========================================================== */
 

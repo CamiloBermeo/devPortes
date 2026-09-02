@@ -26,7 +26,7 @@
 }
 
 /* =====================================================
-   REGLAS GENERALES
+   REGLAS GENERALES & FONDO DE CANCHA
    ===================================================== */
 
 * {
@@ -42,23 +42,25 @@ html {
 
 body {
   min-height: 100vh;
-
   display: flex;
   flex-direction: column;
 
-  background-color: var(--fondo-gris);
+  /* FONDO DE CANCHA GARANTIZADO */
+  background:
+    linear-gradient(rgba(10, 25, 15, 0.45), rgba(10, 25, 15, 0.45)),
+    url('https://images.pexels.com/photos/46798/the-ball-stadion-football-the-pitch-46798.jpeg?auto=compress&cs=tinysrgb&w=1920');
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
   color: var(--texto-oscuro);
 }
 
 /* =====================================================
    FOOTER ANCLADO ABAJO
    ===================================================== */
-
-/*
-   app-footer es un componente personalizado.
-   Lo convertimos en un bloque para poder controlar
-   correctamente su posición.
-*/
 
 app-footer {
   display: block;
@@ -157,27 +159,25 @@ app-footer {
 
   gap: 30px;
 
-  /*
-    Esto ayuda a que el contenido tenga espacio
-    y el footer pueda mantenerse abajo.
-  */
   flex: 1;
 }
 
 /* =====================================================
-   TARJETAS GENERALES
+   TARJETAS GENERALES (EFECTO TRANSLÚCIDO Y CRISTAL)
    ===================================================== */
 
 .tarjeta-panel {
-  background-color: var(--blanco);
+  background-color: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 
   border-radius: 12px;
 
   padding: 30px;
 
-  box-shadow: var(--sombra);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
 
-  border: 1px solid var(--borde-suave);
+  border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 /* =====================================================
@@ -409,6 +409,8 @@ app-footer {
 
   margin-top: 15px;
 
+  background-color: rgba(255, 255, 255, 0.85);
+
   border: 1px solid var(--borde-suave);
 
   border-radius: 8px;
@@ -421,7 +423,7 @@ app-footer {
 .reserva-pendiente:hover {
   border-color: #d5dadd;
 
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 /* INFORMACIÓN */
@@ -616,11 +618,6 @@ app-footer {
    MODAL EDITAR PERFIL
    ===================================================== */
 
-/*
-   El modal empieza oculto.
-   JavaScript le pondrá display: flex.
-*/
-
 .modal-perfil {
   display: none;
 
@@ -630,7 +627,7 @@ app-footer {
 
   z-index: 9999;
 
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
 
   align-items: center;
 
@@ -654,13 +651,15 @@ app-footer {
 
   overflow-y: auto;
 
-  background-color: var(--blanco);
+  background-color: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 
   border-radius: 12px;
 
   padding: 30px;
 
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 
   animation: aparecerModal 0.2s ease;
 }
@@ -929,9 +928,7 @@ app-footer {
   }
 }
 
-/* =====================================================
-   CELULAR
-   ===================================================== */
+/* CELULAR */
 
 @media (max-width: 900px) {
   .panel-contenedor {
@@ -951,9 +948,7 @@ app-footer {
   }
 }
 
-/* =====================================================
-   CELULAR PEQUEÑO
-   ===================================================== */
+/* CELULAR PEQUEÑO */
 
 @media (max-width: 600px) {
   .panel-contenedor {
@@ -961,8 +956,6 @@ app-footer {
 
     padding: 0 12px;
   }
-
-  /* PERFIL */
 
   .tarjeta-panel {
     padding: 20px;
@@ -977,8 +970,6 @@ app-footer {
   .perfil-encabezado h2 {
     font-size: 24px;
   }
-
-  /* RESERVAS PENDIENTES */
 
   .titulo-seccion {
     align-items: flex-start;
@@ -1002,8 +993,6 @@ app-footer {
     width: 100%;
   }
 
-  /* TABLA */
-
   .tabla-responsive {
     overflow-x: auto;
   }
@@ -1011,8 +1000,6 @@ app-footer {
   .tabla-reservas {
     min-width: 750px;
   }
-
-  /* MODAL */
 
   .modal-perfil {
     padding: 12px;

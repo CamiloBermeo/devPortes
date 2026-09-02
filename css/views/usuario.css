@@ -1,16 +1,34 @@
-/* VARIABLES DE DISEÑO (Colores corporativos de Devportes) */
+/* =====================================================
+   VARIABLES DE DISEÑO
+   ===================================================== */
+
 :root {
   --verde-devportes: #39b54a;
   --verde-hover: #2e933c;
+
   --fondo-gris: #f4f6f8;
   --blanco: #ffffff;
+
   --texto-oscuro: #1d2124;
   --texto-gris: #6c757d;
+
   --borde-suave: #e9ecef;
+
   --sombra: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+  --rojo: #dc3545;
+  --rojo-hover: #bb2d3b;
+
+  --verde-claro: #e8f5e9;
+  --rojo-claro: #ffebee;
+  --amarillo-claro: #fff8e1;
+  --amarillo: #bfa100;
 }
 
-/* REGLAS GENERALES */
+/* =====================================================
+   REGLAS GENERALES
+   ===================================================== */
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -18,20 +36,53 @@
   font-family: 'Segoe UI', Roboto, sans-serif;
 }
 
+html {
+  min-height: 100%;
+}
+
 body {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
   background-color: var(--fondo-gris);
   color: var(--texto-oscuro);
 }
 
-/* BARRA DE NAVEGACIÓN */
+/* =====================================================
+   FOOTER ANCLADO ABAJO
+   ===================================================== */
+
+/*
+   app-footer es un componente personalizado.
+   Lo convertimos en un bloque para poder controlar
+   correctamente su posición.
+*/
+
+app-footer {
+  display: block;
+  width: 100%;
+  margin-top: auto;
+}
+
+/* =====================================================
+   BARRA DE NAVEGACIÓN
+   ===================================================== */
+
 .barra-navegacion {
   background-color: var(--blanco);
+
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   padding: 15px 40px;
+
   border-bottom: 1px solid var(--borde-suave);
 }
+
+/* LOGO */
 
 .logo-contenedor {
   display: flex;
@@ -42,8 +93,11 @@ body {
 .logo-icono {
   background-color: #1a3a2a;
   color: var(--blanco);
+
   padding: 5px 12px;
+
   border-radius: 6px;
+
   font-weight: bold;
   font-size: 18px;
 }
@@ -51,14 +105,22 @@ body {
 .logo-texto {
   font-weight: 800;
   letter-spacing: 1px;
+
   color: #1a3a2a;
 }
 
+/* MENÚ */
+
 .menu-navegacion a {
   text-decoration: none;
+
   color: var(--texto-gris);
+
   margin: 0 15px;
+
   font-weight: 500;
+
+  transition: color 0.2s ease;
 }
 
 .menu-navegacion a.activo,
@@ -66,157 +128,922 @@ body {
   color: var(--verde-devportes);
 }
 
+/* AVATAR */
+
 .usuario-avatar img {
   width: 40px;
   height: 40px;
+
   border-radius: 50%;
+
   object-fit: cover;
 }
 
-/* MAQUETACIÓN EN GRID */
+/* =====================================================
+   MAQUETACIÓN PRINCIPAL
+   ===================================================== */
+
 .panel-contenedor {
-  display: grid;
-  grid-template-columns: 350px 1fr;
-  gap: 30px;
+  width: 100%;
   max-width: 1300px;
+
   margin: 40px auto;
+
   padding: 0 20px;
+
+  display: grid;
+
+  grid-template-columns: 350px 1fr;
+
+  gap: 30px;
+
+  /*
+    Esto ayuda a que el contenido tenga espacio
+    y el footer pueda mantenerse abajo.
+  */
+  flex: 1;
 }
 
-/* TARJETAS GENERALES */
+/* =====================================================
+   TARJETAS GENERALES
+   ===================================================== */
+
 .tarjeta-panel {
   background-color: var(--blanco);
+
   border-radius: 12px;
+
   padding: 30px;
+
   box-shadow: var(--sombra);
+
   border: 1px solid var(--borde-suave);
 }
 
-/* COLUMNA PERFIL */
+/* =====================================================
+   COLUMNA PERFIL
+   ===================================================== */
+
+.tarjeta-perfil {
+  height: fit-content;
+}
+
+/* ENCABEZADO */
+
 .perfil-encabezado {
   text-align: center;
+
   margin-bottom: 25px;
 }
 
 .perfil-foto {
   width: 100px;
   height: 100px;
+
   border-radius: 50%;
+
   object-fit: cover;
+
   margin-bottom: 15px;
+
   border: 3px solid var(--borde-suave);
+}
+
+.perfil-encabezado h2 {
+  font-size: 28px;
+
+  margin-bottom: 5px;
+
+  color: var(--texto-oscuro);
 }
 
 .usuario-id {
   color: var(--texto-gris);
+
   font-size: 14px;
+
   margin-top: 5px;
 }
 
+/* =====================================================
+   INFORMACIÓN DEL PERFIL
+   ===================================================== */
+
 .perfil-info {
+  width: 100%;
 }
 
 .info-item {
   display: flex;
+
   justify-content: space-between;
+  align-items: center;
+
+  gap: 15px;
+
   padding: 12px 0;
+
   border-bottom: 1px solid var(--borde-suave);
+
   font-size: 14px;
 }
 
 .info-etiqueta {
   color: var(--texto-gris);
+
+  flex-shrink: 0;
+}
+
+.info-valor {
+  text-align: right;
+
+  word-break: break-word;
 }
 
 .destacado-oro {
-  color: #bfa100;
+  color: var(--amarillo);
+
   font-weight: bold;
 }
 
-/* BOTONES */
-.btn-principal {
-  background-color: var(--verde-devportes);
-  color: var(--blanco);
-  border: none;
+/* =====================================================
+   BOTÓN EDITAR PERFIL
+   ===================================================== */
+
+.btn-editar-perfil {
   width: 100%;
-  padding: 14px;
-  border-radius: 8px;
-  font-weight: bold;
-  font-size: 16px;
+
+  margin-top: 22px;
+
+  padding: 11px 15px;
+
+  background-color: transparent;
+
+  color: var(--verde-devportes);
+
+  border: 1px solid var(--verde-devportes);
+
+  border-radius: 7px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
   cursor: pointer;
+
   transition:
-    background 0.2s,
-    transform 0.1s;
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.1s ease;
 }
 
-.btn-principal:hover {
-  background-color: var(--verde-hover);
+.btn-editar-perfil i {
+  margin-right: 6px;
 }
 
-.btn-principal:active {
+.btn-editar-perfil:hover {
+  background-color: var(--verde-devportes);
+
+  color: var(--blanco);
+}
+
+.btn-editar-perfil:active {
   transform: scale(0.98);
 }
 
-.btn-secundario {
-  background-color: transparent;
-  border: 1px solid var(--borde-suave);
-  padding: 8px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 13px;
-  transition: background 0.2s;
+/* =====================================================
+   CONTENEDOR DE RESERVAS
+   ===================================================== */
+
+.reservas-contenedor {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 25px;
+
+  min-width: 0;
 }
 
-.btn-secundario:hover {
-  background-color: var(--fondo-gris);
-}
+/* =====================================================
+   TÍTULOS DE LAS TARJETAS
+   ===================================================== */
 
-/* TABLA DE RESERVAS */
-.tarjeta-historial h3 {
+.tarjeta-historial h3,
+.tarjeta-pendientes h3 {
   margin-bottom: 20px;
+
   font-size: 20px;
+
+  color: var(--texto-oscuro);
+}
+
+/* =====================================================
+   RESERVAS PENDIENTES
+   ===================================================== */
+
+.tarjeta-pendientes {
+  padding: 25px 30px;
+}
+
+/* TÍTULO + CONTADOR */
+
+.titulo-seccion {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 15px;
+
+  margin-bottom: 20px;
+}
+
+.titulo-seccion h3 {
+  margin-bottom: 5px;
+}
+
+.titulo-seccion p {
+  color: var(--texto-gris);
+
+  font-size: 13px;
+}
+
+/* CONTADOR */
+
+.contador-pendientes {
+  min-width: 30px;
+  height: 30px;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  padding: 0 8px;
+
+  background-color: var(--amarillo-claro);
+
+  color: #9a7d00;
+
+  border-radius: 50%;
+
+  font-size: 13px;
+
+  font-weight: bold;
+}
+
+/* =====================================================
+   CADA RESERVA PENDIENTE
+   ===================================================== */
+
+.reserva-pendiente {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 20px;
+
+  padding: 18px;
+
+  margin-top: 15px;
+
+  border: 1px solid var(--borde-suave);
+
+  border-radius: 8px;
+
+  transition:
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.reserva-pendiente:hover {
+  border-color: #d5dadd;
+
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+}
+
+/* INFORMACIÓN */
+
+.reserva-datos {
+  min-width: 0;
+}
+
+.reserva-datos h4 {
+  font-size: 16px;
+
+  margin-bottom: 10px;
+
+  color: var(--texto-oscuro);
+}
+
+.reserva-detalles {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 15px;
+}
+
+.reserva-detalles span {
+  color: var(--texto-gris);
+
+  font-size: 13px;
+}
+
+.reserva-detalles i {
+  margin-right: 4px;
+
+  color: var(--verde-devportes);
+}
+
+/* =====================================================
+   BOTÓN CANCELAR RESERVA
+   ===================================================== */
+
+.btn-cancelar {
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  padding: 9px 14px;
+
+  background-color: var(--blanco);
+
+  color: var(--rojo);
+
+  border: 1px solid var(--rojo);
+
+  border-radius: 6px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.1s ease;
+}
+
+.btn-cancelar:hover {
+  background-color: var(--rojo);
+
+  color: var(--blanco);
+}
+
+.btn-cancelar:active {
+  transform: scale(0.97);
+}
+
+/* =====================================================
+   TABLA DE RESERVAS
+   ===================================================== */
+
+.tabla-responsive {
+  width: 100%;
+
+  overflow-x: auto;
 }
 
 .tabla-reservas {
   width: 100%;
+
   border-collapse: collapse;
 }
 
 .tabla-reservas th {
   text-align: left;
+
   color: var(--texto-gris);
+
   font-size: 14px;
+
   padding: 12px;
+
   border-bottom: 2px solid var(--borde-suave);
+
+  white-space: nowrap;
 }
 
 .tabla-reservas td {
   padding: 16px 12px;
+
   border-bottom: 1px solid var(--borde-suave);
+
   font-size: 15px;
+
+  white-space: nowrap;
 }
 
-/* ESTADOS DE RESERVA (BADGES) */
-.estado-badge {
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
+.tabla-reservas tbody tr:last-child td {
+  border-bottom: none;
 }
+
+/* =====================================================
+   BOTONES SECUNDARIOS
+   ===================================================== */
+
+.btn-secundario {
+  background-color: transparent;
+
+  color: var(--texto-oscuro);
+
+  border: 1px solid var(--borde-suave);
+
+  padding: 8px 14px;
+
+  border-radius: 6px;
+
+  cursor: pointer;
+
+  font-size: 13px;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.btn-secundario:hover {
+  background-color: var(--fondo-gris);
+
+  border-color: #d4d9dd;
+}
+
+/* =====================================================
+   ESTADOS DE RESERVA
+   ===================================================== */
+
+.estado-badge {
+  display: inline-block;
+
+  padding: 4px 10px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+/* COMPLETADA */
 
 .estado-badge.completada {
-  background-color: #e8f5e9;
+  background-color: var(--verde-claro);
+
   color: #2e7d32;
 }
 
+/* CANCELADA */
+
 .estado-badge.cancelada {
-  background-color: #ffebee;
+  background-color: var(--rojo-claro);
+
   color: #c62828;
 }
 
-/* DISEÑO RESPONSIVO (Para celulares) */
+/* =====================================================
+   MODAL EDITAR PERFIL
+   ===================================================== */
+
+/*
+   El modal empieza oculto.
+   JavaScript le pondrá display: flex.
+*/
+
+.modal-perfil {
+  display: none;
+
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 9999;
+
+  background-color: rgba(0, 0, 0, 0.5);
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 20px;
+}
+
+/* =====================================================
+   CONTENIDO DEL MODAL
+   ===================================================== */
+
+.modal-perfil-contenido {
+  position: relative;
+
+  width: 100%;
+
+  max-width: 480px;
+
+  max-height: 90vh;
+
+  overflow-y: auto;
+
+  background-color: var(--blanco);
+
+  border-radius: 12px;
+
+  padding: 30px;
+
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+
+  animation: aparecerModal 0.2s ease;
+}
+
+/* ANIMACIÓN */
+
+@keyframes aparecerModal {
+  from {
+    opacity: 0;
+
+    transform: translateY(-15px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+/* =====================================================
+   BOTÓN CERRAR MODAL
+   ===================================================== */
+
+.btn-cerrar-modal {
+  position: absolute;
+
+  top: 15px;
+
+  right: 15px;
+
+  width: 35px;
+
+  height: 35px;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  background-color: transparent;
+
+  color: var(--texto-gris);
+
+  border: none;
+
+  border-radius: 50%;
+
+  font-size: 17px;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.btn-cerrar-modal:hover {
+  background-color: var(--fondo-gris);
+
+  color: var(--texto-oscuro);
+}
+
+/* =====================================================
+   ENCABEZADO DEL MODAL
+   ===================================================== */
+
+.modal-encabezado {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  margin-bottom: 25px;
+
+  padding-right: 35px;
+}
+
+.modal-encabezado h3 {
+  margin-bottom: 4px;
+
+  font-size: 21px;
+}
+
+.modal-encabezado p {
+  color: var(--texto-gris);
+
+  font-size: 13px;
+}
+
+/* ICONO */
+
+.icono-editar {
+  width: 45px;
+
+  height: 45px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background-color: #e8f5e9;
+
+  color: var(--verde-devportes);
+
+  border-radius: 8px;
+
+  font-size: 21px;
+}
+
+/* =====================================================
+   CAMPOS DEL FORMULARIO
+   ===================================================== */
+
+.campo-formulario {
+  margin-bottom: 17px;
+}
+
+.campo-formulario label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: var(--texto-oscuro);
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+.campo-formulario input {
+  width: 100%;
+
+  padding: 11px 12px;
+
+  background-color: var(--blanco);
+
+  color: var(--texto-oscuro);
+
+  border: 1px solid #d9dee2;
+
+  border-radius: 7px;
+
+  font-size: 14px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.campo-formulario input:focus {
+  border-color: var(--verde-devportes);
+
+  box-shadow: 0 0 0 3px rgba(57, 181, 74, 0.12);
+}
+
+/* =====================================================
+   BOTONES DEL MODAL
+   ===================================================== */
+
+.modal-botones {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  margin-top: 25px;
+}
+
+/* CANCELAR */
+
+.btn-modal-cancelar {
+  padding: 10px 17px;
+
+  background-color: var(--blanco);
+
+  color: var(--texto-gris);
+
+  border: 1px solid var(--borde-suave);
+
+  border-radius: 6px;
+
+  font-size: 14px;
+
+  cursor: pointer;
+
+  transition: background-color 0.2s ease;
+}
+
+.btn-modal-cancelar:hover {
+  background-color: var(--fondo-gris);
+}
+
+/* GUARDAR */
+
+.btn-modal-guardar {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 10px 17px;
+
+  background-color: var(--verde-devportes);
+
+  color: var(--blanco);
+
+  border: none;
+
+  border-radius: 6px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
+}
+
+.btn-modal-guardar:hover {
+  background-color: var(--verde-hover);
+}
+
+.btn-modal-guardar:active {
+  transform: scale(0.97);
+}
+
+/* =====================================================
+   DISEÑO RESPONSIVO
+   ===================================================== */
+
+/* TABLET */
+
+@media (max-width: 1100px) {
+  .panel-contenedor {
+    grid-template-columns: 300px 1fr;
+
+    gap: 20px;
+
+    padding: 0 15px;
+  }
+
+  .tarjeta-panel {
+    padding: 22px;
+  }
+
+  .reserva-pendiente {
+    align-items: flex-start;
+  }
+
+  .reserva-detalles {
+    flex-direction: column;
+
+    gap: 7px;
+  }
+}
+
+/* =====================================================
+   CELULAR
+   ===================================================== */
+
 @media (max-width: 900px) {
   .panel-contenedor {
     grid-template-columns: 1fr;
+
+    margin: 25px auto;
+
+    flex: none;
+  }
+
+  .tarjeta-perfil {
+    width: 100%;
+  }
+
+  .reservas-contenedor {
+    width: 100%;
+  }
+}
+
+/* =====================================================
+   CELULAR PEQUEÑO
+   ===================================================== */
+
+@media (max-width: 600px) {
+  .panel-contenedor {
+    margin: 20px auto;
+
+    padding: 0 12px;
+  }
+
+  /* PERFIL */
+
+  .tarjeta-panel {
+    padding: 20px;
+  }
+
+  .perfil-foto {
+    width: 90px;
+
+    height: 90px;
+  }
+
+  .perfil-encabezado h2 {
+    font-size: 24px;
+  }
+
+  /* RESERVAS PENDIENTES */
+
+  .titulo-seccion {
+    align-items: flex-start;
+  }
+
+  .reserva-pendiente {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 15px;
+  }
+
+  .reserva-detalles {
+    flex-direction: column;
+
+    gap: 8px;
+  }
+
+  .btn-cancelar {
+    width: 100%;
+  }
+
+  /* TABLA */
+
+  .tabla-responsive {
+    overflow-x: auto;
+  }
+
+  .tabla-reservas {
+    min-width: 750px;
+  }
+
+  /* MODAL */
+
+  .modal-perfil {
+    padding: 12px;
+  }
+
+  .modal-perfil-contenido {
+    padding: 22px;
+
+    max-height: 92vh;
+  }
+
+  .modal-encabezado {
+    gap: 10px;
+  }
+
+  .icono-editar {
+    width: 40px;
+
+    height: 40px;
+
+    font-size: 18px;
+  }
+
+  .modal-botones {
+    flex-direction: column-reverse;
+  }
+
+  .btn-modal-cancelar,
+  .btn-modal-guardar {
+    width: 100%;
+
+    justify-content: center;
   }
 }

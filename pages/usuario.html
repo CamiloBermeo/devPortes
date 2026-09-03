@@ -28,34 +28,50 @@
 
     <main class="panel-contenedor">
       <aside class="tarjeta-panel tarjeta-perfil">
-        <div class="perfil-encabezado">
+        <!-- HERO GRADIENTE -->
+        <div class="perfil-hero" aria-hidden="true"></div>
+
+        <!-- AVATAR -->
+        <div class="avatar-stack">
           <img
             src="https://img.magnific.com/vector-premium/vector-icono-usuario-fondo-azul-adecuado-diseno-web-etc_266866-110.jpg"
             alt="Foto de perfil"
-            class="perfil-foto" />
-          <h2 id="nombreUsuario">Camilo P</h2>
-          <p class="usuario-id">ID: #082026</p>
+            class="perfil-foto"
+            id="perfilFoto" />
+          <span class="avatar-fallback" id="avatarFallback" hidden>CP</span>
         </div>
 
+        <!-- NOMBRE + ID -->
+        <div class="perfil-identidad">
+          <h2 id="nombreUsuario">Camilo P</h2>
+          <span class="usuario-id-badge">#082026</span>
+        </div>
+
+        <!-- INFO -->
         <div class="perfil-info">
           <div class="info-item">
-            <span class="info-etiqueta">Email:</span>
+            <span class="info-etiqueta"><i class="bi bi-envelope-fill"></i> Email</span>
             <span class="info-valor" id="emailUsuario">carlos.m@gmail.com</span>
           </div>
           <div class="info-item">
-            <span class="info-etiqueta">Teléfono:</span>
+            <span class="info-etiqueta"><i class="bi bi-phone-fill"></i> Teléfono</span>
             <span class="info-valor" id="telefonoUsuario">300 123 456</span>
           </div>
           <div class="info-item">
-            <span class="info-etiqueta">Membresía:</span>
-            <span class="info-valor destacado-oro">Vip (Activa)</span>
+            <span class="info-etiqueta"><i class="bi bi-gem"></i> Membresía</span>
+            <span class="info-valor destacado-oro" id="membresiaUsuario">Vip (Activa)</span>
           </div>
         </div>
 
-        <button type="button" class="btn-editar-perfil" id="btnEditarPerfil">
-          <i class="bi bi-pencil-square"></i>
-          Editar perfil
-        </button>
+        <!-- ACCIONES -->
+        <div class="perfil-acciones">
+          <button type="button" class="btn-editar-perfil" id="btnEditarPerfil">
+            <i class="bi bi-pencil-square"></i> Editar perfil
+          </button>
+          <button type="button" class="btn-cerrar-sesion" id="btnCerrarSesion">
+            <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+          </button>
+        </div>
       </aside>
 
       <section class="reservas-contenedor">

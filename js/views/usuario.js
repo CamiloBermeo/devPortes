@@ -1,351 +1,326 @@
 document.addEventListener('DOMContentLoaded', () => {
   /* =====================================================
-     1. BOTÓN EDITAR PERFIL
+     ESTADO GLOBAL
+     ===================================================== */
+
+  const state = {
+    usuario: {
+      nombre: 'Camilo P',
+      usuario: 'CamiloP',
+      email: 'carlos.m@gmail.com',
+      telefono: '300 123 456'
+    }
+  };
+
+  /* =====================================================
+     TOAST NOTIFICATIONS
+     ===================================================== */
+
+  function initToastContainer() {
+    let container = document.querySelector('.toast-container');
+    if (!container) {
+      container = document.createElement('div');
+      container.className = 'toast-container';
+      document.body.appendChild(container);
+    }
+    return container;
+  }
+
+  function showToast(mensaje, tipo = 'info', duracion = 3500) {
+    const container = initToastContainer();
+    const toast = document.createElement('div');
+    toast.className = `toast ${tipo}`;
+    toast.setAttribute('role', 'alert');
+    toast.setAttribute('aria-live', 'polite');
+
+    const iconos = {
+      exito: 'bi-check-circle-fill',
+      error: 'bi-x-circle-fill',
+      info: 'bi-info-circle-fill'
+    };
+
+    toast.innerHTML = `
+      <i class="bi ${iconos[tipo]}"></i>
+      <span>${mensaje}</span>
+    `;
+
+    container.appendChild(toast);
+
+    setTimeout(() => {
+      toast.classList.add('ocultando');
+      toast.addEventListener('animationend', () => toast.remove());
+    }, duracion);
+
+    return toast;
+  }
+
+  /* =====================================================
+     CUSTOM EVENTS PARA COMUNICACIÓN ENTRE COMPONENTES
+     ===================================================== */
+
+  function emit(eventName, detail) {
+    document.dispatchEvent(new CustomEvent(`usuario:${eventName}`, { detail }));
+  }
+
+  function on(eventName, handler) {
+    document.addEventListener(`usuario:${eventName}`, (e) => handler(e.detail));
+  }
+
+  /* =====================================================
+     1. MODAL EDITAR PERFIL - CON FOCUS TRAP
      ===================================================== */
 
   const btnEditarPerfil = document.getElementById('btnEditarPerfil');
   const modalPerfil = document.getElementById('modalPerfil');
-
   const btnCerrarModal = document.getElementById('btnCerrarModal');
   const btnCancelarEdicion = document.getElementById('btnCancelarEdicion');
-
   const formEditarPerfil = document.getElementById('formEditarPerfil');
 
-  /*
-     Cuando hacemos clic en "Editar perfil",
-     mostramos el modal.
-  */
+  let lastFocusedElement = null;
+  let focusableElements = [];
 
-  if (btnEditarPerfil && modalPerfil) {
-    btnEditarPerfil.addEventListener('click', () => {
-      modalPerfil.style.display = 'flex';
-
-      /*
-         Evita que la página se desplace mientras
-         el modal está abierto.
-      */
-
-      document.body.style.overflow = 'hidden';
-    });
+  function getFocusableElements() {
+    return modalPerfil.querySelectorAll(
+      'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    );
   }
 
-  /* =====================================================
-     2. CERRAR MODAL
-     ===================================================== */
+  function trapFocus(event) {
+    if (event.key !== 'Tab') return;
 
-  function cerrarModal() {
-    if (modalPerfil) {
-      modalPerfil.style.display = 'none';
+    focusableElements = getFocusableElements();
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
 
-      /*
-         Volvemos a permitir el scroll.
-      */
-
-      document.body.style.overflow = '';
+    if (event.shiftKey) {
+      if (document.activeElement === firstElement) {
+        event.preventDefault();
+        lastElement.focus();
+      }
+    } else {
+      if (document.activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
+      }
     }
   }
 
-  /*
-     Botón X
-  */
+  function openModal() {
+    if (!modalPerfil) return;
+
+    lastFocusedElement = document.activeElement;
+    modalPerfil.hidden = false;
+    document.body.style.overflow = 'hidden';
+
+    focusableElements = getFocusableElements();
+    if (focusableElements.length > 0) {
+      focusableElements[0].focus();
+    }
+
+    document.addEventListener('keydown', trapFocus);
+    emit('modal:open', { modal: 'perfil' });
+  }
+
+  function closeModal() {
+    if (!modalPerfil) return;
+
+    modalPerfil.hidden = true;
+    document.body.style.overflow = '';
+    document.removeEventListener('keydown', trapFocus);
+
+    if (lastFocusedElement) {
+      lastFocusedElement.focus();
+    }
+
+    emit('modal:close', { modal: 'perfil' });
+  }
+
+  if (btnEditarPerfil && modalPerfil) {
+    btnEditarPerfil.addEventListener('click', openModal);
+  }
 
   if (btnCerrarModal) {
-    btnCerrarModal.addEventListener('click', () => {
-      cerrarModal();
-    });
+    btnCerrarModal.addEventListener('click', closeModal);
   }
-
-  /*
-     Botón Cancelar
-  */
 
   if (btnCancelarEdicion) {
-    btnCancelarEdicion.addEventListener('click', () => {
-      cerrarModal();
-    });
+    btnCancelarEdicion.addEventListener('click', closeModal);
   }
-
-  /* =====================================================
-     3. CERRAR MODAL HACIENDO CLIC AFUERA
-     ===================================================== */
 
   if (modalPerfil) {
     modalPerfil.addEventListener('click', (evento) => {
-      /*
-         Solo cerramos si se hizo clic directamente
-         sobre el fondo oscuro.
-      */
-
       if (evento.target === modalPerfil) {
-        cerrarModal();
+        closeModal();
       }
     });
   }
 
+  document.addEventListener('keydown', (evento) => {
+    if (evento.key === 'Escape' && modalPerfil && !modalPerfil.hidden) {
+      closeModal();
+    }
+  });
+
   /* =====================================================
-     4. GUARDAR CAMBIOS DEL PERFIL
+     2. GUARDAR CAMBIOS DEL PERFIL
      ===================================================== */
 
   if (formEditarPerfil) {
     formEditarPerfil.addEventListener('submit', (evento) => {
-      /*
-         Evita que el formulario recargue la página.
-      */
-
       evento.preventDefault();
 
-      /* ---------------------------------------------
-         OBTENER LOS DATOS DEL FORMULARIO
-      --------------------------------------------- */
-
       const nombre = document.getElementById('inputNombre').value.trim();
-
       const usuario = document.getElementById('inputUsuario').value.trim();
-
       const email = document.getElementById('inputEmail').value.trim();
-
       const telefono = document.getElementById('inputTelefono').value.trim();
 
-      /* ---------------------------------------------
-         ACTUALIZAR INFORMACIÓN EN EL PERFIL
-      --------------------------------------------- */
+      // Validación básica
+      if (!nombre || !usuario || !email || !telefono) {
+        showToast('Por favor completa todos los campos', 'error');
+        return;
+      }
 
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showToast('El correo electrónico no es válido', 'error');
+        return;
+      }
+
+      // Actualizar estado
+      state.usuario = { nombre, usuario, email, telefono };
+
+      // Actualizar DOM
       const nombreUsuario = document.getElementById('nombreUsuario');
       const emailUsuario = document.getElementById('emailUsuario');
       const telefonoUsuario = document.getElementById('telefonoUsuario');
 
-      if (nombreUsuario) {
-        nombreUsuario.textContent = nombre;
-      }
+      if (nombreUsuario) nombreUsuario.textContent = nombre;
+      if (emailUsuario) emailUsuario.textContent = email;
+      if (telefonoUsuario) telefonoUsuario.textContent = telefono;
 
-      if (emailUsuario) {
-        emailUsuario.textContent = email;
-      }
+      // Actualizar valores del formulario para próxima apertura
+      document.getElementById('inputNombre').value = nombre;
+      document.getElementById('inputUsuario').value = usuario;
+      document.getElementById('inputEmail').value = email;
+      document.getElementById('inputTelefono').value = telefono;
 
-      if (telefonoUsuario) {
-        telefonoUsuario.textContent = telefono;
-      }
+      closeModal();
+      showToast('¡Perfil actualizado correctamente!', 'exito');
 
-      /*
-         Cerrar el modal.
-      */
-
-      cerrarModal();
-
-      /*
-         Mensaje de confirmación.
-      */
-
-      alert('¡Perfil actualizado correctamente!');
-
-      /*
-         Por ahora mostramos el nombre de usuario
-         en consola.
-
-         Más adelante esto se puede conectar
-         con el backend/base de datos.
-      */
-
-      console.log('Nombre:', nombre);
-      console.log('Usuario:', usuario);
-      console.log('Email:', email);
-      console.log('Teléfono:', telefono);
+      emit('perfil:actualizado', state.usuario);
     });
   }
 
   /* =====================================================
-     5. CANCELAR RESERVAS PENDIENTES
+     3. CANCELAR RESERVAS PENDIENTES - DELEGACIÓN DE EVENTOS
      ===================================================== */
 
-  const botonesCancelar = document.querySelectorAll('.btn-cancelar');
+  document.addEventListener('click', (evento) => {
+    const btnCancelar = evento.target.closest('.btn-cancelar');
+    if (!btnCancelar) return;
 
-  botonesCancelar.forEach((boton) => {
-    boton.addEventListener('click', () => {
-      /*
-         Buscamos la reserva completa donde
-         está ubicado el botón.
-      */
+    evento.preventDefault();
 
-      const reserva = boton.closest('.reserva-pendiente');
+    const reserva = btnCancelar.closest('.reserva-pendiente');
+    if (!reserva) return;
 
-      /*
-         Si no encontramos la reserva,
-         no hacemos nada.
-      */
+    const canchaEl = reserva.querySelector('h4');
+    const nombreCancha = canchaEl ? canchaEl.textContent.trim() : 'esta reserva';
+    const reservaId = btnCancelar.dataset.id;
 
-      if (!reserva) {
-        return;
-      }
+    const confirmar = confirm(`¿Estás seguro de que deseas cancelar la reserva de ${nombreCancha}?`);
 
-      /*
-         Obtenemos el nombre de la cancha.
-      */
+    if (!confirmar) return;
 
-      const cancha = reserva.querySelector('h4');
+    reserva.remove();
+    actualizarContadorPendientes();
+    showToast('La reserva ha sido cancelada correctamente', 'exito');
 
-      let nombreCancha = 'esta reserva';
-
-      if (cancha) {
-        nombreCancha = cancha.textContent.trim();
-      }
-
-      /* ---------------------------------------------
-         CONFIRMACIÓN
-      --------------------------------------------- */
-
-      const confirmar = confirm(`¿Estás seguro de que deseas cancelar la reserva de ${nombreCancha}?`);
-
-      /*
-         Si el usuario pulsa "Cancelar",
-         no hacemos nada.
-      */
-
-      if (!confirmar) {
-        return;
-      }
-
-      /* ---------------------------------------------
-         ELIMINAR RESERVA DE PENDIENTES
-      --------------------------------------------- */
-
-      reserva.remove();
-
-      /* ---------------------------------------------
-         ACTUALIZAR CONTADOR
-      --------------------------------------------- */
-
-      actualizarContadorPendientes();
-
-      /*
-         Mensaje de confirmación.
-      */
-
-      alert('La reserva ha sido cancelada correctamente.');
-
-      /*
-         En el futuro aquí conectarás con el backend.
-
-         Ejemplo:
-
-         fetch("/api/reservas/cancelar", {
-             method: "POST",
-             body: JSON.stringify({
-                 id: boton.dataset.id
-             })
-         });
-
-      */
-
-      console.log('Reserva cancelada:', boton.dataset.id);
-    });
+    emit('reserva:cancelada', { id: reservaId, cancha: nombreCancha });
   });
 
   /* =====================================================
-     6. ACTUALIZAR CONTADOR DE RESERVAS
+     4. ACTUALIZAR CONTADOR DE RESERVAS
      ===================================================== */
 
   function actualizarContadorPendientes() {
     const contador = document.getElementById('contadorPendientes');
-
     const reservas = document.querySelectorAll('.reserva-pendiente');
-
-    /*
-       Si existe el contador,
-       mostramos la cantidad actual.
-    */
 
     if (contador) {
       contador.textContent = reservas.length;
     }
 
-    /*
-       Si ya no quedan reservas,
-       mostramos un mensaje.
-    */
-
     if (reservas.length === 0) {
       const tarjetaPendientes = document.querySelector('.tarjeta-pendientes');
-
-      /*
-         Evitamos crear el mensaje varias veces.
-      */
-
-      if (tarjetaPendientes && !document.querySelector('.sin-reservas')) {
+      if (tarjetaPendientes && !tarjetaPendientes.querySelector('.sin-reservas')) {
         const mensaje = document.createElement('p');
-
         mensaje.className = 'sin-reservas';
-
         mensaje.textContent = 'No tienes reservas pendientes.';
-
+        mensaje.style.cssText = `
+          text-align: center;
+          color: var(--texto-gris);
+          padding: var(--space-lg);
+          font-size: clamp(13px, 1.4vw, 14px);
+        `;
         tarjetaPendientes.appendChild(mensaje);
       }
+    } else {
+      const mensajeExistente = document.querySelector('.sin-reservas');
+      if (mensajeExistente) mensajeExistente.remove();
     }
   }
 
   /* =====================================================
-     7. BOTONES "VER DETALLE"
+     5. BOTONES "VER DETALLE" - DELEGACIÓN
      ===================================================== */
 
-  const botonesDetalle = document.querySelectorAll('.btn-detalle');
+  document.addEventListener('click', (evento) => {
+    const btnDetalle = evento.target.closest('.btn-detalle');
+    if (!btnDetalle) return;
 
-  botonesDetalle.forEach((boton) => {
-    boton.addEventListener('click', (evento) => {
-      /*
-         data-id está en el botón:
+    const idReserva = btnDetalle.dataset.id;
+    showToast(`Cargando información de la reserva #${idReserva}`, 'info');
 
-         data-id="101"
-
-         Lo obtenemos con dataset.
-      */
-
-      const idReserva = evento.currentTarget.dataset.id;
-
-      alert(`Cargando información completa para la reserva código: #${idReserva}`);
-
-      /*
-         Aquí posteriormente podemos abrir
-         un modal con:
-
-         - Cancha
-         - Fecha
-         - Hora
-         - Tipo
-         - Precio
-         - Estado
-         - Método de pago
-         */
-
-      console.log('Consultando reserva:', idReserva);
-    });
+    emit('reserva:detalle', { id: idReserva });
   });
 
   /* =====================================================
-     8. BOTÓN "RESERVAR NUEVA CANCHA"
+     6. BOTÓN "RESERVAR NUEVA CANCHA" (si existe)
      ===================================================== */
 
   const botonNuevaReserva = document.getElementById('btn-nueva-reserva');
-
   if (botonNuevaReserva) {
     botonNuevaReserva.addEventListener('click', () => {
-      alert('¡Abriendo el asistente de reservas de Devportes!');
-
-      /*
-         Cuando tengas creada la página
-         de reservas puedes activar:
-
-         window.location.href =
-         "../views/reservar-cancha.html";
-      */
+      showToast('Abriendo asistente de reservas...', 'info');
+      // window.location.href = "../views/reservar-cancha.html";
     });
   }
 
   /* =====================================================
-     9. ESC PARA CERRAR EL MODAL
+     7. SINCRONIZAR MODO OSCURO / TEMA (placeholder)
      ===================================================== */
 
-  document.addEventListener('keydown', (evento) => {
-    if (evento.key === 'Escape' && modalPerfil && modalPerfil.style.display === 'flex') {
-      cerrarModal();
-    }
-  });
+  // Escuchar cambios de tema del sistema
+  if (window.matchMedia) {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    mediaQuery.addEventListener('change', (e) => {
+      emit('theme:change', { dark: e.matches });
+    });
+  }
+
+  /* =====================================================
+     8. EXPONER API PÚBLICA
+     ===================================================== */
+
+  window.UsuarioPanel = {
+    state,
+    showToast,
+    emit,
+    on,
+    openModal,
+    closeModal,
+    actualizarContadorPendientes
+  };
+
+  console.log('[UsuarioPanel] Inicializado - API disponible en window.UsuarioPanel');
 });

@@ -37,7 +37,7 @@
   min-height: 90vh;
   background:
     linear-gradient(rgba(34, 67, 48, 0.65), rgba(28, 28, 28, 0.8)),
-    url('https://raw.githubusercontent.com/CamiloBermeo/devPortes/refs/heads/main/assets/img/fondo.webp') center/cover no-repeat;
+    url('https://raw.githubusercontent.com/CamiloBermeo/devPortes/develop/assets/img/fondo.webp') center/cover no-repeat;
 }
 
 /* Fondo de la sección similar al de la imagen */

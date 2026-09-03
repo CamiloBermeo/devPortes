@@ -18,7 +18,7 @@ body.login-page-bg {
   padding: 0;
   background-image:
     linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url('https://raw.githubusercontent.com/CamiloBermeo/devPortes/fix/ImagesToWEBP/assets/img/login/login_01.webp');
+    url('https://raw.githubusercontent.com/CamiloBermeo/devPortes/develop/assets/img/login/login_01.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

@@ -747,85 +747,6 @@ app-footer {
 }
 
 /* =====================================================
-   TOAST NOTIFICATIONS
-   ===================================================== */
-
-.toast-container {
-  position: fixed;
-  bottom: var(--space-lg);
-  right: var(--space-lg);
-  z-index: 10000;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-  pointer-events: none;
-}
-
-.toast {
-  pointer-events: auto;
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  padding: var(--space-md) var(--space-lg);
-  background-color: rgba(29, 33, 36, 0.95);
-  backdrop-filter: blur(10px);
-  color: var(--blanco);
-  border-radius: var(--radius-md);
-  box-shadow: var(--sombra-elevada);
-  font-size: clamp(13px, 1.4vw, 14px);
-  font-weight: 500;
-  animation: slideInRight var(--transition-normal);
-  max-width: min(90vw, 380px);
-}
-
-.toast.exito {
-  border-left: 4px solid var(--verde-devportes);
-}
-
-.toast.error {
-  border-left: 4px solid var(--rojo);
-}
-
-.toast.info {
-  border-left: 4px solid #0dcaf0;
-}
-
-.toast i {
-  font-size: 18px;
-  flex-shrink: 0;
-}
-
-.toast.exito i { color: var(--verde-devportes); }
-.toast.error i { color: var(--rojo); }
-.toast.info i { color: #0dcaf0; }
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(100%);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideOutRight {
-  from {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateX(100%);
-  }
-}
-
-.toast.ocultando {
-  animation: slideOutRight var(--transition-fast) forwards;
-}
-
-/* =====================================================
    DISEÑO RESPONSIVO - CONTAINER QUERIES & MEDIA QUERIES
    ===================================================== */
 
@@ -973,16 +894,6 @@ app-footer {
   .btn-modal-guardar {
     width: 100%;
     justify-content: center;
-  }
-
-  .toast-container {
-    left: var(--space-sm);
-    right: var(--space-sm);
-    bottom: var(--space-sm);
-  }
-
-  .toast {
-    max-width: none;
   }
 }
 

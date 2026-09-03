@@ -1,3 +1,6 @@
+import { showToast } from '../componets/toast.js';
+import { showConfirm } from '../componets/confirm-modal.js';
+
 document.addEventListener('DOMContentLoaded', () => {
   /* =====================================================
      ESTADO GLOBAL
@@ -11,48 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
       telefono: '300 123 456'
     }
   };
-
-  /* =====================================================
-     TOAST NOTIFICATIONS
-     ===================================================== */
-
-  function initToastContainer() {
-    let container = document.querySelector('.toast-container');
-    if (!container) {
-      container = document.createElement('div');
-      container.className = 'toast-container';
-      document.body.appendChild(container);
-    }
-    return container;
-  }
-
-  function showToast(mensaje, tipo = 'info', duracion = 3500) {
-    const container = initToastContainer();
-    const toast = document.createElement('div');
-    toast.className = `toast ${tipo}`;
-    toast.setAttribute('role', 'alert');
-    toast.setAttribute('aria-live', 'polite');
-
-    const iconos = {
-      exito: 'bi-check-circle-fill',
-      error: 'bi-x-circle-fill',
-      info: 'bi-info-circle-fill'
-    };
-
-    toast.innerHTML = `
-      <i class="bi ${iconos[tipo]}"></i>
-      <span>${mensaje}</span>
-    `;
-
-    container.appendChild(toast);
-
-    setTimeout(() => {
-      toast.classList.add('ocultando');
-      toast.addEventListener('animationend', () => toast.remove());
-    }, duracion);
-
-    return toast;
-  }
 
   /* =====================================================
      CUSTOM EVENTS PARA COMUNICACIÓN ENTRE COMPONENTES
@@ -214,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
      3. CANCELAR RESERVAS PENDIENTES - DELEGACIÓN DE EVENTOS
      ===================================================== */
 
-  document.addEventListener('click', (evento) => {
+  document.addEventListener('click', async (evento) => {
     const btnCancelar = evento.target.closest('.btn-cancelar');
     if (!btnCancelar) return;
 
@@ -227,7 +188,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const nombreCancha = canchaEl ? canchaEl.textContent.trim() : 'esta reserva';
     const reservaId = btnCancelar.dataset.id;
 
-    const confirmar = confirm(`¿Estás seguro de que deseas cancelar la reserva de ${nombreCancha}?`);
+    const confirmar = await showConfirm(
+      `¿Estás seguro de que deseas cancelar la reserva de <strong>${nombreCancha}</strong>?`,
+      'Cancelar reserva'
+    );
 
     if (!confirmar) return;
 

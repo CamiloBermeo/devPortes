@@ -1,19 +1,31 @@
 import { showToast } from '../componets/toast.js';
 import { showConfirm } from '../componets/confirm-modal.js';
+import { obtenerDatosSesion } from '../utils/auth.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   /* =====================================================
-     ESTADO GLOBAL
+     ESTADO GLOBAL - Cargar desde sesión
      ===================================================== */
 
+  const session = obtenerDatosSesion();
   const state = {
     usuario: {
-      nombre: 'Camilo P',
-      usuario: 'CamiloP',
-      email: 'carlos.m@gmail.com',
-      telefono: '300 123 456'
+      nombre: session.nombre || 'Usuario',
+      usuario: session.usuario || session.correo?.split('@')[0] || session.email?.split('@')[0] || 'usuario',
+      email: session.correo || session.email || '',
+      telefono: session.telefono || '',
+      cedula: session.cedula || session.identityDocument || ''
     }
   };
+
+  // Poblar DOM con datos de sesión
+  const nombreUsuarioEl = document.getElementById('nombreUsuario');
+  const emailUsuarioEl = document.getElementById('emailUsuario');
+  const telefonoUsuarioEl = document.getElementById('telefonoUsuario');
+
+  if (nombreUsuarioEl) nombreUsuarioEl.textContent = state.usuario.nombre;
+  if (emailUsuarioEl) emailUsuarioEl.textContent = state.usuario.email;
+  if (telefonoUsuarioEl) telefonoUsuarioEl.textContent = state.usuario.telefono;
 
   /* =====================================================
      CUSTOM EVENTS PARA COMUNICACIÓN ENTRE COMPONENTES
@@ -68,6 +80,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function openModal() {
     if (!modalPerfil) return;
+
+    // Poblar formulario con datos actuales
+    const inputNombre = document.getElementById('inputNombre');
+    const inputEmail = document.getElementById('inputEmail');
+    const inputTelefono = document.getElementById('inputTelefono');
+    const inputCedula = document.getElementById('inputCedula');
+
+    if (inputNombre) inputNombre.value = state.usuario.nombre;
+    if (inputEmail) inputEmail.value = state.usuario.email;
+    if (inputTelefono) inputTelefono.value = state.usuario.telefono;
+    if (inputCedula) inputCedula.value = state.usuario.cedula;
 
     lastFocusedElement = document.activeElement;
     modalPerfil.hidden = false;
@@ -131,12 +154,12 @@ document.addEventListener('DOMContentLoaded', () => {
       evento.preventDefault();
 
       const nombre = document.getElementById('inputNombre').value.trim();
-      const usuario = document.getElementById('inputUsuario').value.trim();
       const email = document.getElementById('inputEmail').value.trim();
       const telefono = document.getElementById('inputTelefono').value.trim();
+      const cedula = document.getElementById('inputCedula').value.trim();
 
       // Validación básica
-      if (!nombre || !usuario || !email || !telefono) {
+      if (!nombre || !email || !telefono || !cedula) {
         showToast('Por favor completa todos los campos', 'error');
         return;
       }
@@ -147,9 +170,22 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // Actualizar estado
-      state.usuario = { nombre, usuario, email, telefono };
+      state.usuario = { ...state.usuario, nombre, email, telefono, cedula };
 
-      // Actualizar DOM
+      // Persistir en localStorage (sesión activa)
+      const sessionActual = obtenerDatosSesion();
+      const sessionActualizada = {
+        ...sessionActual,
+        nombre,
+        correo: email,
+        email,
+        telefono,
+        cedula,
+        identityDocument: cedula
+      };
+      localStorage.setItem('devportes_sesion_activa', JSON.stringify(sessionActualizada));
+
+      // Actualizar DOM del perfil
       const nombreUsuario = document.getElementById('nombreUsuario');
       const emailUsuario = document.getElementById('emailUsuario');
       const telefonoUsuario = document.getElementById('telefonoUsuario');
@@ -157,12 +193,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (nombreUsuario) nombreUsuario.textContent = nombre;
       if (emailUsuario) emailUsuario.textContent = email;
       if (telefonoUsuario) telefonoUsuario.textContent = telefono;
-
-      // Actualizar valores del formulario para próxima apertura
-      document.getElementById('inputNombre').value = nombre;
-      document.getElementById('inputUsuario').value = usuario;
-      document.getElementById('inputEmail').value = email;
-      document.getElementById('inputTelefono').value = telefono;
 
       closeModal();
       showToast('¡Perfil actualizado correctamente!', 'exito');

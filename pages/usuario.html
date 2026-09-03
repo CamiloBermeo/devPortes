@@ -148,7 +148,7 @@
       </section>
     </main>
 
-    <div class="modal-perfil" id="modalPerfil" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+    <div class="modal-perfil" id="modalPerfil" role="dialog" aria-modal="true" aria-labelledby="modalTitulo" hidden>
       <div class="modal-perfil-contenido">
         <button type="button" class="btn-cerrar-modal" id="btnCerrarModal" aria-label="Cerrar modal">
           <i class="bi bi-x-lg"></i>
@@ -167,19 +167,19 @@
         <form id="formEditarPerfil">
           <div class="campo-formulario">
             <label for="inputNombre">Nombre completo</label>
-            <input type="text" id="inputNombre" value="Camilo P" required />
-          </div>
-          <div class="campo-formulario">
-            <label for="inputUsuario">Nombre de usuario</label>
-            <input type="text" id="inputUsuario" value="CamiloP" required />
+            <input type="text" id="inputNombre" required />
           </div>
           <div class="campo-formulario">
             <label for="inputEmail">Correo electrónico</label>
-            <input type="email" id="inputEmail" value="carlos.m@gmail.com" required />
+            <input type="email" id="inputEmail" required />
           </div>
           <div class="campo-formulario">
             <label for="inputTelefono">Teléfono</label>
-            <input type="tel" id="inputTelefono" value="300 123 456" required />
+            <input type="tel" id="inputTelefono" required />
+          </div>
+          <div class="campo-formulario">
+            <label for="inputCedula">Cédula</label>
+            <input type="text" id="inputCedula" required />
           </div>
           <div class="modal-botones">
             <button type="button" class="btn-modal-cancelar" id="btnCancelarEdicion">Cancelar</button>

@@ -19,7 +19,7 @@ export const canchasIniciales = [
     tarifa: 60000,
     capacidad: 22,
     estado: 'Disponible',
-    imagen: 'https://images.unsplash.com/photo-1665113721297-dfa3f38de996?q=80&w=687&auto=format&fit=crop',
+    imagen: '../assets/img/canchas/futbol-estadio-principal.webp',
     descripcion: 'Nuestra joya del complejo. Una cancha con medidas oficiales óptima para partidos grandes...',
     detalles: [
       'Capacidad ideal: 22 jugadores',
@@ -36,7 +36,7 @@ export const canchasIniciales = [
     tarifa: 45000,
     capacidad: 10,
     estado: 'Disponible',
-    imagen: 'https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format',
+    imagen: '../assets/img/canchas/baloncesto-coliseo.webp',
     descripcion: 'Espacio totalmente techado y protegido del clima...',
     detalles: [
       'Tableros de baloncesto hidráulicos ajustables',
@@ -53,7 +53,7 @@ export const canchasIniciales = [
     tarifa: 35000,
     capacidad: 4,
     estado: 'Disponible',
-    imagen: 'https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?auto=format',
+    imagen: '../assets/img/canchas/tenis-las-palmas.webp',
     descripcion: 'Diseñada para amantes de la velocidad y precisión...',
     detalles: [
       'Excelente rebote controlado de bola',
@@ -70,7 +70,7 @@ export const canchasIniciales = [
     tarifa: 40000,
     capacidad: 4,
     estado: 'Disponible',
-    imagen: 'https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format',
+    imagen: '../assets/img/canchas/padel-arena.webp',
     descripcion: 'Disfruta del deporte con mayor crecimiento mundial...',
     detalles: [
       'Estructura panorámica de alta visibilidad',
@@ -87,7 +87,7 @@ export const canchasIniciales = [
     tarifa: 25000,
     capacidad: 12,
     estado: 'Disponible',
-    imagen: 'https://images.unsplash.com/photo-1781786501670-82355e5b12c4?q=80&w=1470&auto=format&fit=crop',
+    imagen: '../assets/img/canchas/indoor-entrenamiento.webp',
     descripcion: 'Diseñada especialmente para sesiones enfocadas en la técnica...',
     detalles: [
       'Excelente acústica y concentración',
@@ -104,7 +104,7 @@ export const canchasIniciales = [
     tarifa: 30000,
     capacidad: 10,
     estado: 'Disponible',
-    imagen: 'https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format',
+    imagen: '../assets/img/canchas/baloncesto-coliseo.webp',
     descripcion: 'Espacio techado con pista reglamentaria y zona 3x3 para partidos rápidos...',
     detalles: [
       'Tableros homologados con red reglamentaria',
@@ -121,7 +121,7 @@ export const canchasIniciales = [
     tarifa: 28000,
     capacidad: 12,
     estado: 'Disponible',
-    imagen: 'https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format',
+    imagen: '../assets/img/canchas/padel-arena.webp',
     descripcion: 'Cancha de vóley con arena sintética de alta calidad y red reglamentaria...',
     detalles: [
       'Arena sintética certificada para competencia',
@@ -138,7 +138,7 @@ export const canchasIniciales = [
     tarifa: 38000,
     capacidad: 14,
     estado: 'Mantenimiento',
-    imagen: 'https://images.unsplash.com/photo-1665113721297-dfa3f38de996?q=80&w=687&auto=format&fit=crop',
+    imagen: '../assets/img/canchas/futbol-estadio-principal.webp',
     descripcion: 'Cancha sintética con dimensiones oficiales de fútbol 7, en mantenimiento preventivo...',
     detalles: [
       'Césped sintético de última generación 4G',
@@ -155,7 +155,7 @@ export const canchasIniciales = [
     tarifa: 42000,
     capacidad: 4,
     estado: 'Disponible',
-    imagen: 'https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format',
+    imagen: '../assets/img/canchas/padel-arena.webp',
     descripcion: 'Club de pádel con estructura panorámica y zona para pádel cross...',
     detalles: [
       'Muro panorámico sin perfiles verticales',
@@ -172,7 +172,7 @@ export const canchasIniciales = [
     tarifa: 32000,
     capacidad: 4,
     estado: 'Mantenimiento',
-    imagen: 'https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?auto=format',
+    imagen: '../assets/img/canchas/tenis-las-palmas.webp',
     descripcion: 'Cancha de tenis con superficie de polvo de ladrillo en renovación...',
     detalles: [
       'Superficie de arcilla roja natural',

@@ -2,8 +2,8 @@
 
 /* Elementos del Navbar */
 .logo-box {
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   font-size: 1.125rem;
   background-color: var(--color-terceario);
 }
@@ -19,8 +19,8 @@
 
 /* Elementos del Footer */
 .footer-logo-box {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   font-size: 1rem;
   background-color: #ffffff;
   color: var(--color-dark);

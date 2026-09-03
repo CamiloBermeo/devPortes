@@ -1,0 +1,193 @@
+{
+  "main": {
+    "id": "39b5423f317887c2",
+    "type": "split",
+    "children": [
+      {
+        "id": "4910d76c838536c4",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f693a28adc074376",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Tareas por hacer Front.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Tareas por hacer Front"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "cc47f6c3cd7b61ac",
+    "type": "split",
+    "children": [
+      {
+        "id": "18a49c5298647b08",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "14bee650066f6e01",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Explorador de archivos"
+            }
+          },
+          {
+            "id": "c70e4d000ecf0cc4",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Buscar"
+            }
+          },
+          {
+            "id": "02f301600cdb1bd5",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-bookmark",
+              "title": "Marcadores"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 227.5
+  },
+  "right": {
+    "id": "db1da2f5169e6f73",
+    "type": "split",
+    "children": [
+      {
+        "id": "aeb651e2f3c4ce4f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "949d4bd7fd14fe67",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Tareas por hacer Front.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Enlaces entrantes"
+            }
+          },
+          {
+            "id": "457d7b586390ffb3",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Tareas por hacer Front.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Enlaces salientes"
+            }
+          },
+          {
+            "id": "36c96dcc759cb85e",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Etiquetas"
+            }
+          },
+          {
+            "id": "549702659d49acc2",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "Todas las propiedades"
+            }
+          },
+          {
+            "id": "ee05fce115c82184",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Tareas por hacer Front.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Esquema"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Abrir selector rápido": false,
+      "graph:Abrir vista gráfica": false,
+      "canvas:Crear nuevo lienzo": false,
+      "daily-notes:Abrir la nota de hoy": false,
+      "templates:Insertar plantilla": false,
+      "command-palette:Abrir paleta de comandos": false,
+      "bases:Crear nueva base": false
+    }
+  },
+  "active": "f693a28adc074376",
+  "lastOpenFiles": []
+}

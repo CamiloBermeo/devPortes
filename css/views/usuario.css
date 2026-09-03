@@ -77,13 +77,13 @@ app-footer {
 
 .panel-contenedor {
   width: 100%;
-  max-width: 1300px;
+  max-width: 1440px;
   margin: var(--space-xl) auto;
   padding: 0 var(--space-md);
   display: grid;
   grid-template-columns: minmax(300px, 350px) 1fr;
   gap: var(--space-lg);
-  align-items: start;
+  align-items: stretch;
 }
 
 /* =====================================================
@@ -115,7 +115,8 @@ app-footer {
 .tarjeta-perfil {
   padding: 0;
   overflow: hidden;
-  height: fit-content;
+  display: flex;
+  flex-direction: column;
   position: sticky;
   top: var(--space-lg);
 }
@@ -254,6 +255,52 @@ app-footer {
   border: 1px solid rgba(255, 193, 7, 0.3);
 }
 
+/* ---- Resumen ---- */
+
+.perfil-resumen {
+  padding: 0 var(--space-lg) var(--space-md);
+}
+
+.perfil-resumen h4 {
+  font-size: 11px;
+  color: var(--texto-gris);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+}
+
+.resumen-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+}
+
+.resumen-item {
+  text-align: center;
+  padding: var(--space-sm) var(--space-xs);
+  background: var(--fondo-gris);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--borde-suave);
+}
+
+.resumen-num {
+  display: block;
+  font-size: clamp(18px, 2.5vw, 22px);
+  font-weight: 800;
+  color: var(--verde-devportes);
+  line-height: 1.2;
+}
+
+.resumen-label {
+  display: block;
+  font-size: 10px;
+  color: var(--texto-gris);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-top: 2px;
+}
+
 /* ---- Acciones ---- */
 
 .perfil-acciones {
@@ -261,6 +308,7 @@ app-footer {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
+  margin-top: auto;
 }
 
 .btn-editar-perfil {
@@ -332,6 +380,24 @@ app-footer {
   flex-direction: column;
   gap: var(--space-lg);
   min-width: 0;
+}
+
+.lista-reservas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  max-height: 260px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.lista-reservas::-webkit-scrollbar { width: 4px; }
+.lista-reservas::-webkit-scrollbar-track { background: transparent; }
+.lista-reservas::-webkit-scrollbar-thumb { background: var(--borde-suave); border-radius: 2px; }
+.lista-reservas::-webkit-scrollbar-thumb:hover { background: var(--texto-gris); }
+
+.tarjeta-historial {
+  padding: var(--space-lg);
 }
 
 /* =====================================================
@@ -469,13 +535,19 @@ app-footer {
 
 .tabla-responsive {
   width: 100%;
-  overflow-x: auto;
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 4px;
 }
+
+.tabla-responsive::-webkit-scrollbar { width: 4px; }
+.tabla-responsive::-webkit-scrollbar-track { background: transparent; }
+.tabla-responsive::-webkit-scrollbar-thumb { background: var(--borde-suave); border-radius: 2px; }
+.tabla-responsive::-webkit-scrollbar-thumb:hover { background: var(--texto-gris); }
 
 .tabla-reservas {
   width: 100%;
   border-collapse: collapse;
-  min-width: 750px;
 }
 
 .tabla-reservas th {
@@ -492,7 +564,6 @@ app-footer {
   padding: var(--space-md);
   border-bottom: 1px solid var(--borde-suave);
   font-size: clamp(13px, 1.4vw, 14px);
-  white-space: nowrap;
 }
 
 .tabla-reservas tbody tr:last-child td {
@@ -806,6 +877,109 @@ app-footer {
 }
 
 /* =====================================================
+   MODAL DETALLE RESERVA
+   ===================================================== */
+
+.modal-detalle {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.6);
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+  animation: fadeIn var(--transition-normal);
+}
+
+.modal-detalle:not([hidden]) {
+  display: flex;
+}
+
+.modal-detalle-contenido {
+  position: relative;
+  width: 100%;
+  max-width: min(90vw, 480px);
+  background-color: var(--blanco);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: aparecerModal var(--transition-normal);
+}
+
+.detalle-encabezado {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+  padding-right: var(--space-xl);
+}
+
+.detalle-encabezado h3 {
+  font-size: clamp(18px, 2.2vw, 21px);
+  margin-bottom: var(--space-xs);
+}
+
+.detalle-encabezado p {
+  color: var(--texto-gris);
+  font-size: clamp(12px, 1.3vw, 13px);
+}
+
+.detalle-icono {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--verde-claro);
+  color: var(--verde-devportes);
+  border-radius: var(--radius-md);
+  font-size: 22px;
+}
+
+.detalle-cuerpo {
+  display: flex;
+  flex-direction: column;
+}
+
+.detalle-fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--borde-suave);
+}
+
+.detalle-fila:last-child {
+  border-bottom: none;
+}
+
+.detalle-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--texto-gris);
+  font-size: 13px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.detalle-label i {
+  font-size: 14px;
+  color: var(--verde-devportes);
+}
+
+.detalle-valor {
+  text-align: right;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--texto-oscuro);
+  word-break: break-word;
+}
+
+/* =====================================================
    RESPONSIVO
    ===================================================== */
 
@@ -886,17 +1060,10 @@ app-footer {
 
   .btn-cancelar { width: 100%; }
 
-  /* TABLA → CARDS */
-  .tabla-responsive { display: none; }
-  .historial-cards { display: flex; }
-
-  .historial-card {
-    grid-template-columns: 1fr;
-    gap: var(--space-xs);
+  .tabla-reservas td,
+  .tabla-reservas th {
+    padding: var(--space-xs) var(--space-sm);
   }
-
-  .historial-card .card-full { grid-column: auto; }
-  .historial-card .btn-detalle { justify-self: stretch; width: 100%; }
 
   .modal-perfil { padding: var(--space-sm); }
   .modal-perfil-contenido { padding: var(--space-md); max-height: 92vh; border-radius: var(--radius-md); }
@@ -904,6 +1071,13 @@ app-footer {
   .icono-editar { width: 40px; height: 40px; font-size: 18px; }
   .modal-botones { flex-direction: column-reverse; }
   .btn-modal-cancelar, .btn-modal-guardar { width: 100%; justify-content: center; }
+
+  .modal-detalle { padding: var(--space-sm); }
+  .modal-detalle-contenido { padding: var(--space-md); border-radius: var(--radius-md); }
+  .detalle-encabezado { gap: var(--space-sm); padding-right: var(--space-lg); }
+  .detalle-icono { width: 40px; height: 40px; font-size: 18px; }
+  .detalle-fila { flex-direction: column; align-items: flex-start; gap: var(--space-xs); }
+  .detalle-valor { text-align: left; }
 }
 
 /* CONTAINER QUERIES */

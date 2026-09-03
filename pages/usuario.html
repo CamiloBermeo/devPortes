@@ -63,6 +63,25 @@
           </div>
         </div>
 
+        <!-- RESUMEN -->
+        <div class="perfil-resumen">
+          <h4>Resumen</h4>
+          <div class="resumen-grid">
+            <div class="resumen-item">
+              <span class="resumen-num">12</span>
+              <span class="resumen-label">Reservas</span>
+            </div>
+            <div class="resumen-item">
+              <span class="resumen-num">18h</span>
+              <span class="resumen-label">Jugadas</span>
+            </div>
+            <div class="resumen-item">
+              <span class="resumen-num">P3</span>
+              <span class="resumen-label">Favorita</span>
+            </div>
+          </div>
+        </div>
+
         <!-- ACCIONES -->
         <div class="perfil-acciones">
           <button type="button" class="btn-editar-perfil" id="btnEditarPerfil">
@@ -81,37 +100,159 @@
               <h3>Reservas Pendientes</h3>
               <p>Reservas que tienes programadas</p>
             </div>
-            <span class="contador-pendientes" id="contadorPendientes">2</span>
+            <span class="contador-pendientes" id="contadorPendientes">10</span>
           </div>
 
-          <div class="reserva-pendiente" data-reserva-id="201">
-            <div class="reserva-datos">
-              <h4>Pista 1 - Sintética</h4>
-              <div class="reserva-detalles">
-                <span><i class="bi bi-calendar3"></i>15 Nov 2026</span>
-                <span><i class="bi bi-clock"></i>18:00 - 19:30</span>
-                <span><i class="bi bi-people"></i>Individual</span>
+          <div class="lista-reservas" id="listaReservas">
+            <div class="reserva-pendiente" data-reserva-id="201">
+              <div class="reserva-datos">
+                <h4>Pista 1 - Sintética</h4>
+                <div class="reserva-detalles">
+                  <span><i class="bi bi-calendar3"></i>15 Nov 2026</span>
+                  <span><i class="bi bi-clock"></i>18:00 - 19:30</span>
+                  <span><i class="bi bi-people"></i>Individual</span>
+                </div>
               </div>
+              <button type="button" class="btn-cancelar" data-id="201">
+                <i class="bi bi-x-circle"></i>
+                Cancelar reserva
+              </button>
             </div>
-            <button type="button" class="btn-cancelar" data-id="201">
-              <i class="bi bi-x-circle"></i>
-              Cancelar reserva
-            </button>
-          </div>
 
-          <div class="reserva-pendiente" data-reserva-id="202">
-            <div class="reserva-datos">
-              <h4>Pista 4 - Indoor</h4>
-              <div class="reserva-detalles">
-                <span><i class="bi bi-calendar3"></i>18 Nov 2026</span>
-                <span><i class="bi bi-clock"></i>20:00 - 21:30</span>
-                <span><i class="bi bi-people"></i>Dobles</span>
+            <div class="reserva-pendiente" data-reserva-id="202">
+              <div class="reserva-datos">
+                <h4>Pista 4 - Indoor</h4>
+                <div class="reserva-detalles">
+                  <span><i class="bi bi-calendar3"></i>18 Nov 2026</span>
+                  <span><i class="bi bi-clock"></i>20:00 - 21:30</span>
+                  <span><i class="bi bi-people"></i>Dobles</span>
+                </div>
               </div>
+              <button type="button" class="btn-cancelar" data-id="202">
+                <i class="bi bi-x-circle"></i>
+                Cancelar reserva
+              </button>
             </div>
-            <button type="button" class="btn-cancelar" data-id="202">
-              <i class="bi bi-x-circle"></i>
-              Cancelar reserva
-            </button>
+
+            <div class="reserva-pendiente" data-reserva-id="203">
+              <div class="reserva-datos">
+                <h4>Pista Central - Arcilla</h4>
+                <div class="reserva-detalles">
+                  <span><i class="bi bi-calendar3"></i>20 Nov 2026</span>
+                  <span><i class="bi bi-clock"></i>10:00 - 11:30</span>
+                  <span><i class="bi bi-people"></i>Individual</span>
+                </div>
+              </div>
+              <button type="button" class="btn-cancelar" data-id="203">
+                <i class="bi bi-x-circle"></i>
+                Cancelar reserva
+              </button>
+            </div>
+
+            <div class="reserva-pendiente" data-reserva-id="204">
+              <div class="reserva-datos">
+                <h4>Pista 2 - Arcilla</h4>
+                <div class="reserva-detalles">
+                  <span><i class="bi bi-calendar3"></i>22 Nov 2026</span>
+                  <span><i class="bi bi-clock"></i>16:00 - 17:30</span>
+                  <span><i class="bi bi-people"></i>Dobles</span>
+                </div>
+              </div>
+              <button type="button" class="btn-cancelar" data-id="204">
+                <i class="bi bi-x-circle"></i>
+                Cancelar reserva
+              </button>
+            </div>
+
+            <div class="reserva-pendiente" data-reserva-id="205">
+              <div class="reserva-datos">
+                <h4>Pista 3 - Indoor</h4>
+                <div class="reserva-detalles">
+                  <span><i class="bi bi-calendar3"></i>25 Nov 2026</span>
+                  <span><i class="bi bi-clock"></i>19:00 - 20:30</span>
+                  <span><i class="bi bi-people"></i>Individual</span>
+                </div>
+              </div>
+              <button type="button" class="btn-cancelar" data-id="205">
+                <i class="bi bi-x-circle"></i>
+                Cancelar reserva
+              </button>
+            </div>
+
+            <div class="reserva-pendiente" data-reserva-id="206">
+              <div class="reserva-datos">
+                <h4>Pista 1 - Sintética</h4>
+                <div class="reserva-detalles">
+                  <span><i class="bi bi-calendar3"></i>27 Nov 2026</span>
+                  <span><i class="bi bi-clock"></i>08:00 - 09:30</span>
+                  <span><i class="bi bi-people"></i>Dobles</span>
+                </div>
+              </div>
+              <button type="button" class="btn-cancelar" data-id="206">
+                <i class="bi bi-x-circle"></i>
+                Cancelar reserva
+              </button>
+            </div>
+
+            <div class="reserva-pendiente" data-reserva-id="207">
+              <div class="reserva-datos">
+                <h4>Pista 4 - Indoor</h4>
+                <div class="reserva-detalles">
+                  <span><i class="bi bi-calendar3"></i>29 Nov 2026</span>
+                  <span><i class="bi bi-clock"></i>14:00 - 15:30</span>
+                  <span><i class="bi bi-people"></i>Individual</span>
+                </div>
+              </div>
+              <button type="button" class="btn-cancelar" data-id="207">
+                <i class="bi bi-x-circle"></i>
+                Cancelar reserva
+              </button>
+            </div>
+
+            <div class="reserva-pendiente" data-reserva-id="208">
+              <div class="reserva-datos">
+                <h4>Pista Central - Arcilla</h4>
+                <div class="reserva-detalles">
+                  <span><i class="bi bi-calendar3"></i>01 Dic 2026</span>
+                  <span><i class="bi bi-clock"></i>17:00 - 18:30</span>
+                  <span><i class="bi bi-people"></i>Dobles</span>
+                </div>
+              </div>
+              <button type="button" class="btn-cancelar" data-id="208">
+                <i class="bi bi-x-circle"></i>
+                Cancelar reserva
+              </button>
+            </div>
+
+            <div class="reserva-pendiente" data-reserva-id="209">
+              <div class="reserva-datos">
+                <h4>Pista 2 - Arcilla</h4>
+                <div class="reserva-detalles">
+                  <span><i class="bi bi-calendar3"></i>03 Dic 2026</span>
+                  <span><i class="bi bi-clock"></i>11:00 - 12:30</span>
+                  <span><i class="bi bi-people"></i>Individual</span>
+                </div>
+              </div>
+              <button type="button" class="btn-cancelar" data-id="209">
+                <i class="bi bi-x-circle"></i>
+                Cancelar reserva
+              </button>
+            </div>
+
+            <div class="reserva-pendiente" data-reserva-id="210">
+              <div class="reserva-datos">
+                <h4>Pista 3 - Indoor</h4>
+                <div class="reserva-detalles">
+                  <span><i class="bi bi-calendar3"></i>05 Dic 2026</span>
+                  <span><i class="bi bi-clock"></i>20:00 - 21:30</span>
+                  <span><i class="bi bi-people"></i>Dobles</span>
+                </div>
+              </div>
+              <button type="button" class="btn-cancelar" data-id="210">
+                <i class="bi bi-x-circle"></i>
+                Cancelar reserva
+              </button>
+            </div>
           </div>
         </section>
 
@@ -155,6 +296,62 @@
                   <td>Dobles</td>
                   <td><span class="estado-badge cancelada">Cancelada</span></td>
                   <td><button type="button" class="btn-secundario btn-detalle" data-id="103">Ver Detalle</button></td>
+                </tr>
+                <tr>
+                  <td>22 Oct 2026</td>
+                  <td>Pista 1 - Sintética</td>
+                  <td>15:00 - 16:30</td>
+                  <td>Individual</td>
+                  <td><span class="estado-badge completada">Completada</span></td>
+                  <td><button type="button" class="btn-secundario btn-detalle" data-id="104">Ver Detalle</button></td>
+                </tr>
+                <tr>
+                  <td>18 Oct 2026</td>
+                  <td>Pista 4 - Indoor</td>
+                  <td>19:00 - 20:30</td>
+                  <td>Dobles</td>
+                  <td><span class="estado-badge completada">Completada</span></td>
+                  <td><button type="button" class="btn-secundario btn-detalle" data-id="105">Ver Detalle</button></td>
+                </tr>
+                <tr>
+                  <td>12 Oct 2026</td>
+                  <td>Pista Central - Arcilla</td>
+                  <td>10:00 - 11:30</td>
+                  <td>Individual</td>
+                  <td><span class="estado-badge cancelada">Cancelada</span></td>
+                  <td><button type="button" class="btn-secundario btn-detalle" data-id="106">Ver Detalle</button></td>
+                </tr>
+                <tr>
+                  <td>08 Oct 2026</td>
+                  <td>Pista 3 - Indoor</td>
+                  <td>17:00 - 18:30</td>
+                  <td>Dobles</td>
+                  <td><span class="estado-badge completada">Completada</span></td>
+                  <td><button type="button" class="btn-secundario btn-detalle" data-id="107">Ver Detalle</button></td>
+                </tr>
+                <tr>
+                  <td>03 Oct 2026</td>
+                  <td>Pista 2 - Arcilla</td>
+                  <td>08:00 - 09:30</td>
+                  <td>Individual</td>
+                  <td><span class="estado-badge completada">Completada</span></td>
+                  <td><button type="button" class="btn-secundario btn-detalle" data-id="108">Ver Detalle</button></td>
+                </tr>
+                <tr>
+                  <td>28 Sep 2026</td>
+                  <td>Pista 1 - Sintética</td>
+                  <td>21:00 - 22:30</td>
+                  <td>Dobles</td>
+                  <td><span class="estado-badge confirmada">Confirmada</span></td>
+                  <td><button type="button" class="btn-secundario btn-detalle" data-id="109">Ver Detalle</button></td>
+                </tr>
+                <tr>
+                  <td>22 Sep 2026</td>
+                  <td>Pista 4 - Indoor</td>
+                  <td>14:00 - 15:30</td>
+                  <td>Individual</td>
+                  <td><span class="estado-badge completada">Completada</span></td>
+                  <td><button type="button" class="btn-secundario btn-detalle" data-id="110">Ver Detalle</button></td>
                 </tr>
               </tbody>
             </table>
@@ -205,6 +402,56 @@
             </button>
           </div>
         </form>
+      </div>
+    </div>
+
+    <!-- MODAL DETALLE RESERVA -->
+    <div class="modal-detalle" id="modalDetalle" role="dialog" aria-modal="true" aria-labelledby="detalleTitulo" hidden>
+      <div class="modal-detalle-contenido">
+        <button type="button" class="btn-cerrar-modal" id="btnCerrarDetalle" aria-label="Cerrar detalle">
+          <i class="bi bi-x-lg"></i>
+        </button>
+
+        <div class="detalle-encabezado">
+          <div class="detalle-icono">
+            <i class="bi bi-receipt"></i>
+          </div>
+          <div>
+            <h3 id="detalleTitulo">Detalle de Reserva</h3>
+            <p>Reserva #<span id="detalleId"></span></p>
+          </div>
+        </div>
+
+        <div class="detalle-cuerpo">
+          <div class="detalle-fila">
+            <span class="detalle-label"><i class="bi bi-geo-alt-fill"></i> Cancha</span>
+            <span class="detalle-valor" id="detalleCancha"></span>
+          </div>
+          <div class="detalle-fila">
+            <span class="detalle-label"><i class="bi bi-calendar3"></i> Fecha</span>
+            <span class="detalle-valor" id="detalleFecha"></span>
+          </div>
+          <div class="detalle-fila">
+            <span class="detalle-label"><i class="bi bi-clock-fill"></i> Hora</span>
+            <span class="detalle-valor" id="detalleHora"></span>
+          </div>
+          <div class="detalle-fila">
+            <span class="detalle-label"><i class="bi bi-people-fill"></i> Tipo</span>
+            <span class="detalle-valor" id="detalleTipo"></span>
+          </div>
+          <div class="detalle-fila">
+            <span class="detalle-label"><i class="bi bi-flag-fill"></i> Estado</span>
+            <span class="detalle-valor" id="detalleEstado"></span>
+          </div>
+          <div class="detalle-fila">
+            <span class="detalle-label"><i class="bi bi-person-fill"></i> Jugador</span>
+            <span class="detalle-valor" id="detalleJugador"></span>
+          </div>
+          <div class="detalle-fila">
+            <span class="detalle-label"><i class="bi bi-credit-card-fill"></i> Pago</span>
+            <span class="detalle-valor" id="detallePago"></span>
+          </div>
+        </div>
       </div>
     </div>
 

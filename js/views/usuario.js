@@ -1,6 +1,6 @@
 import { showToast } from '../componets/toast.js';
 import { showConfirm } from '../componets/confirm-modal.js';
-import { obtenerDatosSesion } from '../utils/auth.js';
+import { obtenerDatosSesion, cerrarSesion } from '../utils/auth.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   /* =====================================================
@@ -146,6 +146,23 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* =====================================================
+     CERRAR SESIÓN
+     ===================================================== */
+
+  const btnCerrarSesion = document.getElementById('btnCerrarSesion');
+  if (btnCerrarSesion) {
+    btnCerrarSesion.addEventListener('click', async () => {
+      const confirmar = await showConfirm(
+        '¿Estás seguro de que deseas cerrar sesión?',
+        'Cerrar sesión'
+      );
+      if (confirmar) {
+        cerrarSesion();
+      }
+    });
+  }
+
+  /* =====================================================
      2. GUARDAR CAMBIOS DEL PERFIL
      ===================================================== */
 
@@ -265,17 +282,84 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* =====================================================
-     5. BOTONES "VER DETALLE" - DELEGACIÓN
+     5. BOTONES "VER DETALLE" - MODAL
      ===================================================== */
+
+  const modalDetalle = document.getElementById('modalDetalle');
+  const btnCerrarDetalle = document.getElementById('btnCerrarDetalle');
+  let lastFocusedDetalle = null;
+
+  function openDetalle(tr, idReserva) {
+    if (!modalDetalle) return;
+
+    const celdas = tr.querySelectorAll('td');
+    const reserva = {
+      id: idReserva,
+      cancha: celdas[1]?.textContent.trim() || '',
+      fecha: celdas[0]?.textContent.trim() || '',
+      hora: celdas[2]?.textContent.trim() || '',
+      tipo: celdas[3]?.textContent.trim() || '',
+      estado: celdas[4]?.textContent.trim() || '',
+      jugador: state.usuario.nombre || '—',
+      pago: '$45.000 COP'
+    };
+
+    document.getElementById('detalleId').textContent = reserva.id;
+    document.getElementById('detalleCancha').textContent = reserva.cancha;
+    document.getElementById('detalleFecha').textContent = reserva.fecha;
+    document.getElementById('detalleHora').textContent = reserva.hora;
+    document.getElementById('detalleTipo').textContent = reserva.tipo;
+
+    const estadoEl = document.getElementById('detalleEstado');
+    estadoEl.textContent = reserva.estado;
+    if (reserva.estado === 'Completada') {
+      estadoEl.innerHTML = '<span class="estado-badge completada">Completada</span>';
+    } else if (reserva.estado === 'Cancelada') {
+      estadoEl.innerHTML = '<span class="estado-badge cancelada">Cancelada</span>';
+    } else if (reserva.estado === 'Confirmada') {
+      estadoEl.innerHTML = '<span class="estado-badge confirmada">Confirmada</span>';
+    } else {
+      estadoEl.innerHTML = '<span class="estado-badge pendiente">Pendiente</span>';
+    }
+
+    document.getElementById('detalleJugador').textContent = reserva.jugador;
+    document.getElementById('detallePago').textContent = reserva.pago;
+
+    lastFocusedDetalle = document.activeElement;
+    modalDetalle.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDetalle() {
+    if (!modalDetalle) return;
+    modalDetalle.hidden = true;
+    document.body.style.overflow = '';
+    if (lastFocusedDetalle) lastFocusedDetalle.focus();
+  }
 
   document.addEventListener('click', (evento) => {
     const btnDetalle = evento.target.closest('.btn-detalle');
     if (!btnDetalle) return;
 
     const idReserva = btnDetalle.dataset.id;
-    showToast(`Cargando información de la reserva #${idReserva}`, 'info');
+    const tr = btnDetalle.closest('tr');
+    if (tr) openDetalle(tr, idReserva);
+  });
 
-    emit('reserva:detalle', { id: idReserva });
+  if (btnCerrarDetalle) {
+    btnCerrarDetalle.addEventListener('click', closeDetalle);
+  }
+
+  if (modalDetalle) {
+    modalDetalle.addEventListener('click', (evento) => {
+      if (evento.target === modalDetalle) closeDetalle();
+    });
+  }
+
+  document.addEventListener('keydown', (evento) => {
+    if (evento.key === 'Escape' && modalDetalle && !modalDetalle.hidden) {
+      closeDetalle();
+    }
   });
 
   /* =====================================================

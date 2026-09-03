@@ -7,6 +7,12 @@ export function obtenerDatosSesion() {
   catch { return {}; }
 }
 
+export function cerrarSesion() {
+  localStorage.removeItem('devportes_sesion_activa');
+  localStorage.removeItem('devportes_token');
+  window.location.href = '../index.html';
+}
+
 export async function obtenerPerfilCompleto() {
   const session = obtenerDatosSesion();
   const token = localStorage.getItem('devportes_token');

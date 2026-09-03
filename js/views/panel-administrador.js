@@ -1,5 +1,7 @@
 import { obtenerCanchas, guardarCanchas, formatoTipo, tipoAArray } from '../api/canchas.js';
 
+const KEY_ADMIN_SESSION = 'devportes_admin_sesion';
+
 // Listado local de clientes
 let listaClientes = [
   {
@@ -41,6 +43,12 @@ let listaClientes = [
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
+  const adminSession = localStorage.getItem(KEY_ADMIN_SESSION);
+  if (!adminSession) {
+    window.location.href = 'admin-login.html';
+    return;
+  }
+
   if (window.lucide) {
     lucide.createIcons();
   }
@@ -128,7 +136,8 @@ function activarCerrarSesion() {
     btnLogout.addEventListener('click', (e) => {
       e.preventDefault();
       abrirModalConfirmacion('¿Deseas cerrar tu sesión actual?', () => {
-        window.location.reload();
+        localStorage.removeItem(KEY_ADMIN_SESSION);
+        window.location.href = 'admin-login.html';
       });
     });
   }

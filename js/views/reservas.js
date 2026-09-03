@@ -2,6 +2,7 @@ import { obtenerCanchas, formatoTipo, tipoAArray } from '../api/canchas.js';
 import { renderizarSelectorCanchas } from '../componets/tarjeta_canchas.js';
 import { estaLogueado, obtenerPerfilCompleto } from '../utils/auth.js';
 import { regexNombre, regexCedula, regexTelefono, LONGITUD, validarLongitud } from '../utils/validaciones.js';
+import { showToast } from '../componets/toast.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
   // ---------------- Guard: requerir autenticación ----------------
@@ -717,55 +718,88 @@ document.addEventListener('DOMContentLoaded', async () => {
     const total = obtenerTotalReserva();
     const anticipo = total * 0.20;
 
-    const contenedor = document.getElementById('contenedor-modales-reserva');
+    const metodoPago = document.getElementById('metodoPago');
+    const metodoSeleccionado = metodoPago?.value || 'Efectivo';
 
+    const metodosInfo = {
+      NEQUI:         { icono: 'bi-phone', color: '#00c853', label: 'NEQUI' },
+      Daviplata:     { icono: 'bi-phone', color: '#ff6d00', label: 'Daviplata' },
+      Transferencia: { icono: 'bi-bank', color: '#1565c0', label: 'Transferencia' },
+      Efectivo:      { icono: 'bi-cash-stack', color: '#2e7d32', label: 'Efectivo' },
+    };
+
+    const info = metodosInfo[metodoSeleccionado] || metodosInfo.Efectivo;
+
+    const contenedor = document.getElementById('contenedor-modales-reserva');
     if (!contenedor) return;
 
     contenedor.innerHTML = `
-    <div
-      class="modal fade"
-      id="modalPagoReserva"
-      tabindex="-1"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="modalPagoReserva" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content border-0 rounded-4 overflow-hidden">
 
-          <div class="modal-header">
-            <h5 class="modal-title">
-              Confirmación de reserva
-            </h5>
+          <div class="pago-modal-header text-white text-center">
+            <button type="button" class="btn-close btn-close-white shadow-none position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            <div class="pago-header-icon">
+              <i class="bi bi-shield-lock-fill"></i>
+            </div>
+            <h5 class="fw-bold mb-1">Confirmación de pago</h5>
+            <p class="mb-0 opacity-75 small">Revisa los detalles antes de continuar</p>
           </div>
 
-          <div class="modal-body text-center">
+          <div class="modal-body px-4 py-4" id="modalPagoContenido">
 
-            <p>
-              Para confirmar tu reserva debes realizar un
-              <strong>pago inicial del 20%</strong>
-              del total del servicio.
-            </p>
+            <div class="pago-info-step">
 
-            <p>
-              <strong>Total de la reserva:</strong>
-              ${formatearPrecio(total)}
-            </p>
+              <div class="pago-metodo-card d-flex align-items-center gap-3 p-3 rounded-3 mb-4">
+                <div class="pago-metodo-icono" style="background: ${info.color}">
+                  <i class="bi ${info.icono}"></i>
+                </div>
+                <div>
+                  <small class="text-muted">Método de pago</small>
+                  <p class="fw-bold mb-0">${info.label}</p>
+                </div>
+              </div>
 
-            <p>
-              <strong>Pago requerido (20%):</strong>
-              <span class="text-success fw-bold">
-                ${formatearPrecio(anticipo)}
-              </span>
-            </p>
+              <div class="pago-resumen">
+                <div class="pago-linea d-flex justify-content-between align-items-center py-2 border-bottom">
+                  <span class="text-muted">Cancha</span>
+                  <strong>${datosCancha.titulo}</strong>
+                </div>
+                <div class="pago-linea d-flex justify-content-between align-items-center py-2 border-bottom">
+                  <span class="text-muted">Total reserva</span>
+                  <strong>${formatearPrecio(total)}</strong>
+                </div>
+                <div class="pago-linea pago-anticipo d-flex justify-content-between align-items-center py-2">
+                  <span class="text-muted">Anticipo (20%)</span>
+                  <span class="fs-5 fw-bold text-success">${formatearPrecio(anticipo)}</span>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="pago-procesando d-none text-center">
+              <div class="pago-spinner">
+                <div class="spinner-ring"></div>
+                <i class="bi ${info.icono} pago-spinner-icon"></i>
+              </div>
+              <p class="fw-semibold mt-3 mb-0">Procesando pago con ${info.label}...</p>
+              <small class="text-muted">No cierres esta ventana</small>
+            </div>
+
+            <div class="pago-exitoso d-none text-center">
+              <div class="pago-check-circle">
+                <i class="bi bi-check-lg"></i>
+              </div>
+              <p class="fw-bold text-success mt-3 mb-1">Pago confirmado</p>
+              <small class="text-muted">Tu reserva ha sido registrada</small>
+            </div>
 
           </div>
 
-          <div class="modal-footer justify-content-center">
-            <button
-              type="button"
-              class="btn btn-success px-4"
-              id="btnAceptarPago"
-            >
-              Aceptar
+          <div class="modal-footer border-0 justify-content-center pb-4 pt-0" id="modalPagoFooter">
+            <button type="button" class="btn btn-success rounded-pill px-4 fw-semibold" id="btnAceptarPago">
+              <i class="bi bi-lock-fill me-1"></i>Pagar ${formatearPrecio(anticipo)}
             </button>
           </div>
 
@@ -775,31 +809,34 @@ document.addEventListener('DOMContentLoaded', async () => {
   `;
 
     const modalElement = document.getElementById('modalPagoReserva');
-
     if (!modalElement || !window.bootstrap) return;
 
-    const modalInstance = bootstrap.Modal.getOrCreateInstance(
-      modalElement,
-      {
-        backdrop: 'static',
-        keyboard: false
-      }
-    );
+    const modalInstance = bootstrap.Modal.getOrCreateInstance(modalElement);
 
-    modalElement.addEventListener(
-      'hidden.bs.modal',
-      () => {
-        modalElement.remove();
-      },
-      { once: true }
-    );
+    modalElement.addEventListener('hidden.bs.modal', () => modalElement.remove(), { once: true });
 
-    modalElement
-      .querySelector('#btnAceptarPago')
-      ?.addEventListener('click', () => {
-        modalInstance.hide();
-        mostrarPaso(4);
-      });
+    modalElement.querySelector('#btnAceptarPago')?.addEventListener('click', () => {
+      const infoStep = modalElement.querySelector('.pago-info-step');
+      const procesando = modalElement.querySelector('.pago-procesando');
+      const exitoso = modalElement.querySelector('.pago-exitoso');
+      const footer = document.getElementById('modalPagoFooter');
+      const btnClose = modalElement.querySelector('.btn-close');
+
+      if (btnClose) btnClose.classList.add('d-none');
+      if (footer) footer.classList.add('d-none');
+      if (infoStep) infoStep.classList.add('d-none');
+      if (procesando) procesando.classList.remove('d-none');
+
+      setTimeout(() => {
+        if (procesando) procesando.classList.add('d-none');
+        if (exitoso) exitoso.classList.remove('d-none');
+
+        setTimeout(() => {
+          modalInstance.hide();
+          mostrarPaso(4);
+        }, 1200);
+      }, 1800);
+    });
 
     modalInstance.show();
   };
@@ -839,12 +876,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         const horas = estadoCalendario.horaSeleccionadas;
 
         if (!fecha || horas.length === 0) {
-          alert('Selecciona la fecha y al menos una hora para continuar.');
+          showToast('Selecciona la fecha y al menos una hora para continuar.', 'error');
           return;
         }
 
         if (!validarHorariosContinuos()) {
-          alert('Las horas seleccionadas deben ser consecutivas.');
+          showToast('Las horas seleccionadas deben ser consecutivas.', 'error');
           return;
         }
       }
@@ -948,6 +985,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   // ---------------- inicializacion ----------------
   const pasoGuardado = restaurarReservaLocal();
   aplicarCanchaDesdeUrl();
+
+  // Auto-seleccionar fecha de hoy si no hay reserva guardada
+  if (!estadoCalendario.fechaSeleccionada) {
+    const hoy = new Date();
+    const hoyStr = formatearFechaInput(hoy);
+    estadoCalendario.fechaSeleccionada = hoyStr;
+    if (fechaReservaInput) fechaReservaInput.value = hoyStr;
+  }
 
   let userProfile = null;
   if (estaLogueado()) {

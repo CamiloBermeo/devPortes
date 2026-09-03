@@ -1,58 +1,31 @@
+import { showToast } from '../componets/toast.js';
+import { showConfirm } from '../componets/confirm-modal.js';
+import { obtenerDatosSesion, cerrarSesion } from '../utils/auth.js';
+
 document.addEventListener('DOMContentLoaded', () => {
   /* =====================================================
-     ESTADO GLOBAL
+     ESTADO GLOBAL - Cargar desde sesión
      ===================================================== */
 
+  const session = obtenerDatosSesion();
   const state = {
     usuario: {
-      nombre: 'Camilo P',
-      usuario: 'CamiloP',
-      email: 'carlos.m@gmail.com',
-      telefono: '300 123 456'
+      nombre: session.nombre || 'Usuario',
+      usuario: session.usuario || session.correo?.split('@')[0] || session.email?.split('@')[0] || 'usuario',
+      email: session.correo || session.email || '',
+      telefono: session.telefono || '',
+      cedula: session.cedula || session.identityDocument || ''
     }
   };
 
-  /* =====================================================
-     TOAST NOTIFICATIONS
-     ===================================================== */
+  // Poblar DOM con datos de sesión
+  const nombreUsuarioEl = document.getElementById('nombreUsuario');
+  const emailUsuarioEl = document.getElementById('emailUsuario');
+  const telefonoUsuarioEl = document.getElementById('telefonoUsuario');
 
-  function initToastContainer() {
-    let container = document.querySelector('.toast-container');
-    if (!container) {
-      container = document.createElement('div');
-      container.className = 'toast-container';
-      document.body.appendChild(container);
-    }
-    return container;
-  }
-
-  function showToast(mensaje, tipo = 'info', duracion = 3500) {
-    const container = initToastContainer();
-    const toast = document.createElement('div');
-    toast.className = `toast ${tipo}`;
-    toast.setAttribute('role', 'alert');
-    toast.setAttribute('aria-live', 'polite');
-
-    const iconos = {
-      exito: 'bi-check-circle-fill',
-      error: 'bi-x-circle-fill',
-      info: 'bi-info-circle-fill'
-    };
-
-    toast.innerHTML = `
-      <i class="bi ${iconos[tipo]}"></i>
-      <span>${mensaje}</span>
-    `;
-
-    container.appendChild(toast);
-
-    setTimeout(() => {
-      toast.classList.add('ocultando');
-      toast.addEventListener('animationend', () => toast.remove());
-    }, duracion);
-
-    return toast;
-  }
+  if (nombreUsuarioEl) nombreUsuarioEl.textContent = state.usuario.nombre;
+  if (emailUsuarioEl) emailUsuarioEl.textContent = state.usuario.email;
+  if (telefonoUsuarioEl) telefonoUsuarioEl.textContent = state.usuario.telefono;
 
   /* =====================================================
      CUSTOM EVENTS PARA COMUNICACIÓN ENTRE COMPONENTES
@@ -108,6 +81,17 @@ document.addEventListener('DOMContentLoaded', () => {
   function openModal() {
     if (!modalPerfil) return;
 
+    // Poblar formulario con datos actuales
+    const inputNombre = document.getElementById('inputNombre');
+    const inputEmail = document.getElementById('inputEmail');
+    const inputTelefono = document.getElementById('inputTelefono');
+    const inputCedula = document.getElementById('inputCedula');
+
+    if (inputNombre) inputNombre.value = state.usuario.nombre;
+    if (inputEmail) inputEmail.value = state.usuario.email;
+    if (inputTelefono) inputTelefono.value = state.usuario.telefono;
+    if (inputCedula) inputCedula.value = state.usuario.cedula;
+
     lastFocusedElement = document.activeElement;
     modalPerfil.hidden = false;
     document.body.style.overflow = 'hidden';
@@ -162,6 +146,23 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* =====================================================
+     CERRAR SESIÓN
+     ===================================================== */
+
+  const btnCerrarSesion = document.getElementById('btnCerrarSesion');
+  if (btnCerrarSesion) {
+    btnCerrarSesion.addEventListener('click', async () => {
+      const confirmar = await showConfirm(
+        '¿Estás seguro de que deseas cerrar sesión?',
+        'Cerrar sesión'
+      );
+      if (confirmar) {
+        cerrarSesion();
+      }
+    });
+  }
+
+  /* =====================================================
      2. GUARDAR CAMBIOS DEL PERFIL
      ===================================================== */
 
@@ -170,12 +171,12 @@ document.addEventListener('DOMContentLoaded', () => {
       evento.preventDefault();
 
       const nombre = document.getElementById('inputNombre').value.trim();
-      const usuario = document.getElementById('inputUsuario').value.trim();
       const email = document.getElementById('inputEmail').value.trim();
       const telefono = document.getElementById('inputTelefono').value.trim();
+      const cedula = document.getElementById('inputCedula').value.trim();
 
       // Validación básica
-      if (!nombre || !usuario || !email || !telefono) {
+      if (!nombre || !email || !telefono || !cedula) {
         showToast('Por favor completa todos los campos', 'error');
         return;
       }
@@ -186,9 +187,34 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // Actualizar estado
-      state.usuario = { nombre, usuario, email, telefono };
+      state.usuario = { ...state.usuario, nombre, email, telefono, cedula };
 
-      // Actualizar DOM
+      // Persistir en localStorage (sesión activa)
+      const sessionActual = obtenerDatosSesion();
+      const sessionActualizada = {
+        ...sessionActual,
+        nombre,
+        correo: email,
+        email,
+        telefono,
+        cedula,
+        identityDocument: cedula
+      };
+      localStorage.setItem('devportes_sesion_activa', JSON.stringify(sessionActualizada));
+
+      // Sincronizar con la "base de datos" local para que el login funcione
+      const usuarios = JSON.parse(localStorage.getItem('devportes_usuarios') || '[]');
+      const idx = usuarios.findIndex(u => u.correo === sessionActual.correo || u.correo === sessionActual.email);
+      if (idx !== -1) {
+        usuarios[idx].nombre = nombre;
+        usuarios[idx].correo = email;
+        usuarios[idx].telefono = telefono;
+        usuarios[idx].cedula = cedula;
+        usuarios[idx].identityDocument = cedula;
+        localStorage.setItem('devportes_usuarios', JSON.stringify(usuarios));
+      }
+
+      // Actualizar DOM del perfil
       const nombreUsuario = document.getElementById('nombreUsuario');
       const emailUsuario = document.getElementById('emailUsuario');
       const telefonoUsuario = document.getElementById('telefonoUsuario');
@@ -196,12 +222,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (nombreUsuario) nombreUsuario.textContent = nombre;
       if (emailUsuario) emailUsuario.textContent = email;
       if (telefonoUsuario) telefonoUsuario.textContent = telefono;
-
-      // Actualizar valores del formulario para próxima apertura
-      document.getElementById('inputNombre').value = nombre;
-      document.getElementById('inputUsuario').value = usuario;
-      document.getElementById('inputEmail').value = email;
-      document.getElementById('inputTelefono').value = telefono;
 
       closeModal();
       showToast('¡Perfil actualizado correctamente!', 'exito');
@@ -214,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
      3. CANCELAR RESERVAS PENDIENTES - DELEGACIÓN DE EVENTOS
      ===================================================== */
 
-  document.addEventListener('click', (evento) => {
+  document.addEventListener('click', async (evento) => {
     const btnCancelar = evento.target.closest('.btn-cancelar');
     if (!btnCancelar) return;
 
@@ -227,7 +247,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const nombreCancha = canchaEl ? canchaEl.textContent.trim() : 'esta reserva';
     const reservaId = btnCancelar.dataset.id;
 
-    const confirmar = confirm(`¿Estás seguro de que deseas cancelar la reserva de ${nombreCancha}?`);
+    const confirmar = await showConfirm(
+      `¿Estás seguro de que deseas cancelar la reserva de <strong>${nombreCancha}</strong>?`,
+      'Cancelar reserva'
+    );
 
     if (!confirmar) return;
 
@@ -271,17 +294,84 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* =====================================================
-     5. BOTONES "VER DETALLE" - DELEGACIÓN
+     5. BOTONES "VER DETALLE" - MODAL
      ===================================================== */
+
+  const modalDetalle = document.getElementById('modalDetalle');
+  const btnCerrarDetalle = document.getElementById('btnCerrarDetalle');
+  let lastFocusedDetalle = null;
+
+  function openDetalle(tr, idReserva) {
+    if (!modalDetalle) return;
+
+    const celdas = tr.querySelectorAll('td');
+    const reserva = {
+      id: idReserva,
+      cancha: celdas[1]?.textContent.trim() || '',
+      fecha: celdas[0]?.textContent.trim() || '',
+      hora: celdas[2]?.textContent.trim() || '',
+      tipo: celdas[3]?.textContent.trim() || '',
+      estado: celdas[4]?.textContent.trim() || '',
+      jugador: state.usuario.nombre || '—',
+      pago: '$45.000 COP'
+    };
+
+    document.getElementById('detalleId').textContent = reserva.id;
+    document.getElementById('detalleCancha').textContent = reserva.cancha;
+    document.getElementById('detalleFecha').textContent = reserva.fecha;
+    document.getElementById('detalleHora').textContent = reserva.hora;
+    document.getElementById('detalleTipo').textContent = reserva.tipo;
+
+    const estadoEl = document.getElementById('detalleEstado');
+    estadoEl.textContent = reserva.estado;
+    if (reserva.estado === 'Completada') {
+      estadoEl.innerHTML = '<span class="estado-badge completada">Completada</span>';
+    } else if (reserva.estado === 'Cancelada') {
+      estadoEl.innerHTML = '<span class="estado-badge cancelada">Cancelada</span>';
+    } else if (reserva.estado === 'Confirmada') {
+      estadoEl.innerHTML = '<span class="estado-badge confirmada">Confirmada</span>';
+    } else {
+      estadoEl.innerHTML = '<span class="estado-badge pendiente">Pendiente</span>';
+    }
+
+    document.getElementById('detalleJugador').textContent = reserva.jugador;
+    document.getElementById('detallePago').textContent = reserva.pago;
+
+    lastFocusedDetalle = document.activeElement;
+    modalDetalle.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDetalle() {
+    if (!modalDetalle) return;
+    modalDetalle.hidden = true;
+    document.body.style.overflow = '';
+    if (lastFocusedDetalle) lastFocusedDetalle.focus();
+  }
 
   document.addEventListener('click', (evento) => {
     const btnDetalle = evento.target.closest('.btn-detalle');
     if (!btnDetalle) return;
 
     const idReserva = btnDetalle.dataset.id;
-    showToast(`Cargando información de la reserva #${idReserva}`, 'info');
+    const tr = btnDetalle.closest('tr');
+    if (tr) openDetalle(tr, idReserva);
+  });
 
-    emit('reserva:detalle', { id: idReserva });
+  if (btnCerrarDetalle) {
+    btnCerrarDetalle.addEventListener('click', closeDetalle);
+  }
+
+  if (modalDetalle) {
+    modalDetalle.addEventListener('click', (evento) => {
+      if (evento.target === modalDetalle) closeDetalle();
+    });
+  }
+
+  document.addEventListener('keydown', (evento) => {
+    if (evento.key === 'Escape' && modalDetalle && !modalDetalle.hidden) {
+      closeDetalle();
+    }
   });
 
   /* =====================================================

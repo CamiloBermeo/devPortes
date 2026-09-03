@@ -202,6 +202,18 @@ document.addEventListener('DOMContentLoaded', () => {
       };
       localStorage.setItem('devportes_sesion_activa', JSON.stringify(sessionActualizada));
 
+      // Sincronizar con la "base de datos" local para que el login funcione
+      const usuarios = JSON.parse(localStorage.getItem('devportes_usuarios') || '[]');
+      const idx = usuarios.findIndex(u => u.correo === sessionActual.correo || u.correo === sessionActual.email);
+      if (idx !== -1) {
+        usuarios[idx].nombre = nombre;
+        usuarios[idx].correo = email;
+        usuarios[idx].telefono = telefono;
+        usuarios[idx].cedula = cedula;
+        usuarios[idx].identityDocument = cedula;
+        localStorage.setItem('devportes_usuarios', JSON.stringify(usuarios));
+      }
+
       // Actualizar DOM del perfil
       const nombreUsuario = document.getElementById('nombreUsuario');
       const emailUsuario = document.getElementById('emailUsuario');

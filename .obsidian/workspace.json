@@ -11,14 +11,10 @@
             "id": "f693a28adc074376",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Tareas por hacer Front.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Tareas por hacer Front"
+              "title": "Nueva pestaña"
             }
           }
         ]
@@ -189,5 +185,31 @@
     }
   },
   "active": "f693a28adc074376",
-  "lastOpenFiles": []
+  "lastOpenFiles": [
+    "DATABASE/image.jpeg",
+    "DATABASE/database.sql",
+    "DATABASE",
+    "Tareas por hacer Front.md",
+    "Tareas por hacer Back.md",
+    "devPortes/Tareas por hacer Back.md",
+    "devPortes/assets/icons/favicon/android-chrome-192x192.png",
+    "devPortes/assets/icons/favicon/site.webmanifest",
+    "devPortes/assets/icons/favicon/favicon.ico",
+    "devPortes/assets/icons/favicon/favicon-32x32.png",
+    "devPortes/assets/icons/favicon/favicon-16x16.png",
+    "devPortes/assets/icons/favicon/apple-touch-icon.png",
+    "devPortes/assets/icons/favicon/android-chrome-512x512.png",
+    "devPortes/assets/icons/favicon",
+    "devPortes/assets/img/nosotros/section_01.webp",
+    "devPortes/assets/img/nosotros/hero_03.webp",
+    "devPortes/assets/img/nosotros/hero_02.webp",
+    "devPortes/assets/img/nosotros/hero_01.webp",
+    "devPortes/assets/img/nosotros/canchafutbol.webp",
+    "devPortes/assets/img/nosotros",
+    "devPortes/assets/img/login",
+    "devPortes/assets/img/canchas",
+    "devPortes/assets/img/doc.md",
+    "devPortes/assets/icons",
+    "devPortes/assets/img"
+  ]
 }

@@ -1,4 +1,5 @@
 import { registrarUsuario, iniciarSesion } from '../api/auth.js';
+import { USE_MOCK } from '../utils/mockData.js';
 import { regexNombre, regexCedula, regexTelefono, regexCorreo, LONGITUD, soloNumeros, validarLongitud } from '../utils/validaciones.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -387,7 +388,12 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = '../index.html';
           }
         }, 900);
-      } catch {
+      } catch (error) {
+        if (!USE_MOCK) {
+          marcarInvalido(inputCorreoReg, error.message || 'Error al registrar. Intenta de nuevo.');
+          return;
+        }
+
         const usuarios = obtenerUsuariosGuardados();
         const nuevoUsuario = {
           id: Date.now(),
@@ -484,7 +490,13 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = '../index.html';
           }
         }, 900);
-      } catch {
+      } catch (error) {
+        if (!USE_MOCK) {
+          marcarInvalido(inputCorreoLogin, error.message || 'Credenciales incorrectas');
+          marcarInvalido(inputPassLogin, 'Verifica tu contrasena');
+          return;
+        }
+
         const usuarios = obtenerUsuariosGuardados();
         const usuarioEncontrado = usuarios.find(
           (user) => user.correo === correoIngresado && user.password === passIngresada,

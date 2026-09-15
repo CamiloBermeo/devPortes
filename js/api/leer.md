@@ -1,50 +1,64 @@
 # Carpeta: js/api/
 
-aca es el unico lugr donde esta permitido usar fetch() o sea peticiones http al
-backend
+Aca es el unico lugar donde esta permitido usar fetch() o sea peticiones HTTP al backend.
 
-## Propósito
+## Proposito
 
-Aquí vive **únicamente** la comunicación de red con el backend de Spring Boot.
+Aqui vive **unicamente** la comunicacion de red con el backend de Spring Boot.
 Esta carpeta contiene todas las funciones que hacen peticiones HTTP mediante
 `fetch()`.
 
 **Regla de Oro:** Queda **estrictamente prohibido manipular el DOM** dentro de
 los archivos de esta carpeta. No uses `document.getElementById()`, `innerHTML`,
-ni muestres alertas aquí. Estas funciones solo reciben parámetros, llaman al
+ni muestres alertas aqui. Estas funciones solo reciben parametros, llaman al
 backend y retornan los datos puros (JSON) o lanzan errores.
 
-## Directrices Estrictas
+## Archivos
 
-1. **El único hogar de `fetch()`:** Ningún archivo fuera de esta carpeta tiene
-   permitido ejecutar `fetch()`.
-1. **Centralización de URL:** Consume siempre la constante `API_URL` importada
-   desde `js/api/config.js`. Cero URLs escritas "a mano" en otros archivos.
-1. **Manejo de Respuestas:** Valida siempre `response.ok`. Si el backend
-   responde con un error HTTP (4xx o 5xx), debes lanzar una excepción
-   (`throw new Error(...)`) para que la vista correspondiente atrape el fallo y
-   se lo muestre al usuario.
+| Archivo | Funcion |
+|---------|---------|
+| `config.js` | URL base del backend (`API_URL`). Detecta localhost vs produccion. |
+| `apiClient.js` | Wrapper central de fetch. Helpers: `apiGet`, `apiPost`, `apiPut`, `apiPatch`, `apiMultipart`. Maneja headers, errores y sesion. |
+| `auth.js` | Endpoints de autenticacion: `registrarUsuario`, `iniciarSesion`, `obtenerPerfil`. |
+| `canchas.js` | CRUD de canchas (fields): `obtenerCanchas`, `crearCancha`, `editarCancha`, `eliminarCancha`. Usa `USE_MOCK` para fallback. |
+| `locations.js` | CRUD de ubicaciones: `obtenerUbicaciones`, `crearUbicacion`, `editarUbicacion`, `toggleEstadoUbicacion`. |
 
-## Ejemplos de Archivos
-
-- `config.js` (Exporta la URL base del servidor, ej.
-  `http://localhost:8080/api`).
-- `canchas.js` (Contiene `obtenerCanchas()`, `obtenerCanchaPorId()`).
-- `reservas.js` (Contiene `crearReserva()`, `cancelarReserva()`).
-
-## Ejemplo de Código (js/api/canchas.js)
-
-import { API_URL } from './config.js';
-
-// CORRECTO: Solo hace la petición y retorna los datos export async function
-obtenerCanchas() { const response = await fetch(`${API_URL}/canchas`);
+## Flujo de Datos
 
 ```
-if (!response.ok) {
-    throw new Error('No se pudo obtener el listado de canchas.');
-}
-
-return await response.json(); // Retorna los datos puros a la vista
+ Vista (views/*.js)
+     |
+     v
+ API (api/*.js)  <-- usa apiClient.js para fetch
+     |
+     v
+ Backend Spring Boot (localhost:8080/api/v1)
 ```
 
-}
+## Fallback Mock
+
+El proyecto soporta un modo mock para funcionar sin backend:
+
+- `js/utils/mockData.js` contiene el flag `USE_MOCK` y los datos mock
+- `canchas.js` verifica `USE_MOCK` antes de hacer fetch al backend
+- `login.js` usa `USE_MOCK` para decidir si guardar en localStorage como fallback
+- Para activar/desactivar: cambiar `USE_MOCK` en `mockData.js` (`true`/`false`)
+
+## Ejemplo de Codigo
+
+```javascript
+import { apiGet, apiPost } from './apiClient.js';
+
+// GET con autenticacion
+const canchas = await apiGet('/field/all', { auth: true });
+
+// POST JSON
+const nuevo = await apiPost('/location/new-location', { name: 'Sede Norte' }, { auth: true });
+
+// POST con FormData (multipart)
+import { apiMultipart } from './apiClient.js';
+const formData = new FormData();
+formData.append('name', 'Cancha 1');
+formData.append('picture', fileInput.files[0]);
+const resultado = await apiMultipart('/field/new', formData, { auth: true });
+```

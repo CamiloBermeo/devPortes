@@ -75,13 +75,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   // ---------------- integración de modal de selección de canchas ----------------
   const btnCambiarCancha = document.getElementById('btnCambiarCancha');
 
-  const renderizarSelector = () => {
-    const canchasActualizadas = obtenerCanchas().filter((c) => c.estado === 'Disponible');
+  const renderizarSelector = async () => {
+    const canchasActualizadas = (await obtenerCanchas()).filter((c) => c.estado === 'Disponible');
     renderizarSelectorCanchas(canchasActualizadas, 'contenedor-modales-reserva', datosCancha.id);
   };
 
-  function abrirModalInfoCancha() {
-    const canchas = obtenerCanchas();
+  async function abrirModalInfoCancha() {
+    const canchas = await obtenerCanchas();
     const cancha = canchas.find((c) => c.id === datosCancha.id);
     if (!cancha) return;
 
@@ -174,12 +174,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Listener delegado para botones "Seleccionar" en el grid
   const contenedorModales = document.getElementById('contenedor-modales-reserva');
   if (contenedorModales) {
-    contenedorModales.addEventListener('click', (e) => {
+    contenedorModales.addEventListener('click', async (e) => {
       const btn = e.target.closest('.btn-seleccionar-cancha');
       if (!btn || btn.classList.contains('disabled')) return;
 
       const canchaId = Number(btn.dataset.canchaId);
-      const canchasActuales = obtenerCanchas().filter((c) => c.estado === 'Disponible');
+      const canchasActuales = (await obtenerCanchas()).filter((c) => c.estado === 'Disponible');
       const canchaSeleccionada = canchasActuales.find((c) => c.id === canchaId);
 
       if (canchaSeleccionada) {

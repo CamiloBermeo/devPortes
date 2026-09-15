@@ -1,9 +1,7 @@
-const ADMIN_CREDENTIALS = {
-  email: 'admin@admin.com',
-  password: 'Admin1234.',
-};
+import { iniciarSesion } from '../api/auth.js';
 
 const KEY_ADMIN_SESSION = 'devportes_admin_sesion';
+const KEY_TOKEN = 'devportes_token';
 
 document.addEventListener('DOMContentLoaded', () => {
   if (localStorage.getItem(KEY_ADMIN_SESSION)) {
@@ -16,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const passwordInput = document.getElementById('adminPassword');
   const errorDiv = document.getElementById('adminLoginError');
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     errorDiv.style.display = 'none';
 
@@ -28,19 +26,25 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    if (email !== ADMIN_CREDENTIALS.email || password !== ADMIN_CREDENTIALS.password) {
-      showError('Credenciales incorrectas. Verifica tu correo y contraseña.');
-      return;
+    try {
+      const respuesta = await iniciarSesion({ email, password });
+
+      const adminProfile = {
+        nombre: respuesta.nameUser || 'Administrador',
+        correo: email,
+        rol: 'admin',
+      };
+
+      localStorage.setItem(KEY_ADMIN_SESSION, JSON.stringify(adminProfile));
+      localStorage.setItem(KEY_TOKEN, respuesta.token);
+      window.location.href = 'panel-administrador.html';
+    } catch (error) {
+      if (error.status === 401) {
+        showError('Credenciales incorrectas. Verifica tu correo y contrasena.');
+      } else {
+        showError(error.message || 'Error al conectar con el servidor.');
+      }
     }
-
-    const adminProfile = {
-      nombre: 'Administrador',
-      correo: ADMIN_CREDENTIALS.email,
-      rol: 'admin',
-    };
-
-    localStorage.setItem(KEY_ADMIN_SESSION, JSON.stringify(adminProfile));
-    window.location.href = 'panel-administrador.html';
   });
 
   function showError(msg) {

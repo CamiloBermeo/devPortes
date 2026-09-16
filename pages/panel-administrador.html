@@ -54,6 +54,7 @@
           <i data-lucide="bar-chart-3"></i> <span>Dashboard</span>
         </a>
         <a href="#" class="nav-item" data-target="reservas-view"> <i data-lucide="calendar"></i> <span>Reservas</span> </a>
+        <a href="#" class="nav-item" data-target="sedes-view"> <i data-lucide="map-pin"></i> <span>Sedes</span> </a>
         <a href="#" class="nav-item" data-target="canchas-view"> <i data-lucide="circle-dot"></i> <span>Canchas</span> </a>
         <a href="#" class="nav-item" data-target="clientes-view"> <i data-lucide="users"></i> <span>Clientes</span> </a>
       </nav>
@@ -176,7 +177,20 @@
         </div>
       </section>
 
-      <!-- PANTALLA 3: CANCHAS (PUBLICACIÓN DE PRODUCTOS) -->
+      <!-- PANTALLA 3: SEDES -->
+      <section id="sedes-view" class="view-section">
+        <div class="preview-header">
+          <div>
+            <h2>Gestión de Sedes</h2>
+            <p class="text-muted">Administra las ubicaciones y sedes del sistema.</p>
+          </div>
+          <button class="btn-ver-mas" data-modal="crear-sede">Nueva Sede</button>
+        </div>
+
+        <div class="preview-grid" id="sedesGridPreview"></div>
+      </section>
+
+      <!-- PANTALLA 4: CANCHAS (PUBLICACIÓN DE PRODUCTOS) -->
       <section id="canchas-view" class="view-section">
         <div class="preview-header">
           <div>
@@ -190,7 +204,7 @@
         <div class="preview-grid" id="canchasGridPreview"></div>
       </section>
 
-      <!-- PANTALLA 4: CLIENTES -->
+      <!-- PANTALLA 5: CLIENTES -->
       <section id="clientes-view" class="view-section">
         <div class="preview-header">
           <div>

@@ -1,5 +1,5 @@
 import { obtenerCanchas, crearCancha, editarCancha as editarCanchaApi, eliminarCancha as eliminarCanchaApi, formatoTipo, tipoAArray } from '../api/canchas.js';
-import { obtenerUbicaciones } from '../api/locations.js';
+import { obtenerUbicaciones, crearUbicacion, editarUbicacion as editarUbicacionApi, toggleEstadoUbicacion } from '../api/locations.js';
 import { USE_MOCK } from '../utils/mockData.js';
 
 const KEY_ADMIN_SESSION = 'devportes_admin_sesion';
@@ -43,6 +43,8 @@ let listaClientes = [
   },
 ];
 
+let ubicaciones = [];
+
 function normalizarCancha(raw) {
   if (USE_MOCK) return raw;
 
@@ -67,6 +69,28 @@ function mapearEstadoFrontend(estadoFrontend) {
   return estadoFrontend === 'Disponible' ? 'DISPONIBLE' : 'MANTENIMIENTO';
 }
 
+function obtenerNombreUbicacion(id) {
+  const u = ubicaciones.find((loc) => loc.id === id);
+  return u ? u.name : `Sede #${id}`;
+}
+
+function generarOpcionesSelectUbicacion(selectedId) {
+  return ubicaciones.map((u) =>
+    `<option value="${u.id}" ${u.id === selectedId ? 'selected' : ''}>${u.name}${u.headquarters ? ' - ' + u.headquarters : ''}</option>`
+  ).join('');
+}
+
+async function conScrollPreservado(fn) {
+  const main = document.querySelector('.main-content');
+  const scrollPos = main ? main.scrollTop : window.scrollY;
+  await fn();
+  if (main) {
+    main.scrollTop = scrollPos;
+  } else {
+    window.scrollTo(0, scrollPos);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   const adminSession = localStorage.getItem(KEY_ADMIN_SESSION);
   if (!adminSession) {
@@ -87,7 +111,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   activarCerrarSesion();
 
   renderClientesGrid();
+
+  try {
+    ubicaciones = await obtenerUbicaciones();
+  } catch (err) {
+    ubicaciones = [];
+  }
+
   await renderCanchasGrid();
+  await renderSedesGrid();
   activarModalGeneral();
 });
 
@@ -259,6 +291,10 @@ async function renderCanchasGrid() {
             <span class="text-muted">Tarifa:</span>
             <strong class="text-green">$${cancha.tarifa.toLocaleString('es-CO')}/hr</strong>
           </div>
+          <div class="card-info-row">
+            <span class="text-muted">Sede:</span>
+            <strong>${obtenerNombreUbicacion(cancha.locationId)}</strong>
+          </div>
         </div>
 
         <div class="user-card-actions">
@@ -326,6 +362,13 @@ window.abrirModalCrearCancha = function () {
         </select>
       </div>
       <div class="form-group">
+        <label>Sede / Ubicacion:</label>
+        <select id="crearLocationId" class="form-input" required>
+          <option value="">Selecciona una sede...</option>
+          ${generarOpcionesSelectUbicacion(null)}
+        </select>
+      </div>
+      <div class="form-group">
         <label>Descripcion:</label>
         <textarea id="crearDescripcion" class="form-input" rows="3" placeholder="Describe el espacio deportivo..."></textarea>
       </div>
@@ -365,6 +408,12 @@ window.abrirModalCrearCancha = function () {
     const descripcion = document.getElementById('crearDescripcion').value.trim();
     const detallesRaw = document.getElementById('crearDetalles').value.trim();
     const detalles = detallesRaw ? detallesRaw.split('\n').filter((l) => l.trim()) : [];
+    const locationId = parseInt(document.getElementById('crearLocationId').value, 10);
+
+    if (!locationId) {
+      alert('Debes seleccionar una sede para la cancha.');
+      return;
+    }
 
     const dataCancha = {
       name: titulo,
@@ -375,13 +424,13 @@ window.abrirModalCrearCancha = function () {
       state: mapearEstadoFrontend(estado),
       description: descripcion,
       details: detalles,
-      locationId: 1,
+      locationId: locationId,
     };
 
     try {
       await crearCancha(dataCancha, []);
-      await renderCanchasGrid();
       cerrarModal();
+      await conScrollPreservado(() => renderCanchasGrid());
     } catch (error) {
       alert('Error al crear cancha: ' + error.message);
     }
@@ -484,6 +533,13 @@ window.abrirEditarCancha = async function (id) {
           </select>
         </div>
         <div class="form-group">
+          <label>Sede / Ubicacion:</label>
+          <select id="editLocationId" class="form-input" required>
+            <option value="">Selecciona una sede...</option>
+            ${generarOpcionesSelectUbicacion(cancha.locationId)}
+          </select>
+        </div>
+        <div class="form-group">
           <label>Descripcion:</label>
           <textarea id="editDescripcion" class="form-input" rows="3">${cancha.descripcion}</textarea>
         </div>
@@ -520,13 +576,13 @@ window.abrirEditarCancha = async function (id) {
         state: mapearEstadoFrontend(document.getElementById('editEstado').value),
         description: document.getElementById('editDescripcion').value.trim(),
         details: document.getElementById('editDetalles').value.trim().split('\n').filter((l) => l.trim()),
-        locationId: cancha.locationId || 1,
+        locationId: parseInt(document.getElementById('editLocationId').value, 10),
       };
 
       try {
         await editarCanchaApi(id, dataCancha, cancha.imagen ? [cancha.imagen] : [], []);
-        await renderCanchasGrid();
         cerrarModal();
+        await conScrollPreservado(() => renderCanchasGrid());
       } catch (error) {
         alert('Error al editar cancha: ' + error.message);
       }
@@ -540,9 +596,234 @@ window.eliminarCanchaConfirmada = function (id) {
   abrirModalConfirmacion('Estas seguro de que deseas eliminar esta cancha del catalogo?', async () => {
     try {
       await eliminarCanchaApi(id);
-      await renderCanchasGrid();
+      await conScrollPreservado(() => renderCanchasGrid());
     } catch (error) {
       alert('Error al eliminar cancha: ' + error.message);
+    }
+  });
+};
+
+async function renderSedesGrid() {
+  const contenedor = document.getElementById('sedesGridPreview');
+  if (!contenedor) return;
+
+  contenedor.innerHTML = '<p class="text-muted" style="padding: 1rem; text-align: center">Cargando sedes...</p>';
+
+  try {
+    ubicaciones = await obtenerUbicaciones();
+    contenedor.innerHTML = '';
+
+    if (ubicaciones.length === 0) {
+      contenedor.innerHTML = '<p class="text-muted" style="padding: 1rem; text-align: center">No hay sedes registradas.</p>';
+      return;
+    }
+
+    ubicaciones.forEach((sede) => {
+      const card = document.createElement('div');
+      card.className = 'card user-card-full';
+
+      const badgeClass = sede.state ? 'green' : 'orange';
+      const badgeText = sede.state ? 'Activa' : 'Inactiva';
+
+      card.innerHTML = `
+        <div class="user-card-header">
+          <div class="avatar" style="background: #ede9fe; color: #7c3aed">
+            <i data-lucide="map-pin"></i>
+          </div>
+          <div style="flex: 1; overflow: hidden">
+            <h4 style="font-size: 1rem; font-weight: 700; margin: 0; text-overflow: ellipsis; white-space: nowrap; overflow: hidden">
+              ${sede.name}
+            </h4>
+            <span class="badge-tag ${badgeClass}">${badgeText}</span>
+          </div>
+        </div>
+
+        <div class="user-card-body" style="margin: 12px 0">
+          ${sede.headquarters ? `<div class="card-info-row"><span class="text-muted">Ubicación:</span> <strong>${sede.headquarters}</strong></div>` : ''}
+          ${sede.address ? `<div class="card-info-row"><span class="text-muted">Direccion:</span> <strong>${sede.address}</strong></div>` : ''}
+          ${sede.description ? `<div class="card-info-row" style="flex-direction: column; gap: 6px;"><span class="text-muted">Descripcion:</span> <strong>${sede.description}</strong></div>` : ''}
+        </div>
+
+        <div class="user-card-actions">
+          <button class="btn-action btn-detail" onclick="abrirPerfilSede(${sede.id})"><i data-lucide="eye"></i> Ver</button>
+          <button class="btn-action btn-edit" onclick="abrirEditarSede(${sede.id})"><i data-lucide="edit-3"></i> Editar</button>
+          <button class="btn-action btn-delete" onclick="eliminarSedeConfirmada(${sede.id})"><i data-lucide="trash-2"></i> Eliminar</button>
+        </div>
+      `;
+
+      contenedor.appendChild(card);
+    });
+
+    if (window.lucide) lucide.createIcons();
+  } catch (error) {
+    contenedor.innerHTML = `<p class="text-muted" style="padding: 1rem; text-align: center">Error al cargar sedes: ${error.message}</p>`;
+  }
+}
+
+window.abrirModalCrearSede = function () {
+  const modal = document.getElementById('infoModal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalBody = document.getElementById('modalBody');
+
+  modalTitle.textContent = 'Crear Nueva Sede';
+  modalBody.innerHTML = `
+    <form id="formCrearSedeModal" class="form-modal-layout">
+      <div class="form-group">
+        <label>Nombre:</label>
+        <input type="text" id="crearSedeNombre" class="form-input" placeholder="Ej: Sede Norte" required />
+      </div>
+      <div class="form-group">
+        <label>Ubicación:</label>
+        <input type="text" id="crearSedeHeadquarters" class="form-input" placeholder="Ej: Sede Norte" />
+      </div>
+      <div class="form-group">
+        <label>Direccion:</label>
+        <input type="text" id="crearSedeAddress" class="form-input" placeholder="Ej: Calle 45 #12-34" />
+      </div>
+      <div class="form-group">
+        <label>URL QR:</label>
+        <input type="url" id="crearSedeUrlQr" class="form-input" placeholder="https://..." />
+      </div>
+      <div class="form-group">
+        <label>Descripcion:</label>
+        <textarea id="crearSedeDescription" class="form-input" rows="3" placeholder="Describe la sede..."></textarea>
+      </div>
+      <div class="modal-form-actions">
+        <button type="button" class="btn-secondary" onclick="cerrarModal()">Cancelar</button>
+        <button type="submit" class="btn-primary-modal">Crear Sede</button>
+      </div>
+    </form>
+  `;
+
+  modal.classList.add('open');
+
+  document.getElementById('formCrearSedeModal').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const data = {
+      name: document.getElementById('crearSedeNombre').value.trim(),
+      headquarters: document.getElementById('crearSedeHeadquarters').value.trim(),
+      address: document.getElementById('crearSedeAddress').value.trim(),
+      urlQrAddress: document.getElementById('crearSedeUrlQr').value.trim(),
+      description: document.getElementById('crearSedeDescription').value.trim(),
+    };
+
+    try {
+      await crearUbicacion(data);
+      cerrarModal();
+      await conScrollPreservado(() => Promise.all([renderSedesGrid(), renderCanchasGrid()]));
+    } catch (error) {
+      alert('Error al crear sede: ' + error.message);
+    }
+  });
+};
+
+window.abrirPerfilSede = function (id) {
+  const sede = ubicaciones.find((u) => u.id === id);
+  if (!sede) return;
+
+  const modal = document.getElementById('infoModal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalBody = document.getElementById('modalBody');
+
+  const badgeClass = sede.state ? 'green' : 'orange';
+  const badgeText = sede.state ? 'Activa' : 'Inactiva';
+
+  modalTitle.textContent = 'Detalles de la Sede';
+  modalBody.innerHTML = `
+    <div class="cliente-detalle-header">
+      <div class="avatar" style="width: 48px; height: 48px; font-size: 1.1rem; background: #ede9fe; color: #7c3aed">
+        <i data-lucide="map-pin"></i>
+      </div>
+      <div>
+        <h3 style="font-size: 1.1rem; margin: 0">${sede.name}</h3>
+        <span class="badge-tag ${badgeClass}">${badgeText}</span>
+      </div>
+    </div>
+
+    <div class="cliente-info-box" style="margin-top: 1rem">
+      ${sede.headquarters ? `<p class="cliente-info-item"><strong>Ubicación:</strong> ${sede.headquarters}</p>` : ''}
+      ${sede.address ? `<p class="cliente-info-item"><strong>Direccion:</strong> ${sede.address}</p>` : ''}
+      ${sede.urlQrAddress ? `<p class="cliente-info-item"><strong>URL QR:</strong> <a href="${sede.urlQrAddress}" target="_blank">${sede.urlQrAddress}</a></p>` : ''}
+      ${sede.description ? `<p class="cliente-info-item"><strong>Descripcion:</strong> ${sede.description}</p>` : ''}
+    </div>
+  `;
+
+  modal.classList.add('open');
+  if (window.lucide) lucide.createIcons();
+};
+
+window.abrirEditarSede = function (id) {
+  const sede = ubicaciones.find((u) => u.id === id);
+  if (!sede) return;
+
+  const modal = document.getElementById('infoModal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalBody = document.getElementById('modalBody');
+
+  modalTitle.textContent = 'Editar Sede';
+  modalBody.innerHTML = `
+    <form id="formEditarSedeModal" class="form-modal-layout">
+      <div class="form-group">
+        <label>Nombre:</label>
+        <input type="text" id="editSedeNombre" class="form-input" value="${sede.name}" required />
+      </div>
+      <div class="form-group">
+        <label>Ubicación:</label>
+        <input type="text" id="editSedeHeadquarters" class="form-input" value="${sede.headquarters || ''}" />
+      </div>
+      <div class="form-group">
+        <label>Direccion:</label>
+        <input type="text" id="editSedeAddress" class="form-input" value="${sede.address || ''}" />
+      </div>
+      <div class="form-group">
+        <label>URL QR:</label>
+        <input type="url" id="editSedeUrlQr" class="form-input" value="${sede.urlQrAddress || ''}" />
+      </div>
+      <div class="form-group">
+        <label>Descripcion:</label>
+        <textarea id="editSedeDescription" class="form-input" rows="3">${sede.description || ''}</textarea>
+      </div>
+      <div class="modal-form-actions">
+        <button type="button" class="btn-secondary" onclick="cerrarModal()">Cancelar</button>
+        <button type="submit" class="btn-primary-modal">Guardar Cambios</button>
+      </div>
+    </form>
+  `;
+
+  modal.classList.add('open');
+
+  document.getElementById('formEditarSedeModal').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const data = {
+      name: document.getElementById('editSedeNombre').value.trim(),
+      headquarters: document.getElementById('editSedeHeadquarters').value.trim(),
+      address: document.getElementById('editSedeAddress').value.trim(),
+      urlQrAddress: document.getElementById('editSedeUrlQr').value.trim(),
+      description: document.getElementById('editSedeDescription').value.trim(),
+    };
+
+    try {
+      await editarUbicacionApi(id, data);
+      cerrarModal();
+      await conScrollPreservado(() => Promise.all([renderSedesGrid(), renderCanchasGrid()]));
+    } catch (error) {
+      alert('Error al editar sede: ' + error.message);
+    }
+  });
+};
+
+window.eliminarSedeConfirmada = function (id) {
+  const sede = ubicaciones.find((u) => u.id === id);
+  if (!sede) return;
+
+  abrirModalConfirmacion(`Estas seguro de que deseas eliminar la sede <strong>${sede.name}</strong>?`, async () => {
+    try {
+      await toggleEstadoUbicacion(id);
+      await conScrollPreservado(() => Promise.all([renderSedesGrid(), renderCanchasGrid()]));
+    } catch (error) {
+      alert('Error al eliminar sede: ' + error.message);
     }
   });
 };
@@ -695,6 +976,8 @@ function activarModalGeneral() {
         modal.classList.add('open');
       } else if (clave === 'crear-cancha') {
         abrirModalCrearCancha();
+      } else if (clave === 'crear-sede') {
+        abrirModalCrearSede();
       } else {
         const info = datosGeneralesModales[clave];
         if (info) {

@@ -38,8 +38,8 @@ async function handleResponse(response, { auth = false } = {}) {
       if (!currentPath.includes('login.html')) {
         window.location.href = '../pages/login.html';
       }
+      throw new Error('Sesion expirada. Inicia sesion nuevamente.');
     }
-    throw new Error('Sesion expirada. Inicia sesion nuevamente.');
   }
 
   const data = await response.json().catch(() => ({}));

@@ -1,5 +1,8 @@
+import { apiGet, apiPost, apiPut, apiPatch, apiMultipart } from './apiClient.js';
+import { USE_MOCK, obtenerCanchasMock, guardarCanchasMock } from '../utils/mockData.js';
+
 export function formatoTipo(cancha) {
-  if (Array.isArray(cancha.tipo)) return cancha.tipo.join(' • ');
+  if (Array.isArray(cancha.tipo)) return cancha.tipo.join(' - ');
   return cancha.tipo || '';
 }
 
@@ -9,190 +12,125 @@ export function tipoAArray(valor) {
   return [];
 }
 
-export const canchasIniciales = [
-  {
-    id: 1,
-    titulo: 'Estadio Principal',
-    tipo: ['Fútbol 11'],
-    superficie: 'Grama Natural Pro',
-    precio: '$60.000',
-    tarifa: 60000,
-    capacidad: 22,
-    estado: 'Disponible',
-    imagen: '../assets/img/canchas/futbol-estadio-principal.webp',
-    descripcion: 'Nuestra joya del complejo. Una cancha con medidas oficiales óptima para partidos grandes...',
-    detalles: [
-      'Capacidad ideal: 22 jugadores',
-      'Graderías laterales para acompañantes',
-      'Incluye petos de entrenamiento y balones oficiales',
-    ],
-  },
-  {
-    id: 2,
-    titulo: 'Coliseo Multi-deporte',
-    tipo: ['Fútbol Sala', 'Baloncesto'],
-    superficie: 'Madera Pulida / PVC',
-    precio: '$45.000',
-    tarifa: 45000,
-    capacidad: 10,
-    estado: 'Disponible',
-    imagen: '../assets/img/canchas/baloncesto-coliseo.webp',
-    descripcion: 'Espacio totalmente techado y protegido del clima...',
-    detalles: [
-      'Tableros de baloncesto hidráulicos ajustables',
-      'Excelente ventilación e iluminación cenital',
-      'Arcos de fútsal con mallas reforzadas',
-    ],
-  },
-  {
-    id: 3,
-    titulo: 'Club de Tenis Las Palmas',
-    tipo: ['Tenis'],
-    superficie: 'Superficie Sintética Rápida',
-    precio: '$35.000',
-    tarifa: 35000,
-    capacidad: 4,
-    estado: 'Disponible',
-    imagen: '../assets/img/canchas/tenis-las-palmas.webp',
-    descripcion: 'Diseñada para amantes de la velocidad y precisión...',
-    detalles: [
-      'Excelente rebote controlado de bola',
-      'Entorno libre de ruidos disruptivos',
-      'Alquiler disponible de raquetas y tubos de bolas',
-    ],
-  },
-  {
-    id: 4,
-    titulo: 'Pádel Arena Celeste',
-    tipo: ['Pádel'],
-    superficie: 'Vidrio Templado Panorámico',
-    precio: '$40.000',
-    tarifa: 40000,
-    capacidad: 4,
-    estado: 'Disponible',
-    imagen: '../assets/img/canchas/padel-arena.webp',
-    descripcion: 'Disfruta del deporte con mayor crecimiento mundial...',
-    detalles: [
-      'Estructura panorámica de alta visibilidad',
-      'Iluminación LED antideslumbrante orientada al cielo',
-      'Zona de descanso integrada para hidratación',
-    ],
-  },
-  {
-    id: 5,
-    titulo: 'Zona de Entrenamiento',
-    tipo: ['Cancha Indoor'],
-    superficie: 'Piso de Concreto',
-    precio: '$25.000',
-    tarifa: 25000,
-    capacidad: 12,
-    estado: 'Disponible',
-    imagen: '../assets/img/canchas/indoor-entrenamiento.webp',
-    descripcion: 'Diseñada especialmente para sesiones enfocadas en la técnica...',
-    detalles: [
-      'Excelente acústica y concentración',
-      'Redes de aro en nylon de alta densidad',
-      'Ideal para prácticas libres o rutinas físicas',
-    ],
-  },
-  {
-    id: 6,
-    titulo: 'La Catedral del Basket',
-    tipo: ['Baloncesto', 'Básquetbol 3x3'],
-    superficie: 'Madera Deportiva',
-    precio: '$30.000',
-    tarifa: 30000,
-    capacidad: 10,
-    estado: 'Disponible',
-    imagen: '../assets/img/canchas/baloncesto-coliseo.webp',
-    descripcion: 'Espacio techado con pista reglamentaria y zona 3x3 para partidos rápidos...',
-    detalles: [
-      'Tableros homologados con red reglamentaria',
-      'Iluminación LED de alta intensidad',
-      'Marcador electrónico digital integrado',
-    ],
-  },
-  {
-    id: 7,
-    titulo: 'Olas del Norte',
-    tipo: ['Vóley Playa', 'Vóley Indoor'],
-    superficie: 'Arena Sintética',
-    precio: '$28.000',
-    tarifa: 28000,
-    capacidad: 12,
-    estado: 'Disponible',
-    imagen: '../assets/img/canchas/padel-arena.webp',
-    descripcion: 'Cancha de vóley con arena sintética de alta calidad y red reglamentaria...',
-    detalles: [
-      'Arena sintética certificada para competencia',
-      'Red ajustable para playa o indoor',
-      'Sector de calentamiento lateral',
-    ],
-  },
-  {
-    id: 8,
-    titulo: 'El Potrero Sintético',
-    tipo: ['Fútbol 7', 'Futsal'],
-    superficie: 'Césped Sintético 4G',
-    precio: '$38.000',
-    tarifa: 38000,
-    capacidad: 14,
-    estado: 'Mantenimiento',
-    imagen: '../assets/img/canchas/futbol-estadio-principal.webp',
-    descripcion: 'Cancha sintética con dimensiones oficiales de fútbol 7, en mantenimiento preventivo...',
-    detalles: [
-      'Césped sintético de última generación 4G',
-      'Dimensiones reglamentarias FIFA',
-      'Actualmente en mantenimiento preventivo del césped',
-    ],
-  },
-  {
-    id: 9,
-    titulo: 'Los Cristales Pádel Club',
-    tipo: ['Pádel', 'Pádel Cross'],
-    superficie: 'Cristal Templado Panorámico',
-    precio: '$42.000',
-    tarifa: 42000,
-    capacidad: 4,
-    estado: 'Disponible',
-    imagen: '../assets/img/canchas/padel-arena.webp',
-    descripcion: 'Club de pádel con estructura panorámica y zona para pádel cross...',
-    detalles: [
-      'Muro panorámico sin perfiles verticales',
-      'Iluminación cenital homologada',
-      'Zona adaptada para pádel cross y entrenamiento',
-    ],
-  },
-  {
-    id: 10,
-    titulo: 'Tierra y Red',
-    tipo: ['Tenis', 'Tenis de Mesa'],
-    superficie: 'Polvo de Ladrillo',
-    precio: '$32.000',
-    tarifa: 32000,
-    capacidad: 4,
-    estado: 'Mantenimiento',
-    imagen: '../assets/img/canchas/tenis-las-palmas.webp',
-    descripcion: 'Cancha de tenis con superficie de polvo de ladrillo en renovación...',
-    detalles: [
-      'Superficie de arcilla roja natural',
-      'Red reglamentaria con poste de acero',
-      'Actualmente en proceso de nivelación del court',
-    ],
-  },
-];
-
-const CANCHAS_KEY = 'canchas_data';
-
-export function obtenerCanchas() {
-  const data = localStorage.getItem(CANCHAS_KEY);
-  if (!data) {
-    localStorage.setItem(CANCHAS_KEY, JSON.stringify(canchasIniciales));
-    return canchasIniciales;
-  }
-  return JSON.parse(data);
+function normalizarCanchaBackend(raw) {
+  return {
+    id: raw.id,
+    titulo: raw.name || '',
+    nombre: raw.name || '',
+    tipo: raw.sport ? tipoAArray(raw.sport) : [],
+    superficie: raw.surface || '',
+    precio: `$${Number(raw.hourlyRate || 0).toLocaleString('es-CO')}`,
+    tarifa: Number(raw.hourlyRate || 0),
+    capacidad: Number(raw.capacity || 0),
+    estado: raw.state === 'DISPONIBLE' ? 'Disponible' : raw.state === 'MANTENIMIENTO' ? 'Mantenimiento' : 'Disponible',
+    imagen: (raw.urlPictures && raw.urlPictures[0]) || (raw.url_pictures && raw.url_pictures[0]) || '',
+    descripcion: raw.description || '',
+    detalles: raw.details || [],
+    locationId: raw.locationId || null,
+  };
 }
 
-export function guardarCanchas(canchas) {
-  localStorage.setItem(CANCHAS_KEY, JSON.stringify(canchas));
+export async function obtenerCanchas() {
+  if (USE_MOCK) return obtenerCanchasMock();
+  const data = await apiGet('/field/all');
+  const canchas = Array.isArray(data) ? data : data.canchas || [];
+  return canchas.map(normalizarCanchaBackend);
+}
+
+export async function crearCancha(data, images) {
+  if (USE_MOCK) {
+    const canchas = obtenerCanchasMock();
+    const nuevoId = canchas.length > 0 ? Math.max(...canchas.map((c) => c.id)) + 1 : 1;
+    const nuevaCancha = {
+      id: nuevoId,
+      titulo: data.name,
+      nombre: data.name,
+      tipo: tipoAArray(data.sport),
+      superficie: data.surface,
+      precio: `$${Number(data.hourlyRate).toLocaleString('es-CO')}`,
+      tarifa: Number(data.hourlyRate),
+      capacidad: Number(data.capacity),
+      estado: 'Disponible',
+      imagen: images && images.length > 0 ? URL.createObjectURL(images[0]) : '',
+      descripcion: data.description,
+      detalles: Array.isArray(data.details) ? data.details : [],
+    };
+    canchas.push(nuevaCancha);
+    guardarCanchasMock(canchas);
+    return nuevaCancha;
+  }
+
+  const formData = new FormData();
+  formData.append('locationId', data.locationId);
+  formData.append('name', data.name);
+  formData.append('capacity', String(data.capacity));
+  formData.append('sport', data.sport);
+  formData.append('surface', data.surface);
+  formData.append('description', data.description);
+  formData.append('hourlyRate', String(data.hourlyRate));
+
+  if (Array.isArray(data.details)) {
+    data.details.forEach((detail) => formData.append('details', detail));
+  }
+
+  if (images && images.length > 0) {
+    images.forEach((image) => formData.append('pictures', image));
+  }
+
+  return apiMultipart('/field/new', formData, { auth: true, method: 'POST' });
+}
+
+export async function editarCancha(id, data, existingUrls = [], newImages = []) {
+  if (USE_MOCK) {
+    const canchas = obtenerCanchasMock();
+    const idx = canchas.findIndex((c) => c.id === id);
+    if (idx === -1) throw new Error('Cancha no encontrada');
+
+    canchas[idx].titulo = data.name || canchas[idx].titulo;
+    canchas[idx].nombre = data.name || canchas[idx].nombre;
+    canchas[idx].tipo = data.sport ? tipoAArray(data.sport) : canchas[idx].tipo;
+    canchas[idx].superficie = data.surface || canchas[idx].superficie;
+    canchas[idx].tarifa = data.hourlyRate ? Number(data.hourlyRate) : canchas[idx].tarifa;
+    canchas[idx].precio = `$${canchas[idx].tarifa.toLocaleString('es-CO')}`;
+    canchas[idx].capacidad = data.capacity ? Number(data.capacity) : canchas[idx].capacidad;
+    canchas[idx].estado = data.state || canchas[idx].estado;
+    canchas[idx].descripcion = data.description || canchas[idx].descripcion;
+    canchas[idx].detalles = Array.isArray(data.details) ? data.details : canchas[idx].detalles;
+
+    guardarCanchasMock(canchas);
+    return canchas[idx];
+  }
+
+  const formData = new FormData();
+  if (data.locationId) formData.append('locationId', data.locationId);
+  if (data.name) formData.append('name', data.name);
+  if (data.capacity) formData.append('capacity', String(data.capacity));
+  if (data.sport) formData.append('sport', data.sport);
+  if (data.surface) formData.append('surface', data.surface);
+  if (data.description) formData.append('description', data.description);
+  if (data.hourlyRate) formData.append('hourlyRate', String(data.hourlyRate));
+  if (data.state) formData.append('state', data.state);
+
+  existingUrls.forEach((url) => formData.append('UrlPictures', url));
+
+  if (newImages.length > 0) {
+    newImages.forEach((image) => formData.append('pictures', image));
+  }
+
+  if (Array.isArray(data.details)) {
+    data.details.forEach((detail) => formData.append('details', detail));
+  }
+
+  return apiMultipart(`/field/edit/${id}`, formData, { auth: true, method: 'PUT' });
+}
+
+export async function eliminarCancha(id) {
+  if (USE_MOCK) {
+    const canchas = obtenerCanchasMock();
+    const filtradas = canchas.filter((c) => c.id !== id);
+    guardarCanchasMock(filtradas);
+    return;
+  }
+
+  return apiPatch(`/field/${id}/state`, { auth: true });
 }

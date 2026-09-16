@@ -80,7 +80,11 @@ class AppNavbar extends HTMLElement {
           >
         </li>
         <li class="nav-item">
-          <a class="nav-link nav-link-custom transition-base px-2" href="#">Galería</a>
+          <a
+            class="nav-link ${currentPage === 'galeria.html' ? 'fw-bold text-brand-mid-green' : 'nav-link-custom'} transition-base px-2"
+            href="${this.pagesPath}galeria.html"
+            >Galería</a
+          >
         </li>
       </ul>
 
@@ -171,7 +175,7 @@ class AppFooter extends HTMLElement {
             <a href="${comoFuncionaUrl}" class="nav-link p-1 footer-link transition-base">¿Cómo funciona?</a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link p-1 footer-link transition-base">Galería</a>
+            <a href="${pagesPath}galeria.html" class="nav-link p-1 footer-link transition-base">Galería</a>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link p-1 footer-link transition-base">Política de Privacidad</a>

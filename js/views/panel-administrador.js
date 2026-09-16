@@ -331,8 +331,8 @@ window.abrirModalCrearCancha = function () {
           style="width: 100%; max-height: 160px; object-fit: cover; border-radius: 8px; border: 1px solid #e2e8f0" />
       </div>
       <div class="form-group">
-        <label>URL de la Imagen / Foto:</label>
-        <input type="url" id="crearImagen" class="form-input" value="${defaultImg}" required />
+        <label>Imagen de la Cancha:</label>
+        <input type="file" id="crearImagenFile" class="form-input" accept="image/*" required />
       </div>
       <div class="form-group">
         <label>Nombre del Espacio:</label>
@@ -389,10 +389,13 @@ window.abrirModalCrearCancha = function () {
 
   modal.classList.add('open');
 
-  const inputImagen = document.getElementById('crearImagen');
+  const inputImagenFile = document.getElementById('crearImagenFile');
   const imgPreview = document.getElementById('crearPreviewImg');
-  inputImagen.addEventListener('input', () => {
-    imgPreview.src = inputImagen.value.trim() || defaultImg;
+  inputImagenFile.addEventListener('change', () => {
+    const file = inputImagenFile.files[0];
+    if (file) {
+      imgPreview.src = URL.createObjectURL(file);
+    }
   });
 
   document.getElementById('formCrearCanchaModal').addEventListener('submit', async (e) => {
@@ -404,7 +407,7 @@ window.abrirModalCrearCancha = function () {
     const tarifa = parseFloat(document.getElementById('crearTarifa').value);
     const capacidad = parseInt(document.getElementById('crearCapacidad').value, 10);
     const estado = document.getElementById('crearEstado').value;
-    const imagen = document.getElementById('crearImagen').value.trim() || defaultImg;
+    const imagenFile = document.getElementById('crearImagenFile').files[0];
     const descripcion = document.getElementById('crearDescripcion').value.trim();
     const detallesRaw = document.getElementById('crearDetalles').value.trim();
     const detalles = detallesRaw ? detallesRaw.split('\n').filter((l) => l.trim()) : [];
@@ -428,7 +431,7 @@ window.abrirModalCrearCancha = function () {
     };
 
     try {
-      await crearCancha(dataCancha, []);
+      await crearCancha(dataCancha, imagenFile ? [imagenFile] : []);
       cerrarModal();
       await conScrollPreservado(() => renderCanchasGrid());
     } catch (error) {
@@ -502,8 +505,9 @@ window.abrirEditarCancha = async function (id) {
           <img id="editPreviewImg" src="${imagenActual}" alt="Vista previa" style="width: 100%; max-height: 160px; object-fit: cover; border-radius: 8px; border: 1px solid #e2e8f0;" />
         </div>
         <div class="form-group">
-          <label>URL de la Imagen / Foto:</label>
-          <input type="url" id="editImagen" class="form-input" value="${imagenActual}" required />
+          <label>Imagen de la Cancha:</label>
+          <input type="file" id="editImagenFile" class="form-input" accept="image/*" />
+          <input type="hidden" id="editImagenUrl" value="${imagenActual}" />
         </div>
         <div class="form-group">
           <label>Nombre del Espacio:</label>
@@ -556,12 +560,13 @@ window.abrirEditarCancha = async function (id) {
 
     modal.classList.add('open');
 
-    const inputImagen = document.getElementById('editImagen');
+    const inputImagenFile = document.getElementById('editImagenFile');
     const imgPreview = document.getElementById('editPreviewImg');
-    inputImagen.addEventListener('input', () => {
-      imgPreview.src =
-        inputImagen.value.trim() ||
-        'https://raw.githubusercontent.com/CamiloBermeo/devPortes/develop/assets/img/canchas/baloncesto-coliseo.webp';
+    inputImagenFile.addEventListener('change', () => {
+      const file = inputImagenFile.files[0];
+      if (file) {
+        imgPreview.src = URL.createObjectURL(file);
+      }
     });
 
     document.getElementById('formEditarCanchaModal').addEventListener('submit', async (e) => {
@@ -580,7 +585,13 @@ window.abrirEditarCancha = async function (id) {
       };
 
       try {
-        await editarCanchaApi(id, dataCancha, cancha.imagen ? [cancha.imagen] : [], []);
+        const editImagenFile = document.getElementById('editImagenFile').files[0];
+        const editImagenUrl = document.getElementById('editImagenUrl').value;
+        if (editImagenFile) {
+          await editarCanchaApi(id, dataCancha, [], [editImagenFile]);
+        } else {
+          await editarCanchaApi(id, dataCancha, editImagenUrl ? [editImagenUrl] : [], []);
+        }
         cerrarModal();
         await conScrollPreservado(() => renderCanchasGrid());
       } catch (error) {

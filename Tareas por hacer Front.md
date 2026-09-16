@@ -7,7 +7,7 @@ dividido por sencciones para que no tenga perdida.
 
 ### Miscelaneos
 
-- [ ] Añadir pagina Galería.
+- [x] Añadir pagina Galería.
 - [x] **Optimizar imagenes pasando las mismas a WEBP (Usar github como
   hosting).**
 
@@ -25,13 +25,13 @@ dividido por sencciones para que no tenga perdida.
 
 ### Pag Reservas
 
-- [ ] arreglar colores del modal cambiar cancha
+- [x] arreglar colores del modal cambiar cancha
 
 #### Paso 1
 
-- [ ] centrar los pasos y todos los divs
-- [ ] quitar metodo de pago y pasarlo al modal de pago
-- [ ] (opcional) si no se ocurre nuevo campo separar nombre y apellido
+- [x] centrar los pasos y todos los divs
+- [x] quitar metodo de pago y pasarlo al modal de pago
+- [x] (opcional) si no se ocurre nuevo campo separar nombre y apellido
 
 #### Paso 2
 
@@ -39,18 +39,18 @@ dividido por sencciones para que no tenga perdida.
 
 #### Paso 3
 
-- [ ] cambiar el texto del botón por ir a pagar
+- [x] cambiar el texto del botón por ir a pagar
 
 #### **Paso 4 Modal de pago**
 
-- [ ] **diseño libre para mauricio**
+- [x] **diseño libre para mauricio**
 
 #### Paso 5 - reservado
 
 - [ ] añadir sección del qr para la ubicación de la cancha con textos
   descriptivos
 
-## PERFIL USUAIRO
+## PERFIL USUARIO
 
 - [ ] ***agregar panel de reservas pendientes donde se pueda cancelar una
   reserva***
@@ -63,7 +63,7 @@ dividido por sencciones para que no tenga perdida.
 ## Dashboard
 
 - [ ] que la información se llene del back
-- [ ] ***hacer que el boton de cerrar sesion funcione***
+- [x] ***hacer que el boton de cerrar sesion funcione***
 - [ ] agregar seccion en el sidebard para mi perfil del administrador
 - [ ] ***cambiar "Resumen Ejecutivo del Dashboard" por "historial de
   reservas"***
@@ -83,7 +83,7 @@ dividido por sencciones para que no tenga perdida.
 - [ ] quitar estado del modal de crear nueva cancha
 - [ ] cambiar placeholder Nombre del Espacio: Ej: sintetica #1, Deporte: ej:
   Futbol 11
-- [ ] agregar ubicacion a la cancha
+- [x] agregar ubicacion a la cancha (select de sedes integrado)
 
 ## Cliente
 
@@ -91,5 +91,24 @@ dividido por sencciones para que no tenga perdida.
 
 ### Gestión
 
-- [ ] sección en el sidebar para gestionar temas de métodos de pago y
-  ubicaciones por ahora
+- [x] sección en el sidebar para gestionar sedes/ubicaciones (CRUD de sedes implementado)
+
+## SEDES (Completado)
+
+- [x] CRUD completo de sedes en panel administrador
+- [x] Sidebar: Sedes antes de Canchas
+- [x] Cards con labels: Ubicación, Dirección, Descripción
+- [x] Modal crear sede
+- [x] Modal editar sede
+- [x] Modal ver detalle sede
+- [x] Eliminar sede (toggle estado)
+
+## Fixes realizados en esta sesion
+
+- [x] Tokens expirados: apiClient.js limpia sesion en 401 y 403
+- [x] Sedes no se reflejaban en canchas: re-renderizar canchas despues de CRUD sedes
+- [x] Scroll al fondo: funcion conScrollPreservado() preserva posicion
+- [x] Orden de items: findAll() con ORDER BY id ASC en locations y fields
+- [x] Layout: Sedes antes de Canchas en sidebar y secciones HTML
+- [x] Labels: "Sede:" cambiado a "Ubicación:" en cards, modales y formularios
+- [x] Descripcion en cards: flex-direction column con gap para mejor legibilidad

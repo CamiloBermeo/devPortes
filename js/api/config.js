@@ -2,4 +2,4 @@ const IS_LOCAL = window.location.hostname === 'localhost' || window.location.hos
 
 export const API_URL = IS_LOCAL
   ? 'http://localhost:8080/api/v1'
-  : 'https://TU_API_URL/api/v1';
+  : 'https://devportes-backend.onrender.com/api/v1';

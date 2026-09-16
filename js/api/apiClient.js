@@ -30,12 +30,14 @@ function limpiarSesion() {
   document.dispatchEvent(new CustomEvent('session-change'));
 }
 
-async function handleResponse(response) {
+async function handleResponse(response, { auth = false } = {}) {
   if (response.status === 401 || response.status === 403) {
-    limpiarSesion();
-    const currentPath = window.location.pathname;
-    if (!currentPath.includes('login.html')) {
-      window.location.href = '../pages/login.html';
+    if (auth) {
+      limpiarSesion();
+      const currentPath = window.location.pathname;
+      if (!currentPath.includes('login.html')) {
+        window.location.href = '../pages/login.html';
+      }
     }
     throw new Error('Sesion expirada. Inicia sesion nuevamente.');
   }
@@ -58,7 +60,7 @@ export async function apiGet(endpoint, { auth = false } = {}) {
     method: 'GET',
     headers: getHeaders({ auth }),
   });
-  return handleResponse(response);
+  return handleResponse(response, { auth });
 }
 
 export async function apiPost(endpoint, body, { auth = false } = {}) {
@@ -67,7 +69,7 @@ export async function apiPost(endpoint, body, { auth = false } = {}) {
     headers: getHeaders({ auth }),
     body: JSON.stringify(body),
   });
-  return handleResponse(response);
+  return handleResponse(response, { auth });
 }
 
 export async function apiPut(endpoint, body, { auth = false } = {}) {
@@ -76,7 +78,7 @@ export async function apiPut(endpoint, body, { auth = false } = {}) {
     headers: getHeaders({ auth }),
     body: JSON.stringify(body),
   });
-  return handleResponse(response);
+  return handleResponse(response, { auth });
 }
 
 export async function apiPatch(endpoint, { auth = false } = {}) {
@@ -84,7 +86,7 @@ export async function apiPatch(endpoint, { auth = false } = {}) {
     method: 'PATCH',
     headers: getHeaders({ auth }),
   });
-  return handleResponse(response);
+  return handleResponse(response, { auth });
 }
 
 export async function apiMultipart(endpoint, formData, { auth = false, method = 'POST' } = {}) {
@@ -93,7 +95,7 @@ export async function apiMultipart(endpoint, formData, { auth = false, method = 
     headers: getHeaders({ auth, multipart: true }),
     body: formData,
   });
-  return handleResponse(response);
+  return handleResponse(response, { auth });
 }
 
 export { API_URL };

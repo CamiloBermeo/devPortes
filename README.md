@@ -1,21 +1,20 @@
-# devPortes
+# devPortes - Frontend
 
-Sistema web para la administración y reserva de complejos deportivos. Desarrollado como proyecto integrador para el bootcamp Generation.
+Sistema web para la administración y reserva de complejos deportivos, desarrollado como proyecto integrador para el bootcamp Generation.
 
-## Demo | Index
+## Deployments
 
-<img width="1294" height="686" alt="image" src="https://github.com/user-attachments/assets/da5cbad9-8bc8-4b68-97f8-de81f5597a53" />
+- **Aplicación Web (Vercel):** https://dev-portes.vercel.app/
+- **Servidor Backend:** https://devportes-backend-yvbj.onrender.com/
+- **Repositorio Backend:** [Enlace al repositorio backend](https://github.com/CamiloBermeo/DevPortes-Backend)
 
-> [**Vista el Index**](https://camilobermeo.github.io/devPortes/)
+## Vista Previa
 
+### Index
+![Index](https://github.com/user-attachments/assets/da5cbad9-8bc8-4b68-97f8-de81f5597a53)
 
-
-## Demo | Panel de administrador
-
-<img width="1296" height="704" alt="image" src="https://github.com/user-attachments/assets/2f7a79ef-325a-4fa4-8882-dc84d590cbb8" />
-
-> [Panel de Administrador](https://camilobermeo.github.io/devPortes/pages/panel-administrador.html)
-
+### Panel de Administrador
+![Panel de Administrador](https://github.com/user-attachments/assets/2f7a79ef-325a-4fa4-8882-dc84d590cbb8)
 
 ## Funcionalidades
 
@@ -23,7 +22,9 @@ Sistema web para la administración y reserva de complejos deportivos. Desarroll
 - **Gestión administrativa:** Control de escenarios deportivos, horarios y tarifas.
 - **Panel de usuario:** Historial de reservas y gestión de perfil.
 
-## Tech Stack
+## Tecnologías Utilizadas
 
-- **Frontend:** HTML5, CSS3, JavaScript (ES6+)
-- **Hosting:** GitHub Pages
+- HTML5
+- CSS3
+- JavaScript (ES6+)
+- Vercel (Deployment)

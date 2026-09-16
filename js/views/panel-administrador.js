@@ -1,6 +1,7 @@
 import { obtenerCanchas, crearCancha, editarCancha as editarCanchaApi, eliminarCancha as eliminarCanchaApi, formatoTipo, tipoAArray } from '../api/canchas.js';
 import { obtenerUbicaciones, crearUbicacion, editarUbicacion as editarUbicacionApi, toggleEstadoUbicacion } from '../api/locations.js';
 import { USE_MOCK } from '../utils/mockData.js';
+import { showToast } from '../componets/toast.js';
 
 const KEY_ADMIN_SESSION = 'devportes_admin_sesion';
 
@@ -414,7 +415,7 @@ window.abrirModalCrearCancha = function () {
     const locationId = parseInt(document.getElementById('crearLocationId').value, 10);
 
     if (!locationId) {
-      alert('Debes seleccionar una sede para la cancha.');
+      showToast('Debes seleccionar una sede para la cancha.', 'advertencia');
       return;
     }
 
@@ -435,7 +436,7 @@ window.abrirModalCrearCancha = function () {
       cerrarModal();
       await conScrollPreservado(() => renderCanchasGrid());
     } catch (error) {
-      alert('Error al crear cancha: ' + error.message);
+      showToast('Error al crear cancha: ' + error.message, 'error');
     }
   });
 };
@@ -479,7 +480,7 @@ window.abrirPerfilCancha = async function (id) {
 
     modal.classList.add('open');
   } catch (error) {
-    alert('Error al cargar cancha: ' + error.message);
+    showToast('Error al cargar cancha: ' + error.message, 'error');
   }
 };
 
@@ -595,11 +596,11 @@ window.abrirEditarCancha = async function (id) {
         cerrarModal();
         await conScrollPreservado(() => renderCanchasGrid());
       } catch (error) {
-        alert('Error al editar cancha: ' + error.message);
+        showToast('Error al editar cancha: ' + error.message, 'error');
       }
     });
   } catch (error) {
-    alert('Error al cargar cancha: ' + error.message);
+    showToast('Error al cargar cancha: ' + error.message, 'error');
   }
 };
 
@@ -609,7 +610,7 @@ window.eliminarCanchaConfirmada = function (id) {
       await eliminarCanchaApi(id);
       await conScrollPreservado(() => renderCanchasGrid());
     } catch (error) {
-      alert('Error al eliminar cancha: ' + error.message);
+      showToast('Error al eliminar cancha: ' + error.message, 'error');
     }
   });
 };
@@ -724,7 +725,7 @@ window.abrirModalCrearSede = function () {
       cerrarModal();
       await conScrollPreservado(() => Promise.all([renderSedesGrid(), renderCanchasGrid()]));
     } catch (error) {
-      alert('Error al crear sede: ' + error.message);
+      showToast('Error al crear sede: ' + error.message, 'error');
     }
   });
 };
@@ -795,14 +796,6 @@ window.abrirEditarSede = function (id) {
         <label>Descripcion:</label>
         <textarea id="editSedeDescription" class="form-input" rows="3">${sede.description || ''}</textarea>
       </div>
-      <div class="form-group">
-        <label>Descripción:</label>
-        <textarea id="editDescripcion" class="form-input" rows="3">${cancha.descripcion || ''}</textarea>
-      </div>
-      <div class="form-group">
-        <label>Detalles (uno por línea):</label>
-        <textarea id="editDetalles" class="form-input" rows="4">${detallesRaw}</textarea>
-      </div>
       <div class="modal-form-actions">
         <button type="button" class="btn-secondary" onclick="cerrarModal()">Cancelar</button>
         <button type="submit" class="btn-primary-modal">Guardar Cambios</button>
@@ -828,7 +821,7 @@ window.abrirEditarSede = function (id) {
       cerrarModal();
       await conScrollPreservado(() => Promise.all([renderSedesGrid(), renderCanchasGrid()]));
     } catch (error) {
-      alert('Error al editar sede: ' + error.message);
+      showToast('Error al editar sede: ' + error.message, 'error');
     }
   });
 };
@@ -842,7 +835,7 @@ window.eliminarSedeConfirmada = function (id) {
       await toggleEstadoUbicacion(id);
       await conScrollPreservado(() => Promise.all([renderSedesGrid(), renderCanchasGrid()]));
     } catch (error) {
-      alert('Error al eliminar sede: ' + error.message);
+      showToast('Error al eliminar sede: ' + error.message, 'error');
     }
   });
 };

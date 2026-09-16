@@ -11,6 +11,7 @@
   --fondo-gris: var(--color-fondo, #f8f9fa);
   --texto-oscuro: var(--color-dark, #1c1c1c);
   --texto-gris: #6c757d;
+
   --borde-suave: #e9ecef;
 
   --sombra-suave: 0 2px 8px rgba(0, 0, 0, 0.06);
@@ -148,8 +149,8 @@ app-footer {
 }
 
 .perfil-foto {
-  width: 100px;
-  height: 100px;
+  width: clamp(90px, 18vw, 110px);
+  height: clamp(90px, 18vw, 110px);
   border-radius: 50%;
   object-fit: cover;
   border: 4px solid var(--blanco);
@@ -548,6 +549,7 @@ app-footer {
 .tabla-reservas {
   width: 100%;
   border-collapse: collapse;
+  min-width: 750px;
 }
 
 .tabla-reservas th {
@@ -661,11 +663,13 @@ app-footer {
   white-space: nowrap;
 }
 
+/* COMPLETADA */
 .estado-badge.completada {
   background-color: var(--verde-claro);
   color: #2e7d32;
 }
 
+/* CANCELADA */
 .estado-badge.cancelada {
   background-color: var(--rojo-claro);
   color: #c62828;

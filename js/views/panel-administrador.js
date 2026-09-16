@@ -784,6 +784,14 @@ window.abrirEditarSede = function (id) {
         <label>Descripcion:</label>
         <textarea id="editSedeDescription" class="form-input" rows="3">${sede.description || ''}</textarea>
       </div>
+      <div class="form-group">
+        <label>Descripción:</label>
+        <textarea id="editDescripcion" class="form-input" rows="3">${cancha.descripcion || ''}</textarea>
+      </div>
+      <div class="form-group">
+        <label>Detalles (uno por línea):</label>
+        <textarea id="editDetalles" class="form-input" rows="4">${detallesRaw}</textarea>
+      </div>
       <div class="modal-form-actions">
         <button type="button" class="btn-secondary" onclick="cerrarModal()">Cancelar</button>
         <button type="submit" class="btn-primary-modal">Guardar Cambios</button>

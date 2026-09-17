@@ -356,6 +356,9 @@ document.addEventListener('DOMContentLoaded', () => {
         password: inputPassReg.value,
       };
 
+      const tarjeta = document.getElementById('tarjetaAutenticacion');
+      tarjeta.classList.add('loading-active');
+
       try {
         const respuesta = await registrarUsuario(datosRegistro);
 
@@ -374,8 +377,6 @@ document.addEventListener('DOMContentLoaded', () => {
         formRegistro.reset();
         limpiarErroresFormulario();
 
-        const tarjeta = document.getElementById('tarjetaAutenticacion');
-        tarjeta.classList.add('loading-active');
         const urlParams = new URLSearchParams(window.location.search);
         const redirect = urlParams.get('redirect');
         setTimeout(() => {
@@ -389,6 +390,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }, 900);
       } catch (error) {
+        tarjeta.classList.remove('loading-active');
         if (!USE_MOCK) {
           marcarInvalido(inputCorreoReg, error.message || 'Error al registrar. Intenta de nuevo.');
           return;
@@ -427,8 +429,6 @@ document.addEventListener('DOMContentLoaded', () => {
         formRegistro.reset();
         limpiarErroresFormulario();
 
-        const tarjeta = document.getElementById('tarjetaAutenticacion');
-        tarjeta.classList.add('loading-active');
         const urlParams = new URLSearchParams(window.location.search);
         const redirect = urlParams.get('redirect');
         setTimeout(() => {
@@ -462,6 +462,9 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.removeItem(KEY_RECORDAR_CORREO);
       }
 
+      const tarjeta = document.getElementById('tarjetaAutenticacion');
+      tarjeta.classList.add('loading-active');
+
       try {
         const respuesta = await iniciarSesion({ email: correoIngresado, password: passIngresada });
 
@@ -476,8 +479,6 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('devportes_sesion_activa', JSON.stringify(userProfile));
         document.dispatchEvent(new CustomEvent('session-change'));
 
-        const tarjeta = document.getElementById('tarjetaAutenticacion');
-        tarjeta.classList.add('loading-active');
         const urlParams = new URLSearchParams(window.location.search);
         const redirect = urlParams.get('redirect');
         setTimeout(() => {
@@ -491,6 +492,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }, 900);
       } catch (error) {
+        tarjeta.classList.remove('loading-active');
         if (!USE_MOCK) {
           marcarInvalido(inputCorreoLogin, error.message || 'Credenciales incorrectas');
           marcarInvalido(inputPassLogin, 'Verifica tu contrasena');

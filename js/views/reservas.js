@@ -158,8 +158,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // Abrir modal de selección al hacer clic en "Cambiar"
-  btnCambiarCancha?.addEventListener('click', () => {
-    renderizarSelector();
+  btnCambiarCancha?.addEventListener('click', async () => {
+    await renderizarSelector();
     const modalElement = document.getElementById('modalSeleccionarCancha');
     if (modalElement && window.bootstrap) {
       const modalInstance = bootstrap.Modal.getOrCreateInstance(modalElement);

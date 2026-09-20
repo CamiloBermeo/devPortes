@@ -1,4 +1,10 @@
-export function showConfirm(mensaje, titulo = 'Confirmar') {
+export function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.appendChild(document.createTextNode(text));
+  return div.innerHTML;
+}
+
+export function showConfirm(mensaje, titulo = 'Confirmar', { allowHtml = false } = {}) {
   return new Promise((resolve) => {
     const overlay = document.createElement('div');
     overlay.className = 'confirm-overlay';
@@ -10,8 +16,8 @@ export function showConfirm(mensaje, titulo = 'Confirmar') {
         <div class="confirm-icon">
           <i class="bi bi-question-circle-fill"></i>
         </div>
-        <h3 class="confirm-titulo">${titulo}</h3>
-        <p class="confirm-mensaje">${mensaje}</p>
+        <h3 class="confirm-titulo">${escapeHtml(titulo)}</h3>
+        <p class="confirm-mensaje">${allowHtml ? mensaje : escapeHtml(mensaje)}</p>
         <div class="confirm-botones">
           <button type="button" class="confirm-btn confirm-btn-cancelar">Cancelar</button>
           <button type="button" class="confirm-btn confirm-btn-aceptar">Aceptar</button>

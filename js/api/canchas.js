@@ -1,5 +1,4 @@
-import { apiGet, apiPost, apiPut, apiPatch, apiMultipart } from './apiClient.js';
-import { USE_MOCK, obtenerCanchasMock, guardarCanchasMock } from '../utils/mockData.js';
+import { apiGet, apiPost, apiPut, apiPatch, apiDelete, apiMultipart } from './apiClient.js';
 
 export function formatoTipo(cancha) {
   if (Array.isArray(cancha.tipo)) return cancha.tipo.join(' - ');
@@ -27,39 +26,21 @@ function normalizarCanchaBackend(raw) {
     descripcion: raw.description || '',
     detalles: raw.details || [],
     locationId: raw.locationId || null,
+    sede: raw.locationName || raw.headquarters || '',
+    direccion: raw.locationAddress || raw.address || '',
+    qrUbicacion: raw.locationQrUrl || raw.urlQrAddress || '',
+    urlUbicacion: raw.locationUrl || raw.urlAddress || '',
+    visible: raw.visible !== false,
   };
 }
 
-export async function obtenerCanchas() {
-  if (USE_MOCK) return obtenerCanchasMock();
-  const data = await apiGet('/field/all');
+export async function obtenerCanchas({ signal } = {}) {
+  const data = await apiGet('/field/all', { signal });
   const canchas = Array.isArray(data) ? data : data.canchas || [];
   return canchas.map(normalizarCanchaBackend);
 }
 
 export async function crearCancha(data, images) {
-  if (USE_MOCK) {
-    const canchas = obtenerCanchasMock();
-    const nuevoId = canchas.length > 0 ? Math.max(...canchas.map((c) => c.id)) + 1 : 1;
-    const nuevaCancha = {
-      id: nuevoId,
-      titulo: data.name,
-      nombre: data.name,
-      tipo: tipoAArray(data.sport),
-      superficie: data.surface,
-      precio: `$${Number(data.hourlyRate).toLocaleString('es-CO')}`,
-      tarifa: Number(data.hourlyRate),
-      capacidad: Number(data.capacity),
-      estado: 'Disponible',
-      imagen: images && images.length > 0 ? URL.createObjectURL(images[0]) : '',
-      descripcion: data.description,
-      detalles: Array.isArray(data.details) ? data.details : [],
-    };
-    canchas.push(nuevaCancha);
-    guardarCanchasMock(canchas);
-    return nuevaCancha;
-  }
-
   const formData = new FormData();
   formData.append('locationId', data.locationId);
   formData.append('name', data.name);
@@ -81,26 +62,6 @@ export async function crearCancha(data, images) {
 }
 
 export async function editarCancha(id, data, existingUrls = [], newImages = []) {
-  if (USE_MOCK) {
-    const canchas = obtenerCanchasMock();
-    const idx = canchas.findIndex((c) => c.id === id);
-    if (idx === -1) throw new Error('Cancha no encontrada');
-
-    canchas[idx].titulo = data.name || canchas[idx].titulo;
-    canchas[idx].nombre = data.name || canchas[idx].nombre;
-    canchas[idx].tipo = data.sport ? tipoAArray(data.sport) : canchas[idx].tipo;
-    canchas[idx].superficie = data.surface || canchas[idx].superficie;
-    canchas[idx].tarifa = data.hourlyRate ? Number(data.hourlyRate) : canchas[idx].tarifa;
-    canchas[idx].precio = `$${canchas[idx].tarifa.toLocaleString('es-CO')}`;
-    canchas[idx].capacidad = data.capacity ? Number(data.capacity) : canchas[idx].capacidad;
-    canchas[idx].estado = data.state || canchas[idx].estado;
-    canchas[idx].descripcion = data.description || canchas[idx].descripcion;
-    canchas[idx].detalles = Array.isArray(data.details) ? data.details : canchas[idx].detalles;
-
-    guardarCanchasMock(canchas);
-    return canchas[idx];
-  }
-
   const formData = new FormData();
   if (data.locationId) formData.append('locationId', data.locationId);
   if (data.name) formData.append('name', data.name);
@@ -125,12 +86,5 @@ export async function editarCancha(id, data, existingUrls = [], newImages = []) 
 }
 
 export async function eliminarCancha(id) {
-  if (USE_MOCK) {
-    const canchas = obtenerCanchasMock();
-    const filtradas = canchas.filter((c) => c.id !== id);
-    guardarCanchasMock(filtradas);
-    return;
-  }
-
-  return apiPatch(`/field/${id}/state`, { auth: true });
+  return apiDelete(`/field/${id}`, { auth: true });
 }

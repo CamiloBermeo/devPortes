@@ -1,5 +1,18 @@
 @import '../global.css';
 
+.reserva-ubicacion-final {
+  max-width: 340px;
+  padding: 1rem;
+  border: 1px solid rgba(25, 135, 84, 0.2);
+  border-radius: 1rem;
+  background: rgba(25, 135, 84, 0.04);
+}
+
+.reserva-qr {
+  display: block;
+  margin-inline: auto;
+}
+
 /* ==========================================================================
    ESTRUCTURA BASE Y COBERTURA DE PANTALLA (100vh / 100dvh)
    ========================================================================== */
@@ -258,6 +271,16 @@ main {
   border-color: var(--color-secundario) !important;
 }
 
+.btn-horario-ocupado {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: var(--color-cuaternario) !important;
+  color: #999 !important;
+  border-color: #ccc !important;
+  text-decoration: line-through;
+  pointer-events: none;
+}
+
 .calendar-weekdays,
 .calendar-days {
   grid-template-columns: repeat(7, minmax(0, 1fr));
@@ -280,7 +303,7 @@ main {
   font-size: 0.8rem;
   color: var(--color-texto);
   background: var(--color-fondo);
-  border: 1px solid var(--color-cuaternario);
+  border: 1.5px solid var(--color-primario);
   cursor: pointer;
 }
 
@@ -288,23 +311,60 @@ main {
   background: var(--color-cuaternario);
 }
 
-.calendar-days .day-selected {
-  background: var(--color-primario);
-  color: #ffffff;
-  font-weight: 700;
-  border-color: var(--color-primario);
-}
-
 .calendar-days .day-disabled {
   opacity: 0.4;
   cursor: not-allowed;
   background: var(--color-cuaternario);
+  border-color: var(--color-cuaternario);
+}
+
+.calendar-days .day-no-availability {
+  opacity: 0.35;
+  cursor: not-allowed;
+  background: var(--color-cuaternario);
+  text-decoration: line-through;
+  color: #999;
+  border-color: var(--color-cuaternario);
+}
+
+.calendar-days .day-has-reservations {
+  border: 1.5px solid #f59e0b;
+  background: #fffbeb;
+}
+
+.calendar-days .day-full {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: var(--color-cuaternario);
+  text-decoration: line-through;
+  color: #999;
+  border-color: var(--color-cuaternario);
+}
+
+.calendar-days .day-selected {
+  background: var(--color-primario) !important;
+  color: #ffffff !important;
+  font-weight: 700;
+  border-color: var(--color-primario) !important;
 }
 
 .calendar-days .day-empty {
   background: transparent;
   border: 0;
   cursor: default;
+}
+
+.calendar-days .day-skeleton {
+  border-radius: 8px;
+  background: linear-gradient(90deg, #eee 25%, #e0e0e0 50%, #eee 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+  border: 1px solid #e0e0e0;
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 .titulo-horarios {

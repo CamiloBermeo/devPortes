@@ -1,4 +1,4 @@
-import { apiGet, apiPost, apiPut, apiPatch, apiMultipart } from './apiClient.js';
+import { apiGet, apiPost, apiPut, apiPatch, apiDelete, apiMultipart } from './apiClient.js';
 
 export function formatoTipo(cancha) {
   if (Array.isArray(cancha.tipo)) return cancha.tipo.join(' - ');
@@ -26,6 +26,7 @@ function normalizarCanchaBackend(raw) {
     descripcion: raw.description || '',
     detalles: raw.details || [],
     locationId: raw.locationId || null,
+    visible: raw.visible !== false,
   };
 }
 
@@ -81,5 +82,5 @@ export async function editarCancha(id, data, existingUrls = [], newImages = []) 
 }
 
 export async function eliminarCancha(id) {
-  return apiPatch(`/field/${id}/state`, { auth: true });
+  return apiDelete(`/field/${id}`, { auth: true });
 }

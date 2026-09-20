@@ -1,4 +1,4 @@
-import { apiGet, apiPost, apiPut, apiPatch } from './apiClient.js';
+import { apiGet, apiPost, apiPut, apiPatch, apiDelete } from './apiClient.js';
 
 export async function obtenerUbicaciones() {
   const data = await apiGet('/location/locations');
@@ -15,4 +15,8 @@ export async function editarUbicacion(id, data) {
 
 export async function toggleEstadoUbicacion(id) {
   return apiPatch(`/location/${id}/state`, { auth: true });
+}
+
+export async function eliminarUbicacion(id) {
+  return apiDelete(`/location/${id}`, { auth: true });
 }

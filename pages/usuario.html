@@ -20,7 +20,9 @@
     <meta name="twitter:image" content="https://devportes-development.vercel.app/ogimage.webp" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="GOLAYA - Reserva tu cancha deportiva en segundos. 6 canchas, 5 deportes, disponible 24/7" />
+    <meta
+      property="og:image:alt"
+      content="GOLAYA - Reserva tu cancha deportiva en segundos. 6 canchas, 5 deportes, disponible 24/7" />
     <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon/soccer-ball-variant.svg" />
     <title>Mi Perfil | GOLAYA</title>
     <link rel="icon" type="image/x-icon" href="../assets/icons/favicon/favicon.ico" />
@@ -60,11 +62,15 @@
             class="perfil-foto"
             id="perfilFoto" />
           <span class="avatar-fallback" id="avatarFallback" hidden>CP</span>
+          <button type="button" class="btn-cambiar-foto" id="btnCambiarFoto" aria-label="Cambiar foto de perfil">
+            <i class="bi bi-camera-fill"></i>
+          </button>
+          <input type="file" id="inputFotoPerfil" accept="image/jpeg,image/png,image/webp" hidden />
         </div>
 
         <!-- NOMBRE + ID -->
         <div class="perfil-identidad">
-          <h2 id="nombreUsuario">Camilo P</h2>
+          <h2 id="nombreUsuario">USUARIO</h2>
           <span class="usuario-id-badge">#082026</span>
         </div>
 
@@ -165,9 +171,7 @@
             <div class="empty-icon"><i class="bi bi-calendar-x"></i></div>
             <h4>Sin reservas pendientes</h4>
             <p>No tienes reservas programadas en este momento.</p>
-            <a href="reservas.html" class="btn-reservar-ahora">
-              <i class="bi bi-plus-circle"></i> Reservar cancha
-            </a>
+            <a href="reservas.html" class="btn-reservar-ahora"> <i class="bi bi-plus-circle"></i> Reservar cancha </a>
           </div>
 
           <!-- LISTA -->
@@ -190,16 +194,30 @@
                   <th>Acción</th>
                 </tr>
               </thead>
-              <tbody id="historialBody">
-              </tbody>
+              <tbody id="historialBody"></tbody>
             </table>
           </div>
 
           <!-- LOADING HISTORIAL -->
           <div id="historialLoading" class="usuario-loading-table d-none">
-            <div class="skeleton-table-row"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
-            <div class="skeleton-table-row"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
-            <div class="skeleton-table-row"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
+            <div class="skeleton-table-row">
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line short"></div>
+            </div>
+            <div class="skeleton-table-row">
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line short"></div>
+            </div>
+            <div class="skeleton-table-row">
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line short"></div>
+            </div>
           </div>
 
           <!-- ERROR HISTORIAL -->
@@ -215,9 +233,7 @@
             <div class="empty-icon"><i class="bi bi-clock-history"></i></div>
             <h4>Sin historial</h4>
             <p>Aún no tienes reservas registradas.</p>
-            <a href="reservas.html" class="btn-reservar-ahora">
-              <i class="bi bi-plus-circle"></i> Reservar cancha
-            </a>
+            <a href="reservas.html" class="btn-reservar-ahora"> <i class="bi bi-plus-circle"></i> Reservar cancha </a>
           </div>
 
           <div class="historial-cards" id="historialCards" hidden></div>

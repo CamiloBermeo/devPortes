@@ -50,6 +50,7 @@ export async function obtenerPerfilCompleto() {
         correo: p.email || session.correo,
         cedula: p.identityDocument || session.cedula || '',
         telefono: p.phoneNumber || session.telefono || '',
+        urlPicture: p.urlPicture || session.urlPicture || '',
       };
     } catch {
       return session;

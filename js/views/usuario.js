@@ -1,7 +1,8 @@
 import { showToast } from '../componets/toast.js';
-import { showConfirm } from '../componets/confirm-modal.js';
-import { obtenerDatosSesion, cerrarSesion, tokenExpirado, estaLogueado } from '../utils/auth.js';
+import { showConfirm, escapeHtml } from '../componets/confirm-modal.js';
+import { obtenerDatosSesion, cerrarSesion, tokenExpirado, estaLogueado, obtenerPerfilCompleto } from '../utils/auth.js';
 import { apiPut, isNetworkError } from '../api/apiClient.js';
+import { actualizarFotoPerfil } from '../api/auth.js';
 import {
   obtenerReservasPendientes,
   obtenerHistorialReservas,
@@ -31,7 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
       usuario: session.usuario || session.correo?.split('@')[0] || session.email?.split('@')[0] || 'usuario',
       email: session.correo || session.email || '',
       telefono: session.telefono || '',
-      cedula: session.cedula || session.identityDocument || ''
+      cedula: session.cedula || session.identityDocument || '',
+      urlPicture: session.urlPicture || ''
     }
   };
 
@@ -43,6 +45,116 @@ document.addEventListener('DOMContentLoaded', () => {
   if (nombreUsuarioEl) nombreUsuarioEl.textContent = state.usuario.nombre;
   if (emailUsuarioEl) emailUsuarioEl.textContent = state.usuario.email;
   if (telefonoUsuarioEl) telefonoUsuarioEl.textContent = state.usuario.telefono;
+
+  const perfilFoto = document.getElementById('perfilFoto');
+  const avatarFallback = document.getElementById('avatarFallback');
+  const btnCambiarFoto = document.getElementById('btnCambiarFoto');
+  const inputFotoPerfil = document.getElementById('inputFotoPerfil');
+  function mostrarFotoPerfil(url) {
+    if (!perfilFoto) return;
+    if (!url) {
+      perfilFoto.hidden = true;
+      if (avatarFallback) {
+        avatarFallback.textContent = obtenerIniciales(state.usuario.nombre);
+        avatarFallback.hidden = false;
+      }
+      return;
+    }
+    perfilFoto.src = url;
+    perfilFoto.hidden = false;
+    if (avatarFallback) avatarFallback.hidden = true;
+  }
+
+  function obtenerIniciales(nombre) {
+    return String(nombre || 'Usuario')
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((parte) => parte[0].toUpperCase())
+      .join('');
+  }
+
+  function aplicarPerfilUsuario(perfil) {
+    if (!perfil) return;
+    state.usuario = {
+      ...state.usuario,
+      ...perfil,
+      nombre: perfil.nombre || state.usuario.nombre,
+      email: perfil.correo || perfil.email || state.usuario.email,
+      urlPicture: perfil.urlPicture || state.usuario.urlPicture || '',
+    };
+
+    if (nombreUsuarioEl) nombreUsuarioEl.textContent = state.usuario.nombre;
+    if (emailUsuarioEl) emailUsuarioEl.textContent = state.usuario.email;
+    if (telefonoUsuarioEl) telefonoUsuarioEl.textContent = state.usuario.telefono;
+
+    if (state.usuario.urlPicture) {
+      mostrarFotoPerfil(state.usuario.urlPicture);
+    }
+
+    const sesionActual = JSON.parse(localStorage.getItem('devportes_sesion_activa') || '{}');
+    localStorage.setItem('devportes_sesion_activa', JSON.stringify({
+      ...sesionActual,
+      nombre: state.usuario.nombre,
+      correo: state.usuario.email,
+      email: state.usuario.email,
+      telefono: state.usuario.telefono,
+      cedula: state.usuario.cedula,
+      urlPicture: state.usuario.urlPicture,
+    }));
+  }
+
+  if (state.usuario.urlPicture) mostrarFotoPerfil(state.usuario.urlPicture);
+  else if (perfilFoto && !perfilFoto.getAttribute('src')) mostrarFotoPerfil('');
+
+  obtenerPerfilCompleto()
+    .then(aplicarPerfilUsuario)
+    .catch(() => {
+      // La información de sesión ya está disponible como fallback visual.
+    });
+
+  perfilFoto?.addEventListener('error', () => {
+    perfilFoto.hidden = true;
+    if (avatarFallback) {
+      avatarFallback.textContent = obtenerIniciales(state.usuario.nombre);
+      avatarFallback.hidden = false;
+    }
+  });
+
+  btnCambiarFoto?.addEventListener('click', () => inputFotoPerfil?.click());
+  inputFotoPerfil?.addEventListener('change', async () => {
+    const file = inputFotoPerfil.files?.[0];
+    if (!file) return;
+    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+      showToast('Selecciona una imagen JPG, PNG o WebP.', 'advertencia');
+      inputFotoPerfil.value = '';
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      showToast('La imagen no puede superar los 5 MB.', 'advertencia');
+      inputFotoPerfil.value = '';
+      return;
+    }
+    btnCambiarFoto.disabled = true;
+    btnCambiarFoto.classList.add('loading');
+    try {
+      const respuesta = await actualizarFotoPerfil(file);
+      const urlPicture = respuesta?.urlPicture;
+      if (!urlPicture) throw new Error('El servidor no devolvió la URL de la imagen.');
+      if (respuesta?.token) localStorage.setItem('devportes_token', respuesta.token);
+      state.usuario.urlPicture = urlPicture;
+      mostrarFotoPerfil(urlPicture);
+      const sesionActual = JSON.parse(localStorage.getItem('devportes_sesion_activa') || '{}');
+      localStorage.setItem('devportes_sesion_activa', JSON.stringify({ ...sesionActual, urlPicture }));
+      showToast('Foto de perfil actualizada correctamente.', 'exito');
+    } catch (error) {
+      if (!isNetworkError(error)) showToast(error.message || 'No se pudo actualizar la foto.', 'error');
+    } finally {
+      btnCambiarFoto.disabled = false;
+      btnCambiarFoto.classList.remove('loading');
+      inputFotoPerfil.value = '';
+    }
+  });
 
   /* =====================================================
      CUSTOM EVENTS PARA COMUNICACIÓN ENTRE COMPONENTES
@@ -69,6 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loading?.classList.add('d-none');
     error?.classList.add('d-none');
     vacio?.classList.add('d-none');
+    lista?.classList.add('d-none');
 
     switch (estado) {
       case 'cargando':
@@ -78,6 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
         error?.classList.remove('d-none');
         break;
       case 'vacio':
+        if (lista) lista.innerHTML = '';
         vacio?.classList.remove('d-none');
         break;
       case 'exito':
@@ -144,8 +258,9 @@ document.addEventListener('DOMContentLoaded', () => {
           <h4>${r.cancha}</h4>
           <div class="reserva-detalles">
             <span><i class="bi bi-calendar3"></i>${r.fecha}</span>
-            <span><i class="bi bi-clock"></i>${r.hora}</span>
+            <span><i class="bi bi-clock"></i>${r.hora}${r.horaFin ? ` - ${r.horaFin.substring(0, 5)}` : ''}</span>
             <span><i class="bi bi-people"></i>${r.tipo}</span>
+            <span><i class="bi bi-cash-stack"></i>${formatearPrecioUsuario(r.totalPago)}</span>
           </div>
         </div>
         <button type="button" class="btn-cancelar" data-id="${r.id}">
@@ -186,16 +301,30 @@ document.addEventListener('DOMContentLoaded', () => {
     tbody.innerHTML = reservas.map((r) => {
       const claseEstado = r.estado.toLowerCase().replace(/\s/g, '');
       return `
-        <tr>
+        <tr data-total-pago="${r.totalPago}" data-saldo-pendiente="${r.saldoPendiente}">
           <td>${r.fecha}</td>
           <td>${r.cancha}</td>
-          <td>${r.hora}</td>
+          <td>${r.hora}${r.horaFin ? ` - ${r.horaFin.substring(0, 5)}` : ''}</td>
           <td>${r.tipo}</td>
-          <td><span class="estado-badge ${claseEstado}">${r.estado}</span></td>
+          <td><span class="estado-badge ${claseEstado}">${r.estadoTexto}</span></td>
           <td><button type="button" class="btn-secundario btn-detalle" data-id="${r.id}">Ver Detalle</button></td>
         </tr>
       `;
     }).join('');
+  }
+
+  function formatearPrecioUsuario(valor) {
+    return Number(valor || 0).toLocaleString('es-CO', {
+      style: 'currency',
+      currency: 'COP',
+      maximumFractionDigits: 0,
+    });
+  }
+
+  function reservaDataPago(tr) {
+    const total = Number(tr?.dataset.totalPago || 0);
+    const saldo = Number(tr?.dataset.saldoPendiente || 0);
+    return `${formatearPrecioUsuario(total)} · pendiente ${formatearPrecioUsuario(saldo)}`;
   }
 
   /* =====================================================
@@ -421,12 +550,30 @@ document.addEventListener('DOMContentLoaded', () => {
       const cedula = inputCedula.value.trim();
 
       try {
-        await apiPut('/auth/profile', {
+        const respuesta = await apiPut('/auth/profile', {
           name: nombre,
           email,
           phoneNumber: telefono,
           identityDocument: cedula
         }, { auth: true });
+
+        // Actualizar token JWT en localStorage (el email cambió → el subject del JWT también)
+        if (respuesta?.token) {
+          localStorage.setItem('devportes_token', respuesta.token);
+        }
+
+        // Actualizar datos de sesión en localStorage para que persistan al recargar
+        const sesionActual = JSON.parse(localStorage.getItem('devportes_sesion_activa') || '{}');
+        const sesionActualizada = {
+          ...sesionActual,
+          nombre,
+          correo: email,
+          email,
+          telefono,
+          cedula,
+          urlPicture: respuesta?.urlPicture || state.usuario.urlPicture || sesionActual.urlPicture || ''
+        };
+        localStorage.setItem('devportes_sesion_activa', JSON.stringify(sesionActualizada));
 
         state.usuario = { ...state.usuario, nombre, email, telefono, cedula };
 
@@ -454,8 +601,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (error.status === 404 || error.status === 405) {
           showToast('Esta funcionalidad no está disponible aún.', 'advertencia');
+          return;
         } else if (error.status === 500) {
           showToast('Error del servidor. Intenta más tarde.', 'error');
+          return;
         } else if (campo === 'email') {
           marcarInvalido(inputEmail, mensaje);
         } else if (campo === 'identityDocument') {
@@ -489,8 +638,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const reservaId = btnCancelar.dataset.id;
 
     const confirmar = await showConfirm(
-      `Deseas cancelar la reserva de <strong>${nombreCancha}</strong>?`,
-      'Cancelar reserva'
+      `Deseas cancelar la reserva de <strong>${escapeHtml(nombreCancha)}</strong>?`,
+      'Cancelar reserva',
+      { allowHtml: true }
     );
 
     if (!confirmar) return;
@@ -545,7 +695,7 @@ document.addEventListener('DOMContentLoaded', () => {
       tipo: celdas[3]?.textContent.trim() || '',
       estado: celdas[4]?.textContent.trim() || '',
       jugador: state.usuario.nombre || '—',
-      pago: '$45.000 COP'
+      pago: reservaDataPago(tr)
     };
 
     document.getElementById('detalleId').textContent = reserva.id;
@@ -555,15 +705,17 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('detalleTipo').textContent = reserva.tipo;
 
     const estadoEl = document.getElementById('detalleEstado');
-    estadoEl.textContent = reserva.estado;
-    if (reserva.estado === 'Completada') {
-      estadoEl.innerHTML = '<span class="estado-badge completada">Completada</span>';
-    } else if (reserva.estado === 'Cancelada') {
-      estadoEl.innerHTML = '<span class="estado-badge cancelada">Cancelada</span>';
-    } else if (reserva.estado === 'Confirmada') {
-      estadoEl.innerHTML = '<span class="estado-badge confirmada">Confirmada</span>';
+    const estadoNorm = reserva.estado.toLowerCase().trim();
+    if (estadoNorm === 'completada') {
+      estadoEl.innerHTML = `<span class="estado-badge completada">${reserva.estado}</span>`;
+    } else if (estadoNorm === 'cancelada') {
+      estadoEl.innerHTML = `<span class="estado-badge cancelada">${reserva.estado}</span>`;
+    } else if (estadoNorm === 'confirmada') {
+      estadoEl.innerHTML = `<span class="estado-badge confirmada">${reserva.estado}</span>`;
+    } else if (estadoNorm === 'pendiente') {
+      estadoEl.innerHTML = `<span class="estado-badge pendiente">${reserva.estado}</span>`;
     } else {
-      estadoEl.innerHTML = '<span class="estado-badge pendiente">Pendiente</span>';
+      estadoEl.textContent = reserva.estado;
     }
 
     document.getElementById('detalleJugador').textContent = reserva.jugador;
@@ -636,6 +788,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('btnReintentarPendientes')?.addEventListener('click', () => cargarReservasPendientes());
   document.getElementById('btnReintentarHistorial')?.addEventListener('click', () => cargarHistorialReservas());
+
+  let ultimaActualizacionReservas = 0;
+  async function actualizarReservasAlVolver() {
+    const ahora = Date.now();
+    if (ahora - ultimaActualizacionReservas < 1000) return;
+    ultimaActualizacionReservas = ahora;
+    await Promise.all([cargarReservasPendientes(), cargarHistorialReservas()]);
+  }
+
+  window.addEventListener('pageshow', actualizarReservasAlVolver);
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') actualizarReservasAlVolver();
+  });
 
   /* =====================================================
      CARGAR DATOS AL INICIAR

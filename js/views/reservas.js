@@ -269,7 +269,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       estadoCalendario.codigoReserva = reserva.codigoReserva || null;
       Object.assign(datosCancha, reserva.cancha || {});
 
-      return Number(reserva.pasoActual) || 1;
+      // Conservamos los datos incompletos, pero cada visita a la página
+      // debe comenzar siempre desde el primer paso.
+      return 1;
     } catch {
       localStorage.removeItem(claveReservaLocal);
       return 1;

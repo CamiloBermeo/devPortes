@@ -1,15 +1,20 @@
 import { obtenerCanchas, crearCancha, editarCancha as editarCanchaApi, eliminarCancha as eliminarCanchaApi, formatoTipo, tipoAArray } from '../api/canchas.js';
-import { obtenerUbicaciones, crearUbicacion, editarUbicacion as editarUbicacionApi, toggleEstadoUbicacion } from '../api/locations.js';
+import { obtenerUbicaciones, crearUbicacion, editarUbicacion as editarUbicacionApi, toggleEstadoUbicacion, eliminarUbicacion } from '../api/locations.js';
 import { obtenerPosts, crearPost, editarPost, eliminarPost } from '../api/gallery.js';
 import { obtenerUsuarios } from '../api/auth.js';
+import { obtenerTodasLasReservas, obtenerMetodosPago, registrarPagoFinal } from '../api/reservations.js';
 import { showToast } from '../componets/toast.js';
 import { tokenExpirado } from '../utils/auth.js';
 
 const KEY_ADMIN_SESSION = 'devportes_admin_sesion';
 
 let listaClientes = [];
+let listaReservas = [];
 
 let ubicaciones = [];
+let dashboardCharts = { income: null, distribution: null };
+let dashboardPeriod = 'semana';
+let filtrosReservasActivados = false;
 
 function normalizarCancha(raw) {
   return {
@@ -26,6 +31,7 @@ function normalizarCancha(raw) {
     descripcion: raw.description || raw.descripcion || '',
     detalles: raw.details || raw.detalles || [],
     locationId: raw.locationId || null,
+    visible: raw.visible !== false,
   };
 }
 
@@ -34,10 +40,19 @@ function mapearEstadoFrontend(estadoFrontend) {
 }
 
 function setFormBtnLoading(form, loading) {
-  const btn = form.querySelector('[type="submit"]');
+  const btn = form?.matches('button') ? form : form?.querySelector('[type="submit"], .btn-primary-modal');
   if (!btn) return;
   btn.classList.toggle('loading', loading);
   btn.disabled = loading;
+}
+
+function establecerCargaDashboard(cargando) {
+  const dashboard = document.getElementById('dashboard-view');
+  if (!dashboard) return;
+  dashboard.classList.toggle('dashboard-loading', cargando);
+  if (!cargando) {
+    dashboard.querySelectorAll('.skeleton').forEach((elemento) => elemento.remove());
+  }
 }
 
 function obtenerNombreUbicacion(id) {
@@ -84,18 +99,26 @@ document.addEventListener('DOMContentLoaded', async () => {
     lucide.createIcons();
   }
 
-  const incomeChart = renderGraficoBarra();
-  renderGraficoDoughnut();
+  inicializarFechasDashboard();
+  dashboardCharts.income = renderGraficoBarra();
+  dashboardCharts.distribution = renderGraficoDoughnut();
 
   activarMenuMovil();
   activarNavegacionMenu();
-  if (incomeChart) activarFiltrosTiempo(incomeChart);
+  activarFiltrosDashboard();
   activarCerrarSesion();
 
   renderClientesGrid();
+  try {
+    await renderReservas();
+  } finally {
+    establecerCargaDashboard(false);
+    actualizarDashboard();
+  }
+  activarActualizacionAutomaticaReservas();
 
   try {
-    ubicaciones = await obtenerUbicaciones();
+    ubicaciones = (await obtenerUbicaciones()).filter((sede) => sede.visible !== false);
   } catch (err) {
     ubicaciones = [];
   }
@@ -211,6 +234,91 @@ function normalizarCliente(raw) {
   };
 }
 
+function formatearHoraAdmin(hora) {
+  return hora ? hora.substring(0, 5) : '-';
+}
+
+function formatearDineroAdmin(valor) {
+  return `$${Number(valor || 0).toLocaleString('es-CO')}`;
+}
+
+function renderReservasTabla() {
+  const contenedor = document.getElementById('reservationsTableContainer');
+  const search = document.getElementById('reservationSearch')?.value.trim().toLowerCase() || '';
+  const status = document.getElementById('reservationStatusFilter')?.value || '';
+  if (!contenedor) return;
+
+  const reservas = listaReservas.filter((reserva) => {
+    const coincideTexto = !search || `${reserva.cliente} ${reserva.cancha}`.toLowerCase().includes(search);
+    return coincideTexto && (!status || reserva.estado === status);
+  });
+
+  if (reservas.length === 0) {
+    contenedor.innerHTML = '<p class="empty-state text-muted">No hay reservas que coincidan con los filtros.</p>';
+    return;
+  }
+
+  contenedor.innerHTML = `
+    <table class="tabla-modal reservations-table">
+      <thead>
+        <tr>
+          <th>Fecha y hora</th>
+          <th>Cliente</th>
+          <th>Cancha</th>
+          <th>Estado</th>
+          <th class="td-acciones">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${reservas.map((reserva) => `
+          <tr>
+            <td data-label="Fecha y hora" class="reservation-date-cell"><strong>${escapeHtml(formatearFechaAdmin(reserva.fecha))}</strong><span class="reservation-time"><i data-lucide="clock-3"></i>${formatearHoraAdmin(reserva.horaInicio)} - ${formatearHoraAdmin(reserva.horaFin)}</span></td>
+            <td data-label="Cliente" class="reservation-client-cell"><strong>${escapeHtml(reserva.cliente)}</strong><span class="text-muted">${escapeHtml(reserva.emailCliente || 'Sin correo')}</span></td>
+            <td data-label="Cancha"><span class="reservation-field"><i data-lucide="map-pin"></i>${escapeHtml(reserva.cancha)}</span></td>
+            <td data-label="Estado"><span class="reservation-status ${reserva.estado.toLowerCase()}">${escapeHtml(reserva.estadoTexto)}</span><span class="reservation-balance">${Number(reserva.saldoPendiente) > 0 ? `Pendiente ${formatearDineroAdmin(reserva.saldoPendiente)}` : 'Pago completo'}</span></td>
+            <td data-label="Acción" class="td-acciones">
+              <button class="btn-action btn-detail" onclick="abrirDetalleReserva(${reserva.id})"><i data-lucide="eye"></i> Ver detalle</button>
+              ${Number(reserva.saldoPendiente) > 0 && reserva.estado !== 'CANCELADA' ? `<button class="btn-action btn-payment" onclick="abrirPagoFinalReserva(${reserva.id})"><i data-lucide="banknote"></i> Terminar pago</button>` : ''}
+            </td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+  if (window.lucide) lucide.createIcons();
+}
+
+async function renderReservas() {
+  const contenedor = document.getElementById('reservationsTableContainer');
+  if (!contenedor) return;
+  contenedor.innerHTML = '<p class="empty-state text-muted">Cargando reservas...</p>';
+  try {
+    listaReservas = await obtenerTodasLasReservas();
+    ajustarRangoInicialDashboard();
+    const resumen = document.getElementById('reservationSummary');
+    if (resumen) resumen.textContent = `${listaReservas.length} reserva${listaReservas.length === 1 ? '' : 's'} registradas`;
+    renderReservasTabla();
+    actualizarDashboard();
+  } catch (error) {
+    contenedor.innerHTML = '<p class="empty-state text-muted">No fue posible cargar las reservas.</p>';
+    showToast(`Error al cargar reservas: ${error.message}`, 'error');
+    establecerCargaDashboard(false);
+  }
+  if (!filtrosReservasActivados) {
+    document.getElementById('reservationSearch')?.addEventListener('input', renderReservasTabla);
+    document.getElementById('reservationStatusFilter')?.addEventListener('change', renderReservasTabla);
+    filtrosReservasActivados = true;
+  }
+}
+
+function activarActualizacionAutomaticaReservas() {
+  const refrescarSiVisible = () => {
+    if (document.visibilityState === 'visible') renderReservas();
+  };
+  window.addEventListener('pageshow', refrescarSiVisible);
+  document.addEventListener('visibilitychange', refrescarSiVisible);
+}
+
 async function renderClientesGrid() {
   const contenedor = document.getElementById('clientesGridPreview');
   if (!contenedor) return;
@@ -271,12 +379,20 @@ async function renderCanchasGrid() {
 
   try {
     const canchasRaw = await obtenerCanchas();
-    const canchas = Array.isArray(canchasRaw) ? canchasRaw.map(normalizarCancha) : [];
+    const canchas = Array.isArray(canchasRaw)
+      ? canchasRaw
+          .map(normalizarCancha)
+          .filter((cancha) => cancha.visible !== false)
+          .filter((cancha) => {
+            const sede = ubicaciones.find((location) => location.id === cancha.locationId);
+            return sede ? sede.visible !== false : true;
+          })
+      : [];
 
     contenedor.innerHTML = '';
 
     if (canchas.length === 0) {
-      contenedor.innerHTML = '<p class="text-muted" style="padding: 1rem; text-align: center">No hay canchas registradas.</p>';
+      contenedor.innerHTML = '<p class="empty-state text-muted">No hay canchas activas para mostrar.</p>';
       return;
     }
 
@@ -633,10 +749,11 @@ window.abrirEditarCancha = async function (id) {
 };
 
 window.eliminarCanchaConfirmada = function (id) {
-  abrirModalConfirmacion('Estas seguro de que deseas eliminar esta cancha del catalogo?', async () => {
+  abrirModalConfirmacion('Estas seguro de que deseas eliminar esta cancha del panel? Las reservas existentes se conservaran.', async () => {
     try {
       await eliminarCanchaApi(id);
       await conScrollPreservado(() => renderCanchasGrid());
+      showToast('Cancha eliminada del panel.', 'exito');
     } catch (error) {
       showToast('Error al eliminar cancha: ' + error.message, 'error');
     }
@@ -1060,11 +1177,11 @@ async function renderSedesGrid() {
   contenedor.innerHTML = '<p class="text-muted" style="padding: 1rem; text-align: center">Cargando sedes...</p>';
 
   try {
-    ubicaciones = await obtenerUbicaciones();
+    ubicaciones = (await obtenerUbicaciones()).filter((sede) => sede.visible !== false);
     contenedor.innerHTML = '';
 
     if (ubicaciones.length === 0) {
-      contenedor.innerHTML = '<p class="text-muted" style="padding: 1rem; text-align: center">No hay sedes registradas.</p>';
+      contenedor.innerHTML = '<p class="empty-state text-muted">No hay sedes activas para mostrar.</p>';
       return;
     }
 
@@ -1272,10 +1389,11 @@ window.eliminarSedeConfirmada = function (id) {
   const sede = ubicaciones.find((u) => u.id === id);
   if (!sede) return;
 
-  abrirModalConfirmacion(`Estas seguro de que deseas eliminar la sede <strong>${sede.name}</strong>?`, async () => {
+  abrirModalConfirmacion(`Estas seguro de que deseas eliminar la sede <strong>${sede.name}</strong> del panel? Las reservas existentes se conservaran.`, async () => {
     try {
-      await toggleEstadoUbicacion(id);
+      await eliminarUbicacion(id);
       await conScrollPreservado(() => Promise.all([renderSedesGrid(), renderCanchasGrid()]));
+      showToast('Sede eliminada del panel.', 'exito');
     } catch (error) {
       showToast('Error al eliminar sede: ' + error.message, 'error');
     }
@@ -1309,6 +1427,114 @@ window.abrirPerfilCliente = function (id) {
   `;
 
   modal.classList.add('open');
+};
+
+window.abrirDetalleReserva = function (id) {
+  const reserva = listaReservas.find((item) => Number(item.id) === Number(id));
+  if (!reserva) return;
+
+  const modal = document.getElementById('infoModal');
+  document.getElementById('modalTitle').textContent = 'Detalle de la reserva';
+  document.getElementById('modalBody').innerHTML = `
+    <div class="reservation-detail">
+      <div class="reservation-detail-heading">
+        <div>
+          <span class="reservation-status ${reserva.estado.toLowerCase()}">${escapeHtml(reserva.estadoTexto)}</span>
+          <h3>${escapeHtml(reserva.cancha)}</h3>
+          <p class="text-muted">${escapeHtml(formatearFechaAdmin(reserva.fecha))} · ${formatearHoraAdmin(reserva.horaInicio)} - ${formatearHoraAdmin(reserva.horaFin)}</p>
+        </div>
+      </div>
+      <div class="reservation-detail-grid">
+        <div><span class="text-muted">Cliente</span><strong>${escapeHtml(reserva.cliente)}</strong></div>
+        <div><span class="text-muted">Correo</span><strong>${escapeHtml(reserva.emailCliente || '-')}</strong></div>
+        <div><span class="text-muted">Duración</span><strong>${reserva.totalHoras} hora${reserva.totalHoras === 1 ? '' : 's'}</strong></div>
+        <div><span class="text-muted">Modalidad</span><strong>${escapeHtml(reserva.tipo)}</strong></div>
+        <div><span class="text-muted">Total</span><strong>${formatearDineroAdmin(reserva.totalPago)}</strong></div>
+        <div><span class="text-muted">Saldo pendiente</span><strong>${formatearDineroAdmin(reserva.saldoPendiente)}</strong></div>
+      </div>
+    </div>
+  `;
+  modal.classList.add('open');
+};
+
+window.abrirPagoFinalReserva = async function (id) {
+  const reserva = listaReservas.find((item) => Number(item.id) === Number(id));
+  if (!reserva || Number(reserva.saldoPendiente) <= 0) return;
+
+  const modal = document.getElementById('infoModal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalBody = document.getElementById('modalBody');
+  modalTitle.textContent = 'Registrar pago final';
+  modalBody.innerHTML = `
+    <div class="final-payment-modal">
+      <div class="final-payment-hero">
+        <div class="final-payment-icon"><i data-lucide="wallet-cards"></i></div>
+        <p class="final-payment-kicker">Cliente presente</p>
+        <h3>Completar pago de la reserva</h3>
+        <p>Registra el saldo restante que el cliente está pagando en este momento.</p>
+      </div>
+      <div class="final-payment-summary">
+        <div><span class="text-muted">Cliente</span><strong>${escapeHtml(reserva.cliente)}</strong></div>
+        <div><span class="text-muted">Reserva</span><strong>${escapeHtml(reserva.cancha)} · ${escapeHtml(formatearFechaAdmin(reserva.fecha))}</strong></div>
+        <div class="final-payment-amount"><span>Saldo a cobrar</span><strong>${formatearDineroAdmin(reserva.saldoPendiente)}</strong></div>
+      </div>
+      <div class="form-group">
+        <label for="finalPaymentMethod">Método de pago</label>
+        <select id="finalPaymentMethod" class="form-input">
+          <option value="">Cargando métodos...</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="finalPaymentNotes">Nota (opcional)</label>
+        <input id="finalPaymentNotes" class="form-input" placeholder="Ej: Pago recibido en efectivo" />
+      </div>
+      <div class="modal-form-actions">
+        <button type="button" class="btn-secondary" onclick="cerrarModal()">Cancelar</button>
+        <button type="button" class="btn-primary-modal" id="btnConfirmarPagoFinal"><span class="btn-label">Confirmar pago</span><span class="btn-spinner"><i class="bi bi-arrow-repeat"></i> Registrando...</span></button>
+      </div>
+    </div>
+  `;
+  modal.classList.add('open');
+  if (window.lucide) lucide.createIcons();
+
+  try {
+    const metodos = await obtenerMetodosPago();
+    const select = document.getElementById('finalPaymentMethod');
+    if (!select) return;
+    select.innerHTML = metodos.filter((metodo) => metodo.state !== false).map((metodo) =>
+      `<option value="${metodo.id}">${escapeHtml(metodo.paymentMethodName)}</option>`
+    ).join('');
+    if (!select.options.length) {
+      select.innerHTML = '<option value="">No hay métodos disponibles</option>';
+    }
+  } catch (error) {
+    const select = document.getElementById('finalPaymentMethod');
+    if (select) select.innerHTML = '<option value="">No fue posible cargar métodos</option>';
+    showToast(`Error al cargar métodos de pago: ${error.message}`, 'error');
+    return;
+  }
+
+  document.getElementById('btnConfirmarPagoFinal')?.addEventListener('click', async (event) => {
+    const button = event.currentTarget;
+    const methodId = document.getElementById('finalPaymentMethod')?.value;
+    if (!methodId) {
+      showToast('Selecciona un método de pago.', 'advertencia');
+      return;
+    }
+    setFormBtnLoading(button.closest('.final-payment-modal'), true);
+    try {
+      const pago = await registrarPagoFinal(reserva.id, methodId, document.getElementById('finalPaymentNotes')?.value.trim());
+      if (pago && (Number(pago.remainingPayment) > 0 || pago.reservationStatus !== 'COMPLETADA')) {
+        throw new Error('El backend no confirmó la finalización de la reserva.');
+      }
+      cerrarModal();
+      showToast('Pago final registrado. La reserva está completada.', 'exito');
+      await renderReservas();
+    } catch (error) {
+      setFormBtnLoading(button.closest('.final-payment-modal'), false);
+      showToast(`Error al registrar el pago: ${error.message}`, 'error');
+    }
+  });
 };
 
 window.cerrarModal = function () {
@@ -1361,7 +1587,7 @@ function activarModalGeneral() {
         abrirModalCrearSede();
       } else if (clave === 'crear-post') {
         abrirModalCrearPost();
-      } else {
+      } else if (clave !== 'reservas') {
         const info = datosGeneralesModales[clave];
         if (info) {
           modalTitle.textContent = info.titulo;
@@ -1423,38 +1649,159 @@ const datosGeneralesModales = {
     titulo: 'Informe Completo del Dashboard',
     contenido: `<p>Metricas de ingresos, nivel de ocupacion por tipo de cancha y proyecciones del mes.</p>`,
   },
-  reservas: {
-    titulo: 'Listado de Reservas',
-    contenido: `<p>Administracion de reservas agendadas, control de pagos e historial de la sede.</p>`,
-  },
 };
+
+function formatearDineroDashboard(valor) {
+  return Number(valor || 0).toLocaleString('es-CO', {
+    style: 'currency',
+    currency: 'COP',
+    maximumFractionDigits: 0,
+  });
+}
+
+function ajustarRangoInicialDashboard() {
+  const desde = document.getElementById('fechaDesde');
+  const hasta = document.getElementById('fechaHasta');
+  if (!desde || !hasta || listaReservas.length === 0) return;
+
+  const fechas = listaReservas
+    .map((reserva) => normalizarFechaDashboard(reserva.fecha))
+    .filter(Boolean)
+    .sort();
+  if (!fechas.length) return;
+
+  const fechaMinima = fechas[0];
+  const fechaMaxima = fechas[fechas.length - 1];
+  const hoy = new Date();
+  const inicioMesActual = new Date(hoy.getFullYear(), hoy.getMonth(), 1).toISOString().slice(0, 10);
+  const finMesActual = new Date(hoy.getFullYear(), hoy.getMonth() + 1, 0).toISOString().slice(0, 10);
+  const hayReservasEsteMes = fechas.some((fecha) => fecha >= inicioMesActual && fecha <= finMesActual);
+
+  if (!hayReservasEsteMes) {
+    desde.value = fechaMinima;
+    hasta.value = fechaMaxima;
+  }
+}
+
+function normalizarFechaDashboard(fecha) {
+  if (!fecha) return '';
+  const texto = String(fecha).trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(texto)) return texto;
+  const fechaLatina = texto.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if (fechaLatina) return `${fechaLatina[3]}-${fechaLatina[2]}-${fechaLatina[1]}`;
+  return texto.slice(0, 10);
+}
+
+function inicializarFechasDashboard() {
+  const desde = document.getElementById('fechaDesde');
+  const hasta = document.getElementById('fechaHasta');
+  if (!desde || !hasta) return;
+  const hoy = new Date();
+  const iso = (fecha) => fecha.toISOString().slice(0, 10);
+  desde.value = iso(new Date(hoy.getFullYear(), hoy.getMonth(), 1));
+  hasta.value = iso(new Date(hoy.getFullYear(), hoy.getMonth() + 1, 0));
+}
+
+function ingresoCobrado(reserva) {
+  return Math.max(Number(reserva.totalPago || 0) - Number(reserva.saldoPendiente || 0), 0);
+}
+
+function reservasDashboardFiltradas() {
+  const desde = document.getElementById('fechaDesde')?.value || '';
+  const hasta = document.getElementById('fechaHasta')?.value || '';
+  return listaReservas.filter((reserva) =>
+    reserva.estado !== 'CANCELADA' &&
+    (!desde || normalizarFechaDashboard(reserva.fecha) >= desde) &&
+    (!hasta || normalizarFechaDashboard(reserva.fecha) <= hasta)
+  );
+}
+
+function actualizarKpisDashboard(reservas) {
+  const ingresos = new Map();
+  reservas.forEach((reserva) => {
+    ingresos.set(reserva.cancha, (ingresos.get(reserva.cancha) || 0) + ingresoCobrado(reserva));
+  });
+  const ranking = [...ingresos.entries()].sort((a, b) => b[1] - a[1]);
+  const total = ranking.reduce((suma, [, valor]) => suma + valor, 0);
+
+  document.getElementById('kpiIngresosTotales').textContent = formatearDineroDashboard(total);
+  document.getElementById('kpiComparativa').textContent = `${reservas.length} reserva${reservas.length === 1 ? '' : 's'} en el periodo`;
+
+  [1, 2, 3].forEach((posicion) => {
+    const item = ranking[posicion - 1];
+    document.getElementById(`kpiCancha${posicion}Titulo`).textContent = item?.[0] || 'Sin datos';
+    document.getElementById(`kpiCancha${posicion}Valor`).textContent = item ? formatearDineroDashboard(item[1]) : '—';
+    document.getElementById(`kpiCancha${posicion}Sub`).textContent = item && total
+      ? `${Math.round((item[1] / total) * 100)}% del total`
+      : 'Sin datos';
+  });
+}
+
+function clavePeriodo(fecha, periodo) {
+  fecha = normalizarFechaDashboard(fecha);
+  if (!fecha) return 'Sin fecha';
+  if (periodo === 'dia') return fecha;
+  if (periodo === 'mes') return fecha.slice(0, 7);
+  const date = new Date(`${fecha}T00:00:00`);
+  const primerDia = new Date(date.getFullYear(), 0, 1);
+  const semana = Math.ceil((((date - primerDia) / 86400000) + primerDia.getDay() + 1) / 7);
+  return `${date.getFullYear()}-Sem ${semana}`;
+}
+
+function actualizarGraficosDashboard(reservas) {
+  if (!dashboardCharts.income || !dashboardCharts.distribution) return;
+  const colores = ['#16a34a', '#9333ea', '#ea580c', '#0284c7', '#db2777', '#ca8a04'];
+  const etiquetas = [...new Set(reservas.map((reserva) => clavePeriodo(reserva.fecha, dashboardPeriod)))].sort();
+  const canchas = [...new Set(reservas.map((reserva) => reserva.cancha))];
+
+  dashboardCharts.income.data.labels = etiquetas.length ? etiquetas : ['Sin datos'];
+  dashboardCharts.income.data.datasets = canchas.map((cancha, indice) => ({
+    label: cancha,
+    data: etiquetas.map((etiqueta) => reservas
+      .filter((reserva) => reserva.cancha === cancha && clavePeriodo(reserva.fecha, dashboardPeriod) === etiqueta)
+      .reduce((suma, reserva) => suma + ingresoCobrado(reserva), 0)),
+    backgroundColor: colores[indice % colores.length],
+    borderRadius: 5,
+  }));
+  dashboardCharts.income.update();
+
+  dashboardCharts.distribution.data.labels = canchas.length ? canchas : ['Sin datos'];
+  dashboardCharts.distribution.data.datasets[0].data = canchas.length
+    ? canchas.map((cancha) => reservas.filter((reserva) => reserva.cancha === cancha).reduce((suma, reserva) => suma + ingresoCobrado(reserva), 0))
+    : [1];
+  dashboardCharts.distribution.data.datasets[0].backgroundColor = canchas.length
+    ? canchas.map((_, indice) => colores[indice % colores.length])
+    : ['#e2e8f0'];
+  dashboardCharts.distribution.update();
+}
+
+function actualizarDashboard() {
+  const reservas = reservasDashboardFiltradas();
+  actualizarKpisDashboard(reservas);
+  actualizarGraficosDashboard(reservas);
+  console.info('[Dashboard] métricas actualizadas', {
+    reservasCargadas: listaReservas.length,
+    reservasIncluidas: reservas.length,
+    desde: document.getElementById('fechaDesde')?.value || '',
+    hasta: document.getElementById('fechaHasta')?.value || '',
+    periodo: dashboardPeriod,
+    ingresosTotales: reservas.reduce((total, reserva) => total + ingresoCobrado(reserva), 0),
+  });
+}
 
 function renderGraficoBarra() {
   const ctx = document.getElementById('incomeChart')?.getContext('2d');
-  if (!ctx) return null;
-
+  if (!ctx || typeof window.Chart !== 'function') return null;
   return new Chart(ctx, {
     type: 'bar',
-    data: {
-      labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
-      datasets: [
-        { label: 'Cancha 1', data: [300, 450, 320, 500], backgroundColor: '#16a34a', borderRadius: 4 },
-        { label: 'Cancha 2', data: [200, 300, 250, 400], backgroundColor: '#9333ea', borderRadius: 4 },
-        { label: 'Cancha 3', data: [150, 200, 180, 220], backgroundColor: '#ea580c', borderRadius: 4 },
-      ],
-    },
+    data: { labels: ['Cargando...'], datasets: [] },
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          position: 'top',
-          labels: { color: '#0f172a', boxWidth: 12, padding: 8, font: { size: 11, family: 'Plus Jakarta Sans' } },
-        },
-      },
+      plugins: { legend: { position: 'top' } },
       scales: {
-        x: { ticks: { color: '#64748b', font: { size: 10 } }, grid: { color: '#f1f5f9' } },
-        y: { ticks: { color: '#64748b', font: { size: 10 } }, grid: { color: '#f1f5f9' } },
+        x: { ticks: { color: '#64748b' }, grid: { color: '#f1f5f9' } },
+        y: { beginAtZero: true, ticks: { color: '#64748b', callback: (value) => formatearDineroDashboard(value) }, grid: { color: '#f1f5f9' } },
       },
     },
   });
@@ -1462,61 +1809,29 @@ function renderGraficoBarra() {
 
 function renderGraficoDoughnut() {
   const ctx = document.getElementById('doughnutChart')?.getContext('2d');
-  if (!ctx) return null;
-
+  if (!ctx || typeof window.Chart !== 'function') return null;
   return new Chart(ctx, {
     type: 'doughnut',
-    data: {
-      labels: ['Cancha 1', 'Cancha 2', 'Cancha 3'],
-      datasets: [
-        {
-          data: [45, 35, 20],
-          backgroundColor: ['#16a34a', '#9333ea', '#ea580c'],
-          borderWidth: 0,
-        },
-      ],
-    },
+    data: { labels: ['Cargando...'], datasets: [{ data: [1], backgroundColor: ['#e2e8f0'], borderWidth: 0 }] },
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          position: 'bottom',
-          labels: { color: '#0f172a', boxWidth: 12, padding: 8, font: { size: 11, family: 'Plus Jakarta Sans' } },
-        },
-      },
+      plugins: { legend: { position: 'bottom' } },
     },
   });
 }
 
-function activarFiltrosTiempo(chart) {
+function activarFiltrosDashboard() {
   const contenedor = document.getElementById('periodFilterGroup');
-  if (!contenedor || !chart) return;
-
-  contenedor.addEventListener('click', (e) => {
-    if (!e.target.classList.contains('btn-time')) return;
-
-    contenedor.querySelectorAll('.btn-time').forEach((b) => b.classList.remove('active'));
-    e.target.classList.add('active');
-
-    const periodo = e.target.getAttribute('data-period');
-
-    if (periodo === 'dia') {
-      chart.data.labels = ['8 AM', '12 PM', '4 PM', '8 PM'];
-      chart.data.datasets[0].data = [40, 80, 120, 200];
-      chart.data.datasets[1].data = [30, 50, 90, 150];
-      chart.data.datasets[2].data = [20, 40, 60, 100];
-    } else if (periodo === 'semana') {
-      chart.data.labels = ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'];
-      chart.data.datasets[0].data = [300, 450, 320, 500];
-      chart.data.datasets[1].data = [200, 300, 250, 400];
-      chart.data.datasets[2].data = [150, 200, 180, 220];
-    } else if (periodo === 'mes') {
-      chart.data.labels = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'];
-      chart.data.datasets[0].data = [1200, 1500, 1800, 1400, 1900, 2100];
-      chart.data.datasets[1].data = [900, 1100, 1300, 1000, 1400, 1600];
-      chart.data.datasets[2].data = [600, 700, 850, 800, 950, 1100];
-    }
-    chart.update();
+  if (!contenedor) return;
+  contenedor.addEventListener('click', (evento) => {
+    const boton = evento.target.closest('.btn-time');
+    if (!boton) return;
+    contenedor.querySelectorAll('.btn-time').forEach((item) => item.classList.remove('active'));
+    boton.classList.add('active');
+    dashboardPeriod = boton.dataset.period || 'semana';
+    actualizarDashboard();
   });
+  document.getElementById('fechaDesde')?.addEventListener('change', actualizarDashboard);
+  document.getElementById('fechaHasta')?.addEventListener('change', actualizarDashboard);
 }

@@ -83,11 +83,12 @@ async function handleResponse(response, { auth = false } = {}) {
   return data;
 }
 
-export async function apiGet(endpoint, { auth = false, signal = null } = {}) {
+export async function apiGet(endpoint, { auth = false, signal = null, cache } = {}) {
   const response = await safeFetch(`${API_URL}${endpoint}`, {
     method: 'GET',
     headers: getHeaders({ auth }),
     signal,
+    ...(cache ? { cache } : {}),
   });
   return handleResponse(response, { auth });
 }
@@ -139,4 +140,3 @@ export async function apiDelete(endpoint, { auth = false } = {}) {
 }
 
 export { API_URL };
-

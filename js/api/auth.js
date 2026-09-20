@@ -1,4 +1,4 @@
-import { apiPost, apiGet } from './apiClient.js';
+import { apiPost, apiGet, apiMultipart } from './apiClient.js';
 
 export async function registrarUsuario({ name, identityDocument, phoneNumber, email, password }) {
   return apiPost('/auth/register', { name, identityDocument, phoneNumber, email, password });
@@ -13,5 +13,11 @@ export async function obtenerPerfil(token) {
 }
 
 export async function obtenerUsuarios() {
-  return apiGet('/auth/users', { auth: true });
+  return apiGet('/admin/clients', { auth: true });
+}
+
+export async function actualizarFotoPerfil(file) {
+  const formData = new FormData();
+  formData.append('picture', file);
+  return apiMultipart('/auth/profile/picture', formData, { auth: true, method: 'PUT' });
 }

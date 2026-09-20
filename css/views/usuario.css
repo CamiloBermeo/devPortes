@@ -1230,6 +1230,39 @@ app-footer {
   font-size: clamp(13px, 1.4vw, 14px);
 }
 
+.btn-reservar-ahora {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-top: var(--space-md);
+  padding: var(--space-sm) var(--space-lg);
+  background-color: var(--verde-devportes);
+  color: var(--blanco);
+  border: none;
+  border-radius: 999px;
+  font-size: clamp(13px, 1.4vw, 14px);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+  box-shadow: 0 2px 8px rgba(64, 182, 34, 0.25);
+}
+
+.btn-reservar-ahora:hover {
+  background-color: var(--verde-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(64, 182, 34, 0.35);
+}
+
+.btn-reservar-ahora:active {
+  transform: scale(0.97);
+}
+
+.btn-reservar-ahora:focus-visible {
+  outline: 2px solid var(--verde-devportes);
+  outline-offset: 2px;
+}
+
 /* =====================================================
    VALIDACIÓN DE CAMPOS - TOOLTIP ERROR
    ===================================================== */

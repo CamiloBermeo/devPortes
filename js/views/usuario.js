@@ -69,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loading?.classList.add('d-none');
     error?.classList.add('d-none');
     vacio?.classList.add('d-none');
-    if (lista) lista.innerHTML = '';
 
     switch (estado) {
       case 'cargando':
@@ -502,6 +501,7 @@ document.addEventListener('DOMContentLoaded', () => {
       actualizarContadorPendientes();
       showToast('La reserva ha sido cancelada correctamente', 'exito');
       emit('reserva:cancelada', { id: reservaId, cancha: nombreCancha });
+      cargarHistorialReservas();
     } catch (error) {
       console.error('Error al cancelar reserva:', error);
       showToast('No se pudo cancelar la reserva. Intenta de nuevo.', 'error');

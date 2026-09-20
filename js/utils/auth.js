@@ -45,6 +45,7 @@ export async function obtenerPerfilCompleto() {
     try {
       const p = await apiGet('/auth/profile', { auth: true });
       return {
+        id: p.id || session.id,
         nombre: p.name || session.nombre,
         correo: p.email || session.correo,
         cedula: p.identityDocument || session.cedula || '',

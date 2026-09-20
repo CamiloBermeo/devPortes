@@ -1,6 +1,7 @@
 import { obtenerCanchas } from '../api/canchas.js';
 import { renderizarInstalaciones, renderizarModales } from '../componets/tarjeta_canchas.js';
 import { renderizarFiltroDeportes } from '../componets/filtro_deportes.js';
+import { obtenerEstadisticasPublicas } from '../api/statistics.js';
 
 let contenedorInstalaciones;
 let indexError;
@@ -13,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('btnReintentarIndex')?.addEventListener('click', () => cargarCanchas());
   cargarCanchas();
+  cargarEstadisticasPublicas();
   inicializarScroll();
 });
 
@@ -30,6 +32,7 @@ function mostrarEstado(estado, mensajeError = '') {
       if (errorTexto && mensajeError) {
         errorTexto.textContent = mensajeError;
       }
+
       indexError?.classList.remove('d-none');
       break;
     case 'vacio':
@@ -39,6 +42,31 @@ function mostrarEstado(estado, mensajeError = '') {
       contenedorInstalaciones?.classList.remove('d-none');
       break;
   }
+
+}
+
+function cargarEstadisticasPublicas() {
+  obtenerEstadisticasPublicas()
+    .then((estadisticas) => {
+      const canchas = document.getElementById('heroCantidadCanchas');
+      const deportes = document.getElementById('heroCantidadDeportes');
+      const ubicaciones = document.getElementById('heroCantidadUbicaciones');
+      const online = document.getElementById('heroReservaOnline');
+
+      if (canchas) canchas.textContent = String(estadisticas.availableFields);
+      if (deportes) deportes.textContent = `${estadisticas.sports} deportes`;
+      if (ubicaciones) ubicaciones.textContent = String(estadisticas.locations);
+      if (online) online.textContent = estadisticas.onlineBooking ? '24/7' : 'No';
+      [canchas, deportes, ubicaciones, online].forEach((element) => {
+        element?.classList.remove('hero-stat-loading');
+      });
+    })
+    .catch(() => {
+      document.querySelectorAll('.hero-stat-loading').forEach((element) => {
+        element.textContent = '—';
+        element.classList.remove('hero-stat-loading');
+      });
+    });
 }
 
 async function cargarCanchas() {

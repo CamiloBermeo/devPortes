@@ -355,6 +355,32 @@ app-footer {
   padding: 0 var(--space-lg) var(--space-md);
 }
 
+.resumen-dato-loading {
+  min-width: 3rem;
+  color: transparent;
+  border-radius: 0.25rem;
+  background: linear-gradient(90deg, #e8eee8 25%, #f8faf8 50%, #e8eee8 75%);
+  background-size: 200% 100%;
+  animation: resumenShimmer 1.2s ease-in-out infinite;
+}
+
+.resumen-favorita {
+  max-width: 8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.resumen-estado {
+  margin-top: 0.65rem;
+  color: var(--texto-secundario, #6b7280);
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+@keyframes resumenShimmer {
+  to { background-position: -200% 0; }
+}
+
 .perfil-resumen h4 {
   font-size: 11px;
   color: var(--texto-gris);

@@ -99,18 +99,19 @@
           <h4>Resumen</h4>
           <div class="resumen-grid">
             <div class="resumen-item">
-              <span class="resumen-num">12</span>
+              <span class="resumen-num resumen-dato-loading" id="totalReservasUsuario">0</span>
               <span class="resumen-label">Reservas</span>
             </div>
             <div class="resumen-item">
-              <span class="resumen-num">18h</span>
+              <span class="resumen-num resumen-dato-loading" id="horasJugadasUsuario">0h</span>
               <span class="resumen-label">Jugadas</span>
             </div>
             <div class="resumen-item">
-              <span class="resumen-num">P3</span>
+              <span class="resumen-num resumen-dato-loading resumen-favorita" id="canchaFavoritaUsuario">Sin datos</span>
               <span class="resumen-label">Favorita</span>
             </div>
           </div>
+          <div class="resumen-estado" id="resumenEstado" role="status" aria-live="polite" hidden></div>
         </div>
 
         <!-- ACCIONES -->

@@ -3,6 +3,7 @@ import { showConfirm, escapeHtml } from '../componets/confirm-modal.js';
 import { obtenerDatosSesion, cerrarSesion, tokenExpirado, estaLogueado, obtenerPerfilCompleto } from '../utils/auth.js';
 import { apiPut, isNetworkError } from '../api/apiClient.js';
 import { actualizarFotoPerfil } from '../api/auth.js';
+import { obtenerEstadisticasUsuario } from '../api/statistics.js';
 import {
   obtenerReservasPendientes,
   obtenerHistorialReservas,
@@ -113,6 +114,33 @@ document.addEventListener('DOMContentLoaded', () => {
     .catch(() => {
       // La información de sesión ya está disponible como fallback visual.
     });
+
+  cargarEstadisticasUsuario();
+
+  async function cargarEstadisticasUsuario() {
+    const estado = document.getElementById('resumenEstado');
+    const reservas = document.getElementById('totalReservasUsuario');
+    const horas = document.getElementById('horasJugadasUsuario');
+    const favorita = document.getElementById('canchaFavoritaUsuario');
+
+    try {
+      const estadisticas = await obtenerEstadisticasUsuario();
+      if (reservas) reservas.textContent = String(estadisticas.totalReservations ?? 0);
+      if (horas) horas.textContent = `${estadisticas.playedHours ?? 0}h`;
+      if (favorita) favorita.textContent = estadisticas.favoriteField || 'Sin datos';
+      if (estado) estado.hidden = true;
+    } catch (error) {
+      console.error('Error al cargar estadísticas del usuario:', error);
+      if (estado) {
+        estado.textContent = 'No se pudieron cargar tus estadísticas.';
+        estado.hidden = false;
+      }
+    } finally {
+      [reservas, horas, favorita].forEach((element) => {
+        element?.classList.remove('resumen-dato-loading');
+      });
+    }
+  }
 
   perfilFoto?.addEventListener('error', () => {
     perfilFoto.hidden = true;

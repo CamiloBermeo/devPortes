@@ -354,7 +354,8 @@ document.addEventListener('DOMContentLoaded', () => {
           nombre: respuesta.nameUser || datosRegistro.name,
           correo: respuesta.email || datosRegistro.email,
           cedula: datosRegistro.identityDocument,
-          telefono: datosRegistro.phoneNumber
+          telefono: datosRegistro.phoneNumber,
+          urlPicture: respuesta.urlPicture || ''
         };
 
         localStorage.setItem('devportes_token', respuesta.token);
@@ -422,7 +423,8 @@ document.addEventListener('DOMContentLoaded', () => {
           nombre: respuesta.nameUser || '',
           correo: correoIngresado,
           cedula: respuesta.identityDocument || '',
-          telefono: respuesta.phoneNumber || ''
+          telefono: respuesta.phoneNumber || '',
+          urlPicture: respuesta.urlPicture || ''
         };
 
         localStorage.setItem('devportes_token', respuesta.token);

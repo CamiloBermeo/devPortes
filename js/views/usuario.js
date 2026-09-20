@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const perfilFoto = document.getElementById('perfilFoto');
   const avatarFallback = document.getElementById('avatarFallback');
+  const avatarLoading = document.getElementById('avatarLoading');
   const btnCambiarFoto = document.getElementById('btnCambiarFoto');
   const inputFotoPerfil = document.getElementById('inputFotoPerfil');
   function mostrarFotoPerfil(url) {
@@ -137,6 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     btnCambiarFoto.disabled = true;
     btnCambiarFoto.classList.add('loading');
+    if (avatarLoading) avatarLoading.hidden = false;
     try {
       const respuesta = await actualizarFotoPerfil(file);
       const urlPicture = respuesta?.urlPicture;
@@ -152,6 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } finally {
       btnCambiarFoto.disabled = false;
       btnCambiarFoto.classList.remove('loading');
+      if (avatarLoading) avatarLoading.hidden = true;
       inputFotoPerfil.value = '';
     }
   });

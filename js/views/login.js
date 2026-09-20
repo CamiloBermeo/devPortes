@@ -1,8 +1,9 @@
 import { registrarUsuario, iniciarSesion } from '../api/auth.js';
-import { USE_MOCK } from '../utils/mockData.js';
+import { isNetworkError } from '../api/apiClient.js';
 import { regexNombre, regexCedula, regexTelefono, regexCorreo, LONGITUD, soloNumeros, validarLongitud } from '../utils/validaciones.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+
   /* ==========================================================
      Auto-abrir pestaña de registro si ?tab=register
      ========================================================== */
@@ -93,13 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
       LOCALSTORAGE (PERSISTENCIA Y USUARIOS)
      ========================================================== */
   const KEY_BORRADOR_REGISTRO = 'devportes_borrador_registro';
-  const KEY_USUARIOS_BD = 'devportes_usuarios';
   const KEY_RECORDAR_CORREO = 'devportes_correo_recordado';
-
-  function obtenerUsuariosGuardados() {
-    const data = localStorage.getItem(KEY_USUARIOS_BD);
-    return data ? JSON.parse(data) : [];
-  }
 
   function guardarBorradorRegistro() {
     const borrador = {
@@ -190,13 +185,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return false;
     } else if (!regexCorreo.test(valor)) {
       marcarInvalido(inputCorreoReg, 'Ingresa un correo válido');
-      return false;
-    }
-
-    const usuarios = obtenerUsuariosGuardados();
-    const existe = usuarios.some((u) => u.correo === valor);
-    if (existe) {
-      marcarInvalido(inputCorreoReg, 'Este correo ya está registrado');
       return false;
     }
 
@@ -369,7 +357,7 @@ document.addEventListener('DOMContentLoaded', () => {
           telefono: datosRegistro.phoneNumber
         };
 
-        localStorage.setItem('devportes_token', respuesta.token || 'local-token');
+        localStorage.setItem('devportes_token', respuesta.token);
         localStorage.setItem('devportes_sesion_activa', JSON.stringify(userProfile));
         document.dispatchEvent(new CustomEvent('session-change'));
 
@@ -391,56 +379,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 900);
       } catch (error) {
         tarjeta.classList.remove('loading-active');
-        if (!USE_MOCK) {
-          marcarInvalido(inputCorreoReg, error.message || 'Error al registrar. Intenta de nuevo.');
-          return;
-        }
-
-        const usuarios = obtenerUsuariosGuardados();
-        const nuevoUsuario = {
-          id: Date.now(),
-          nombre: datosRegistro.name,
-          cedula: datosRegistro.identityDocument,
-          telefono: datosRegistro.phoneNumber,
-          correo: datosRegistro.email,
-          password: datosRegistro.password,
-        };
-
-        if (usuarios.some((u) => u.correo === nuevoUsuario.correo)) {
-          marcarInvalido(inputCorreoReg, 'Este correo ya está registrado');
-          return;
-        }
-
-        usuarios.push(nuevoUsuario);
-        localStorage.setItem(KEY_USUARIOS_BD, JSON.stringify(usuarios));
-
-        const userProfile = {
-          nombre: nuevoUsuario.nombre,
-          correo: nuevoUsuario.correo,
-          cedula: nuevoUsuario.cedula,
-          telefono: nuevoUsuario.telefono
-        };
-
-        localStorage.setItem('devportes_token', 'local-token');
-        localStorage.setItem('devportes_sesion_activa', JSON.stringify(userProfile));
-        document.dispatchEvent(new CustomEvent('session-change'));
-
-        borrarBorradorRegistro();
-        formRegistro.reset();
-        limpiarErroresFormulario();
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const redirect = urlParams.get('redirect');
-        setTimeout(() => {
-          if (redirect === 'reservas') {
-            const params = new URLSearchParams(window.location.search);
-            params.delete('redirect');
-            params.delete('tab');
-            window.location.href = `../pages/reservas.html?${params.toString()}`;
+        if (!isNetworkError(error)) {
+          const campo = error.data?.field;
+          const mensaje = error.message || 'Error al registrar. Intenta de nuevo.';
+          if (campo === 'identityDocument') {
+            marcarInvalido(inputCedulaReg, mensaje);
+          } else if (campo === 'email') {
+            marcarInvalido(inputCorreoReg, mensaje);
           } else {
-            window.location.href = '../index.html';
+            marcarInvalido(inputCorreoReg, mensaje);
           }
-        }, 900);
+        }
+        return;
       }
     }
   });
@@ -493,47 +443,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 900);
       } catch (error) {
         tarjeta.classList.remove('loading-active');
-        if (!USE_MOCK) {
+        if (!isNetworkError(error)) {
           marcarInvalido(inputCorreoLogin, error.message || 'Credenciales incorrectas');
           marcarInvalido(inputPassLogin, 'Verifica tu contrasena');
-          return;
         }
-
-        const usuarios = obtenerUsuariosGuardados();
-        const usuarioEncontrado = usuarios.find(
-          (user) => user.correo === correoIngresado && user.password === passIngresada,
-        );
-
-        if (usuarioEncontrado) {
-          const userProfile = {
-            nombre: usuarioEncontrado.nombre,
-            correo: usuarioEncontrado.correo,
-            cedula: usuarioEncontrado.cedula || '',
-            telefono: usuarioEncontrado.telefono || ''
-          };
-
-          localStorage.setItem('devportes_token', 'local-token');
-          localStorage.setItem('devportes_sesion_activa', JSON.stringify(userProfile));
-          document.dispatchEvent(new CustomEvent('session-change'));
-
-          const tarjeta = document.getElementById('tarjetaAutenticacion');
-          tarjeta.classList.add('loading-active');
-          const urlParams = new URLSearchParams(window.location.search);
-          const redirect = urlParams.get('redirect');
-          setTimeout(() => {
-            if (redirect === 'reservas') {
-              const params = new URLSearchParams(window.location.search);
-              params.delete('redirect');
-              params.delete('tab');
-              window.location.href = `../pages/reservas.html?${params.toString()}`;
-            } else {
-              window.location.href = '../index.html';
-            }
-          }, 900);
-        } else {
-          marcarInvalido(inputCorreoLogin, 'Credenciales incorrectas');
-          marcarInvalido(inputPassLogin, 'Verifica tu contraseña');
-        }
+        return;
       }
     }
   });

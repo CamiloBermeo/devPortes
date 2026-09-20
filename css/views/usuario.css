@@ -792,6 +792,7 @@ app-footer {
    ===================================================== */
 
 .campo-formulario {
+  position: relative;
   margin-bottom: var(--space-md);
 }
 
@@ -1090,6 +1091,194 @@ app-footer {
   .btn-cancelar { width: 100%; }
   .info-item { flex-direction: column; align-items: flex-start; gap: var(--space-xs); }
   .info-valor { text-align: left; }
+}
+
+/* =====================================================
+   ESTADOS DE CARGA / ERROR / VACIO
+   ===================================================== */
+
+/* SKELETON - Reservas pendientes */
+.usuario-loading-state {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.skeleton-reserva {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: var(--fondo-gris);
+  border: 1px solid var(--borde-suave);
+  border-radius: var(--radius-md);
+}
+
+.skeleton-reserva-texto {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.skeleton-line {
+  height: 12px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-line.title {
+  height: 16px;
+  width: 60%;
+  margin-bottom: 4px;
+}
+
+.skeleton-line.short {
+  width: 40%;
+}
+
+.skeleton-line-btn {
+  width: 100px;
+  height: 32px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  border-radius: var(--radius-sm);
+  animation: shimmer 1.5s infinite;
+  flex-shrink: 0;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* SKELETON - Tabla historial */
+.usuario-loading-table {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+}
+
+.skeleton-table-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 0.6fr;
+  gap: var(--space-md);
+  padding: var(--space-md) 0;
+  border-bottom: 1px solid var(--borde-suave);
+}
+
+.skeleton-table-row .skeleton-line {
+  height: 14px;
+}
+
+/* ERROR STATE */
+.usuario-error-state {
+  text-align: center;
+  padding: var(--space-lg) var(--space-md);
+  background: #fff5f5;
+  border: 1px solid #feb2b2;
+  border-radius: var(--radius-lg);
+}
+
+.usuario-error-state .error-icon {
+  font-size: 40px;
+  color: #e53e3e;
+  margin-bottom: var(--space-sm);
+}
+
+.usuario-error-state h4 {
+  font-size: clamp(16px, 1.8vw, 18px);
+  font-weight: 700;
+  color: #9b2c2c;
+  margin-bottom: var(--space-xs);
+}
+
+.usuario-error-state p {
+  color: #742a2a;
+  font-size: clamp(13px, 1.4vw, 14px);
+  margin-bottom: var(--space-md);
+}
+
+/* EMPTY STATE */
+.usuario-empty-state {
+  text-align: center;
+  padding: var(--space-lg) var(--space-md);
+  background: var(--blanco);
+  border: 1px dashed var(--borde-suave);
+  border-radius: var(--radius-lg);
+}
+
+.usuario-empty-state .empty-icon {
+  font-size: 40px;
+  color: #a0aec0;
+  margin-bottom: var(--space-sm);
+}
+
+.usuario-empty-state h4 {
+  font-size: clamp(16px, 1.8vw, 18px);
+  font-weight: 700;
+  color: var(--texto-oscuro);
+  margin-bottom: var(--space-xs);
+}
+
+.usuario-empty-state p {
+  color: var(--texto-gris);
+  font-size: clamp(13px, 1.4vw, 14px);
+}
+
+/* =====================================================
+   VALIDACIÓN DE CAMPOS - TOOLTIP ERROR
+   ===================================================== */
+
+.campo-formulario.is-invalid input,
+.campo-formulario.is-invalid textarea {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+.campo-formulario.is-valid input,
+.campo-formulario.is-valid textarea {
+  border-color: #10b981 !important;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+}
+
+.tooltip-error {
+  position: absolute;
+  top: -0.6rem;
+  right: 0.5rem;
+  z-index: 20;
+  padding: 0.15rem 0.5rem;
+  background-color: #ef4444;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border-radius: 0.375rem;
+  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tooltip-error::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  right: 10px;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid #ef4444;
+}
+
+.campo-formulario.is-invalid .tooltip-error {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* =====================================================

@@ -1,8 +1,25 @@
 import { showToast } from '../componets/toast.js';
 import { showConfirm } from '../componets/confirm-modal.js';
-import { obtenerDatosSesion, cerrarSesion } from '../utils/auth.js';
+import { obtenerDatosSesion, cerrarSesion, tokenExpirado, estaLogueado } from '../utils/auth.js';
+import { apiPut, isNetworkError } from '../api/apiClient.js';
+import {
+  obtenerReservasPendientes,
+  obtenerHistorialReservas,
+  cancelarReserva
+} from '../api/reservations.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+  /* =====================================================
+     VERIFICAR SESION EXPIRADA
+     ===================================================== */
+
+  if (estaLogueado() && tokenExpirado()) {
+    showToast('Tu sesion ha expirado. Inicia sesion nuevamente.', 'advertencia', 2500);
+    setTimeout(() => {
+      cerrarSesion();
+    }, 2500);
+    return;
+  }
   /* =====================================================
      ESTADO GLOBAL - Cargar desde sesión
      ===================================================== */
@@ -37,6 +54,149 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function on(eventName, handler) {
     document.addEventListener(`usuario:${eventName}`, (e) => handler(e.detail));
+  }
+
+  /* =====================================================
+     GESTION DE ESTADOS (LOADING / ERROR / VACIO / EXITO)
+     ===================================================== */
+
+  function mostrarEstadoPendientes(estado) {
+    const loading = document.getElementById('pendientesLoading');
+    const error = document.getElementById('pendientesError');
+    const vacio = document.getElementById('pendientesVacio');
+    const lista = document.getElementById('listaReservas');
+
+    loading?.classList.add('d-none');
+    error?.classList.add('d-none');
+    vacio?.classList.add('d-none');
+    if (lista) lista.innerHTML = '';
+
+    switch (estado) {
+      case 'cargando':
+        loading?.classList.remove('d-none');
+        break;
+      case 'error':
+        error?.classList.remove('d-none');
+        break;
+      case 'vacio':
+        vacio?.classList.remove('d-none');
+        break;
+      case 'exito':
+        if (lista) lista.classList.remove('d-none');
+        break;
+    }
+  }
+
+  function mostrarEstadoHistorial(estado) {
+    const loading = document.getElementById('historialLoading');
+    const error = document.getElementById('historialError');
+    const vacio = document.getElementById('historialVacio');
+    const tabla = document.getElementById('tablaHistorial');
+
+    loading?.classList.add('d-none');
+    error?.classList.add('d-none');
+    vacio?.classList.add('d-none');
+    if (tabla) tabla.classList.add('d-none');
+
+    switch (estado) {
+      case 'cargando':
+        loading?.classList.remove('d-none');
+        break;
+      case 'error':
+        error?.classList.remove('d-none');
+        break;
+      case 'vacio':
+        vacio?.classList.remove('d-none');
+        break;
+      case 'exito':
+        tabla?.classList.remove('d-none');
+        break;
+    }
+  }
+
+  /* =====================================================
+     CARGAR RESERVAS PENDIENTES
+     ===================================================== */
+
+  async function cargarReservasPendientes() {
+    mostrarEstadoPendientes('cargando');
+
+    try {
+      const reservas = await obtenerReservasPendientes();
+      if (reservas.length === 0) {
+        mostrarEstadoPendientes('vacio');
+        return;
+      }
+      renderizarReservasPendientes(reservas);
+      mostrarEstadoPendientes('exito');
+    } catch (error) {
+      console.error('Error al cargar reservas pendientes:', error);
+      mostrarEstadoPendientes('error');
+    }
+  }
+
+  function renderizarReservasPendientes(reservas) {
+    const lista = document.getElementById('listaReservas');
+    if (!lista) return;
+
+    lista.innerHTML = reservas.map((r) => `
+      <div class="reserva-pendiente" data-reserva-id="${r.id}">
+        <div class="reserva-datos">
+          <h4>${r.cancha}</h4>
+          <div class="reserva-detalles">
+            <span><i class="bi bi-calendar3"></i>${r.fecha}</span>
+            <span><i class="bi bi-clock"></i>${r.hora}</span>
+            <span><i class="bi bi-people"></i>${r.tipo}</span>
+          </div>
+        </div>
+        <button type="button" class="btn-cancelar" data-id="${r.id}">
+          <i class="bi bi-x-circle"></i>
+          Cancelar reserva
+        </button>
+      </div>
+    `).join('');
+
+    actualizarContadorPendientes();
+  }
+
+  /* =====================================================
+     CARGAR HISTORIAL DE RESERVAS
+     ===================================================== */
+
+  async function cargarHistorialReservas() {
+    mostrarEstadoHistorial('cargando');
+
+    try {
+      const reservas = await obtenerHistorialReservas();
+      if (reservas.length === 0) {
+        mostrarEstadoHistorial('vacio');
+        return;
+      }
+      renderizarHistorial(reservas);
+      mostrarEstadoHistorial('exito');
+    } catch (error) {
+      console.error('Error al cargar historial:', error);
+      mostrarEstadoHistorial('error');
+    }
+  }
+
+  function renderizarHistorial(reservas) {
+    const tbody = document.getElementById('historialBody');
+    if (!tbody) return;
+
+    tbody.innerHTML = reservas.map((r) => {
+      const claseEstado = r.estado.toLowerCase().replace(/\s/g, '');
+      return `
+        <tr>
+          <td>${r.fecha}</td>
+          <td>${r.cancha}</td>
+          <td>${r.hora}</td>
+          <td>${r.tipo}</td>
+          <td><span class="estado-badge ${claseEstado}">${r.estado}</span></td>
+          <td><button type="button" class="btn-secundario btn-detalle" data-id="${r.id}">Ver Detalle</button></td>
+        </tr>
+      `;
+    }).join('');
   }
 
   /* =====================================================
@@ -80,6 +240,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function openModal() {
     if (!modalPerfil) return;
+
+    limpiarErroresFormulario();
 
     // Poblar formulario con datos actuales
     const inputNombre = document.getElementById('inputNombre');
@@ -146,6 +308,80 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* =====================================================
+     VALIDACIÓN DE CAMPOS DEL MODAL
+     ===================================================== */
+
+  const inputNombre = document.getElementById('inputNombre');
+  const inputEmail = document.getElementById('inputEmail');
+  const inputTelefono = document.getElementById('inputTelefono');
+  const inputCedula = document.getElementById('inputCedula');
+
+  function marcarInvalido(inputEl, mensaje) {
+    const group = inputEl.closest('.campo-formulario');
+    if (!group) return;
+    group.classList.remove('is-valid');
+    group.classList.add('is-invalid');
+    const tooltip = group.querySelector('.tooltip-error');
+    if (tooltip && mensaje) tooltip.textContent = mensaje;
+  }
+
+  function marcarValido(inputEl) {
+    const group = inputEl.closest('.campo-formulario');
+    if (!group) return;
+    group.classList.remove('is-invalid');
+    group.classList.add('is-valid');
+  }
+
+  function limpiarErroresFormulario() {
+    document.querySelectorAll('#formEditarPerfil .campo-formulario').forEach((g) => {
+      g.classList.remove('is-invalid', 'is-valid');
+    });
+  }
+
+  function validarNombreEdit() {
+    const v = inputNombre.value.trim();
+    if (v === '') { marcarInvalido(inputNombre, 'El nombre es obligatorio'); return false; }
+    if (v.length < 2 || v.length > 80) { marcarInvalido(inputNombre, 'Entre 2 y 80 caracteres'); return false; }
+    marcarValido(inputNombre);
+    return true;
+  }
+
+  function validarEmailEdit() {
+    const v = inputEmail.value.trim();
+    if (v === '') { marcarInvalido(inputEmail, 'El correo es obligatorio'); return false; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { marcarInvalido(inputEmail, 'Ingresa un correo válido'); return false; }
+    marcarValido(inputEmail);
+    return true;
+  }
+
+  function validarTelefonoEdit() {
+    const v = inputTelefono.value.trim();
+    if (v === '') { marcarInvalido(inputTelefono, 'El teléfono es requerido'); return false; }
+    if (!/^\d{10}$/.test(v)) { marcarInvalido(inputTelefono, 'Debe tener 10 dígitos'); return false; }
+    marcarValido(inputTelefono);
+    return true;
+  }
+
+  function validarCedulaEdit() {
+    const v = inputCedula.value.trim();
+    if (v === '') { marcarInvalido(inputCedula, 'La cédula es requerida'); return false; }
+    if (!/^\d{3,12}$/.test(v)) { marcarInvalido(inputCedula, 'Solo números (3-12 dígitos)'); return false; }
+    marcarValido(inputCedula);
+    return true;
+  }
+
+  inputNombre?.addEventListener('input', validarNombreEdit);
+  inputEmail?.addEventListener('input', validarEmailEdit);
+  inputTelefono?.addEventListener('input', () => {
+    inputTelefono.value = inputTelefono.value.replace(/\D/g, '');
+    validarTelefonoEdit();
+  });
+  inputCedula?.addEventListener('input', () => {
+    inputCedula.value = inputCedula.value.replace(/\D/g, '');
+    validarCedulaEdit();
+  });
+
+  /* =====================================================
      CERRAR SESIÓN
      ===================================================== */
 
@@ -163,75 +399,81 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* =====================================================
-     2. GUARDAR CAMBIOS DEL PERFIL
+     GUARDAR CAMBIOS DEL PERFIL
      ===================================================== */
 
   if (formEditarPerfil) {
-    formEditarPerfil.addEventListener('submit', (evento) => {
+    formEditarPerfil.addEventListener('submit', async (evento) => {
       evento.preventDefault();
+      limpiarErroresFormulario();
 
-      const nombre = document.getElementById('inputNombre').value.trim();
-      const email = document.getElementById('inputEmail').value.trim();
-      const telefono = document.getElementById('inputTelefono').value.trim();
-      const cedula = document.getElementById('inputCedula').value.trim();
+      const esNombreValido = validarNombreEdit();
+      const esEmailValido = validarEmailEdit();
+      const esTelefonoValido = validarTelefonoEdit();
+      const esCedulaValida = validarCedulaEdit();
 
-      // Validación básica
-      if (!nombre || !email || !telefono || !cedula) {
-        showToast('Por favor completa todos los campos', 'error');
+      if (!esNombreValido || !esEmailValido || !esTelefonoValido || !esCedulaValida) {
         return;
       }
 
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        showToast('El correo electrónico no es válido', 'error');
-        return;
+      const nombre = inputNombre.value.trim();
+      const email = inputEmail.value.trim();
+      const telefono = inputTelefono.value.trim();
+      const cedula = inputCedula.value.trim();
+
+      try {
+        await apiPut('/auth/profile', {
+          name: nombre,
+          email,
+          phoneNumber: telefono,
+          identityDocument: cedula
+        }, { auth: true });
+
+        state.usuario = { ...state.usuario, nombre, email, telefono, cedula };
+
+        const nombreUsuario = document.getElementById('nombreUsuario');
+        const emailUsuario = document.getElementById('emailUsuario');
+        const telefonoUsuario = document.getElementById('telefonoUsuario');
+
+        if (nombreUsuario) nombreUsuario.textContent = nombre;
+        if (emailUsuario) emailUsuario.textContent = email;
+        if (telefonoUsuario) telefonoUsuario.textContent = telefono;
+
+        closeModal();
+        limpiarErroresFormulario();
+        showToast('Perfil actualizado correctamente!', 'exito');
+        emit('perfil:actualizado', state.usuario);
+      } catch (error) {
+        console.error('Error al actualizar perfil:', error);
+
+        if (isNetworkError(error)) {
+          return;
+        }
+
+        const campo = error.data?.field;
+        const mensaje = error.message || 'Error al actualizar. Intenta de nuevo.';
+
+        if (error.status === 404 || error.status === 405) {
+          showToast('Esta funcionalidad no está disponible aún.', 'advertencia');
+        } else if (error.status === 500) {
+          showToast('Error del servidor. Intenta más tarde.', 'error');
+        } else if (campo === 'email') {
+          marcarInvalido(inputEmail, mensaje);
+        } else if (campo === 'identityDocument') {
+          marcarInvalido(inputCedula, mensaje);
+        } else if (campo === 'phoneNumber') {
+          marcarInvalido(inputTelefono, mensaje);
+        } else if (campo === 'name') {
+          marcarInvalido(inputNombre, mensaje);
+        } else {
+          showToast(mensaje, 'error');
+        }
       }
-
-      // Actualizar estado
-      state.usuario = { ...state.usuario, nombre, email, telefono, cedula };
-
-      // Persistir en localStorage (sesión activa)
-      const sessionActual = obtenerDatosSesion();
-      const sessionActualizada = {
-        ...sessionActual,
-        nombre,
-        correo: email,
-        email,
-        telefono,
-        cedula,
-        identityDocument: cedula
-      };
-      localStorage.setItem('devportes_sesion_activa', JSON.stringify(sessionActualizada));
-
-      // Sincronizar con la "base de datos" local para que el login funcione
-      const usuarios = JSON.parse(localStorage.getItem('devportes_usuarios') || '[]');
-      const idx = usuarios.findIndex(u => u.correo === sessionActual.correo || u.correo === sessionActual.email);
-      if (idx !== -1) {
-        usuarios[idx].nombre = nombre;
-        usuarios[idx].correo = email;
-        usuarios[idx].telefono = telefono;
-        usuarios[idx].cedula = cedula;
-        usuarios[idx].identityDocument = cedula;
-        localStorage.setItem('devportes_usuarios', JSON.stringify(usuarios));
-      }
-
-      // Actualizar DOM del perfil
-      const nombreUsuario = document.getElementById('nombreUsuario');
-      const emailUsuario = document.getElementById('emailUsuario');
-      const telefonoUsuario = document.getElementById('telefonoUsuario');
-
-      if (nombreUsuario) nombreUsuario.textContent = nombre;
-      if (emailUsuario) emailUsuario.textContent = email;
-      if (telefonoUsuario) telefonoUsuario.textContent = telefono;
-
-      closeModal();
-      showToast('¡Perfil actualizado correctamente!', 'exito');
-
-      emit('perfil:actualizado', state.usuario);
     });
   }
 
   /* =====================================================
-     3. CANCELAR RESERVAS PENDIENTES - DELEGACIÓN DE EVENTOS
+     CANCELAR RESERVAS PENDIENTES - DELEGACION DE EVENTOS
      ===================================================== */
 
   document.addEventListener('click', async (evento) => {
@@ -248,21 +490,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const reservaId = btnCancelar.dataset.id;
 
     const confirmar = await showConfirm(
-      `¿Estás seguro de que deseas cancelar la reserva de <strong>${nombreCancha}</strong>?`,
+      `Deseas cancelar la reserva de <strong>${nombreCancha}</strong>?`,
       'Cancelar reserva'
     );
 
     if (!confirmar) return;
 
-    reserva.remove();
-    actualizarContadorPendientes();
-    showToast('La reserva ha sido cancelada correctamente', 'exito');
-
-    emit('reserva:cancelada', { id: reservaId, cancha: nombreCancha });
+    try {
+      await cancelarReserva(reservaId);
+      reserva.remove();
+      actualizarContadorPendientes();
+      showToast('La reserva ha sido cancelada correctamente', 'exito');
+      emit('reserva:cancelada', { id: reservaId, cancha: nombreCancha });
+    } catch (error) {
+      console.error('Error al cancelar reserva:', error);
+      showToast('No se pudo cancelar la reserva. Intenta de nuevo.', 'error');
+    }
   });
 
   /* =====================================================
-     4. ACTUALIZAR CONTADOR DE RESERVAS
+     ACTUALIZAR CONTADOR DE RESERVAS
      ===================================================== */
 
   function actualizarContadorPendientes() {
@@ -274,27 +521,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (reservas.length === 0) {
-      const tarjetaPendientes = document.querySelector('.tarjeta-pendientes');
-      if (tarjetaPendientes && !tarjetaPendientes.querySelector('.sin-reservas')) {
-        const mensaje = document.createElement('p');
-        mensaje.className = 'sin-reservas';
-        mensaje.textContent = 'No tienes reservas pendientes.';
-        mensaje.style.cssText = `
-          text-align: center;
-          color: var(--texto-gris);
-          padding: var(--space-lg);
-          font-size: clamp(13px, 1.4vw, 14px);
-        `;
-        tarjetaPendientes.appendChild(mensaje);
-      }
-    } else {
-      const mensajeExistente = document.querySelector('.sin-reservas');
-      if (mensajeExistente) mensajeExistente.remove();
+      mostrarEstadoPendientes('vacio');
     }
   }
 
   /* =====================================================
-     5. BOTONES "VER DETALLE" - MODAL
+     BOTONES "VER DETALLE" - MODAL
      ===================================================== */
 
   const modalDetalle = document.getElementById('modalDetalle');
@@ -375,7 +607,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* =====================================================
-     6. BOTÓN "RESERVAR NUEVA CANCHA" (si existe)
+     BOTON "RESERVAR NUEVA CANCHA" (si existe)
      ===================================================== */
 
   const botonNuevaReserva = document.getElementById('btn-nueva-reserva');
@@ -387,7 +619,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* =====================================================
-     7. SINCRONIZAR MODO OSCURO / TEMA (placeholder)
+     SINCRONIZAR MODO OSCURO / TEMA (placeholder)
      ===================================================== */
 
   // Escuchar cambios de tema del sistema
@@ -399,7 +631,21 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* =====================================================
-     8. EXPONER API PÚBLICA
+     BOTONES REINTENTAR
+     ===================================================== */
+
+  document.getElementById('btnReintentarPendientes')?.addEventListener('click', () => cargarReservasPendientes());
+  document.getElementById('btnReintentarHistorial')?.addEventListener('click', () => cargarHistorialReservas());
+
+  /* =====================================================
+     CARGAR DATOS AL INICIAR
+     ===================================================== */
+
+  cargarReservasPendientes();
+  cargarHistorialReservas();
+
+  /* =====================================================
+     EXPONER API PUBLICA
      ===================================================== */
 
   window.UsuarioPanel = {
@@ -409,7 +655,8 @@ document.addEventListener('DOMContentLoaded', () => {
     on,
     openModal,
     closeModal,
-    actualizarContadorPendientes
+    cargarReservasPendientes,
+    cargarHistorialReservas
   };
 
   console.log('[UsuarioPanel] Inicializado - API disponible en window.UsuarioPanel');

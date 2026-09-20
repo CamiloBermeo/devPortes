@@ -335,6 +335,47 @@ body.login-page-bg {
 }
 
 /* ==========================================================
+   ERROR GLOBAL (red/servidor)
+   ========================================================== */
+.login-error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  margin: 0;
+  background-color: #fef2f2;
+  border-bottom: 1px solid #fecaca;
+  color: #991b1b;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.login-error i.bi-exclamation-triangle-fill {
+  color: var(--color-error);
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.login-error span {
+  flex: 1;
+}
+
+.login-error-close {
+  background: none;
+  border: none;
+  color: #991b1b;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.8rem;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.login-error-close:hover {
+  opacity: 1;
+}
+
+/* ==========================================================
    RESPONSIVE (Móviles y Tablets)
    ========================================================== */
 

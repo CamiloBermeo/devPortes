@@ -1,10 +1,15 @@
 import { API_URL } from './config.js';
+import { showToast } from '../componets/toast.js';
 
 const TOKEN_KEY = 'devportes_token';
 const SESSION_KEY = 'devportes_sesion_activa';
 
 function getToken() {
   return localStorage.getItem(TOKEN_KEY);
+}
+
+function isAdminPage() {
+  return window.location.pathname.includes('panel-administrador');
 }
 
 export function getHeaders({ auth = false, multipart = false } = {}) {
@@ -31,13 +36,35 @@ function limpiarSesion() {
   document.dispatchEvent(new CustomEvent('session-change'));
 }
 
+function getRedirectUrl() {
+  return isAdminPage() ? '../pages/admin-login.html' : '../pages/login.html';
+}
+
+export function isNetworkError(error) {
+  return error instanceof TypeError && /fetch|network/i.test(error.message);
+}
+
+async function safeFetch(url, options) {
+  try {
+    return await fetch(url, options);
+  } catch (error) {
+    if (isNetworkError(error)) {
+      showToast('No se pudo conectar con el servidor. Verifica tu conexion.', 'error');
+    }
+    throw error;
+  }
+}
+
 async function handleResponse(response, { auth = false } = {}) {
   if (response.status === 401 || response.status === 403) {
     if (auth) {
       limpiarSesion();
       const currentPath = window.location.pathname;
       if (!currentPath.includes('login.html')) {
-        window.location.href = '../pages/login.html';
+        showToast('Tu sesion ha expirado. Inicia sesion nuevamente.', 'advertencia', 2500);
+        setTimeout(() => {
+          window.location.href = getRedirectUrl();
+        }, 2500);
       }
       throw new Error('Sesion expirada. Inicia sesion nuevamente.');
     }
@@ -57,7 +84,7 @@ async function handleResponse(response, { auth = false } = {}) {
 }
 
 export async function apiGet(endpoint, { auth = false } = {}) {
-  const response = await fetch(`${API_URL}${endpoint}`, {
+  const response = await safeFetch(`${API_URL}${endpoint}`, {
     method: 'GET',
     headers: getHeaders({ auth }),
   });
@@ -65,7 +92,7 @@ export async function apiGet(endpoint, { auth = false } = {}) {
 }
 
 export async function apiPost(endpoint, body, { auth = false } = {}) {
-  const response = await fetch(`${API_URL}${endpoint}`, {
+  const response = await safeFetch(`${API_URL}${endpoint}`, {
     method: 'POST',
     headers: getHeaders({ auth }),
     body: JSON.stringify(body),
@@ -74,7 +101,7 @@ export async function apiPost(endpoint, body, { auth = false } = {}) {
 }
 
 export async function apiPut(endpoint, body, { auth = false } = {}) {
-  const response = await fetch(`${API_URL}${endpoint}`, {
+  const response = await safeFetch(`${API_URL}${endpoint}`, {
     method: 'PUT',
     headers: getHeaders({ auth }),
     body: JSON.stringify(body),
@@ -83,7 +110,7 @@ export async function apiPut(endpoint, body, { auth = false } = {}) {
 }
 
 export async function apiPatch(endpoint, { auth = false } = {}) {
-  const response = await fetch(`${API_URL}${endpoint}`, {
+  const response = await safeFetch(`${API_URL}${endpoint}`, {
     method: 'PATCH',
     headers: getHeaders({ auth }),
   });
@@ -91,7 +118,7 @@ export async function apiPatch(endpoint, { auth = false } = {}) {
 }
 
 export async function apiMultipart(endpoint, formData, { auth = false, method = 'POST' } = {}) {
-  const response = await fetch(`${API_URL}${endpoint}`, {
+  const response = await safeFetch(`${API_URL}${endpoint}`, {
     method,
     headers: getHeaders({ auth, multipart: true }),
     body: formData,
@@ -100,7 +127,7 @@ export async function apiMultipart(endpoint, formData, { auth = false, method = 
 }
 
 export async function apiDelete(endpoint, { auth = false } = {}) {
-  const response = await fetch(`${API_URL}${endpoint}`, {
+  const response = await safeFetch(`${API_URL}${endpoint}`, {
     method: 'DELETE',
     headers: getHeaders({ auth }),
   });

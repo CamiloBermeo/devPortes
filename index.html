@@ -22,6 +22,7 @@
     <!-- FONT AWESOME (iconos deportivos) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- COMPONENTES -->
+    <link rel="stylesheet" href="./css/components/toast.css" />
     <link rel="stylesheet" href="./css/components/navbar-footer.css" />
     <!-- ESTILOS PERSONALIZADOS -->
     <link rel="stylesheet" href="./css/views/index.css" />
@@ -109,6 +110,23 @@
               <div class="skeleton-card"></div>
               <div class="skeleton-card"></div>
             </div>
+          </div>
+
+          <!-- ESTADO: ERROR -->
+          <div id="indexError" class="galeria-error-state d-none">
+            <div class="error-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
+            <h4>No se pudieron cargar las canchas</h4>
+            <p id="indexErrorMensaje">Ocurrió un inconveniente al conectar con el servidor.</p>
+            <button id="btnReintentarIndex" class="btn-reintentar">
+              <i class="bi bi-arrow-clockwise"></i> Reintentar
+            </button>
+          </div>
+
+          <!-- ESTADO: VACÍO -->
+          <div id="indexEmpty" class="galeria-empty-state d-none">
+            <div class="empty-icon"><i class="bi bi-calendar-x"></i></div>
+            <h3>No hay canchas disponibles</h3>
+            <p>Pronto tendremos espacios deportivos para ti.</p>
           </div>
         </div>
       </section>

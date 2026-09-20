@@ -1,4 +1,6 @@
 import { iniciarSesion } from '../api/auth.js';
+import { isNetworkError } from '../api/apiClient.js';
+import { showToast } from '../componets/toast.js';
 
 const KEY_ADMIN_SESSION = 'devportes_admin_sesion';
 const KEY_TOKEN = 'devportes_token';
@@ -12,18 +14,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.querySelector('.login-form');
   const emailInput = document.getElementById('adminEmail');
   const passwordInput = document.getElementById('adminPassword');
-  const errorDiv = document.getElementById('adminLoginError');
   const btnSubmit = document.getElementById('btnAdminLogin');
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    errorDiv.style.display = 'none';
 
     const email = emailInput.value.trim().toLowerCase();
     const password = passwordInput.value;
 
     if (!email || !password) {
-      showError('Completa todos los campos.');
+      showToast('Completa todos los campos.', 'advertencia');
       return;
     }
 
@@ -43,16 +43,13 @@ document.addEventListener('DOMContentLoaded', () => {
       window.location.href = 'panel-administrador.html';
     } catch (error) {
       btnSubmit.classList.remove('loading');
-      if (error.status === 401) {
-        showError('Credenciales incorrectas. Verifica tu correo y contrasena.');
-      } else {
-        showError(error.message || 'Error al conectar con el servidor.');
+      if (!isNetworkError(error)) {
+        if (error.status === 401) {
+          showToast('Credenciales incorrectas. Verifica tu correo y contraseña.', 'advertencia');
+        } else {
+          showToast(error.message || 'Error al conectar con el servidor.', 'error');
+        }
       }
     }
   });
-
-  function showError(msg) {
-    errorDiv.textContent = msg;
-    errorDiv.style.display = 'block';
-  }
 });

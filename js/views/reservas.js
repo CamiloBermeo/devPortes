@@ -1,6 +1,6 @@
 import { obtenerCanchas, formatoTipo, tipoAArray } from '../api/canchas.js';
 import { renderizarSelectorCanchas } from '../componets/tarjeta_canchas.js';
-import { estaLogueado, obtenerPerfilCompleto } from '../utils/auth.js';
+import { estaLogueado, tokenExpirado, obtenerPerfilCompleto } from '../utils/auth.js';
 import { regexNombre, regexCedula, regexTelefono, LONGITUD, validarLongitud } from '../utils/validaciones.js';
 import { showToast } from '../componets/toast.js';
 
@@ -13,6 +13,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       ...Object.fromEntries(currentParams),
     });
     window.location.href = `./login.html?${redirectParams.toString()}&tab=register`;
+    return;
+  }
+
+  if (tokenExpirado()) {
+    showToast('Tu sesion ha expirado. Inicia sesion nuevamente.', 'advertencia', 2500);
+    setTimeout(() => { window.location.href = './login.html'; }, 2500);
     return;
   }
 

@@ -2,8 +2,8 @@ import { obtenerCanchas, crearCancha, editarCancha as editarCanchaApi, eliminarC
 import { obtenerUbicaciones, crearUbicacion, editarUbicacion as editarUbicacionApi, toggleEstadoUbicacion } from '../api/locations.js';
 import { obtenerPosts, crearPost, editarPost, eliminarPost } from '../api/gallery.js';
 import { obtenerUsuarios } from '../api/auth.js';
-import { USE_MOCK } from '../utils/mockData.js';
 import { showToast } from '../componets/toast.js';
+import { tokenExpirado } from '../utils/auth.js';
 
 const KEY_ADMIN_SESSION = 'devportes_admin_sesion';
 
@@ -12,8 +12,6 @@ let listaClientes = [];
 let ubicaciones = [];
 
 function normalizarCancha(raw) {
-  if (USE_MOCK) return raw;
-
   return {
     id: raw.id,
     titulo: raw.name || raw.titulo || '',
@@ -68,6 +66,17 @@ document.addEventListener('DOMContentLoaded', async () => {
   const adminSession = localStorage.getItem(KEY_ADMIN_SESSION);
   if (!adminSession) {
     window.location.href = 'admin-login.html';
+    return;
+  }
+
+  if (tokenExpirado()) {
+    localStorage.removeItem(KEY_ADMIN_SESSION);
+    localStorage.removeItem('devportes_token');
+    localStorage.removeItem('devportes_sesion_activa');
+    showToast('Tu sesion ha expirado. Inicia sesion nuevamente.', 'advertencia', 2500);
+    setTimeout(() => {
+      window.location.href = 'admin-login.html';
+    }, 2500);
     return;
   }
 

@@ -20,6 +20,7 @@ function inicializarElementos() {
   galeriaLoading = document.getElementById('galeriaLoading');
   galeriaError = document.getElementById('galeriaError');
   galeriaEmpty = document.getElementById('galeriaEmpty');
+  document.getElementById('btnReintentar')?.addEventListener('click', () => cargarPublicaciones());
 }
 
 function inicializarModales() {
@@ -84,7 +85,7 @@ async function cargarPublicaciones() {
     mostrarEstado('exito');
   } catch (error) {
     console.error('Error al cargar la galería:', error);
-    mostrarEstado('error', error.message || 'Error de conexión con el servidor.');
+    mostrarEstado('error');
   }
 }
 

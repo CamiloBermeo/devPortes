@@ -15,6 +15,22 @@ export function obtenerDatosSesion() {
   }
 }
 
+export function tokenExpirado() {
+  const token = localStorage.getItem(TOKEN_KEY);
+  if (!token) return false;
+
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return Date.now() >= payload.exp * 1000;
+  } catch {
+    return true;
+  }
+}
+
+export function sesionExpirada() {
+  return estaLogueado() && tokenExpirado();
+}
+
 export function cerrarSesion() {
   localStorage.removeItem(SESSION_KEY);
   localStorage.removeItem(TOKEN_KEY);
@@ -25,7 +41,7 @@ export async function obtenerPerfilCompleto() {
   const session = obtenerDatosSesion();
   const token = localStorage.getItem(TOKEN_KEY);
 
-  if (token && token !== 'local-token') {
+  if (token) {
     try {
       const p = await apiGet('/auth/profile', { auth: true });
       return {

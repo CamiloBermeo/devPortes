@@ -5,7 +5,7 @@ export const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const LONGITUD = {
   nombre: { min: 3, max: 50 },
-  cedula: { min: 6, max: 11 },
+  cedula: { min: 6, max: 9 },
   telefono: { min: 10, max: 10 },
 };
 

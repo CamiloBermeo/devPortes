@@ -192,7 +192,11 @@
               <option value="CANCELADA">Canceladas</option>
             </select>
           </div>
-          <div id="reservationsTableContainer" class="tabla-modal-wrapper"></div>
+          <div id="reservationsTableContainer" class="tabla-modal-wrapper">
+            <div class="admin-loading-table" aria-label="Cargando reservas">
+              <span></span><span></span><span></span><span></span>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -206,7 +210,9 @@
           <button class="btn-ver-mas" data-modal="crear-sede">Nueva Sede</button>
         </div>
 
-        <div class="preview-grid" id="sedesGridPreview"></div>
+        <div class="preview-grid" id="sedesGridPreview">
+          <div class="admin-skeleton-card"></div><div class="admin-skeleton-card"></div>
+        </div>
       </section>
 
       <!-- PANTALLA 4: CANCHAS (PUBLICACIÓN DE PRODUCTOS) -->
@@ -220,7 +226,9 @@
         </div>
 
         <!-- Tarjetas dinámicas para mostrar las canchas -->
-        <div class="preview-grid" id="canchasGridPreview"></div>
+        <div class="preview-grid" id="canchasGridPreview">
+          <div class="admin-skeleton-card"></div><div class="admin-skeleton-card"></div><div class="admin-skeleton-card"></div>
+        </div>
       </section>
 
       <!-- PANTALLA 5: GALERÍA -->
@@ -233,7 +241,9 @@
           <button class="btn-ver-mas" data-modal="crear-post">Nueva Publicación</button>
         </div>
 
-        <div class="preview-grid" id="galeriaGridPreview"></div>
+        <div class="preview-grid" id="galeriaGridPreview">
+          <div class="admin-skeleton-card"></div><div class="admin-skeleton-card"></div>
+        </div>
       </section>
 
       <!-- PANTALLA 6: CLIENTES -->
@@ -247,7 +257,9 @@
         </div>
 
         <!-- Tarjetas interactivas con botones de acción visibles en móvil y PC -->
-        <div class="preview-grid" id="clientesGridPreview"></div>
+        <div class="preview-grid" id="clientesGridPreview">
+          <div class="admin-skeleton-card"></div><div class="admin-skeleton-card"></div>
+        </div>
       </section>
     </main>
 

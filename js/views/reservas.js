@@ -78,6 +78,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     superficie: '4 x 4 (750 mts)',
     precio: '$80.000',
     imagen: 'https://raw.githubusercontent.com/CamiloBermeo/devPortes/refs/heads/main/assets/img/canchas/futbol-estadio-principal.webp',
+    sede: '',
+    direccion: '',
+    qrUbicacion: '',
+    urlUbicacion: '',
   };
 
   // ---------------- integración de modal de selección de canchas ----------------
@@ -110,6 +114,39 @@ document.addEventListener('DOMContentLoaded', async () => {
     const canchasActualizadas = (await obtenerCanchas()).filter((c) => c.estado === 'Disponible');
     renderizarSelectorCanchas(canchasActualizadas, 'contenedor-modales-reserva', datosCancha.id);
   };
+
+  async function cargarUbicacionCanchaSeleccionada() {
+    const canchas = await obtenerCanchas();
+    const cancha = canchas.find((item) => item.id === datosCancha.id);
+    if (!cancha) return;
+    datosCancha.sede = cancha.sede || '';
+    datosCancha.direccion = cancha.direccion || '';
+    datosCancha.qrUbicacion = cancha.qrUbicacion || '';
+    datosCancha.urlUbicacion = cancha.urlUbicacion || '';
+  }
+
+  function actualizarUbicacionReservaFinal() {
+    const contenedor = document.getElementById('ubicacionReservaFinal');
+    const qr = document.getElementById('reservaFinalQr');
+    const sede = document.getElementById('reservaFinalSede');
+    const direccion = document.getElementById('reservaFinalDireccion');
+    const abrir = document.getElementById('reservaFinalAbrirMapa');
+    if (!contenedor || !qr || !datosCancha.qrUbicacion) {
+      if (contenedor) contenedor.hidden = true;
+      return;
+    }
+    sede.textContent = datosCancha.sede || 'Sede';
+    direccion.textContent = datosCancha.direccion || 'Dirección no disponible';
+    qr.src = datosCancha.qrUbicacion;
+    if (datosCancha.urlUbicacion) {
+      abrir.href = datosCancha.urlUbicacion;
+      abrir.hidden = false;
+    } else {
+      abrir.removeAttribute('href');
+      abrir.hidden = true;
+    }
+    contenedor.hidden = false;
+  }
 
   async function abrirModalInfoCancha() {
     const canchas = await obtenerCanchas();
@@ -233,6 +270,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         datosCancha.superficie = canchaSeleccionada.superficie || 'Sintética Standard';
         datosCancha.precio = canchaSeleccionada.precio || `$${(canchaSeleccionada.tarifa || 0).toLocaleString('es-CO')}`;
         datosCancha.imagen = canchaSeleccionada.imagen;
+        datosCancha.sede = canchaSeleccionada.sede || '';
+        datosCancha.direccion = canchaSeleccionada.direccion || '';
+        datosCancha.qrUbicacion = canchaSeleccionada.qrUbicacion || '';
+        datosCancha.urlUbicacion = canchaSeleccionada.urlUbicacion || '';
 
         actualizarResumen();
         actualizarVistaPrevia();
@@ -631,7 +672,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     currentMonthLabel.textContent = primerDia.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' }).toUpperCase();
     calendarDays.innerHTML = '';
 
-    const cacheKey = `${year}-${month}`;
+    const cacheKey = `${datosCancha.id}-${year}-${month}`;
     let datosFechas = cacheFechasMes[cacheKey];
 
     if (datosFechas === undefined) {
@@ -642,7 +683,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         calendarDays.appendChild(skeleton);
       }
       try {
-        datosFechas = await obtenerFechasDisponibles(year, month);
+        datosFechas = await obtenerFechasDisponibles(datosCancha.id, year, month);
         cacheFechasMes[cacheKey] = datosFechas;
       } catch {
         datosFechas = null;
@@ -704,8 +745,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   };
 
   const cargarHorariosParaFecha = async (fecha) => {
-    if (cacheHorarios[fecha]) {
-      horariosDisponiblesLista = cacheHorarios[fecha];
+    const cacheKey = `${datosCancha.id}-${fecha}`;
+    if (cacheHorarios[cacheKey]) {
+      horariosDisponiblesLista = cacheHorarios[cacheKey];
       estadoCalendario.horaSeleccionadas = [];
       renderHorarios();
       actualizarDisponibilidadCambioCancha();
@@ -718,7 +760,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     horariosAbort = new AbortController();
 
     try {
-      const horasReservadas = await obtenerHorasDisponibles(fecha, horariosAbort.signal);
+      const horasReservadas = await obtenerHorasDisponibles(datosCancha.id, fecha, horariosAbort.signal);
 
       if (currentFetch !== fetchHorariosId) return;
 
@@ -745,14 +787,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         ...h,
         ocupado: horasReservadasSet.has(h.value),
       }));
-      cacheHorarios[fecha] = horariosDisponiblesLista;
+      cacheHorarios[cacheKey] = horariosDisponiblesLista;
       estadoCalendario.horaSeleccionadas = [];
       renderHorarios();
       actualizarDisponibilidadCambioCancha();
     } catch (e) {
       if (e.name === 'AbortError') return;
       horariosDisponiblesLista = [];
-      cacheHorarios[fecha] = [];
+      cacheHorarios[cacheKey] = [];
       estadoCalendario.horaSeleccionadas = [];
       renderHorarios();
       actualizarDisponibilidadCambioCancha();
@@ -985,13 +1027,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (infoStep) infoStep.classList.remove('d-none');
         if (btnClose) btnClose.classList.remove('d-none');
         if (footer) footer.classList.remove('d-none');
-        showToast('Error al crear la reserva. Intenta de nuevo.', 'error');
+        showToast(
+          error.status === 409
+            ? 'Ese horario acaba de ser reservado. Selecciona otro horario.'
+            : 'Error al crear la reserva. Intenta de nuevo.',
+          error.status === 409 ? 'advertencia' : 'error'
+        );
         return;
       }
 
       setTimeout(() => {
         if (procesando) procesando.classList.add('d-none');
         if (exitoso) exitoso.classList.remove('d-none');
+        actualizarUbicacionReservaFinal();
 
         setTimeout(() => {
           modalInstance.hide();
@@ -1199,6 +1247,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderCalendar(),
     cargarHorarios,
     cargarMetodosPago(),
+    cargarUbicacionCanchaSeleccionada(),
   ]);
   userProfile = profile;
 

@@ -1,5 +1,18 @@
 @import '../global.css';
 
+.reserva-ubicacion-final {
+  max-width: 340px;
+  padding: 1rem;
+  border: 1px solid rgba(25, 135, 84, 0.2);
+  border-radius: 1rem;
+  background: rgba(25, 135, 84, 0.04);
+}
+
+.reserva-qr {
+  display: block;
+  margin-inline: auto;
+}
+
 /* ==========================================================================
    ESTRUCTURA BASE Y COBERTURA DE PANTALLA (100vh / 100dvh)
    ========================================================================== */

@@ -96,13 +96,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   activarFiltrosDashboard();
   activarCerrarSesion();
 
-  renderClientesGrid();
-  try {
-    await renderReservas();
-  } finally {
+  const cargarReservasDashboard = renderReservas().finally(() => {
     establecerCargaDashboard(false);
     actualizarDashboard();
-  }
+  });
   activarActualizacionAutomaticaReservas();
 
   try {
@@ -111,9 +108,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     ubicaciones = [];
   }
 
-  await renderCanchasGrid();
-  await renderGaleriaGrid();
-  await renderSedesGrid();
+  await Promise.all([
+    cargarReservasDashboard,
+    renderClientesGrid(),
+    renderCanchasGrid(),
+    renderGaleriaGrid(),
+    renderSedesGrid(),
+  ]);
   activarModalGeneral();
 });
 
@@ -1335,7 +1336,7 @@ window.abrirEditarSede = function (id) {
       </div>
       <div class="form-group">
         <label>URL QR:</label>
-        <input type="url" id="editSedeUrlQr" class="form-input" value="${sede.urlQrAddress || ''}" />
+        <input type="url" id="editSedeUrlQr" class="form-input" value="${sede.urlAddress || sede.urlQrAddress || ''}" />
       </div>
       <div class="form-group">
         <label>Descripcion:</label>

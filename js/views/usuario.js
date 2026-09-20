@@ -1,6 +1,7 @@
 import { showToast } from '../componets/toast.js';
 import { showConfirm, escapeHtml } from '../componets/confirm-modal.js';
-import { obtenerDatosSesion, cerrarSesion, estaLogueado, obtenerPerfilCompleto } from '../utils/auth.js';
+import { obtenerDatosSesion, cerrarSesion, estaLogueado, tokenExpirado, obtenerPerfilCompleto } from '../utils/auth.js';
+import { handleSessionExpired } from '../utils/session-manager.js';
 import { apiPut, isNetworkError, isAbortError } from '../api/apiClient.js';
 import { actualizarFotoPerfil } from '../api/auth.js';
 import { obtenerEstadisticasUsuario } from '../api/statistics.js';
@@ -12,10 +13,19 @@ import {
 
 document.addEventListener('DOMContentLoaded', () => {
   /* =====================================================
-     VERIFICAR SESION EXPIRADA
+     PROTEGER ACCESO AL PERFIL
      ===================================================== */
 
-  if (!estaLogueado()) return;
+  const token = localStorage.getItem('devportes_token');
+  if (!estaLogueado() || !token) {
+    window.location.replace('./login.html?redirect=usuario');
+    return;
+  }
+
+  if (tokenExpirado()) {
+    handleSessionExpired();
+    return;
+  }
   /* =====================================================
      ESTADO GLOBAL - Cargar desde sesión
      ===================================================== */
@@ -31,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
       urlPicture: session.urlPicture || ''
     }
   };
+  let reservasPendientesActuales = [];
   const pageLoadController = new AbortController();
   window.addEventListener('pagehide', () => pageLoadController.abort(), { once: true });
 
@@ -123,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const estadisticas = await obtenerEstadisticasUsuario(pageLoadController.signal);
       if (reservas) reservas.textContent = String(estadisticas.totalReservations ?? 0);
       if (horas) horas.textContent = `${estadisticas.playedHours ?? 0}h`;
-      if (favorita) favorita.textContent = estadisticas.favoriteField || 'Sin datos';
+      if (favorita) favorita.textContent = estadisticas.favoriteField || 'N/A';
       if (estado) estado.hidden = true;
     } catch (error) {
       if (isAbortError(error)) return;
@@ -264,6 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       const reservas = await obtenerReservasPendientes(pageLoadController.signal);
+      reservasPendientesActuales = reservas;
       if (reservas.length === 0) {
         mostrarEstadoPendientes('vacio');
         return;
@@ -292,15 +304,57 @@ document.addEventListener('DOMContentLoaded', () => {
             <span><i class="bi bi-cash-stack"></i>${formatearPrecioUsuario(r.totalPago)}</span>
           </div>
         </div>
-        <button type="button" class="btn-cancelar" data-id="${r.id}">
-          <i class="bi bi-x-circle"></i>
-          Cancelar reserva
-        </button>
+        <div class="reserva-acciones">
+          ${r.qrUbicacion ? `
+            <button type="button" class="btn-secundario btn-ver-qr" data-id="${r.id}">
+              <i class="bi bi-qr-code me-1"></i>Ver QR
+            </button>
+          ` : ''}
+          <button type="button" class="btn-cancelar" data-id="${r.id}">
+            <i class="bi bi-x-circle"></i>
+            Cancelar reserva
+          </button>
+        </div>
       </div>
     `).join('');
 
     actualizarContadorPendientes();
   }
+
+  const modalQrUbicacion = document.getElementById('modalQrUbicacion');
+  const btnCerrarQrUbicacion = document.getElementById('btnCerrarQrUbicacion');
+  let lastFocusedQr = null;
+
+  function abrirModalQrUbicacion(reserva) {
+    if (!modalQrUbicacion || !reserva.qrUbicacion) return;
+
+    document.getElementById('qrUbicacionSede').textContent = reserva.sede || 'Sede';
+    document.getElementById('qrUbicacionDireccion').textContent = reserva.direccion || 'Dirección no disponible';
+    document.getElementById('qrUbicacionImagen').src = reserva.qrUbicacion;
+    const abrir = document.getElementById('qrUbicacionAbrir');
+    if (reserva.urlUbicacion) {
+      abrir.href = reserva.urlUbicacion;
+      abrir.hidden = false;
+    } else {
+      abrir.removeAttribute('href');
+      abrir.hidden = true;
+    }
+    lastFocusedQr = document.activeElement;
+    modalQrUbicacion.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function cerrarModalQrUbicacion() {
+    if (!modalQrUbicacion) return;
+    modalQrUbicacion.hidden = true;
+    document.body.style.overflow = '';
+    lastFocusedQr?.focus();
+  }
+
+  btnCerrarQrUbicacion?.addEventListener('click', cerrarModalQrUbicacion);
+  modalQrUbicacion?.addEventListener('click', (evento) => {
+    if (evento.target === modalQrUbicacion) cerrarModalQrUbicacion();
+  });
 
   /* =====================================================
      CARGAR HISTORIAL DE RESERVAS
@@ -655,6 +709,13 @@ document.addEventListener('DOMContentLoaded', () => {
      ===================================================== */
 
   document.addEventListener('click', async (evento) => {
+    const btnQr = evento.target.closest('.btn-ver-qr');
+    if (btnQr) {
+      const reserva = reservasPendientesActuales.find((item) => String(item.id) === String(btnQr.dataset.id));
+      if (reserva) abrirModalQrUbicacion(reserva);
+      return;
+    }
+
     const btnCancelar = evento.target.closest('.btn-cancelar');
     if (!btnCancelar) return;
 
@@ -785,6 +846,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('keydown', (evento) => {
     if (evento.key === 'Escape' && modalDetalle && !modalDetalle.hidden) {
       closeDetalle();
+    }
+    if (evento.key === 'Escape' && modalQrUbicacion && !modalQrUbicacion.hidden) {
+      cerrarModalQrUbicacion();
     }
   });
 

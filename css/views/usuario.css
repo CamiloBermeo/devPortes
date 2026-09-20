@@ -366,6 +366,7 @@ app-footer {
 
 .resumen-favorita {
   max-width: 8rem;
+  text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -397,6 +398,10 @@ app-footer {
 }
 
 .resumen-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   padding: var(--space-sm) var(--space-xs);
   background: var(--fondo-gris);
@@ -406,6 +411,7 @@ app-footer {
 
 .resumen-num {
   display: block;
+  width: 100%;
   font-size: clamp(18px, 2.5vw, 22px);
   font-weight: 800;
   color: var(--verde-devportes);
@@ -597,6 +603,38 @@ app-footer {
 .reserva-pendiente:hover {
   border-color: var(--verde-devportes);
   box-shadow: 0 4px 12px rgba(64, 182, 34, 0.08);
+}
+
+.reserva-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.qr-ubicacion-contenido {
+  max-width: 420px;
+  text-align: center;
+}
+
+.qr-ubicacion-cuerpo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 0;
+}
+
+.qr-ubicacion-imagen,
+.reserva-qr {
+  width: 190px;
+  height: 190px;
+  object-fit: contain;
+  border-radius: 0.75rem;
+  background: #fff;
+  padding: 0.5rem;
+  border: 1px solid var(--borde-suave);
 }
 
 .reserva-datos {

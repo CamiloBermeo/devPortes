@@ -14,6 +14,10 @@ function normalizarReservaAdmin(raw) {
     totalHoras: raw.totalHours ?? 0,
     totalPago: raw.totalPay ?? 0,
     saldoPendiente: raw.remainingPayment ?? 0,
+    sede: raw.locationName || '',
+    direccion: raw.locationAddress || '',
+    qrUbicacion: raw.locationQrUrl || '',
+    urlUbicacion: raw.locationUrl || raw.urlAddress || '',
     estadoTexto: formatearEstadoReserva(raw.status || raw.estado || 'PENDIENTE'),
   };
 }
@@ -45,6 +49,10 @@ function normalizarDatosReserva(raw) {
     estadoTexto: formatearEstadoReserva(raw.estado || raw.status || 'PENDIENTE'),
     totalPago: raw.totalPay ?? 0,
     saldoPendiente: raw.remainingPayment ?? 0,
+    sede: raw.locationName || '',
+    direccion: raw.locationAddress || '',
+    qrUbicacion: raw.locationQrUrl || raw.urlQrAddress || '',
+    urlUbicacion: raw.locationUrl || raw.urlAddress || '',
   };
 }
 
@@ -71,6 +79,10 @@ function normalizarReservaHistorial(raw) {
     hora: raw.hora || raw.time || raw.startTime || '',
     tipo: raw.tipo || raw.matchType || 'Individual',
     estado: raw.estado || raw.status || 'Pendiente',
+    sede: raw.locationName || '',
+    direccion: raw.locationAddress || '',
+    qrUbicacion: raw.locationQrUrl || '',
+    urlUbicacion: raw.locationUrl || raw.urlAddress || '',
   };
 }
 
@@ -101,8 +113,8 @@ export async function cancelarReserva(id) {
   return apiPatch(`/reservations/${numId}/cancel`, { auth: true });
 }
 
-export async function obtenerFechasDisponibles(anio, mes) {
-  const data = await apiGet(`/reservation/available-dates/${anio}/${mes}`, { auth: true });
+export async function obtenerFechasDisponibles(fieldId, anio, mes) {
+  const data = await apiGet(`/reservation/available-dates/${fieldId}/${anio}/${mes}`, { auth: true });
   return {
     availableDates: data.availableDates || [],
     fullDates: data.fullDates || [],
@@ -110,8 +122,8 @@ export async function obtenerFechasDisponibles(anio, mes) {
   };
 }
 
-export async function obtenerHorasDisponibles(fecha, signal) {
-  const data = await apiGet(`/reservation/available-dates-times/${fecha}`, { auth: true, signal });
+export async function obtenerHorasDisponibles(fieldId, fecha, signal) {
+  const data = await apiGet(`/reservation/available-dates-times/${fieldId}/${fecha}`, { auth: true, signal });
   return data.reservationHours || [];
 }
 

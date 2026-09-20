@@ -28,6 +28,8 @@ function normalizarCanchaBackend(raw) {
     locationId: raw.locationId || null,
     sede: raw.locationName || raw.headquarters || '',
     direccion: raw.locationAddress || raw.address || '',
+    qrUbicacion: raw.locationQrUrl || raw.urlQrAddress || '',
+    urlUbicacion: raw.locationUrl || raw.urlAddress || '',
     visible: raw.visible !== false,
   };
 }

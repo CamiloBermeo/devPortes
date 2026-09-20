@@ -107,7 +107,7 @@
               <span class="resumen-label">Jugadas</span>
             </div>
             <div class="resumen-item">
-              <span class="resumen-num resumen-dato-loading resumen-favorita" id="canchaFavoritaUsuario">Sin datos</span>
+              <span class="resumen-num resumen-dato-loading resumen-favorita" id="canchaFavoritaUsuario">N/A</span>
               <span class="resumen-label">Favorita</span>
             </div>
           </div>
@@ -340,6 +340,28 @@
             <span class="detalle-label"><i class="bi bi-credit-card-fill"></i> Pago</span>
             <span class="detalle-valor" id="detallePago"></span>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-detalle modal-qr-ubicacion" id="modalQrUbicacion" role="dialog" aria-modal="true" aria-labelledby="qrUbicacionTitulo" hidden>
+      <div class="modal-detalle-contenido qr-ubicacion-contenido">
+        <button type="button" class="btn-cerrar-modal" id="btnCerrarQrUbicacion" aria-label="Cerrar ubicación">
+          <i class="bi bi-x-lg"></i>
+        </button>
+        <div class="detalle-encabezado">
+          <div class="detalle-icono"><i class="bi bi-geo-alt-fill"></i></div>
+          <div>
+            <h3 id="qrUbicacionTitulo">Ubicación de la reserva</h3>
+            <p id="qrUbicacionSede"></p>
+          </div>
+        </div>
+        <div class="qr-ubicacion-cuerpo">
+          <img id="qrUbicacionImagen" class="qr-ubicacion-imagen" alt="Código QR de la ubicación" />
+          <p id="qrUbicacionDireccion" class="small text-muted"></p>
+          <a id="qrUbicacionAbrir" class="btn btn-brand rounded-pill" target="_blank" rel="noopener">
+            <i class="bi bi-box-arrow-up-right me-1"></i>Abrir ubicación
+          </a>
         </div>
       </div>
     </div>

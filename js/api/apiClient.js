@@ -1,15 +1,11 @@
 import { API_URL } from './config.js';
+import { handleSessionExpired } from '../utils/session-manager.js';
 import { showToast } from '../componets/toast.js';
 
 const TOKEN_KEY = 'devportes_token';
-const SESSION_KEY = 'devportes_sesion_activa';
 
 function getToken() {
   return localStorage.getItem(TOKEN_KEY);
-}
-
-function isAdminPage() {
-  return window.location.pathname.includes('panel-administrador');
 }
 
 export function getHeaders({ auth = false, multipart = false } = {}) {
@@ -29,27 +25,28 @@ export function getHeaders({ auth = false, multipart = false } = {}) {
   return headers;
 }
 
-function limpiarSesion() {
-  localStorage.removeItem(TOKEN_KEY);
-  localStorage.removeItem(SESSION_KEY);
-  localStorage.removeItem('devportes_admin_sesion');
-  document.dispatchEvent(new CustomEvent('session-change'));
-}
-
-function getRedirectUrl() {
-  return isAdminPage() ? '../pages/admin-login.html' : '../pages/login.html';
-}
-
 export function isNetworkError(error) {
   return error instanceof TypeError && /fetch|network/i.test(error.message);
 }
+
+export function isAbortError(error) {
+  return error?.name === 'AbortError';
+}
+
+let pageIsLeaving = false;
+window.addEventListener('pagehide', () => {
+  pageIsLeaving = true;
+});
+window.addEventListener('pageshow', () => {
+  pageIsLeaving = false;
+});
 
 async function safeFetch(url, options) {
   try {
     return await fetch(url, options);
   } catch (error) {
-    if (isNetworkError(error)) {
-      showToast('No se pudo conectar con el servidor. Verifica tu conexion.', 'error');
+    if (!pageIsLeaving && !isAbortError(error) && isNetworkError(error)) {
+      showToast('No se pudo conectar con el servidor. Verifica tu conexión.', 'error');
     }
     throw error;
   }
@@ -58,14 +55,7 @@ async function safeFetch(url, options) {
 async function handleResponse(response, { auth = false } = {}) {
   if (response.status === 401 || response.status === 403) {
     if (auth) {
-      limpiarSesion();
-      const currentPath = window.location.pathname;
-      if (!currentPath.includes('login.html')) {
-        showToast('Tu sesion ha expirado. Inicia sesion nuevamente.', 'advertencia', 2500);
-        setTimeout(() => {
-          window.location.href = getRedirectUrl();
-        }, 2500);
-      }
+      handleSessionExpired();
       throw new Error('Sesion expirada. Inicia sesion nuevamente.');
     }
   }

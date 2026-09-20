@@ -8,8 +8,8 @@ export async function iniciarSesion({ email, password }) {
   return apiPost('/auth/login', { email, password });
 }
 
-export async function obtenerPerfil(token) {
-  return apiGet('/auth/profile', { auth: true });
+export async function obtenerPerfil(token, signal) {
+  return apiGet('/auth/profile', { auth: true, signal });
 }
 
 export async function obtenerUsuarios() {

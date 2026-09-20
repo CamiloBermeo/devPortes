@@ -1,7 +1,7 @@
 import { showToast } from '../componets/toast.js';
 import { showConfirm, escapeHtml } from '../componets/confirm-modal.js';
-import { obtenerDatosSesion, cerrarSesion, tokenExpirado, estaLogueado, obtenerPerfilCompleto } from '../utils/auth.js';
-import { apiPut, isNetworkError } from '../api/apiClient.js';
+import { obtenerDatosSesion, cerrarSesion, estaLogueado, obtenerPerfilCompleto } from '../utils/auth.js';
+import { apiPut, isNetworkError, isAbortError } from '../api/apiClient.js';
 import { actualizarFotoPerfil } from '../api/auth.js';
 import { obtenerEstadisticasUsuario } from '../api/statistics.js';
 import {
@@ -15,13 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
      VERIFICAR SESION EXPIRADA
      ===================================================== */
 
-  if (estaLogueado() && tokenExpirado()) {
-    showToast('Tu sesion ha expirado. Inicia sesion nuevamente.', 'advertencia', 2500);
-    setTimeout(() => {
-      cerrarSesion();
-    }, 2500);
-    return;
-  }
+  if (!estaLogueado()) return;
   /* =====================================================
      ESTADO GLOBAL - Cargar desde sesión
      ===================================================== */
@@ -37,6 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
       urlPicture: session.urlPicture || ''
     }
   };
+  const pageLoadController = new AbortController();
+  window.addEventListener('pagehide', () => pageLoadController.abort(), { once: true });
 
   // Poblar DOM con datos de sesión
   const nombreUsuarioEl = document.getElementById('nombreUsuario');
@@ -109,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (state.usuario.urlPicture) mostrarFotoPerfil(state.usuario.urlPicture);
   else if (perfilFoto && !perfilFoto.getAttribute('src')) mostrarFotoPerfil('');
 
-  obtenerPerfilCompleto()
+  obtenerPerfilCompleto(pageLoadController.signal)
     .then(aplicarPerfilUsuario)
     .catch(() => {
       // La información de sesión ya está disponible como fallback visual.
@@ -124,12 +120,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const favorita = document.getElementById('canchaFavoritaUsuario');
 
     try {
-      const estadisticas = await obtenerEstadisticasUsuario();
+      const estadisticas = await obtenerEstadisticasUsuario(pageLoadController.signal);
       if (reservas) reservas.textContent = String(estadisticas.totalReservations ?? 0);
       if (horas) horas.textContent = `${estadisticas.playedHours ?? 0}h`;
       if (favorita) favorita.textContent = estadisticas.favoriteField || 'Sin datos';
       if (estado) estado.hidden = true;
     } catch (error) {
+      if (isAbortError(error)) return;
       console.error('Error al cargar estadísticas del usuario:', error);
       if (estado) {
         estado.textContent = 'No se pudieron cargar tus estadísticas.';
@@ -266,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mostrarEstadoPendientes('cargando');
 
     try {
-      const reservas = await obtenerReservasPendientes();
+      const reservas = await obtenerReservasPendientes(pageLoadController.signal);
       if (reservas.length === 0) {
         mostrarEstadoPendientes('vacio');
         return;
@@ -274,6 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
       renderizarReservasPendientes(reservas);
       mostrarEstadoPendientes('exito');
     } catch (error) {
+      if (isAbortError(error)) return;
       console.error('Error al cargar reservas pendientes:', error);
       mostrarEstadoPendientes('error');
     }
@@ -312,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mostrarEstadoHistorial('cargando');
 
     try {
-      const reservas = await obtenerHistorialReservas();
+      const reservas = await obtenerHistorialReservas(pageLoadController.signal);
       if (reservas.length === 0) {
         mostrarEstadoHistorial('vacio');
         return;
@@ -320,6 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
       renderizarHistorial(reservas);
       mostrarEstadoHistorial('exito');
     } catch (error) {
+      if (isAbortError(error)) return;
       console.error('Error al cargar historial:', error);
       mostrarEstadoHistorial('error');
     }

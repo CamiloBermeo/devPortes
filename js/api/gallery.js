@@ -24,7 +24,13 @@ export async function obtenerPosts() {
   try {
     const data = await apiGet('/post/all');
     const posts = Array.isArray(data) ? data : [];
-    return posts.map(normalizarPost);
+    return posts
+      .map(normalizarPost)
+      .sort((a, b) => {
+        if (!a.eventDate) return 1;
+        if (!b.eventDate) return -1;
+        return b.eventDate.localeCompare(a.eventDate);
+      });
   } catch (error) {
     console.warn('Fallo al obtener posts desde el backend:', error);
     throw error;

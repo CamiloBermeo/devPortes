@@ -1,6 +1,6 @@
 import { obtenerCanchas, formatoTipo, tipoAArray } from '../api/canchas.js';
 import { renderizarSelectorCanchas } from '../componets/tarjeta_canchas.js';
-import { estaLogueado, tokenExpirado, obtenerPerfilCompleto } from '../utils/auth.js';
+import { estaLogueado, obtenerPerfilCompleto } from '../utils/auth.js';
 import { regexNombre, regexCedula, regexTelefono, LONGITUD, validarLongitud } from '../utils/validaciones.js';
 import { showToast } from '../componets/toast.js';
 import {
@@ -19,12 +19,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       ...Object.fromEntries(currentParams),
     });
     window.location.href = `./login.html?${redirectParams.toString()}&tab=register`;
-    return;
-  }
-
-  if (tokenExpirado()) {
-    showToast('Tu sesion ha expirado. Inicia sesion nuevamente.', 'advertencia', 2500);
-    setTimeout(() => { window.location.href = './login.html'; }, 2500);
     return;
   }
 
@@ -88,6 +82,29 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // ---------------- integración de modal de selección de canchas ----------------
   const btnCambiarCancha = document.getElementById('btnCambiarCancha');
+  const contenedorCambiarCancha = document.getElementById('contenedorCambiarCancha');
+
+  function mostrarAvisoCambioCanchaBloqueado() {
+    showToast(
+      'Quita las horas seleccionadas para poder cambiar de cancha. Los horarios actuales pertenecen a la cancha elegida.',
+      'advertencia'
+    );
+  }
+
+  function actualizarDisponibilidadCambioCancha() {
+    if (!btnCambiarCancha) return;
+
+    const tieneFecha = Boolean(fechaReservaInput?.value || estadoCalendario.fechaSeleccionada);
+    const tieneHoras = estadoCalendario.horaSeleccionadas.length > 0;
+    const bloquearCambio = tieneFecha && tieneHoras;
+
+    btnCambiarCancha.disabled = bloquearCambio;
+    btnCambiarCancha.setAttribute('aria-disabled', String(bloquearCambio));
+    contenedorCambiarCancha?.setAttribute('aria-disabled', String(bloquearCambio));
+    btnCambiarCancha.title = bloquearCambio
+      ? 'No puedes cambiar de cancha después de seleccionar fecha y hora.'
+      : 'Cambiar cancha';
+  }
 
   const renderizarSelector = async () => {
     const canchasActualizadas = (await obtenerCanchas()).filter((c) => c.estado === 'Disponible');
@@ -173,11 +190,24 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Abrir modal de selección al hacer clic en "Cambiar"
   btnCambiarCancha?.addEventListener('click', async () => {
+    if (btnCambiarCancha.disabled) return;
     await renderizarSelector();
     const modalElement = document.getElementById('modalSeleccionarCancha');
     if (modalElement && window.bootstrap) {
       const modalInstance = bootstrap.Modal.getOrCreateInstance(modalElement);
       modalInstance.show();
+    }
+  });
+
+  contenedorCambiarCancha?.addEventListener('click', (evento) => {
+    if (evento.target.closest('#btnCambiarCancha') && !btnCambiarCancha.disabled) return;
+    if (btnCambiarCancha.disabled) mostrarAvisoCambioCanchaBloqueado();
+  });
+
+  contenedorCambiarCancha?.addEventListener('keydown', (evento) => {
+    if ((evento.key === 'Enter' || evento.key === ' ') && btnCambiarCancha.disabled) {
+      evento.preventDefault();
+      mostrarAvisoCambioCanchaBloqueado();
     }
   });
 
@@ -662,6 +692,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         estadoCalendario.fechaSeleccionada = diaDateValue;
         if (fechaReservaInput) fechaReservaInput.value = diaDateValue;
         await cargarHorariosParaFecha(diaDateValue);
+        actualizarDisponibilidadCambioCancha();
         renderCalendar();
         actualizarResumen();
         actualizarVistaPrevia();
@@ -677,6 +708,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       horariosDisponiblesLista = cacheHorarios[fecha];
       estadoCalendario.horaSeleccionadas = [];
       renderHorarios();
+      actualizarDisponibilidadCambioCancha();
       return;
     }
 
@@ -716,12 +748,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       cacheHorarios[fecha] = horariosDisponiblesLista;
       estadoCalendario.horaSeleccionadas = [];
       renderHorarios();
+      actualizarDisponibilidadCambioCancha();
     } catch (e) {
       if (e.name === 'AbortError') return;
       horariosDisponiblesLista = [];
       cacheHorarios[fecha] = [];
       estadoCalendario.horaSeleccionadas = [];
       renderHorarios();
+      actualizarDisponibilidadCambioCancha();
       showToast('No se pudieron cargar los horarios para esta fecha.', 'advertencia');
     }
   };
@@ -751,6 +785,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           } else {
             estadoCalendario.horaSeleccionadas.push(horario.value);
           }
+          actualizarDisponibilidadCambioCancha();
           renderHorarios();
           actualizarResumen();
           actualizarVistaPrevia();
@@ -1094,6 +1129,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       estadoCalendario.fechaActual = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
       renderCalendar();
       renderHorarios();
+      actualizarDisponibilidadCambioCancha();
 
       const opcionMi = document.querySelector('input[name="reservaPara"][value="mi"]');
       if (opcionMi) opcionMi.checked = true;
@@ -1150,6 +1186,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     estadoCalendario.fechaSeleccionada = hoyStr;
     if (fechaReservaInput) fechaReservaInput.value = hoyStr;
   }
+  actualizarDisponibilidadCambioCancha();
 
   let userProfile = null;
 

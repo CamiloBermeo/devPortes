@@ -329,9 +329,16 @@
               <h3 class="titulo-resumen mb-0">Tu Reserva</h3>
               <!-- BOTÓN AÑADIDO -->
               <!-- En reservas.html (reemplaza tu botón actual por este): -->
-              <button type="button" id="btnCambiarCancha" class="btn btn-sm btn-outline-light">
-                <i class="bi bi-arrow-repeat me-1"></i>Cambiar cancha
-              </button>
+              <span
+                id="contenedorCambiarCancha"
+                class="d-inline-block"
+                tabindex="0"
+                role="button"
+                aria-label="Cambiar cancha">
+                <button type="button" id="btnCambiarCancha" class="btn btn-sm btn-outline-light">
+                  <i class="bi bi-arrow-repeat me-1"></i>Cambiar cancha
+                </button>
+              </span>
             </div>
             <div class="resumen-body p-3">
               <div class="resumen-imagen rounded-3 overflow-hidden mb-3 position-relative">

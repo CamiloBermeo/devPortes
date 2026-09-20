@@ -4,7 +4,6 @@ import { obtenerPosts, crearPost, editarPost, eliminarPost } from '../api/galler
 import { obtenerUsuarios } from '../api/auth.js';
 import { obtenerTodasLasReservas, obtenerMetodosPago, registrarPagoFinal } from '../api/reservations.js';
 import { showToast } from '../componets/toast.js';
-import { tokenExpirado } from '../utils/auth.js';
 
 const KEY_ADMIN_SESSION = 'devportes_admin_sesion';
 
@@ -81,17 +80,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const adminSession = localStorage.getItem(KEY_ADMIN_SESSION);
   if (!adminSession) {
     window.location.href = 'admin-login.html';
-    return;
-  }
-
-  if (tokenExpirado()) {
-    localStorage.removeItem(KEY_ADMIN_SESSION);
-    localStorage.removeItem('devportes_token');
-    localStorage.removeItem('devportes_sesion_activa');
-    showToast('Tu sesion ha expirado. Inicia sesion nuevamente.', 'advertencia', 2500);
-    setTimeout(() => {
-      window.location.href = 'admin-login.html';
-    }, 2500);
     return;
   }
 

@@ -2,8 +2,18 @@ class AppNavbar extends HTMLElement {
   _listenersSetup;
 
   connectedCallback() {
+    this._loadSessionManager();
     this.render();
     this._setupListeners();
+  }
+
+  _loadSessionManager() {
+    if (document.querySelector('script[data-session-manager]')) return;
+    const script = document.createElement('script');
+    script.type = 'module';
+    script.dataset.sessionManager = 'true';
+    script.src = `${window.location.pathname.includes('/pages/') ? '../' : './'}js/utils/session-manager.js`;
+    document.head.appendChild(script);
   }
 
   render() {

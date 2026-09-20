@@ -37,13 +37,13 @@ export function cerrarSesion() {
   window.location.href = '../index.html';
 }
 
-export async function obtenerPerfilCompleto() {
+export async function obtenerPerfilCompleto(signal) {
   const session = obtenerDatosSesion();
   const token = localStorage.getItem(TOKEN_KEY);
 
   if (token) {
     try {
-      const p = await apiGet('/auth/profile', { auth: true });
+      const p = await apiGet('/auth/profile', { auth: true, signal });
       return {
         id: p.id || session.id,
         nombre: p.name || session.nombre,

@@ -2,12 +2,15 @@ import { obtenerCanchas } from '../api/canchas.js';
 import { renderizarInstalaciones, renderizarModales } from '../componets/tarjeta_canchas.js';
 import { renderizarFiltroDeportes } from '../componets/filtro_deportes.js';
 import { obtenerEstadisticasPublicas } from '../api/statistics.js';
+import { isAbortError } from '../api/apiClient.js';
 
 let contenedorInstalaciones;
 let indexError;
 let indexEmpty;
+let indexLoadController;
 
 document.addEventListener('DOMContentLoaded', () => {
+  indexLoadController = new AbortController();
   contenedorInstalaciones = document.getElementById('contenedor-instalaciones');
   indexError = document.getElementById('indexError');
   indexEmpty = document.getElementById('indexEmpty');
@@ -16,6 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
   cargarCanchas();
   cargarEstadisticasPublicas();
   inicializarScroll();
+});
+
+window.addEventListener('pagehide', () => {
+  indexLoadController?.abort();
 });
 
 function mostrarEstado(estado, mensajeError = '') {
@@ -46,7 +53,7 @@ function mostrarEstado(estado, mensajeError = '') {
 }
 
 function cargarEstadisticasPublicas() {
-  obtenerEstadisticasPublicas()
+  obtenerEstadisticasPublicas({ signal: indexLoadController?.signal })
     .then((estadisticas) => {
       const canchas = document.getElementById('heroCantidadCanchas');
       const deportes = document.getElementById('heroCantidadDeportes');
@@ -62,6 +69,7 @@ function cargarEstadisticasPublicas() {
       });
     })
     .catch(() => {
+      if (indexLoadController?.signal.aborted) return;
       document.querySelectorAll('.hero-stat-loading').forEach((element) => {
         element.textContent = '—';
         element.classList.remove('hero-stat-loading');
@@ -73,7 +81,8 @@ async function cargarCanchas() {
   mostrarEstado('cargando');
 
   try {
-    const canchas = (await obtenerCanchas()).filter((c) => c.estado === 'Disponible');
+    const canchas = (await obtenerCanchas({ signal: indexLoadController?.signal }))
+      .filter((c) => c.estado === 'Disponible');
 
     if (canchas.length === 0) {
       mostrarEstado('vacio');
@@ -88,6 +97,7 @@ async function cargarCanchas() {
     });
     mostrarEstado('exito');
   } catch (error) {
+    if (isAbortError(error)) return;
     mostrarEstado('error');
   }
 }

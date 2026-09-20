@@ -74,9 +74,9 @@ function normalizarReservaHistorial(raw) {
   };
 }
 
-export async function obtenerReservasPendientes() {
+export async function obtenerReservasPendientes(signal) {
   try {
-    const data = await apiGet('/reservations/pending', { auth: true, cache: 'no-store' });
+    const data = await apiGet('/reservations/pending', { auth: true, cache: 'no-store', signal });
     const reservas = Array.isArray(data) ? data : [];
     return reservas.map(normalizarDatosReserva);
   } catch (error) {
@@ -85,9 +85,9 @@ export async function obtenerReservasPendientes() {
   }
 }
 
-export async function obtenerHistorialReservas() {
+export async function obtenerHistorialReservas(signal) {
   try {
-    const data = await apiGet('/reservations/history', { auth: true, cache: 'no-store' });
+    const data = await apiGet('/reservations/history', { auth: true, cache: 'no-store', signal });
     const reservas = Array.isArray(data) ? data : [];
     return reservas.map(normalizarDatosReserva);
   } catch (error) {

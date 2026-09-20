@@ -14,7 +14,14 @@ function initToastContainer() {
   return container;
 }
 
+const recentToasts = new Map();
+
 export function showToast(mensaje, tipo = 'info', duracion = 3500) {
+  const toastKey = `${tipo}:${mensaje}`;
+  const lastShownAt = recentToasts.get(toastKey) || 0;
+  if (Date.now() - lastShownAt < 1500) return null;
+  recentToasts.set(toastKey, Date.now());
+
   const container = initToastContainer();
   const toast = document.createElement('div');
   toast.className = `dp-toast dp-toast--${tipo}`;

@@ -65,6 +65,22 @@ export function renderizarModales(canchas, contenedorId = 'contenedor-modales') 
                 <ul class="list-unstyled small text-brand-dark mb-4">
                   ${cancha.detalles.map((d) => `<li class="mb-1">✔️ ${d}</li>`).join('')}
                 </ul>
+                ${(cancha.sede || cancha.direccion) ? `
+                  <div class="small text-muted mb-4">
+                    ${cancha.sede ? `
+                      <div class="d-flex align-items-center gap-2 mb-1">
+                        <i class="bi bi-building-fill text-brand-mid-green"></i>
+                        <span><strong class="text-brand-dark">Sede:</strong> ${cancha.sede}</span>
+                      </div>
+                    ` : ''}
+                    ${cancha.direccion ? `
+                      <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-geo-alt-fill text-brand-mid-green"></i>
+                        <span><strong class="text-brand-dark">Dirección:</strong> ${cancha.direccion}</span>
+                      </div>
+                    ` : ''}
+                  </div>
+                ` : ''}
               </div>
               <div class="d-flex justify-content-between align-items-center pt-3 border-top border-light gap-2">
                 <div>

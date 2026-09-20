@@ -26,12 +26,14 @@ function normalizarCanchaBackend(raw) {
     descripcion: raw.description || '',
     detalles: raw.details || [],
     locationId: raw.locationId || null,
+    sede: raw.locationName || raw.headquarters || '',
+    direccion: raw.locationAddress || raw.address || '',
     visible: raw.visible !== false,
   };
 }
 
-export async function obtenerCanchas() {
-  const data = await apiGet('/field/all');
+export async function obtenerCanchas({ signal } = {}) {
+  const data = await apiGet('/field/all', { signal });
   const canchas = Array.isArray(data) ? data : data.canchas || [];
   return canchas.map(normalizarCanchaBackend);
 }

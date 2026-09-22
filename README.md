@@ -1,4 +1,4 @@
-# devPortes - Frontend
+# Golaya - Sistema de gestión de reservas
 
 Sistema web para la administración y reserva de complejos deportivos, desarrollado como proyecto integrador para el bootcamp Generation.
 

@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Gestiona canchas, reservas y usuarios desde el panel de administración." />
+    <meta name="author" content="GOLAYA" />
+    <meta name="theme-color" content="#40b622" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AdminCanchas - Panel de Control" />
+    <meta property="og:description" content="Gestiona canchas, reservas y usuarios desde el panel de administración." />
+    <meta property="og:image" content="https://golaya.vercel.app/ogimage.webp" />
+    <meta property="og:url" content="https://golaya.vercel.app/pages/panel-administrador.html" />
+    <meta property="og:site_name" content="GOLAYA" />
+    <meta property="og:locale" content="es_CO" />
+    <link rel="canonical" href="https://golaya.vercel.app/pages/panel-administrador.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="AdminCanchas - Panel de Control" />
+    <meta name="twitter:description" content="Gestiona canchas, reservas y usuarios desde el panel de administración." />
+    <meta name="twitter:image" content="https://golaya.vercel.app/ogimage.webp" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="GOLAYA - Reserva tu cancha deportiva en segundos. 6 canchas, 5 deportes, disponible 24/7" />
+    <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon/soccer-ball-variant.svg" />
+    <title>AdminCanchas - Panel de Control</title>
+    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/icons/favicon/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/icons/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="../assets/icons/favicon/site.webmanifest" />
+
+    <!-- Fuentes oficiales de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Hoja de estilos principal -->
+    <link rel="stylesheet" href="../css/views/panel-administrador.css" />
+    <link rel="stylesheet" href="../css/components/toast.css" />
+
+    <!-- Bootstrap Icons para spinners -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+
+    <!-- Librerías de gráficos e íconos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+  </head>
+  <body>
+    <!-- Encabezado superior para pantallas móviles -->
+    <header class="mobile-header">
+      <div class="brand">
+        <div class="brand-icon">
+          <i data-lucide="layout-grid"></i>
+        </div>
+        <span class="brand-name">AdminCanchas</span>
+      </div>
+      <button class="mobile-toggle-btn" id="mobileToggleBtn" aria-label="Abrir menú de navegación">
+        <i data-lucide="menu"></i>
+      </button>
+    </header>
+
+    <!-- Capa oscura semitransparente para cuando se despliega el menú en celulares -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Menú lateral navegable -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand brand-desktop">
+        <div class="brand-icon">
+          <i data-lucide="layout-grid"></i>
+        </div>
+        <span class="brand-name">AdminCanchas</span>
+      </div>
+
+      <!-- Navegación principal -->
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-target="dashboard-view">
+          <i data-lucide="bar-chart-3"></i> <span>Dashboard</span>
+        </a>
+        <a href="#" class="nav-item" data-target="reservas-view"> <i data-lucide="calendar"></i> <span>Reservas</span> </a>
+        <a href="#" class="nav-item" data-target="sedes-view"> <i data-lucide="map-pin"></i> <span>Sedes</span> </a>
+        <a href="#" class="nav-item" data-target="canchas-view"> <i data-lucide="circle-dot"></i> <span>Canchas</span> </a>
+        <a href="#" class="nav-item" data-target="galeria-view"> <i data-lucide="image"></i> <span>Galería</span> </a>
+        <a href="#" class="nav-item" data-target="clientes-view"> <i data-lucide="users"></i> <span>Clientes</span> </a>
+      </nav>
+
+      <!-- Botón de cierre de sesión -->
+      <div class="sidebar-footer">
+        <a href="#" class="nav-item nav-logout" id="logoutBtn"> <i data-lucide="log-out"></i> <span>Cerrar sesión</span> </a>
+      </div>
+    </aside>
+
+    <!-- Área de contenido principal -->
+    <main class="main-content">
+      <!-- PANTALLA 1: DASHBOARD Y MÉTRICAS -->
+      <section id="dashboard-view" class="view-section active dashboard-loading">
+        <div class="filter-bar">
+          <div class="filter-group">
+            <label for="fechaDesde">Desde:</label> <input type="date" id="fechaDesde" value="2026-08-01" />
+            <label for="fechaHasta">Hasta:</label> <input type="date" id="fechaHasta" value="2026-08-31" />
+          </div>
+
+          <div class="btn-group" id="periodFilterGroup">
+            <button class="btn-time" data-period="dia">Día</button>
+            <button class="btn-time active" data-period="semana">Semana</button>
+            <button class="btn-time" data-period="mes">Mes</button>
+          </div>
+        </div>
+
+        <!-- Tarjetas de indicadores KPI -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <span class="kpi-title">Ingresos cobrados</span>
+            <div class="kpi-value" id="kpiIngresosTotales"><span class="skeleton skeleton-value"></span></div>
+            <span class="kpi-sub" id="kpiComparativa"><span class="skeleton skeleton-sub"></span></span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-title" id="kpiCancha1Titulo">Cancha con más ingresos</span>
+            <div class="kpi-value text-green" id="kpiCancha1Valor"><span class="skeleton skeleton-value"></span></div>
+            <span class="kpi-sub" id="kpiCancha1Sub"><span class="skeleton skeleton-sub"></span></span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-title" id="kpiCancha2Titulo">Segunda cancha</span>
+            <div class="kpi-value text-purple" id="kpiCancha2Valor"><span class="skeleton skeleton-value"></span></div>
+            <span class="kpi-sub" id="kpiCancha2Sub"><span class="skeleton skeleton-sub"></span></span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-title" id="kpiCancha3Titulo">Tercera cancha</span>
+            <div class="kpi-value text-orange" id="kpiCancha3Valor"><span class="skeleton skeleton-value"></span></div>
+            <span class="kpi-sub" id="kpiCancha3Sub"><span class="skeleton skeleton-sub"></span></span>
+          </div>
+        </div>
+
+        <!-- Sección de gráficos del dashboard -->
+        <div class="dashboard-grid">
+          <div class="card">
+            <div class="card-header">
+              <h3>Ingresos por Cancha</h3>
+              <i data-lucide="trending-up" class="icon-accent"></i>
+            </div>
+            <div class="chart-container">
+              <div class="chart-skeleton" aria-label="Cargando gráfico"></div>
+              <canvas id="incomeChart"></canvas>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3>Distribución General</h3>
+            </div>
+            <div class="chart-container">
+              <div class="chart-skeleton" aria-label="Cargando gráfico"></div>
+              <canvas id="doughnutChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta adaptada para resumen con botón responsivo -->
+        <div class="card card-margin-top">
+          <div class="card-header card-header-responsive">
+            <div class="card-header-title">
+              <h3>Resumen Ejecutivo del Dashboard</h3>
+            </div>
+            <button class="btn-ver-mas" data-modal="dashboard">Ver más información</button>
+          </div>
+          <p class="text-muted">Vista rápida de métricas clave del sistema e ingresos registrados en la sede actual.</p>
+        </div>
+      </section>
+
+      <!-- PANTALLA 2: RESERVAS -->
+      <section id="reservas-view" class="view-section">
+        <div class="preview-header">
+          <div>
+            <h2>Gestión de reservas</h2>
+            <p class="text-muted">Consulta todas las reservas registradas y revisa sus datos de pago y cliente.</p>
+          </div>
+          <div class="reservation-summary" id="reservationSummary">Cargando reservas...</div>
+        </div>
+
+        <div class="card reservations-card">
+          <div class="reservations-toolbar">
+            <label class="search-control">
+              <span class="sr-only">Buscar reservas</span>
+              <i data-lucide="search"></i>
+              <input type="search" id="reservationSearch" placeholder="Buscar por cliente o cancha" />
+            </label>
+            <select id="reservationStatusFilter" class="form-input reservation-filter" aria-label="Filtrar por estado">
+              <option value="">Todos los estados</option>
+              <option value="PENDIENTE">Pendientes</option>
+              <option value="COMPLETADA">Completadas</option>
+              <option value="CANCELADA">Canceladas</option>
+            </select>
+          </div>
+          <div id="reservationsTableContainer" class="tabla-modal-wrapper">
+            <div class="admin-loading-table" aria-label="Cargando reservas">
+              <span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANTALLA 3: SEDES -->
+      <section id="sedes-view" class="view-section">
+        <div class="preview-header">
+          <div>
+            <h2>Gestión de Sedes</h2>
+            <p class="text-muted">Administra las ubicaciones y sedes del sistema.</p>
+          </div>
+          <button class="btn-ver-mas" data-modal="crear-sede">Nueva Sede</button>
+        </div>
+
+        <div class="preview-grid" id="sedesGridPreview">
+          <div class="admin-skeleton-card"></div>
+          <div class="admin-skeleton-card"></div>
+        </div>
+      </section>
+
+      <!-- PANTALLA 4: CANCHAS (PUBLICACIÓN DE PRODUCTOS) -->
+      <section id="canchas-view" class="view-section">
+        <div class="preview-header">
+          <div>
+            <h2>Gestión y Catálogo de Canchas</h2>
+            <p class="text-muted">Administra los espacios deportivos y publica nuevos escenarios.</p>
+          </div>
+          <button class="btn-ver-mas" data-modal="crear-cancha">Nueva Cancha</button>
+        </div>
+
+        <!-- Tarjetas dinámicas para mostrar las canchas -->
+        <div class="preview-grid" id="canchasGridPreview">
+          <div class="admin-skeleton-card"></div>
+          <div class="admin-skeleton-card"></div>
+          <div class="admin-skeleton-card"></div>
+        </div>
+      </section>
+
+      <!-- PANTALLA 5: GALERÍA -->
+      <section id="galeria-view" class="view-section">
+        <div class="preview-header">
+          <div>
+            <h2>Gestión de Galería</h2>
+            <p class="text-muted">Administra las publicaciones y fotos del sitio.</p>
+          </div>
+          <button class="btn-ver-mas" data-modal="crear-post">Nueva Publicación</button>
+        </div>
+
+        <div class="preview-grid" id="galeriaGridPreview">
+          <div class="admin-skeleton-card"></div>
+          <div class="admin-skeleton-card"></div>
+        </div>
+      </section>
+
+      <!-- PANTALLA 6: CLIENTES -->
+      <section id="clientes-view" class="view-section">
+        <div class="preview-header">
+          <div>
+            <h2>Directorio de Clientes</h2>
+            <p class="text-muted">Gestiona el listado completo con opciones para consultar, editar o eliminar.</p>
+          </div>
+          <button class="btn-ver-mas" data-modal="clientes">Ver lista y gestionar</button>
+        </div>
+
+        <!-- Tarjetas interactivas con botones de acción visibles en móvil y PC -->
+        <div class="preview-grid" id="clientesGridPreview">
+          <div class="admin-skeleton-card"></div>
+          <div class="admin-skeleton-card"></div>
+        </div>
+      </section>
+    </main>
+
+    <!-- VENTANA MODAL REUTILIZABLE -->
+    <div class="modal-overlay" id="infoModal">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 id="modalTitle">Información del Módulo</h3>
+          <button class="close-btn" id="closeModalBtn" aria-label="Cerrar ventana">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+        <div class="modal-body" id="modalBody">
+          <!-- El contenido se inyecta dinámicamente mediante JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Archivo JavaScript con la lógica de negocio -->
+    <script type="module" src="../js/views/panel-administrador.js"></script>
+  </body>
+</html>

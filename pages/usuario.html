@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Administra tu perfil y datos personales en GOLAYA." />
+    <meta name="author" content="GOLAYA" />
+    <meta name="theme-color" content="#40b622" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Mi Perfil - GOLAYA" />
+    <meta property="og:description" content="Administra tu perfil y datos personales en GOLAYA." />
+    <meta property="og:image" content="https://golaya.vercel.app/ogimage.webp" />
+    <meta property="og:url" content="https://golaya.vercel.app/pages/usuario.html" />
+    <meta property="og:site_name" content="GOLAYA" />
+    <meta property="og:locale" content="es_CO" />
+    <link rel="canonical" href="https://golaya.vercel.app/pages/usuario.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Mi Perfil - GOLAYA" />
+    <meta name="twitter:description" content="Administra tu perfil y datos personales en GOLAYA." />
+    <meta name="twitter:image" content="https://golaya.vercel.app/ogimage.webp" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="GOLAYA - Reserva tu cancha deportiva en segundos. 6 canchas, 5 deportes, disponible 24/7" />
+    <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon/soccer-ball-variant.svg" />
+    <title>Mi Perfil | GOLAYA</title>
+    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/icons/favicon/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/icons/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="../assets/icons/favicon/site.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Inter:wght@400;500;700;800&amp;display=swap"
+      rel="stylesheet" />
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+    <!-- COMPONENTES -->
+    <link rel="stylesheet" href="../css/components/toast.css" />
+    <link rel="stylesheet" href="../css/components/navbar-footer.css" />
+    <!-- ESTILOS PERSONALIZADOS -->
+    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/views/usuario.css" />
+  </head>
+  <body>
+    <app-navbar></app-navbar>
+
+    <main class="panel-contenedor">
+      <aside class="tarjeta-panel tarjeta-perfil">
+        <!-- HERO GRADIENTE -->
+        <div class="perfil-hero" aria-hidden="true"></div>
+
+        <!-- AVATAR -->
+        <div class="avatar-stack">
+          <img
+            src="https://img.magnific.com/vector-premium/vector-icono-usuario-fondo-azul-adecuado-diseno-web-etc_266866-110.jpg"
+            alt="Foto de perfil"
+            class="perfil-foto"
+            id="perfilFoto" />
+          <span class="avatar-fallback" id="avatarFallback" hidden>CP</span>
+          <span class="avatar-loading" id="avatarLoading" aria-hidden="true" hidden>
+            <span class="avatar-loading-shimmer"></span>
+            <i class="bi bi-arrow-repeat"></i>
+          </span>
+          <button type="button" class="btn-cambiar-foto" id="btnCambiarFoto" aria-label="Cambiar foto de perfil">
+            <i class="bi bi-camera-fill"></i>
+          </button>
+          <input type="file" id="inputFotoPerfil" accept="image/jpeg,image/png,image/webp" hidden />
+        </div>
+
+        <!-- NOMBRE + ID -->
+        <div class="perfil-identidad">
+          <h2 id="nombreUsuario">USUARIO</h2>
+          <span class="usuario-id-badge">#082026</span>
+        </div>
+
+        <!-- INFO -->
+        <div class="perfil-info">
+          <div class="info-item">
+            <span class="info-etiqueta"><i class="bi bi-envelope-fill"></i> Email</span>
+            <span class="info-valor" id="emailUsuario">carlos.m@gmail.com</span>
+          </div>
+          <div class="info-item">
+            <span class="info-etiqueta"><i class="bi bi-phone-fill"></i> Teléfono</span>
+            <span class="info-valor" id="telefonoUsuario">300 123 456</span>
+          </div>
+          <div class="info-item">
+            <span class="info-etiqueta"><i class="bi bi-gem"></i> Nivel de jugador</span>
+            <span class="info-valor nivel-jugador-loading" id="nivelJugadorUsuario">Cargando...</span>
+          </div>
+        </div>
+
+        <!-- RESUMEN -->
+        <div class="perfil-resumen">
+          <h4>Resumen</h4>
+          <div class="resumen-grid">
+            <div class="resumen-item">
+              <span class="resumen-num resumen-dato-loading resumen-numero-loading" id="totalReservasUsuario">0</span>
+              <span class="resumen-label">Reservas</span>
+            </div>
+            <div class="resumen-item">
+              <span class="resumen-num resumen-dato-loading resumen-numero-loading" id="horasJugadasUsuario">0h</span>
+              <span class="resumen-label">Jugadas</span>
+            </div>
+            <div class="resumen-item resumen-item-favorita">
+              <span class="resumen-num resumen-dato-loading resumen-favorita resumen-favorita-loading" id="canchaFavoritaUsuario"
+                >N/A</span
+              >
+              <span class="resumen-label">Favorita</span>
+            </div>
+          </div>
+          <div class="resumen-estado" id="resumenEstado" role="status" aria-live="polite" hidden></div>
+        </div>
+
+        <!-- ACCIONES -->
+        <div class="perfil-acciones">
+          <button type="button" class="btn-editar-perfil" id="btnEditarPerfil">
+            <i class="bi bi-pencil-square"></i> Editar perfil
+          </button>
+          <button type="button" class="btn-cerrar-sesion" id="btnCerrarSesion">
+            <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+          </button>
+        </div>
+      </aside>
+
+      <section class="reservas-contenedor">
+        <section class="tarjeta-panel tarjeta-pendientes">
+          <div class="titulo-seccion">
+            <div>
+              <h3>Reservas Pendientes</h3>
+              <p>Reservas que tienes programadas</p>
+            </div>
+            <span class="contador-pendientes" id="contadorPendientes">0</span>
+          </div>
+
+          <!-- LOADING -->
+          <div id="pendientesLoading" class="usuario-loading-state">
+            <div class="skeleton-reserva">
+              <div class="skeleton-reserva-texto">
+                <div class="skeleton-line title"></div>
+                <div class="skeleton-line"></div>
+                <div class="skeleton-line short"></div>
+              </div>
+              <div class="skeleton-line-btn"></div>
+            </div>
+            <div class="skeleton-reserva">
+              <div class="skeleton-reserva-texto">
+                <div class="skeleton-line title"></div>
+                <div class="skeleton-line"></div>
+                <div class="skeleton-line short"></div>
+              </div>
+              <div class="skeleton-line-btn"></div>
+            </div>
+            <div class="skeleton-reserva">
+              <div class="skeleton-reserva-texto">
+                <div class="skeleton-line title"></div>
+                <div class="skeleton-line"></div>
+                <div class="skeleton-line short"></div>
+              </div>
+              <div class="skeleton-line-btn"></div>
+            </div>
+          </div>
+
+          <!-- ERROR -->
+          <div id="pendientesError" class="usuario-error-state d-none">
+            <div class="error-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
+            <h4>No se pudieron cargar las reservas</h4>
+            <p>Ocurrió un inconveniente al conectar con el servidor.</p>
+            <button id="btnReintentarPendientes" class="btn-reintentar"><i class="bi bi-arrow-clockwise"></i> Reintentar</button>
+          </div>
+
+          <!-- VACÍO -->
+          <div id="pendientesVacio" class="usuario-empty-state d-none">
+            <div class="empty-icon"><i class="bi bi-calendar-x"></i></div>
+            <h4>Sin reservas pendientes</h4>
+            <p>No tienes reservas programadas en este momento.</p>
+            <a href="reservas.html" class="btn-reservar-ahora"> <i class="bi bi-plus-circle"></i> Reservar cancha </a>
+          </div>
+
+          <!-- LISTA -->
+          <div class="lista-reservas" id="listaReservas"></div>
+        </section>
+
+        <section class="tarjeta-panel tarjeta-historial">
+          <div class="titulo-seccion">
+            <h3>Historial de Reservas</h3>
+          </div>
+          <div class="tabla-responsive" id="tablaHistorial">
+            <table class="tabla-reservas">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Cancha</th>
+                  <th>Hora</th>
+                  <th>Tipo</th>
+                  <th>Estado</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody id="historialBody"></tbody>
+            </table>
+          </div>
+
+          <!-- LOADING HISTORIAL -->
+          <div id="historialLoading" class="usuario-loading-table d-none">
+            <div class="skeleton-table-row">
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line short"></div>
+            </div>
+            <div class="skeleton-table-row">
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line short"></div>
+            </div>
+            <div class="skeleton-table-row">
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line short"></div>
+            </div>
+          </div>
+
+          <!-- ERROR HISTORIAL -->
+          <div id="historialError" class="usuario-error-state d-none">
+            <div class="error-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
+            <h4>No se pudo cargar el historial</h4>
+            <p>Ocurrió un inconveniente al conectar con el servidor.</p>
+            <button id="btnReintentarHistorial" class="btn-reintentar"><i class="bi bi-arrow-clockwise"></i> Reintentar</button>
+          </div>
+
+          <!-- VACÍO HISTORIAL -->
+          <div id="historialVacio" class="usuario-empty-state d-none">
+            <div class="empty-icon"><i class="bi bi-clock-history"></i></div>
+            <h4>Sin historial</h4>
+            <p>Aún no tienes reservas registradas.</p>
+            <a href="reservas.html" class="btn-reservar-ahora"> <i class="bi bi-plus-circle"></i> Reservar cancha </a>
+          </div>
+
+          <div class="historial-cards" id="historialCards" hidden></div>
+        </section>
+      </section>
+    </main>
+
+    <div class="modal-perfil" id="modalPerfil" role="dialog" aria-modal="true" aria-labelledby="modalTitulo" hidden>
+      <div class="modal-perfil-contenido">
+        <button type="button" class="btn-cerrar-modal" id="btnCerrarModal" aria-label="Cerrar modal">
+          <i class="bi bi-x-lg"></i>
+        </button>
+
+        <div class="modal-encabezado">
+          <div class="icono-editar">
+            <i class="bi bi-person-gear"></i>
+          </div>
+          <div>
+            <h3 id="modalTitulo">Editar perfil</h3>
+            <p>Actualiza tus datos personales</p>
+          </div>
+        </div>
+
+        <form id="formEditarPerfil" novalidate>
+          <div class="campo-formulario">
+            <label for="inputNombre">Nombre completo</label>
+            <input type="text" id="inputNombre" autocomplete="off" />
+            <div class="tooltip-error" id="errorNombre">Ingresa tu nombre</div>
+          </div>
+          <div class="campo-formulario">
+            <label for="inputEmail">Correo electrónico</label>
+            <input type="email" id="inputEmail" autocomplete="off" />
+            <div class="tooltip-error" id="errorEmail">Ingresa un correo válido</div>
+          </div>
+          <div class="campo-formulario">
+            <label for="inputTelefono">Teléfono</label>
+            <input type="tel" id="inputTelefono" autocomplete="off" />
+            <div class="tooltip-error" id="errorTelefono">Teléfono requerido</div>
+          </div>
+          <div class="campo-formulario">
+            <label for="inputCedula">Cédula</label>
+            <input type="text" id="inputCedula" autocomplete="off" />
+            <div class="tooltip-error" id="errorCedula">Cédula requerida</div>
+          </div>
+          <div class="modal-botones">
+            <button type="button" class="btn-modal-cancelar" id="btnCancelarEdicion">Cancelar</button>
+            <button type="submit" class="btn-modal-guardar">
+              <span class="btn-label"><i class="bi bi-check-lg"></i> Guardar cambios</span>
+              <span class="btn-spinner"><i class="bi bi-arrow-repeat"></i> Guardando...</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- MODAL DETALLE RESERVA -->
+    <div class="modal-detalle" id="modalDetalle" role="dialog" aria-modal="true" aria-labelledby="detalleTitulo" hidden>
+      <div class="modal-detalle-contenido">
+        <button type="button" class="btn-cerrar-modal" id="btnCerrarDetalle" aria-label="Cerrar detalle">
+          <i class="bi bi-x-lg"></i>
+        </button>
+
+        <div class="detalle-encabezado">
+          <div class="detalle-icono">
+            <i class="bi bi-receipt"></i>
+          </div>
+          <div>
+            <h3 id="detalleTitulo">Detalle de Reserva</h3>
+            <p>Reserva #<span id="detalleId"></span></p>
+          </div>
+        </div>
+
+        <div class="detalle-cuerpo">
+          <div class="detalle-fila">
+            <span class="detalle-label"><i class="bi bi-geo-alt-fill"></i> Cancha</span>
+            <span class="detalle-valor" id="detalleCancha"></span>
+          </div>
+          <div class="detalle-fila">
+            <span class="detalle-label"><i class="bi bi-calendar3"></i> Fecha</span>
+            <span class="detalle-valor" id="detalleFecha"></span>
+          </div>
+          <div class="detalle-fila">
+            <span class="detalle-label"><i class="bi bi-clock-fill"></i> Hora</span>
+            <span class="detalle-valor" id="detalleHora"></span>
+          </div>
+          <div class="detalle-fila">
+            <span class="detalle-label"><i class="bi bi-people-fill"></i> Tipo</span>
+            <span class="detalle-valor" id="detalleTipo"></span>
+          </div>
+          <div class="detalle-fila">
+            <span class="detalle-label"><i class="bi bi-flag-fill"></i> Estado</span>
+            <span class="detalle-valor" id="detalleEstado"></span>
+          </div>
+          <div class="detalle-fila">
+            <span class="detalle-label"><i class="bi bi-person-fill"></i> Jugador</span>
+            <span class="detalle-valor" id="detalleJugador"></span>
+          </div>
+          <div class="detalle-fila">
+            <span class="detalle-label" id="detallePagoLabel"><i class="bi bi-credit-card-fill"></i> Pago</span>
+            <span class="detalle-valor" id="detallePago"></span>
+          </div>
+          <div class="detalle-alerta-cancelacion" id="detalleCancelacion" hidden>
+            <i class="bi bi-info-circle-fill" aria-hidden="true"></i>
+            <span>La reserva fue cancelada. Este detalle no confirma un reembolso.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal-detalle modal-qr-ubicacion"
+      id="modalQrUbicacion"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="qrUbicacionTitulo"
+      hidden>
+      <div class="modal-detalle-contenido qr-ubicacion-contenido">
+        <button type="button" class="btn-cerrar-modal" id="btnCerrarQrUbicacion" aria-label="Cerrar ubicación">
+          <i class="bi bi-x-lg"></i>
+        </button>
+        <div class="detalle-encabezado">
+          <div class="detalle-icono"><i class="bi bi-geo-alt-fill"></i></div>
+          <div>
+            <h3 id="qrUbicacionTitulo">Ubicación de la reserva</h3>
+            <p id="qrUbicacionSede"></p>
+          </div>
+        </div>
+        <div class="qr-ubicacion-cuerpo">
+          <img id="qrUbicacionImagen" class="qr-ubicacion-imagen" alt="Código QR de la ubicación" />
+          <p id="qrUbicacionDireccion" class="small text-muted"></p>
+          <a id="qrUbicacionAbrir" class="btn btn-brand rounded-pill" target="_blank" rel="noopener">
+            <i class="bi bi-box-arrow-up-right me-1"></i>Abrir ubicación
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <app-footer></app-footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script type="module" src="../js/views/usuario.js"></script>
+    <script src="../js/componets/nav_footer.js" defer></script>
+    <script src="../js/componets/ball-logo.js"></script>
+  </body>
+</html>
